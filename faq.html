@@ -1,0 +1,1368 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>TrafficMENA — ECommerce Day 2026 · FAQ</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=IBM+Plex+Sans+Arabic:wght@400;500;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- ✅ Reusable navbar -->
+    <script src="navbar.js" defer></script>
+    <!-- ✅ Reusable footer -->
+    <script src="footer.js" defer></script>
+
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        margin: 0;
+        font-family: "Manrope", "IBM Plex Sans Arabic", sans-serif;
+        color: #101010;
+        background-color: #ffffff;
+        overflow-x: hidden;
+      }
+      a {
+        color: #04c44e;
+        text-decoration: none;
+      }
+      a:hover {
+        color: #006681;
+      }
+      input::placeholder {
+        color: #9aa1a9;
+      }
+      input,
+      select,
+      textarea,
+      button {
+        font-family: "Manrope", sans-serif;
+      }
+      .container {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 0 24px;
+      }
+      .font-mono {
+        font-family: "JetBrains Mono", monospace;
+      }
+
+      /* Buttons */
+      .btn-primary {
+        background: #05ef62;
+        border: none;
+        color: #101010;
+        border-radius: 10px;
+        padding: 14px 26px;
+        font-weight: 600;
+        font-size: 15px;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        transition: background 0.2s;
+      }
+      .btn-primary:hover {
+        background: #04d657;
+      }
+      .btn-secondary {
+        background: #ffffff;
+        border: 1px solid #101010;
+        color: #101010;
+        border-radius: 10px;
+        padding: 14px 26px;
+        font-weight: 600;
+        font-size: 15px;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        transition: background 0.2s;
+      }
+      .btn-secondary:hover {
+        background: #f4f6f8;
+      }
+
+      /* ==========================================
+         02. HERO + SEARCH
+         ========================================== */
+      .hero {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 64px 24px 40px;
+      }
+      .hero-label {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 24px;
+      }
+      .hero-label .indicator {
+        width: 24px;
+        height: 2px;
+        background: #05ef62;
+        flex: none;
+      }
+      .hero-label span {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 12px;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: #6b747e;
+      }
+      .hero-title {
+        font-size: 48px;
+        line-height: 1.05;
+        font-weight: 700;
+        margin: 0 0 14px;
+        max-width: 24ch;
+      }
+      .hero-sub {
+        font-size: 17px;
+        line-height: 1.7;
+        color: #4a5563;
+        margin: 0 0 28px;
+        max-width: 60ch;
+      }
+      .search-row {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        max-width: 640px;
+        flex-wrap: wrap;
+      }
+      .search-input {
+        flex: 1;
+        min-width: 0;
+        border: 1px solid #d5dae0;
+        border-radius: 12px;
+        padding: 15px 18px;
+        font-size: 15px;
+        outline-color: #05ef62;
+      }
+      .search-input:focus {
+        outline: 2px solid #05ef62;
+        outline-offset: 1px;
+      }
+      .results-meta {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 11px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: #6b747e;
+        margin-top: 12px;
+      }
+
+      /* ==========================================
+         03. POPULAR
+         ========================================== */
+      .popular-band {
+        background: #f4f6f8;
+        border-top: 1px solid #e6eaee;
+        border-bottom: 1px solid #e6eaee;
+      }
+      .popular-inner {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 56px 24px;
+      }
+      .popular-title {
+        font-weight: 700;
+        font-size: 22px;
+        margin-bottom: 24px;
+      }
+      .popular-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 16px;
+      }
+      .popular-card {
+        background: #ffffff;
+        border: 1px solid #d5dae0;
+        border-radius: 14px;
+        padding: 22px 20px;
+      }
+      .popular-card-q {
+        font-weight: 700;
+        font-size: 15px;
+        line-height: 1.5;
+        color: #101010;
+        margin-bottom: 10px;
+      }
+      .popular-card-a {
+        font-size: 13px;
+        line-height: 1.7;
+        color: #4a5563;
+      }
+
+      /* ==========================================
+         04. STICKY CATEGORY CHIPS
+         ========================================== */
+      .cat-bar {
+        position: sticky;
+        top: 72px;
+        z-index: 40;
+        background: rgba(255, 255, 255, 0.94);
+        backdrop-filter: blur(12px);
+        border-bottom: 1px solid #e6eaee;
+      }
+      .cat-bar-inner {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 14px 24px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+      .cat-chips {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+        flex: 1;
+      }
+      .cat-chip {
+        background: #ffffff;
+        border: 1px solid #d5dae0;
+        border-radius: 999px;
+        padding: 7px 15px;
+        font-weight: 600;
+        font-size: 13px;
+        color: #101010;
+        cursor: pointer;
+        transition: all 0.15s;
+      }
+      .cat-chip.active {
+        background: #101010;
+        border-color: #101010;
+        color: #ffffff;
+      }
+      .cat-bar-note {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 0 24px 8px;
+        font-family: "JetBrains Mono", monospace;
+        font-size: 9px;
+        letter-spacing: 0.06em;
+        color: #9aa1a9;
+      }
+
+      /* ==========================================
+         05. FAQ SECTIONS
+         ========================================== */
+      .faq-body {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 48px 24px 80px;
+        display: flex;
+        flex-direction: column;
+        gap: 48px;
+      }
+      .faq-cat-title {
+        font-size: 26px;
+        font-weight: 700;
+        margin: 0 0 18px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      .faq-cat-title::before {
+        content: "";
+        width: 24px;
+        height: 2px;
+        background: #05ef62;
+        flex: none;
+      }
+      .faq-list {
+        border-top: 1px solid #e6eaee;
+        max-width: 900px;
+      }
+      .faq-item {
+        border-bottom: 1px solid #e6eaee;
+      }
+      .faq-toggle {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 16px;
+        background: none;
+        border: none;
+        padding: 18px 4px;
+        cursor: pointer;
+        text-align: left;
+      }
+      .faq-q {
+        font-family: "Manrope", sans-serif;
+        font-weight: 700;
+        font-size: 15px;
+        line-height: 1.5;
+        color: #101010;
+      }
+      .faq-q .highlight {
+        background: #c3f7d7;
+        border-radius: 3px;
+      }
+      .faq-toggle-right {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex: none;
+      }
+      .faq-badge {
+        border-radius: 999px;
+        padding: 2px 8px;
+        font-family: "JetBrains Mono", monospace;
+        font-size: 8px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        background: #e6fbee;
+        border: 1px solid #c3f7d7;
+        color: #04c44e;
+      }
+      .faq-icon {
+        color: #04c44e;
+        font-size: 19px;
+      }
+      .faq-body-content {
+        padding: 0 4px 18px;
+      }
+      .faq-pending {
+        display: inline-block;
+        border-radius: 4px;
+        padding: 2px 8px;
+        font-family: "JetBrains Mono", monospace;
+        font-size: 8px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        background: #f4f6f8;
+        border: 1px solid #e6eaee;
+        color: #6b747e;
+        margin-bottom: 8px;
+      }
+      .faq-answer {
+        font-size: 14px;
+        line-height: 1.8;
+        color: #4a5563;
+        margin: 0 0 12px;
+        max-width: 70ch;
+      }
+      .faq-feedback-row {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        flex-wrap: wrap;
+      }
+      .faq-feedback-row span {
+        font-size: 12px;
+        color: #6b747e;
+      }
+      .feedback-pill {
+        background: #ffffff;
+        border: 1px solid #d5dae0;
+        border-radius: 999px;
+        padding: 5px 14px;
+        font-size: 12px;
+        font-weight: 600;
+        color: #101010;
+        cursor: pointer;
+        transition: all 0.15s;
+      }
+      .feedback-pill:hover {
+        background: #f4f6f8;
+      }
+      .feedback-thanks {
+        font-size: 12px;
+        color: #04c44e;
+        font-weight: 600;
+      }
+      .feedback-input {
+        border: 1px solid #d5dae0;
+        border-radius: 8px;
+        padding: 7px 12px;
+        font-size: 12px;
+        width: 220px;
+        max-width: 100%;
+        outline-color: #05ef62;
+      }
+      .feedback-send {
+        background: #101010;
+        border: none;
+        color: #ffffff;
+        border-radius: 8px;
+        padding: 7px 14px;
+        font-size: 12px;
+        font-weight: 600;
+        cursor: pointer;
+      }
+      .copy-link {
+        margin-left: auto;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        background: none;
+        border: none;
+        color: #6b747e;
+        font-weight: 600;
+        font-size: 11px;
+        cursor: pointer;
+      }
+      .copy-link.copied {
+        color: #04c44e;
+      }
+
+      /* ==========================================
+         06. NO RESULTS
+         ========================================== */
+      .no-results-wrap {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 0 24px 56px;
+      }
+      .no-results {
+        border: 1px dashed #d5dae0;
+        border-radius: 16px;
+        padding: 56px 24px;
+        text-align: center;
+      }
+      .no-results p {
+        font-weight: 700;
+        font-size: 19px;
+        color: #101010;
+        margin: 0 0 16px;
+      }
+
+      /* ==========================================
+         07. FINAL CTA
+         ========================================== */
+      .cta-band {
+        background: #101010;
+      }
+      .cta-inner {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 80px 24px;
+        text-align: center;
+      }
+      .cta-inner h2 {
+        font-size: 34px;
+        font-weight: 700;
+        color: #ffffff;
+        margin: 0 0 28px;
+      }
+      .cta-buttons {
+        display: flex;
+        gap: 14px;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+      .cta-note {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 9px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: #6b747e;
+        margin-top: 14px;
+      }
+
+      /* ==========================================
+         10. RESPONSIVE
+         ========================================== */
+      @media (max-width: 1024px) {
+        .hero-title {
+          font-size: 38px;
+        }
+        .popular-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .cat-bar {
+          top: 72;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .hero {
+          padding: 40px 20px 28px;
+        }
+        .hero-title {
+          font-size: 28px;
+          max-width: none;
+        }
+        .hero-sub {
+          font-size: 14px;
+        }
+        .search-input {
+          padding: 13px 14px;
+          font-size: 14px;
+        }
+        .popular-inner {
+          padding: 32px 20px;
+        }
+        .popular-grid {
+          grid-template-columns: 1fr;
+        }
+
+        /* ✅ FIX: الشريط نفسه ما يفرضش عرض على الصفحة */
+        .cat-bar {
+          overflow: hidden;
+          top: 78px;
+        }
+        .cat-bar-inner {
+          padding: 10px 20px;
+          flex-direction: column;
+          align-items: stretch;
+          min-width: 0; /* ✅ مهم */
+        }
+        .cat-chips {
+          display: flex;
+          flex-wrap: nowrap;
+          overflow-x: auto;
+          -webkit-overflow-scrolling: touch;
+          padding-bottom: 4px;
+          min-width: 0; /* ✅ مهم */
+          max-width: 100%; /* ✅ مهم */
+          scrollbar-width: thin; /* اختياري */
+        }
+        .cat-chip {
+          flex: 0 0 auto; /* ✅ بدل flex: none */
+          white-space: nowrap;
+        }
+        .cat-bar-note {
+          padding: 0 20px 8px;
+        }
+
+        .faq-body {
+          padding: 32px 20px 48px;
+          gap: 28px;
+        }
+        .faq-cat-title {
+          font-size: 18px;
+        }
+        .faq-q {
+          font-size: 13px;
+        }
+        .faq-answer {
+          font-size: 13px;
+        }
+        .cta-inner {
+          padding: 48px 20px;
+        }
+        .cta-inner h2 {
+          font-size: 22px;
+        }
+        .copy-link {
+          margin-left: 0;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .container {
+          padding: 0 18px;
+        }
+        .hero-title {
+          font-size: 24px;
+        }
+        .btn-primary,
+        .btn-secondary {
+          padding: 12px 20px;
+          font-size: 14px;
+        }
+        .faq-cat-title {
+          font-size: 16px;
+        }
+        .feedback-input {
+          width: 100%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- ✅ Reusable Navbar — one line, no duplication -->
+    <site-navbar current="faq"></site-navbar>
+
+    <!-- ==================== HERO ==================== -->
+    <div class="hero">
+      <div class="hero-label">
+        <span class="indicator"></span>
+        <span>FAQ</span>
+      </div>
+      <h1 class="hero-title">
+        Everything you need to know before
+        <span style="color: #04c44e">ECommerce Day</span>
+      </h1>
+      <p class="hero-sub">
+        The difference between the tickets, how workshop reservation works,
+        entry details, and what you'll find on the platform after the event.
+      </p>
+      <div class="search-row">
+        <input
+          id="faqSearch"
+          class="search-input"
+          type="text"
+          placeholder="Search tickets, workshops, refunds…"
+          aria-label="Search the questions"
+        />
+        <button
+          id="clearSearchBtn"
+          class="btn-secondary"
+          style="padding: 14px 20px; font-size: 13px; display: none"
+        >
+          Clear
+        </button>
+      </div>
+      <div class="results-meta" id="resultsMeta">44 answers</div>
+    </div>
+
+    <!-- ==================== NO RESULTS ==================== -->
+    <div class="no-results-wrap" id="noResults" style="display: none">
+      <div class="no-results">
+        <p>
+          We couldn't find a matching answer. Try another word or contact the
+          support team.
+        </p>
+        <a
+          href="mailto:info@trafficmena.com?subject=FAQ%20Support%20Request"
+          class="btn-primary"
+          style="text-decoration: none"
+          >Contact Support</a
+        >
+      </div>
+    </div>
+
+    <!-- ==================== POPULAR ==================== -->
+    <div class="popular-band" id="popularBand">
+      <div class="popular-inner">
+        <div class="popular-title">Most asked questions</div>
+        <div class="popular-grid" id="popularGrid"></div>
+      </div>
+    </div>
+
+    <!-- ==================== STICKY CATEGORY CHIPS ==================== -->
+    <div class="cat-bar">
+      <div class="cat-bar-inner">
+        <div class="cat-chips" id="catChips"></div>
+        <button
+          id="expandAllBtn"
+          style="
+            background: none;
+            border: none;
+            font-weight: 600;
+            font-size: 13px;
+            color: #04c44e;
+            cursor: pointer;
+            flex: none;
+          "
+        >
+          Expand all
+        </button>
+      </div>
+      <div class="cat-bar-note">
+        * CHIP SELECTION UPDATES THE URL — DEEP LINKS OPEN THE CATEGORY DIRECTLY
+      </div>
+    </div>
+
+    <!-- ==================== FAQ SECTIONS ==================== -->
+    <div class="faq-body" id="faqBody"></div>
+
+    <!-- ==================== FINAL CTA ==================== -->
+    <div class="cta-band">
+      <div class="cta-inner">
+        <h2>Didn't find your answer?</h2>
+        <div class="cta-buttons">
+          <a
+            href="tickets.html"
+            class="btn-primary"
+            style="padding: 15px 28px; font-size: 15px; text-decoration: none"
+          >
+            Choose Your Ticket
+          </a>
+          <a
+            href="mailto:info@trafficmena.com?subject=FAQ%20Support%20Request"
+            class="btn-secondary"
+            style="
+              background: transparent;
+              color: #ffffff;
+              border-color: #ffffff;
+              padding: 15px 28px;
+              font-size: 15px;
+              text-decoration: none;
+            "
+            >Contact Support</a
+          >
+        </div>
+        <div class="cta-note">
+          Contact carries your question &amp; category automatically
+        </div>
+      </div>
+    </div>
+
+    <!-- FOOTER -->
+    <site-footer></site-footer>
+
+    <!-- ==================== SCRIPTS ==================== -->
+    <script>
+      // ==========================================
+      // 00. DATA
+      // ==========================================
+      var popularData = [
+        {
+          q: "What is the difference between the two tickets?",
+          a: "Full Journey includes the Main Stage and the workshops; Control Tower includes the Main Stage only. Recordings and files come with both.",
+        },
+        {
+          q: "Do I need to reserve workshops in advance?",
+          a: "Yes — Full Journey holders reserve after payment, subject to capacity.",
+        },
+        {
+          q: "Will all the content be recorded?",
+          a: "The plan is to record sessions and workshops and upload them to the platform for attendees.",
+        },
+        {
+          q: "How long is platform access?",
+          a: "3 months with Control Tower and 1 year with Full Journey.",
+        },
+        {
+          q: "Is there an attendance certificate?",
+          a: "No — there is no certificate with either ticket.",
+        },
+        {
+          q: "What happens if a workshop fills up?",
+          a: "Pick another available workshop; the ticket does not guarantee a seat in every workshop.",
+        },
+      ];
+
+      var categories = [
+        {
+          label: "About the Event",
+          items: [
+            {
+              q: "What is ECommerce Day?",
+              a: "A full offline day in Cairo by TrafficMENA covering the entire order journey: the Main Stage (The Control Tower) plus three workshop tracks — CLICKED, CONFIRMED and DELIVERED.",
+            },
+            {
+              q: "Who is the day for?",
+              a: "Store owners and founders, marketing and growth teams, product and CRO people, and operations and fulfillment teams — anyone who touches the order.",
+            },
+            {
+              q: "How is the day structured?",
+              a: "A main stage running all day (keynotes, panels, founder stories) plus hands-on workshops running in parallel in three specialized rooms.",
+            },
+            {
+              q: "Is it offline or online?",
+              a: "Fully offline in Cairo. Every session is recorded and uploaded to the platform after the event for all attendees.",
+            },
+            {
+              q: "When and where?",
+              a: "22 October 2026, Cairo. Venue details will be announced soon.",
+            },
+          ],
+        },
+        {
+          label: "Tickets",
+          items: [
+            {
+              q: "What ticket types exist?",
+              a: "Two only: the Control Tower Pass and the Full Journey Pass. No third type and no VIP ticket.",
+            },
+            {
+              q: "What does the Control Tower Pass include?",
+              a: "Full-day Main Stage access + all recordings + Workshop Templates & Files + 3-month platform access + Basic Summaries and Action Pack and the ECommerce Report summary.",
+            },
+            {
+              q: "What does the Full Journey Pass include?",
+              a: "Everything in the Control Tower Pass + entry to the 3 workshop tracks + workshop seat reservation + Exercises & Live Builds + the Full Summaries, Action Pack and Report + a full year of platform access.",
+            },
+            {
+              q: "Are recordings and files included with both tickets?",
+              a: "Yes — all recordings and the Workshop Templates & Files are available to both ticket types on the platform.",
+            },
+            {
+              q: "Is there a certificate?",
+              a: "No — there is no attendance certificate with either ticket.",
+              upd: true,
+            },
+            {
+              q: "Is there a group discount or group ticket?",
+              a: "No group ticket and no group discount — tickets are individual, each with its own attendee details and QR.",
+            },
+            {
+              q: "Can I upgrade from Control Tower to Full Journey?",
+              a: "Yes, before the event. Workshop seats after upgrading depend on availability at that time — reserve early.",
+            },
+            {
+              q: "Can I transfer my ticket?",
+              a: "Transfers follow the Ticket & Entry policy. For special cases contact info@trafficmena.com.",
+            },
+          ],
+        },
+        {
+          label: "Workshops",
+          items: [
+            {
+              q: "Who can enter the workshops?",
+              a: "Full Journey Pass holders only — workshops are offline attendance.",
+            },
+            {
+              q: "When do I pick my workshops?",
+              a: "After completing payment you receive the reservation link. Reserve early — seats are limited.",
+            },
+            {
+              q: "Does Full Journey guarantee a seat in every workshop?",
+              a: "No. The pass grants reservation eligibility; the seat depends on capacity at the time of booking.",
+            },
+            {
+              q: "What is the capacity of each room?",
+              a: "CLICKED 80 · CONFIRMED 200 · DELIVERED 100 — draft numbers subject to review per venue.",
+              pending: true,
+            },
+            {
+              q: "Can I attend two workshops at the same time?",
+              a: "No — one workshop per slot, and the system prevents conflicts automatically.",
+            },
+            {
+              q: "What if a workshop is full?",
+              a: "Choose another available workshop or join the waiting list — the workshop recording will be available to you either way.",
+            },
+            {
+              q: "Can I change my selection?",
+              a: "Yes, you can adjust your reservation before the event as long as seats are available.",
+            },
+            {
+              q: "Do I need a laptop?",
+              a: "Some workshops are hands-on and a laptop is recommended — each workshop\u2019s details arrive before the event.",
+            },
+          ],
+        },
+        {
+          label: "Booking & Payment",
+          items: [
+            {
+              q: "How do I book?",
+              a: "Pick your ticket on the Tickets page, fill in your details and pay — booking is guest checkout with no account or password.",
+            },
+            {
+              q: "Does the success page mean my booking is confirmed?",
+              a: "Final confirmation appears after the server verifies the payment, and you receive an email with your ticket and QR.",
+            },
+            {
+              q: "What payment methods are available?",
+              a: "Cards, wallets and instant payment — final methods depend on the approved payment provider.",
+              pending: true,
+            },
+            {
+              q: "Does the price include taxes and fees?",
+              a: "The final price is in EGP, and any fees or taxes are shown clearly before you complete payment.",
+              pending: true,
+            },
+            {
+              q: "Can I buy for someone else?",
+              a: "Yes — every ticket has its own attendee details and its own QR.",
+            },
+            {
+              q: "I paid but did not receive the ticket?",
+              a: "Check spam first, try Resend from the confirmation page, or use Booking lookup with your email and order number. If it persists, contact support.",
+            },
+            {
+              q: "I was charged twice?",
+              a: "The system detects duplicates and never issues two bookings — if a double charge shows on your statement, contact us immediately with the order number.",
+            },
+          ],
+        },
+        {
+          label: "Event Day",
+          items: [
+            {
+              q: "What do I need at entry?",
+              a: "Your QR on your phone + a personal ID. No printing needed.",
+            },
+            {
+              q: "Is a screenshot of the QR enough?",
+              a: "It works as long as the code is clear — opening the ticket page directly is better to guarantee the latest version.",
+            },
+            {
+              q: "When does entry start?",
+              a: "Registration and door times will be confirmed before the event and emailed to you.",
+              pending: true,
+            },
+            {
+              q: "Can I leave and come back?",
+              a: "Yes — you can move between rooms and exit and re-enter all day, per your ticket type.",
+            },
+            {
+              q: "What about accessibility?",
+              a: "Note your needs in the Accessibility field during booking and we will prepare the right arrangements.",
+            },
+            {
+              q: "Is there food and drink?",
+              a: "Catering details will be confirmed along with the venue details.",
+              pending: true,
+            },
+            {
+              q: "Is the day filmed?",
+              a: "Yes, the day is fully photographed and recorded — see the Recording & Photography Policy.",
+            },
+          ],
+        },
+        {
+          label: "Platform & Content",
+          items: [
+            {
+              q: "Will all the content be recorded?",
+              a: "The plan is to record the Main Stage sessions and the workshops and upload them to the platform for all attendees.",
+            },
+            {
+              q: "When are the recordings uploaded?",
+              a: "After the event — the upload schedule will be confirmed later.",
+              pending: true,
+            },
+            {
+              q: "How long is platform access?",
+              a: "3 months for Control Tower Pass holders and a full year for Full Journey Pass holders.",
+            },
+            {
+              q: "Are workshop files available if I did not attend the workshop?",
+              a: "Yes — the Workshop Templates & Files are available to all attendees regardless of workshop attendance.",
+            },
+            {
+              q: "Can I download and share the content?",
+              a: "Files are downloadable for your personal use; sharing account access or republishing the content is not allowed.",
+            },
+            {
+              q: "Can I contact speakers through the platform?",
+              a: "No — the platform is a Content Hub only: no speaker directory and no direct messaging.",
+            },
+            {
+              q: "My platform account is not working?",
+              a: "Try resending the activation (magic) link; if the problem persists contact info@trafficmena.com.",
+            },
+          ],
+        },
+        {
+          label: "Changes & Refunds",
+          items: [
+            {
+              q: "What is the cancellation and refund policy?",
+              a: "Refunds follow the published Refund & Cancellation policy — review it before booking.",
+            },
+            {
+              q: "How do I request a refund?",
+              a: 'From your booking page choose "Request refund" — the request opens a support case and does not mean automatic approval.',
+            },
+            {
+              q: "How long does a refund take?",
+              a: "Processing time will be defined in the final policy and communicated with every request.",
+              pending: true,
+            },
+            {
+              q: "What if a speaker or session changes?",
+              a: "The agenda shows working times and may change before the final version — changes do not create an automatic refund right except as per the policy.",
+            },
+            {
+              q: "What happens if the event is postponed?",
+              a: "Your ticket carries over to the new date automatically, with refund options per the policy.",
+            },
+            {
+              q: "What happens if the event is cancelled?",
+              a: "In a full cancellation we contact every attendee with the available refund options.",
+            },
+          ],
+        },
+        {
+          label: "Speakers & Sponsors",
+          items: [
+            {
+              q: "When are speakers announced?",
+              a: "The speaker lineup will be announced soon — follow the Speakers page and the emails.",
+              pending: true,
+            },
+            {
+              q: "Can I contact speakers after the event?",
+              a: "No — the platform does not provide any direct contact channel with speakers.",
+            },
+            {
+              q: "How do I apply to speak?",
+              a: "Send your experience and proposed topic to info@trafficmena.com — participation depends on editorial topic fit.",
+            },
+            {
+              q: "How do I become a sponsor or partner?",
+              a: "See the Become a Sponsor page and submit a partnership brief — partnerships are tailored to your objectives, with no published prices.",
+            },
+          ],
+        },
+      ];
+
+      // ==========================================
+      // 01. STATE
+      // ==========================================
+      var state = {
+        q: "",
+        cat: null, // null = all, otherwise index
+        openD: {}, // desktop open map { qid: true }
+        openM: null, // mobile: only one open at a time
+        expandAll: false,
+        feedback: {}, // { qid: 'yes' | 'no' | 'sent' }
+        copied: null,
+      };
+
+      // ==========================================
+      // 02. HELPERS
+      // ==========================================
+      function highlight(text, q) {
+        if (!q) return escapeHtml(text);
+        var lower = text.toLowerCase();
+        var ql = q.toLowerCase();
+        var out = "";
+        var i = 0;
+        while (i < text.length) {
+          var idx = lower.indexOf(ql, i);
+          if (idx === -1) {
+            out += escapeHtml(text.slice(i));
+            break;
+          }
+          if (idx > i) out += escapeHtml(text.slice(i, idx));
+          out +=
+            '<span class="highlight">' +
+            escapeHtml(text.slice(idx, idx + q.length)) +
+            "</span>";
+          i = idx + q.length;
+        }
+        return out;
+      }
+
+      function escapeHtml(s) {
+        return String(s)
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;");
+      }
+
+      function matchItem(item, q) {
+        if (!q) return true;
+        var ql = q.toLowerCase();
+        return (
+          item.q.toLowerCase().indexOf(ql) !== -1 ||
+          item.a.toLowerCase().indexOf(ql) !== -1
+        );
+      }
+
+      function buildFiltered(mobile) {
+        var out = [];
+        categories.forEach(function (cat, ci) {
+          if (state.cat !== null && state.cat !== ci) return;
+          var items = [];
+          cat.items.forEach(function (item, qi) {
+            if (!matchItem(item, state.q)) return;
+            var qid = ci + "-" + qi;
+            var open = mobile
+              ? state.openM === qid
+              : state.expandAll || !!state.openD[qid];
+            items.push({
+              qid: qid,
+              q: item.q,
+              a: item.a,
+              pending: !!item.pending,
+              upd: !!item.upd,
+              open: open,
+            });
+          });
+          if (items.length) out.push({ label: cat.label, items: items });
+        });
+        return out;
+      }
+
+      // ==========================================
+      // 03. RENDER POPULAR
+      // ==========================================
+      function renderPopular() {
+        var grid = document.getElementById("popularGrid");
+        grid.innerHTML = popularData
+          .map(function (p) {
+            return (
+              '<div class="popular-card">' +
+              '<div class="popular-card-q">' +
+              escapeHtml(p.q) +
+              "</div>" +
+              '<div class="popular-card-a">' +
+              escapeHtml(p.a) +
+              "</div>" +
+              "</div>"
+            );
+          })
+          .join("");
+      }
+
+      // ==========================================
+      // 04. RENDER CATEGORY CHIPS
+      // ==========================================
+      function renderCatChips() {
+        var wrap = document.getElementById("catChips");
+        var chips = [{ label: "All", ci: null }].concat(
+          categories.map(function (c, i) {
+            return { label: c.label, ci: i };
+          }),
+        );
+        wrap.innerHTML = chips
+          .map(function (c) {
+            var active = state.cat === c.ci ? " active" : "";
+            return (
+              '<button class="cat-chip' +
+              active +
+              '" data-cat="' +
+              (c.ci === null ? "" : c.ci) +
+              '">' +
+              escapeHtml(c.label) +
+              "</button>"
+            );
+          })
+          .join("");
+        wrap.querySelectorAll(".cat-chip").forEach(function (btn) {
+          btn.addEventListener("click", function () {
+            var v = this.getAttribute("data-cat");
+            state.cat = v === "" ? null : parseInt(v);
+            renderCatChips();
+            renderFaq();
+            updateVisibility();
+          });
+        });
+      }
+
+      // ==========================================
+      // 05. RENDER FAQ
+      // ==========================================
+      function renderFaq() {
+        var body = document.getElementById("faqBody");
+        var filtered = buildFiltered(false);
+        if (filtered.length === 0) {
+          body.innerHTML = "";
+          return;
+        }
+        body.innerHTML = filtered
+          .map(function (cat) {
+            return (
+              "<div>" +
+              '<h2 class="faq-cat-title">' +
+              escapeHtml(cat.label) +
+              "</h2>" +
+              '<div class="faq-list">' +
+              cat.items
+                .map(function (it) {
+                  return renderFaqItem(it);
+                })
+                .join("") +
+              "</div>" +
+              "</div>"
+            );
+          })
+          .join("");
+        bindFaqEvents();
+      }
+
+      function renderFaqItem(it) {
+        var fb = state.feedback[it.qid];
+        var feedbackHtml;
+        if (!fb) {
+          feedbackHtml =
+            "<span>Was this answer helpful?</span>" +
+            '<button class="feedback-pill" data-qid="' +
+            it.qid +
+            '" data-act="yes">Yes</button>' +
+            '<button class="feedback-pill" data-qid="' +
+            it.qid +
+            '" data-act="no">No</button>';
+        } else if (fb === "yes") {
+          feedbackHtml =
+            '<span class="feedback-thanks">✓ Thanks for your feedback</span>';
+        } else if (fb === "no") {
+          feedbackHtml =
+            '<input class="feedback-input" type="text" placeholder="What was missing? (optional)" aria-label="Your feedback">' +
+            '<button class="feedback-send" data-qid="' +
+            it.qid +
+            '" data-act="send">Send</button>';
+        } else {
+          feedbackHtml =
+            '<span class="feedback-thanks">✓ Feedback received</span>';
+        }
+
+        return (
+          '<div class="faq-item">' +
+          '<button class="faq-toggle" data-qid="' +
+          it.qid +
+          '" aria-expanded="' +
+          (it.open ? "true" : "false") +
+          '">' +
+          '<span class="faq-q">' +
+          highlight(it.q, state.q) +
+          "</span>" +
+          '<span class="faq-toggle-right">' +
+          (it.upd ? '<span class="faq-badge">Updated</span>' : "") +
+          '<span class="faq-icon">' +
+          (it.open ? "−" : "+") +
+          "</span>" +
+          "</span>" +
+          "</button>" +
+          (it.open
+            ? '<div class="faq-body-content">' +
+              (it.pending
+                ? '<span class="faq-pending">Pending — final details to be confirmed</span>'
+                : "") +
+              '<p class="faq-answer">' +
+              escapeHtml(it.a) +
+              "</p>" +
+              '<div class="faq-feedback-row">' +
+              feedbackHtml +
+              '<button class="copy-link' +
+              (state.copied === it.qid ? " copied" : "") +
+              '" data-qid="' +
+              it.qid +
+              '" data-act="copy">' +
+              '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">' +
+              '<path d="M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.7 1.7"></path>' +
+              '<path d="M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7l1.7-1.7"></path>' +
+              "</svg>" +
+              (state.copied === it.qid ? "Copied ✓" : "Copy link") +
+              "</button>" +
+              "</div>" +
+              "</div>"
+            : "") +
+          "</div>"
+        );
+      }
+
+      function bindFaqEvents() {
+        // Toggle open/close
+        document.querySelectorAll(".faq-toggle").forEach(function (btn) {
+          btn.addEventListener("click", function () {
+            var qid = this.getAttribute("data-qid");
+            if (window.innerWidth <= 768) {
+              state.openM = state.openM === qid ? null : qid;
+            } else {
+              state.openD[qid] = !state.openD[qid];
+              state.expandAll = false;
+            }
+            renderFaq();
+          });
+        });
+        // Feedback
+        document.querySelectorAll(".feedback-pill").forEach(function (btn) {
+          btn.addEventListener("click", function () {
+            var qid = this.getAttribute("data-qid");
+            var act = this.getAttribute("data-act");
+            state.feedback[qid] = act;
+            renderFaq();
+          });
+        });
+        document.querySelectorAll(".feedback-send").forEach(function (btn) {
+          btn.addEventListener("click", function () {
+            var qid = this.getAttribute("data-qid");
+            state.feedback[qid] = "sent";
+            renderFaq();
+          });
+        });
+        // Copy link
+        document.querySelectorAll(".copy-link").forEach(function (btn) {
+          btn.addEventListener("click", function () {
+            var qid = this.getAttribute("data-qid");
+            try {
+              if (navigator.clipboard)
+                navigator.clipboard.writeText(
+                  window.location.origin +
+                    window.location.pathname +
+                    "#faq-" +
+                    qid,
+                );
+            } catch (e) {}
+            state.copied = qid;
+            renderFaq();
+            setTimeout(function () {
+              state.copied = null;
+              renderFaq();
+            }, 1500);
+          });
+        });
+      }
+
+      // ==========================================
+      // 06. UPDATE VISIBILITY (no results / popular)
+      // ==========================================
+      function updateVisibility() {
+        var filtered = buildFiltered(false);
+        var count = filtered.reduce(function (n, c) {
+          return n + c.items.length;
+        }, 0);
+
+        // Results meta
+        var meta = document.getElementById("resultsMeta");
+        var note = state.q ? ' — searching "' + state.q + '"' : "";
+        meta.textContent = count + " answers" + note;
+
+        // No results
+        var noResults = document.getElementById("noResults");
+        noResults.style.display = count === 0 ? "block" : "none";
+
+        // Popular band
+        var popularBand = document.getElementById("popularBand");
+        popularBand.style.display =
+          state.q || state.cat !== null ? "none" : "block";
+
+        // Clear search button
+        var clearBtn = document.getElementById("clearSearchBtn");
+        clearBtn.style.display = state.q ? "inline-flex" : "none";
+
+        // Expand label
+        var expandBtn = document.getElementById("expandAllBtn");
+        expandBtn.textContent = state.expandAll ? "Collapse all" : "Expand all";
+      }
+
+      // ==========================================
+      // 07. BIND SEARCH
+      // ==========================================
+      (function () {
+        var search = document.getElementById("faqSearch");
+        search.addEventListener("input", function () {
+          state.q = this.value;
+          renderFaq();
+          updateVisibility();
+        });
+
+        document
+          .getElementById("clearSearchBtn")
+          .addEventListener("click", function () {
+            state.q = "";
+            search.value = "";
+            renderFaq();
+            updateVisibility();
+          });
+
+        document
+          .getElementById("expandAllBtn")
+          .addEventListener("click", function () {
+            state.expandAll = !state.expandAll;
+            state.openD = {};
+            renderFaq();
+            updateVisibility();
+          });
+      })();
+
+      // ==========================================
+      // 08. INIT
+      // ==========================================
+      renderPopular();
+      renderCatChips();
+      renderFaq();
+      updateVisibility();
+    </script>
+  </body>
+</html>

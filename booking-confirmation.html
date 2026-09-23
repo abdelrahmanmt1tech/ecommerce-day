@@ -1,0 +1,3590 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>TrafficMENA — ECommerce Day 2026 · Booking Confirmation</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=IBM+Plex+Sans+Arabic:wght@400;500;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- ✅ Reusable navbar -->
+    <script src="navbar.js" defer></script>
+    <!-- ✅ Reusable footer -->
+    <script src="footer.js" defer></script>
+
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        margin: 0;
+        font-family: "Manrope", "IBM Plex Sans Arabic", sans-serif;
+        color: #101010;
+        background-color: #ffffff;
+        overflow-x: hidden;
+      }
+      a {
+        color: #04c44e;
+        text-decoration: none;
+      }
+      a:hover {
+        color: #006681;
+      }
+      button {
+        font-family: "Manrope", sans-serif;
+      }
+      input,
+      select,
+      textarea {
+        font-family: "Manrope", sans-serif;
+      }
+      .container {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 0 24px;
+      }
+      .font-mono {
+        font-family: "JetBrains Mono", monospace;
+      }
+
+      /* Buttons */
+      .btn-primary {
+        background: #05ef62;
+        border: none;
+        color: #101010;
+        border-radius: 10px;
+        padding: 14px 26px;
+        font-family: "Manrope", sans-serif;
+        font-weight: 600;
+        font-size: 15px;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        transition: background 0.2s;
+      }
+      .btn-primary:hover {
+        background: #04d657;
+      }
+      .btn-secondary {
+        background: #ffffff;
+        border: 1px solid #101010;
+        color: #101010;
+        border-radius: 10px;
+        padding: 14px 26px;
+        font-family: "Manrope", sans-serif;
+        font-weight: 600;
+        font-size: 15px;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        transition: background 0.2s;
+      }
+      .btn-secondary:hover {
+        background: #f4f6f8;
+      }
+
+      /* Sections & Utilities */
+      .section-padding {
+        padding: 88px 0;
+      }
+      .section-bg-alt {
+        background: #f4f6f8;
+        border-top: 1px solid #e6eaee;
+        border-bottom: 1px solid #e6eaee;
+      }
+      .section-bg-dark {
+        background: #101010;
+        color: #ffffff;
+      }
+      /* Workshop reservation: more vertical breathing room */
+      #workshopSection > .container {
+        padding: 104px 24px;
+      }
+      #workshopSection .section-title {
+        margin-bottom: 16px;
+      }
+      #workshopSection #resSlotsContainer {
+        gap: 22px;
+        margin-bottom: 32px;
+      }
+      #workshopSection #resNotConfirmed {
+        margin-top: 8px;
+      }
+      /* Next-actions band (between hero and tickets) */
+      .confirm-next-actions {
+        padding: 72px 24px;
+      }
+      .section-label {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 16px;
+      }
+      .section-label .indicator {
+        width: 24px;
+        height: 2px;
+        background: #05ef62;
+        flex: none;
+      }
+      .section-label span {
+        font-size: 12px;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: #6b747e;
+      }
+      .section-bg-dark .section-label span {
+        color: #05ef62;
+      }
+      .section-title {
+        font-size: 36px;
+        line-height: 1.15;
+        font-weight: 700;
+        margin: 0 0 24px;
+      }
+
+      /* ==========================================
+         02. GRIDS
+         ========================================== */
+      .grid-5-cols {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 14px;
+      }
+      .grid-2-cols {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+      }
+      .grid-3-cols {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+      }
+      .grid-4-cols {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 16px;
+      }
+      .split-2 {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 24px;
+      }
+      .split-2b {
+        display: grid;
+        grid-template-columns: 1fr 1.2fr;
+        gap: 24px;
+      }
+      .split-2c {
+        display: grid;
+        grid-template-columns: 1.2fr 1fr;
+        gap: 24px;
+      }
+
+      /* ==========================================
+         03. SUCCESS HERO
+         ========================================== */
+      .success-hero {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 64px 24px 48px;
+        text-align: center;
+      }
+      .success-icon-wrap {
+        width: 72px;
+        height: 72px;
+        border-radius: 50%;
+        background: #101010;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 24px;
+      }
+      .success-title {
+        font-size: 44px;
+        line-height: 1.1;
+        font-weight: 800;
+        margin: 0 0 12px;
+      }
+      .order-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        border: 1px solid #d5dae0;
+        border-radius: 10px;
+        padding: 10px 16px;
+        margin-bottom: 14px;
+      }
+
+      /* ==========================================
+         04. TICKET CARDS
+         ========================================== */
+      .ticket-card {
+        border: 1px solid #d5dae0;
+        border-radius: 16px;
+        overflow: hidden;
+      }
+      .ticket-card-head {
+        background: #101010;
+        padding: 16px 22px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .ticket-card-body {
+        padding: 24px;
+        display: grid;
+        grid-template-columns: 180px 1fr;
+        gap: 24px;
+        align-items: center;
+      }
+      .qr-box {
+        background: #ffffff;
+        border: 1px solid #e6eaee;
+        border-radius: 12px;
+        padding: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      /* ==========================================
+         05. WORKSHOP RESERVATION
+         ========================================== */
+      .res-btn {
+        text-align: left;
+        border-radius: 12px;
+        padding: 14px 16px;
+        cursor: pointer;
+        font-family: "Manrope", sans-serif;
+        display: block;
+        width: 100%;
+        transition:
+          border-color 0.15s,
+          background 0.15s;
+      }
+      .res-btn:disabled {
+        cursor: not-allowed;
+      }
+
+      /* ==========================================
+         06. PLATFORM TABLE
+         ========================================== */
+      .platform-table {
+        border: 1px solid #e6eaee;
+        border-radius: 12px;
+        overflow: hidden;
+        margin-bottom: 20px;
+      }
+      .platform-row {
+        display: grid;
+        grid-template-columns: 1.4fr 1fr 1fr;
+        padding: 9px 16px;
+        border-bottom: 1px solid #e6eaee;
+        font-size: 12px;
+        align-items: center;
+      }
+      .platform-row:last-child {
+        border-bottom: none;
+      }
+      .platform-head {
+        background: #f4f6f8;
+        border-bottom: 1px solid #e6eaee;
+        padding: 10px 16px;
+        font-family: "JetBrains Mono", monospace;
+        font-size: 10px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: #6b747e;
+      }
+      .platform-head-inner {
+        display: grid;
+        grid-template-columns: 1.4fr 1fr 1fr;
+      }
+
+      /* ==========================================
+         07. EDGE STATE CARDS
+         ========================================== */
+      .edge-card {
+        background: #ffffff;
+        border-radius: 16px;
+        padding: 40px 32px;
+        text-align: center;
+        box-shadow: 0 2px 16px rgba(16, 16, 16, 0.06);
+      }
+      .edge-icon {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 18px;
+        font-size: 18px;
+        font-weight: 700;
+      }
+
+      /* ==========================================
+         09. RESPONSIVE BREAKPOINTS
+         ========================================== */
+      @media (max-width: 1024px) {
+        .success-title {
+          font-size: 36px;
+        }
+        .grid-5-cols {
+          grid-template-columns: repeat(3, 1fr);
+        }
+        .grid-4-cols {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .split-2,
+        .split-2b,
+        .split-2c {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .section-padding {
+          padding: 56px 0;
+        }
+        #workshopSection > .container {
+          padding: 72px 18px;
+        }
+        .confirm-next-actions {
+          padding: 56px 18px;
+        }
+        .success-title {
+          font-size: 28px;
+        }
+        .section-title {
+          font-size: 24px;
+        }
+        .success-hero {
+          padding: 40px 20px 32px;
+        }
+
+        /* Grids collapse */
+        .grid-5-cols,
+        .grid-2-cols,
+        .grid-3-cols,
+        .grid-4-cols {
+          grid-template-columns: 1fr;
+        }
+
+        /* Ticket card stacks */
+        .ticket-card-body {
+          grid-template-columns: 1fr;
+          gap: 20px;
+        }
+
+        /* Success hero buttons stack */
+        .hero-actions {
+          flex-direction: column;
+        }
+        .hero-actions .btn-primary,
+        .hero-actions .btn-secondary {
+          width: 100%;
+        }
+
+        /* QR centered */
+        .qr-box {
+          justify-content: center;
+        }
+
+        /* Platform table mobile */
+        .platform-row,
+        .platform-head-inner {
+          grid-template-columns: 1fr;
+          gap: 4px;
+        }
+        .platform-row span:first-child {
+          font-weight: 700;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .container {
+          padding: 0 18px;
+        }
+        .success-title {
+          font-size: 24px;
+        }
+        .btn-primary,
+        .btn-secondary {
+          padding: 12px 20px;
+          font-size: 14px;
+        }
+        .edge-card {
+          padding: 28px 20px;
+        }
+      }
+
+      /* Mobile menu hidden by default */
+      .mobile-menu {
+        display: none;
+      }
+      .mobile-menu.open {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        padding: 16px 24px 24px;
+        border-top: 1px solid #e6eaee;
+        background: #ffffff;
+      }
+      .mobile-menu a {
+        font-size: 15px;
+        font-weight: 600;
+        color: #101010;
+        padding: 6px 0;
+      }
+      .mobile-menu .btn-primary,
+      .mobile-menu .btn-secondary {
+        width: 100%;
+        margin-top: 4px;
+      }
+
+      /* Copy feedback animation */
+      .copied-feedback {
+        color: #04c44e !important;
+      }
+
+      /* Step rail for mobile */
+      .step-rail-vertical {
+        width: 2px;
+        background: #d5dae0;
+        flex: 1;
+        min-height: 20px;
+      }
+
+      /* Hide scrollbar for reservation track */
+      .res-track::-webkit-scrollbar {
+        display: none;
+      }
+      .res-track {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .visually-hidden {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- ✅ Reusable Navbar — one line, no duplication -->
+    <site-navbar></site-navbar>
+
+    <div id="ecdSuccessFlow">
+      <!-- Success Hero -->
+      <div class="success-hero">
+        <div class="success-icon-wrap">
+          <svg
+            width="34"
+            height="34"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="#05ef62"
+            stroke-width="2.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M4 12.5l5 5L20 6.5"></path>
+          </svg>
+        </div>
+        <div
+          class="font-mono"
+          style="
+            font-size: 11px;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: #04c44e;
+            margin-bottom: 12px;
+          "
+        >
+          Payment confirmed — verified by server
+        </div>
+        <h1 class="success-title">Your booking is complete.</h1>
+        <p
+          id="confirmThanks"
+          style="font-size: 17px; color: #4a5563; margin: 0 0 24px"
+        >
+          Thanks, <span id="confirmFirstName">[First Name]</span> —
+          <span id="confirmQtyText">2 tickets</span> booked successfully.
+        </p>
+        <div class="order-pill">
+          <span
+            class="font-mono"
+            id="confirmOrderId"
+            style="font-size: 13px; letter-spacing: 0.06em; color: #101010"
+            >ORDER ECD26-0042</span
+          >
+          <button
+            class="copy-order-btn"
+            id="confirmCopyOrder"
+            data-copy="ECD26-0042"
+            style="
+              background: none;
+              border: none;
+              color: #04c44e;
+              font-family: Manrope, sans-serif;
+              font-weight: 600;
+              font-size: 12px;
+              cursor: pointer;
+            "
+          >
+            Copy
+          </button>
+        </div>
+        <div style="font-size: 13px; color: #6b747e; margin-bottom: 28px">
+          A copy was sent to
+          <span id="confirmMaskedEmail">ma••••@domain.com</span> ·
+          <button
+            type="button"
+            class="resend-btn"
+            id="heroResendEmail"
+            style="
+              background: none;
+              border: none;
+              color: #04c44e;
+              font-family: Manrope, sans-serif;
+              font-weight: 600;
+              font-size: 13px;
+              cursor: pointer;
+              padding: 0;
+            "
+          >
+            Resend
+          </button>
+        </div>
+        <div
+          class="hero-actions"
+          style="
+            display: flex;
+            gap: 14px;
+            justify-content: center;
+            flex-wrap: wrap;
+          "
+        >
+          <button class="btn-primary" id="viewMyTicketBtn" type="button">
+            View My Ticket
+          </button>
+          <button class="btn-secondary" id="addToCalendarBtn" type="button">
+            Add Event to Calendar
+          </button>
+        </div>
+      </div>
+
+      <!-- Next Actions -->
+      <div class="section-bg-alt">
+        <div class="container confirm-next-actions">
+          <div
+            class="font-mono"
+            style="
+              font-size: 11px;
+              letter-spacing: 0.12em;
+              text-transform: uppercase;
+              color: #6b747e;
+              margin-bottom: 24px;
+            "
+          >
+            What to do next
+          </div>
+          <div class="grid-5-cols">
+            <div
+              class="action-card"
+              style="
+                background: #ffffff;
+                border: 1px solid #d5dae0;
+                border-radius: 14px;
+                padding: 20px 18px;
+                display: flex;
+                flex-direction: column;
+              "
+            >
+              <div
+                style="
+                  display: flex;
+                  align-items: center;
+                  gap: 8px;
+                  margin-bottom: 12px;
+                "
+              >
+                <span
+                  style="
+                    width: 22px;
+                    height: 22px;
+                    border-radius: 50%;
+                    background: #101010;
+                    color: #05ef62;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    font-family:
+                      JetBrains Mono,
+                      monospace;
+                    font-size: 11px;
+                    flex: none;
+                  "
+                  >1</span
+                >
+              </div>
+              <div
+                style="
+                  font-weight: 700;
+                  font-size: 15px;
+                  color: #101010;
+                  margin-bottom: 8px;
+                "
+              >
+                Save Ticket
+              </div>
+              <div
+                style="
+                  font-size: 12px;
+                  line-height: 1.6;
+                  color: #4a5563;
+                  margin-bottom: 14px;
+                "
+              >
+                Download PDF or add to your wallet.
+              </div>
+              <button
+                type="button"
+                id="actionDownloadPdf"
+                style="
+                  margin-top: auto;
+                  background: #ffffff;
+                  border: 1px solid #101010;
+                  color: #101010;
+                  border-radius: 8px;
+                  padding: 9px;
+                  font-family: Manrope, sans-serif;
+                  font-weight: 600;
+                  font-size: 12px;
+                  cursor: pointer;
+                "
+              >
+                Download PDF
+              </button>
+            </div>
+            <div
+              class="action-card"
+              style="
+                background: #ffffff;
+                border: 1px solid #d5dae0;
+                border-radius: 14px;
+                padding: 20px 18px;
+                display: flex;
+                flex-direction: column;
+              "
+            >
+              <div
+                style="
+                  display: flex;
+                  align-items: center;
+                  gap: 8px;
+                  margin-bottom: 12px;
+                "
+              >
+                <span
+                  style="
+                    width: 22px;
+                    height: 22px;
+                    border-radius: 50%;
+                    background: #101010;
+                    color: #05ef62;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    font-family:
+                      JetBrains Mono,
+                      monospace;
+                    font-size: 11px;
+                    flex: none;
+                  "
+                  >2</span
+                >
+              </div>
+              <div
+                style="
+                  font-weight: 700;
+                  font-size: 15px;
+                  color: #101010;
+                  margin-bottom: 8px;
+                "
+              >
+                Add to Calendar
+              </div>
+              <div
+                style="
+                  font-size: 12px;
+                  line-height: 1.6;
+                  color: #4a5563;
+                  margin-bottom: 14px;
+                "
+              >
+                Google · Apple (ICS) · Outlook.
+              </div>
+              <button
+                type="button"
+                id="actionAddCalendar"
+                style="
+                  margin-top: auto;
+                  background: #ffffff;
+                  border: 1px solid #101010;
+                  color: #101010;
+                  border-radius: 8px;
+                  padding: 9px;
+                  font-family: Manrope, sans-serif;
+                  font-weight: 600;
+                  font-size: 12px;
+                  cursor: pointer;
+                "
+              >
+                Add to Calendar
+              </button>
+            </div>
+            <div
+              class="action-card"
+              style="
+                background: #ffffff;
+                border: 1px solid #d5dae0;
+                border-radius: 14px;
+                padding: 20px 18px;
+                display: flex;
+                flex-direction: column;
+              "
+            >
+              <div
+                style="
+                  display: flex;
+                  align-items: center;
+                  gap: 8px;
+                  margin-bottom: 12px;
+                "
+              >
+                <span
+                  style="
+                    width: 22px;
+                    height: 22px;
+                    border-radius: 50%;
+                    background: #101010;
+                    color: #05ef62;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    font-family:
+                      JetBrains Mono,
+                      monospace;
+                    font-size: 11px;
+                    flex: none;
+                  "
+                  >3</span
+                >
+              </div>
+              <div
+                style="
+                  font-weight: 700;
+                  font-size: 15px;
+                  color: #101010;
+                  margin-bottom: 8px;
+                "
+              >
+                Activate Platform
+              </div>
+              <div
+                style="
+                  font-size: 12px;
+                  line-height: 1.6;
+                  color: #4a5563;
+                  margin-bottom: 14px;
+                "
+              >
+                Recordings &amp; files after the event.
+              </div>
+              <button
+                type="button"
+                id="actionActivatePlatform"
+                style="
+                  margin-top: auto;
+                  background: #ffffff;
+                  border: 1px solid #101010;
+                  color: #101010;
+                  border-radius: 8px;
+                  padding: 9px;
+                  font-family: Manrope, sans-serif;
+                  font-weight: 600;
+                  font-size: 12px;
+                  cursor: pointer;
+                "
+              >
+                Activate
+              </button>
+            </div>
+            <div
+              class="action-card"
+              id="workshopActionCard"
+              style="
+                background: #101010;
+                border: 1px solid #101010;
+                border-radius: 14px;
+                padding: 20px 18px;
+                display: flex;
+                flex-direction: column;
+              "
+            >
+              <div
+                style="
+                  display: flex;
+                  align-items: center;
+                  gap: 8px;
+                  margin-bottom: 12px;
+                "
+              >
+                <span
+                  style="
+                    width: 22px;
+                    height: 22px;
+                    border-radius: 50%;
+                    background: #05ef62;
+                    color: #101010;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    font-family:
+                      JetBrains Mono,
+                      monospace;
+                    font-size: 11px;
+                    flex: none;
+                  "
+                  >4</span
+                >
+                <span
+                  style="
+                    border-radius: 999px;
+                    padding: 2px 8px;
+                    font-size: 9px;
+                    font-weight: 600;
+                    background: #05ef62;
+                    color: #101010;
+                    font-family:
+                      JetBrains Mono,
+                      monospace;
+                    letter-spacing: 0.06em;
+                    text-transform: uppercase;
+                  "
+                  >Full Journey</span
+                >
+              </div>
+              <div
+                style="
+                  font-weight: 700;
+                  font-size: 15px;
+                  color: #ffffff;
+                  margin-bottom: 8px;
+                "
+              >
+                Reserve Workshops
+              </div>
+              <div
+                style="
+                  font-size: 12px;
+                  line-height: 1.6;
+                  color: #9aa1a9;
+                  margin-bottom: 14px;
+                "
+              >
+                Capacity-limited — reserve early.
+              </div>
+              <button
+                type="button"
+                id="actionReserveWorkshops"
+                style="
+                  margin-top: auto;
+                  background: #05ef62;
+                  border: 1px solid #05ef62;
+                  color: #101010;
+                  border-radius: 8px;
+                  padding: 9px;
+                  font-family: Manrope, sans-serif;
+                  font-weight: 600;
+                  font-size: 12px;
+                  cursor: pointer;
+                "
+              >
+                Reserve Now
+              </button>
+            </div>
+            <div
+              class="action-card"
+              style="
+                background: #ffffff;
+                border: 1px solid #d5dae0;
+                border-radius: 14px;
+                padding: 20px 18px;
+                display: flex;
+                flex-direction: column;
+              "
+            >
+              <div
+                style="
+                  display: flex;
+                  align-items: center;
+                  gap: 8px;
+                  margin-bottom: 12px;
+                "
+              >
+                <span
+                  style="
+                    width: 22px;
+                    height: 22px;
+                    border-radius: 50%;
+                    background: #101010;
+                    color: #05ef62;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    font-family:
+                      JetBrains Mono,
+                      monospace;
+                    font-size: 11px;
+                    flex: none;
+                  "
+                  >5</span
+                >
+              </div>
+              <div
+                style="
+                  font-weight: 700;
+                  font-size: 15px;
+                  color: #101010;
+                  margin-bottom: 8px;
+                "
+              >
+                Review Event Guide
+              </div>
+              <div
+                style="
+                  font-size: 12px;
+                  line-height: 1.6;
+                  color: #4a5563;
+                  margin-bottom: 14px;
+                "
+              >
+                Entry, timing and venue updates.
+              </div>
+              <button
+                type="button"
+                id="actionOpenGuide"
+                style="
+                  margin-top: auto;
+                  background: #ffffff;
+                  border: 1px solid #101010;
+                  color: #101010;
+                  border-radius: 8px;
+                  padding: 9px;
+                  font-family: Manrope, sans-serif;
+                  font-weight: 600;
+                  font-size: 12px;
+                  cursor: pointer;
+                "
+              >
+                Open Guide
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Ticket Cards -->
+      <div class="container section-padding" id="yourTicketsSection">
+        <div class="section-label">
+          <span class="indicator"></span>
+          <span class="font-mono">Your Tickets — one QR per attendee</span>
+        </div>
+        <div class="grid-2-cols" id="ecdTicketsGrid" style="max-width: 1060px">
+          <!-- Ticket cards rendered by ecd-api after payment -->
+        </div>
+      </div>
+
+      <!-- LEGACY STATIC TICKET CARDS (hidden; kept as design reference) -->
+      <div
+        class="container section-padding"
+        id="legacyTicketCards"
+        style="display: none"
+      >
+        <div class="grid-2-cols" style="max-width: 1060px">
+          <!-- Ticket 1 -->
+          <div class="ticket-card">
+            <div class="ticket-card-head">
+              <div>
+                <div style="font-weight: 700; font-size: 16px; color: #ffffff">
+                  [Attendee 1 Name]
+                </div>
+                <div
+                  class="font-mono"
+                  style="
+                    font-size: 10px;
+                    letter-spacing: 0.08em;
+                    color: #05ef62;
+                    text-transform: uppercase;
+                  "
+                >
+                  Full Journey Pass
+                </div>
+              </div>
+              <span
+                style="
+                  border-radius: 999px;
+                  padding: 4px 12px;
+                  font-size: 11px;
+                  font-weight: 600;
+                  background: #e6fbee;
+                  border: 1px solid #c3f7d7;
+                  color: #04c44e;
+                "
+                >Active</span
+              >
+            </div>
+            <div class="ticket-card-body">
+              <div>
+                <div class="qr-box">
+                  <svg
+                    viewBox="0 0 25 25"
+                    width="156"
+                    height="156"
+                    style="display: block"
+                    shape-rendering="crispEdges"
+                    role="img"
+                    aria-label="Ticket QR code"
+                  >
+                    <path id="qr-path-1" fill="#101010"></path>
+                  </svg>
+                </div>
+                <div
+                  style="
+                    text-align: center;
+                    font-family:
+                      JetBrains Mono,
+                      monospace;
+                    font-size: 10px;
+                    letter-spacing: 0.06em;
+                    color: #6b747e;
+                    margin-top: 8px;
+                  "
+                >
+                  ECD26-T-000241
+                </div>
+              </div>
+              <div style="display: flex; flex-direction: column; gap: 12px">
+                <div style="display: flex; align-items: center; gap: 8px">
+                  <span
+                    class="font-mono"
+                    style="
+                      font-size: 12px;
+                      letter-spacing: 0.06em;
+                      color: #101010;
+                    "
+                    >ECD26-T-000241</span
+                  >
+                  <button
+                    class="copy-ticket-btn"
+                    data-copy="ECD26-T-000241"
+                    style="
+                      background: none;
+                      border: none;
+                      color: #04c44e;
+                      font-family: Manrope, sans-serif;
+                      font-weight: 600;
+                      font-size: 12px;
+                      cursor: pointer;
+                    "
+                  >
+                    Copy
+                  </button>
+                </div>
+                <div style="font-size: 13px; color: #4a5563; line-height: 1.7">
+                  ECommerce Day 2026 · 22 October 2026<br />Venue details will
+                  be announced soon.
+                </div>
+                <div style="display: flex; flex-direction: column; gap: 8px">
+                  <button
+                    class="btn-primary"
+                    style="padding: 10px; font-size: 13px"
+                  >
+                    Download PDF
+                  </button>
+                  <div style="display: flex; gap: 8px">
+                    <button
+                      class="btn-secondary"
+                      style="flex: 1; padding: 9px; font-size: 12px"
+                    >
+                      Email Ticket
+                    </button>
+                    <button
+                      class="btn-secondary"
+                      style="flex: 1; padding: 9px; font-size: 12px"
+                    >
+                      Add to Wallet
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Ticket 2 -->
+          <div class="ticket-card">
+            <div class="ticket-card-head">
+              <div>
+                <div style="font-weight: 700; font-size: 16px; color: #ffffff">
+                  [Attendee 2 Name]
+                </div>
+                <div
+                  class="font-mono"
+                  style="
+                    font-size: 10px;
+                    letter-spacing: 0.08em;
+                    color: #05ef62;
+                    text-transform: uppercase;
+                  "
+                >
+                  Full Journey Pass
+                </div>
+              </div>
+              <span
+                style="
+                  border-radius: 999px;
+                  padding: 4px 12px;
+                  font-size: 11px;
+                  font-weight: 600;
+                  background: #e6fbee;
+                  border: 1px solid #c3f7d7;
+                  color: #04c44e;
+                "
+                >Active</span
+              >
+            </div>
+            <div class="ticket-card-body">
+              <div>
+                <div class="qr-box">
+                  <svg
+                    viewBox="0 0 25 25"
+                    width="156"
+                    height="156"
+                    style="display: block"
+                    shape-rendering="crispEdges"
+                    role="img"
+                    aria-label="Ticket QR code"
+                  >
+                    <path id="qr-path-2" fill="#101010"></path>
+                  </svg>
+                </div>
+                <div
+                  style="
+                    text-align: center;
+                    font-family:
+                      JetBrains Mono,
+                      monospace;
+                    font-size: 10px;
+                    letter-spacing: 0.06em;
+                    color: #6b747e;
+                    margin-top: 8px;
+                  "
+                >
+                  ECD26-T-000242
+                </div>
+              </div>
+              <div style="display: flex; flex-direction: column; gap: 12px">
+                <div style="display: flex; align-items: center; gap: 8px">
+                  <span
+                    class="font-mono"
+                    style="
+                      font-size: 12px;
+                      letter-spacing: 0.06em;
+                      color: #101010;
+                    "
+                    >ECD26-T-000242</span
+                  >
+                  <button
+                    class="copy-ticket-btn"
+                    data-copy="ECD26-T-000242"
+                    style="
+                      background: none;
+                      border: none;
+                      color: #04c44e;
+                      font-family: Manrope, sans-serif;
+                      font-weight: 600;
+                      font-size: 12px;
+                      cursor: pointer;
+                    "
+                  >
+                    Copy
+                  </button>
+                </div>
+                <div style="font-size: 13px; color: #4a5563; line-height: 1.7">
+                  ECommerce Day 2026 · 22 October 2026<br />Venue details will
+                  be announced soon.
+                </div>
+                <div style="display: flex; flex-direction: column; gap: 8px">
+                  <button
+                    class="btn-primary"
+                    style="padding: 10px; font-size: 13px"
+                  >
+                    Download PDF
+                  </button>
+                  <div style="display: flex; gap: 8px">
+                    <button
+                      class="btn-secondary"
+                      style="flex: 1; padding: 9px; font-size: 12px"
+                    >
+                      Email Ticket
+                    </button>
+                    <button
+                      class="btn-secondary"
+                      style="flex: 1; padding: 9px; font-size: 12px"
+                    >
+                      Add to Wallet
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div
+          style="
+            display: flex;
+            gap: 8px;
+            margin-top: 20px;
+            align-items: center;
+            flex-wrap: wrap;
+          "
+        >
+          <span
+            class="font-mono"
+            style="
+              font-size: 9px;
+              letter-spacing: 0.08em;
+              text-transform: uppercase;
+              color: #6b747e;
+            "
+            >Status pills:</span
+          >
+          <span
+            style="
+              border-radius: 999px;
+              padding: 3px 10px;
+              font-size: 11px;
+              font-weight: 600;
+              background: #e6fbee;
+              border: 1px solid #c3f7d7;
+              color: #04c44e;
+            "
+            >Active</span
+          >
+          <span
+            style="
+              border-radius: 999px;
+              padding: 3px 10px;
+              font-size: 11px;
+              font-weight: 600;
+              background: #f4f6f8;
+              border: 1px solid #e6eaee;
+              color: #4a5563;
+            "
+            >Transferred</span
+          >
+          <span
+            style="
+              border-radius: 999px;
+              padding: 3px 10px;
+              font-size: 11px;
+              font-weight: 600;
+              background: #f4f6f8;
+              border: 1px solid #d5dae0;
+              color: #6b747e;
+            "
+            >Refunded</span
+          >
+          <span
+            style="
+              border-radius: 999px;
+              padding: 3px 10px;
+              font-size: 11px;
+              font-weight: 600;
+              background: #101010;
+              border: 1px solid #101010;
+              color: #05ef62;
+            "
+            >Checked in</span
+          >
+        </div>
+      </div>
+
+      <!-- Workshop Reservation (Full Journey Only) -->
+      <div id="workshopSection" class="section-bg-dark">
+        <div class="container section-padding">
+          <div class="section-label">
+            <span class="indicator"></span>
+            <span class="font-mono" style="color: #05ef62"
+              >Reserve Your Workshops — Full Journey</span
+            >
+          </div>
+          <h2 class="section-title" style="color: #ffffff">
+            One workshop per slot. Seats are capacity-limited.
+          </h2>
+          <p style="font-size: 14px; color: #9aa1a9; margin: 0 0 32px">
+            No selection? Your ticket remains valid for the Main Stage and all
+            content.
+          </p>
+
+          <div id="resNotConfirmed">
+            <div
+              id="resSlotsContainer"
+              style="
+                display: flex;
+                flex-direction: column;
+                margin-bottom: 32px;
+              "
+            >
+              <p id="resSlotsLoading" style="color:#9aa1a9;font-size:14px;margin:0">Loading workshops…</p>
+            </div>
+            <button
+              id="confirmWorkshopsBtn"
+              disabled
+              style="
+                background: #3a3a3a;
+                border: none;
+                color: #6b747e;
+                border-radius: 10px;
+                padding: 14px 28px;
+                font-family: Manrope, sans-serif;
+                font-weight: 600;
+                font-size: 15px;
+                cursor: not-allowed;
+              "
+            >
+              Confirm My Workshops (0 selected)
+            </button>
+          </div>
+
+          <div id="resConfirmed" style="display: none">
+            <div
+              style="
+                background: #ffffff;
+                border-radius: 16px;
+                padding: 32px;
+                max-width: 640px;
+              "
+            >
+              <div
+                style="
+                  display: flex;
+                  align-items: center;
+                  gap: 10px;
+                  margin-bottom: 12px;
+                "
+              >
+                <span
+                  style="
+                    width: 32px;
+                    height: 32px;
+                    border-radius: 50%;
+                    background: #e6fbee;
+                    border: 1px solid #c3f7d7;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    color: #04c44e;
+                    font-weight: 700;
+                  "
+                  >✓</span
+                >
+                <span style="font-weight: 800; font-size: 18px; color: #101010"
+                  >Workshops reserved</span
+                >
+              </div>
+              <div
+                class="font-mono"
+                style="
+                  font-size: 12px;
+                  letter-spacing: 0.06em;
+                  color: #101010;
+                  margin-bottom: 12px;
+                "
+              >
+                WORKSHOP BOOKING <span id="wbIdDisplay">WB-ECD26-0000</span>
+              </div>
+              <div
+                style="
+                  font-size: 13px;
+                  color: #4a5563;
+                  line-height: 1.8;
+                  margin-bottom: 16px;
+                "
+              >
+                A confirmation email is on its way with your workshop schedule.
+                Each workshop was added to your calendar file.
+              </div>
+              <div style="display: flex; gap: 10px; flex-wrap: wrap">
+                <button
+                  type="button"
+                  class="btn-primary"
+                  id="workshopAddCalendarBtn"
+                  style="padding: 11px 18px; font-size: 13px"
+                >
+                  Add to Calendar
+                </button>
+                <button
+                  type="button"
+                  class="btn-secondary"
+                  id="editWorkshopsBtn"
+                  style="padding: 11px 18px; font-size: 13px"
+                >
+                  Edit Selection
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Order Summary + Receipts -->
+      <div class="container section-padding">
+        <div class="split-2">
+          <!-- Order Summary -->
+          <div
+            style="
+              border: 1px solid #d5dae0;
+              border-radius: 16px;
+              padding: 28px;
+            "
+          >
+            <div
+              class="font-mono"
+              style="
+                font-size: 11px;
+                letter-spacing: 0.12em;
+                text-transform: uppercase;
+                color: #6b747e;
+                margin-bottom: 18px;
+              "
+            >
+              Order Summary
+            </div>
+            <div
+              style="
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+                font-size: 14px;
+              "
+            >
+              <div style="display: flex; justify-content: space-between">
+                <span style="color: #4a5563">Order number</span
+                ><span
+                  class="font-mono"
+                  id="summaryOrderId"
+                  style="font-size: 12px"
+                  >ECD26-0042</span
+                >
+              </div>
+              <div style="display: flex; justify-content: space-between">
+                <span style="color: #4a5563">Purchased</span
+                ><span id="summaryPurchased" style="font-weight: 600"
+                  >8 September 2026 · 2:41 PM</span
+                >
+              </div>
+              <div style="display: flex; justify-content: space-between">
+                <span style="color: #4a5563"
+                  ><span class="price-ticket-name">Full Journey Pass</span> ×
+                  <span class="price-qty">2</span></span
+                ><span style="font-weight: 600"
+                  ><span class="price-unit" data-suffix=" EGP each"
+                    >[Final Price] EGP each</span
+                  ></span
+                >
+              </div>
+              <div
+                id="summaryDiscountRow"
+                style="display: flex; justify-content: space-between"
+              >
+                <span style="color: #04c44e">Discount</span
+                ><span style="font-weight: 600; color: #04c44e"
+                  ><span
+                    class="price-discount"
+                    data-minus="1"
+                    data-suffix=" EGP"
+                    >− [Discount] EGP</span
+                  ></span
+                >
+              </div>
+              <div style="display: flex; justify-content: space-between">
+                <span style="color: #4a5563">Fees &amp; tax</span
+                ><span style="color: #6b747e; font-weight: 600"
+                  >Included in price</span
+                >
+              </div>
+              <div
+                style="
+                  display: flex;
+                  justify-content: space-between;
+                  border-top: 1px solid #e6eaee;
+                  padding-top: 12px;
+                "
+              >
+                <span style="font-weight: 700; font-size: 15px">Paid Total</span
+                ><span style="font-weight: 800; font-size: 17px"
+                  ><span class="price-total" data-suffix=" EGP"
+                    >[Total] EGP</span
+                  ></span
+                >
+              </div>
+              <div style="display: flex; justify-content: space-between">
+                <span style="color: #4a5563">Payment method</span
+                ><span id="summaryMethod" style="font-weight: 600"
+                  >Card ···· 4242</span
+                >
+              </div>
+              <div style="display: flex; justify-content: space-between">
+                <span style="color: #4a5563">Payment reference</span
+                ><span
+                  class="font-mono"
+                  id="summaryPayRef"
+                  style="font-size: 12px"
+                  >PAY-ECD26-0042</span
+                >
+              </div>
+            </div>
+          </div>
+
+          <!-- Receipt & Invoice -->
+          <div
+            style="
+              border: 1px solid #d5dae0;
+              border-radius: 16px;
+              padding: 28px;
+            "
+          >
+            <div
+              class="font-mono"
+              style="
+                font-size: 11px;
+                letter-spacing: 0.12em;
+                text-transform: uppercase;
+                color: #6b747e;
+                margin-bottom: 18px;
+              "
+            >
+              Receipt &amp; Invoice
+            </div>
+            <div
+              style="
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                border: 1px solid #e6eaee;
+                border-radius: 10px;
+                padding: 14px 16px;
+                margin-bottom: 12px;
+              "
+            >
+              <div>
+                <div style="font-weight: 700; font-size: 14px">Receipt</div>
+                <div style="font-size: 12px; color: #04c44e; font-weight: 600">
+                  Ready
+                </div>
+              </div>
+              <button
+                type="button"
+                class="btn-primary"
+                id="receiptDownloadBtn"
+                style="padding: 10px 16px; font-size: 12px"
+              >
+                Download
+              </button>
+            </div>
+            <div
+              id="invoiceBlock"
+              style="
+                border: 1px solid #e6eaee;
+                border-radius: 10px;
+                padding: 14px 16px;
+                margin-bottom: 12px;
+              "
+            >
+              <div
+                style="
+                  display: flex;
+                  justify-content: space-between;
+                  align-items: center;
+                  margin-bottom: 10px;
+                "
+              >
+                <div style="font-weight: 700; font-size: 14px">Invoice</div>
+                <div style="display: flex; gap: 6px; flex-wrap: wrap">
+                  <span
+                    id="invoiceStatusPill"
+                    style="
+                      border-radius: 999px;
+                      padding: 2px 9px;
+                      font-size: 10px;
+                      font-weight: 600;
+                      background: #f4f6f8;
+                      border: 1px solid #e6eaee;
+                      color: #6b747e;
+                    "
+                    >Not requested</span
+                  >
+                </div>
+              </div>
+              <div
+                id="invoiceDetails"
+                style="font-size: 12px; color: #4a5563; line-height: 1.8"
+              >
+                No invoice details on this booking.
+              </div>
+            </div>
+            <button
+              type="button"
+              id="invoiceCorrectionBtn"
+              style="
+                background: none;
+                border: none;
+                color: #04c44e;
+                font-family: Manrope, sans-serif;
+                font-weight: 600;
+                font-size: 13px;
+                cursor: pointer;
+                padding: 0;
+              "
+            >
+              Request correction →
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Event Details + Platform Access -->
+      <div class="section-bg-alt">
+        <div class="container section-padding">
+          <div class="split-2b">
+            <!-- Event Details -->
+            <div
+              style="
+                background: #ffffff;
+                border: 1px solid #d5dae0;
+                border-radius: 16px;
+                padding: 28px;
+              "
+            >
+              <div
+                class="font-mono"
+                style="
+                  font-size: 11px;
+                  letter-spacing: 0.12em;
+                  text-transform: uppercase;
+                  color: #6b747e;
+                  margin-bottom: 18px;
+                "
+              >
+                Event Details &amp; Guide
+              </div>
+              <div
+                style="
+                  display: flex;
+                  flex-direction: column;
+                  gap: 14px;
+                  font-size: 14px;
+                "
+              >
+                <div>
+                  <div style="font-weight: 700; margin-bottom: 2px">
+                    Date &amp; time
+                  </div>
+                  <div style="color: #4a5563">
+                    22 October 2026 · Doors &amp; program start — to be
+                    confirmed
+                  </div>
+                </div>
+                <div>
+                  <div style="font-weight: 700; margin-bottom: 2px">Venue</div>
+                  <div style="color: #4a5563">
+                    Venue details will be announced soon.
+                  </div>
+                  <button
+                    disabled
+                    style="
+                      margin-top: 6px;
+                      background: #f4f6f8;
+                      border: 1px solid #e6eaee;
+                      color: #9aa1a9;
+                      border-radius: 8px;
+                      padding: 8px 14px;
+                      font-family: Manrope, sans-serif;
+                      font-weight: 600;
+                      font-size: 12px;
+                      cursor: not-allowed;
+                    "
+                  >
+                    Get Directions
+                  </button>
+                </div>
+                <div>
+                  <div style="font-weight: 700; margin-bottom: 2px">Entry</div>
+                  <div style="color: #4a5563">
+                    Bring your QR on your phone — no printing needed.
+                  </div>
+                </div>
+                <div>
+                  <a
+                    href="agenda.html"
+                    id="viewAgendaLink"
+                    style="font-weight: 600; color: #04c44e"
+                    >View Full Agenda →</a
+                  >
+                </div>
+                <div
+                  style="
+                    font-size: 12px;
+                    color: #6b747e;
+                    border-top: 1px solid #e6eaee;
+                    padding-top: 12px;
+                  "
+                >
+                  We'll email you every update. Support: info@trafficmena.com ·
+                  01118111793
+                </div>
+              </div>
+            </div>
+
+            <!-- Platform Access -->
+            <div
+              style="
+                background: #ffffff;
+                border: 1px solid #d5dae0;
+                border-radius: 16px;
+                padding: 28px;
+              "
+            >
+              <div
+                class="font-mono"
+                style="
+                  font-size: 11px;
+                  letter-spacing: 0.12em;
+                  text-transform: uppercase;
+                  color: #6b747e;
+                  margin-bottom: 18px;
+                "
+              >
+                Platform Access
+              </div>
+
+              <div class="platform-table">
+                <div class="platform-head">
+                  <div class="platform-head-inner">
+                    <span></span><span>Control Tower</span
+                    ><span>Full Journey</span>
+                  </div>
+                </div>
+                <div class="platform-row">
+                  <span style="font-weight: 500; color: #1f2630"
+                    >Access duration</span
+                  ><span style="font-weight: 600; color: #101010">3 months</span
+                  ><span style="font-weight: 600; color: #101010">1 year</span>
+                </div>
+                <div class="platform-row">
+                  <span style="font-weight: 500; color: #1f2630"
+                    >Session recordings</span
+                  ><span style="font-weight: 600; color: #101010">Yes</span
+                  ><span style="font-weight: 600; color: #101010">Yes</span>
+                </div>
+                <div class="platform-row">
+                  <span style="font-weight: 500; color: #1f2630"
+                    >Workshop recordings</span
+                  ><span style="font-weight: 600; color: #101010">Yes</span
+                  ><span style="font-weight: 600; color: #101010">Yes</span>
+                </div>
+                <div class="platform-row">
+                  <span style="font-weight: 500; color: #1f2630"
+                    >Templates &amp; Files</span
+                  ><span style="font-weight: 600; color: #101010">Yes</span
+                  ><span style="font-weight: 600; color: #101010">Yes</span>
+                </div>
+                <div class="platform-row">
+                  <span style="font-weight: 500; color: #1f2630"
+                    >Speaker Directory</span
+                  ><span style="font-weight: 600; color: #6b747e"
+                    >Not available</span
+                  ><span style="font-weight: 600; color: #6b747e"
+                    >Not available</span
+                  >
+                </div>
+                <div class="platform-row">
+                  <span style="font-weight: 500; color: #1f2630"
+                    >Direct speaker contact</span
+                  ><span style="font-weight: 600; color: #6b747e"
+                    >Not available</span
+                  ><span style="font-weight: 600; color: #6b747e"
+                    >Not available</span
+                  >
+                </div>
+                <div class="platform-row">
+                  <span style="font-weight: 500; color: #1f2630"
+                    >Workshop reservation</span
+                  ><span style="font-weight: 600; color: #6b747e"
+                    >Not available</span
+                  ><span style="font-weight: 600; color: #101010"
+                    >Available by capacity</span
+                  >
+                </div>
+              </div>
+
+              <div
+                class="font-mono"
+                style="
+                  font-size: 10px;
+                  letter-spacing: 0.1em;
+                  text-transform: uppercase;
+                  color: #6b747e;
+                  margin-bottom: 10px;
+                "
+              >
+                Activation states
+              </div>
+              <div class="grid-2-cols" style="gap: 10px">
+                <div
+                  style="
+                    border: 1px solid #e6eaee;
+                    border-radius: 10px;
+                    padding: 12px 14px;
+                  "
+                >
+                  <div
+                    style="
+                      font-size: 12px;
+                      font-weight: 700;
+                      margin-bottom: 6px;
+                    "
+                  >
+                    New email
+                  </div>
+                  <button
+                    type="button"
+                    class="btn-primary"
+                    id="btnActivateAccount"
+                    style="padding: 8px 12px; font-size: 11px"
+                  >
+                    Activate My Account
+                  </button>
+                  <div style="font-size: 11px; color: #6b747e; margin-top: 6px">
+                    Opens TrafficMENA — use the email from your booking.
+                  </div>
+                </div>
+                <div
+                  style="
+                    border: 1px solid #e6eaee;
+                    border-radius: 10px;
+                    padding: 12px 14px;
+                  "
+                >
+                  <div
+                    style="
+                      font-size: 12px;
+                      font-weight: 700;
+                      margin-bottom: 6px;
+                    "
+                  >
+                    Existing account
+                  </div>
+                  <div
+                    style="
+                      font-size: 11px;
+                      color: #04c44e;
+                      font-weight: 600;
+                      margin-bottom: 6px;
+                    "
+                  >
+                    ✓ Content access added after the event
+                  </div>
+                  <button
+                    type="button"
+                    class="btn-secondary"
+                    id="btnLoginPlatform"
+                    style="padding: 8px 12px; font-size: 11px"
+                  >
+                    Log in to Platform
+                  </button>
+                </div>
+                <div
+                  style="
+                    border: 1px solid #e6eaee;
+                    border-radius: 10px;
+                    padding: 12px 14px;
+                  "
+                >
+                  <div
+                    style="
+                      font-size: 12px;
+                      font-weight: 700;
+                      margin-bottom: 6px;
+                    "
+                  >
+                    Email not received
+                  </div>
+                  <button
+                    type="button"
+                    class="btn-secondary"
+                    id="btnPlatformResend"
+                    style="padding: 8px 12px; font-size: 11px"
+                  >
+                    Resend
+                  </button>
+                  <div style="font-size: 11px; color: #6b747e; margin-top: 6px">
+                    Rate-limited — 1 resend per minute.
+                  </div>
+                </div>
+                <div
+                  style="
+                    border: 1px solid #e6eaee;
+                    border-radius: 10px;
+                    padding: 12px 14px;
+                  "
+                >
+                  <div
+                    style="
+                      font-size: 12px;
+                      font-weight: 700;
+                      margin-bottom: 6px;
+                    "
+                  >
+                    Content not yet published
+                  </div>
+                  <span
+                    style="
+                      border-radius: 999px;
+                      padding: 2px 9px;
+                      font-size: 10px;
+                      font-weight: 600;
+                      background: #f4f6f8;
+                      border: 1px solid #e6eaee;
+                      color: #6b747e;
+                    "
+                    >Coming Soon — expected [date]</span
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Edit / Transfer / Refund + Help -->
+      <div class="container section-padding">
+        <div class="split-2c">
+          <div
+            style="
+              border: 1px solid #d5dae0;
+              border-radius: 16px;
+              padding: 28px;
+            "
+          >
+            <div
+              class="font-mono"
+              style="
+                font-size: 11px;
+                letter-spacing: 0.12em;
+                text-transform: uppercase;
+                color: #6b747e;
+                margin-bottom: 18px;
+              "
+            >
+              Edit, Transfer &amp; Refund
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 10px">
+              <div
+                style="
+                  display: flex;
+                  justify-content: space-between;
+                  align-items: center;
+                  border: 1px solid #e6eaee;
+                  border-radius: 10px;
+                  padding: 13px 16px;
+                "
+              >
+                <div>
+                  <div style="font-weight: 700; font-size: 13px">
+                    Edit contact details
+                  </div>
+                  <div style="font-size: 11px; color: #6b747e">
+                    Phone or company — instant
+                  </div>
+                </div>
+                <button
+                  type="button"
+                  class="btn-secondary"
+                  id="btnEditContact"
+                  style="padding: 8px 14px; font-size: 11px"
+                >
+                  Edit
+                </button>
+              </div>
+              <div
+                style="
+                  display: flex;
+                  justify-content: space-between;
+                  align-items: center;
+                  border: 1px solid #e6eaee;
+                  border-radius: 10px;
+                  padding: 13px 16px;
+                "
+              >
+                <div>
+                  <div style="font-weight: 700; font-size: 13px">
+                    Change attendee
+                  </div>
+                  <div style="font-size: 11px; color: #6b747e">
+                    Only if policy allows — issues a new QR
+                  </div>
+                </div>
+                <button
+                  type="button"
+                  class="btn-secondary"
+                  id="btnChangeAttendee"
+                  style="padding: 8px 14px; font-size: 11px"
+                >
+                  Change
+                </button>
+              </div>
+              <div
+                style="
+                  display: flex;
+                  justify-content: space-between;
+                  align-items: center;
+                  border: 1px solid #e6eaee;
+                  border-radius: 10px;
+                  padding: 13px 16px;
+                "
+              >
+                <div>
+                  <div style="font-weight: 700; font-size: 13px">
+                    Change email
+                  </div>
+                  <div style="font-size: 11px; color: #6b747e">
+                    Requires verification of the new address
+                  </div>
+                </div>
+                <button
+                  type="button"
+                  class="btn-secondary"
+                  id="btnChangeEmail"
+                  style="padding: 8px 14px; font-size: 11px"
+                >
+                  Change
+                </button>
+              </div>
+              <div
+                style="
+                  display: flex;
+                  justify-content: space-between;
+                  align-items: center;
+                  border: 1px solid #e6eaee;
+                  border-radius: 10px;
+                  padding: 13px 16px;
+                "
+              >
+                <div>
+                  <div style="font-weight: 700; font-size: 13px">
+                    Request refund
+                  </div>
+                  <div style="font-size: 11px; color: #6b747e">
+                    Opens a support case — does not guarantee approval
+                  </div>
+                </div>
+                <button
+                  type="button"
+                  class="btn-secondary"
+                  id="btnRequestRefund"
+                  style="
+                    padding: 8px 14px;
+                    font-size: 11px;
+                    color: #4a5563;
+                    border-color: #d5dae0;
+                  "
+                >
+                  Request
+                </button>
+              </div>
+            </div>
+            <div
+              style="
+                display: flex;
+                gap: 16px;
+                margin-top: 16px;
+                font-size: 12px;
+                font-weight: 600;
+                flex-wrap: wrap;
+              "
+            >
+              <a href="policy.html#ticket" style="color: #1f2630"
+                >Ticket &amp; Entry Policy</a
+              >
+              <a href="policy.html#refund" style="color: #1f2630"
+                >Refund &amp; Cancellation</a
+              >
+              <a href="policy.html#privacy" style="color: #1f2630">Privacy</a>
+            </div>
+          </div>
+
+          <div
+            style="
+              border: 1px solid #d5dae0;
+              border-radius: 16px;
+              padding: 28px;
+            "
+          >
+            <div
+              class="font-mono"
+              style="
+                font-size: 11px;
+                letter-spacing: 0.12em;
+                text-transform: uppercase;
+                color: #6b747e;
+                margin-bottom: 18px;
+              "
+            >
+              Help &amp; Recovery
+            </div>
+            <div
+              style="
+                display: flex;
+                flex-direction: column;
+                gap: 12px;
+                font-size: 13px;
+              "
+            >
+              <button
+                type="button"
+                id="helpResendEmail"
+                style="
+                  text-align: left;
+                  background: none;
+                  border: none;
+                  color: #04c44e;
+                  font-family: Manrope, sans-serif;
+                  font-weight: 600;
+                  font-size: 13px;
+                  cursor: pointer;
+                  padding: 0;
+                "
+              >
+                Resend confirmation email →
+              </button>
+              <div
+                style="
+                  border: 1px solid #e6eaee;
+                  border-radius: 10px;
+                  padding: 14px 16px;
+                "
+              >
+                <div
+                  style="font-weight: 700; font-size: 13px; margin-bottom: 8px"
+                >
+                  Booking lookup
+                </div>
+                <div style="display: flex; flex-direction: column; gap: 8px">
+                  <input
+                    id="helpLookupEmail"
+                    type="email"
+                    placeholder="Email"
+                    aria-label="Email for booking lookup"
+                    autocomplete="email"
+                    style="
+                      border: 1px solid #d5dae0;
+                      border-radius: 8px;
+                      padding: 10px 12px;
+                      font-size: 13px;
+                    "
+                  />
+                  <input
+                    id="helpLookupOrder"
+                    type="text"
+                    placeholder="Order number"
+                    aria-label="Order number"
+                    style="
+                      border: 1px solid #d5dae0;
+                      border-radius: 8px;
+                      padding: 10px 12px;
+                      font-size: 13px;
+                    "
+                  />
+                  <button
+                    type="button"
+                    id="helpFindBooking"
+                    style="
+                      background: #101010;
+                      border: none;
+                      color: #ffffff;
+                      border-radius: 8px;
+                      padding: 10px;
+                      font-family: Manrope, sans-serif;
+                      font-weight: 600;
+                      font-size: 12px;
+                      cursor: pointer;
+                    "
+                  >
+                    Find My Booking
+                  </button>
+                </div>
+              </div>
+              <div style="color: #4a5563">
+                Support: info@trafficmena.com · 01118111793
+              </div>
+              <button
+                type="button"
+                id="btnSignOutShared"
+                style="
+                  text-align: left;
+                  background: none;
+                  border: none;
+                  color: #6b747e;
+                  font-family: Manrope, sans-serif;
+                  font-weight: 600;
+                  font-size: 12px;
+                  cursor: pointer;
+                  padding: 0;
+                  text-decoration: underline;
+                "
+              >
+                Hide details / Sign out — shared device?
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- /#ecdSuccessFlow -->
+
+    <!-- Edge states (runtime only — one panel shown; not a design gallery) -->
+    <div
+      id="ecdEdgeState"
+      class="section-bg-alt"
+      style="
+        display: none;
+        min-height: 80vh;
+        align-content: center;
+        padding-block: 16px;
+      "
+      hidden
+    >
+      <div
+        class="container section-padding"
+        style="max-width: 480px; margin: 0 auto"
+      >
+        <!-- Pending Verification -->
+        <div
+          id="ecdEdgePending"
+          class="edge-card"
+          style="display: none; border: 1px solid #ffb020; text-align: center"
+          hidden
+        >
+          <div
+            class="edge-icon"
+            style="
+              background: #fff4de;
+              border: 1px solid #ffb020;
+              color: #8a5a00;
+              margin: 0 auto 16px;
+            "
+          >
+            ⏱
+          </div>
+          <div style="font-weight: 800; font-size: 18px; margin-bottom: 8px">
+            Payment is being verified
+          </div>
+          <div style="font-size: 13px; color: #4a5563; margin-bottom: 20px">
+            Your tickets and QR codes appear here the moment the payment is
+            confirmed. We'll also email you.
+          </div>
+          <button
+            type="button"
+            id="ecdEdgeCheckStatus"
+            class="btn-secondary"
+            style="width: 100%; padding: 13px; font-size: 13px"
+          >
+            Check Status
+          </button>
+        </div>
+
+        <!-- Failed -->
+        <div
+          id="ecdEdgeFailed"
+          class="edge-card"
+          style="display: none; border: 1px solid #e2a9a5; text-align: center"
+          hidden
+        >
+          <div
+            class="edge-icon"
+            style="
+              background: #fbedec;
+              border: 1px solid #e2a9a5;
+              color: #b3362e;
+              font-size: 20px;
+              margin: 0 auto 16px;
+            "
+          >
+            ✕
+          </div>
+          <div style="font-weight: 800; font-size: 18px; margin-bottom: 8px">
+            Payment was not completed
+          </div>
+          <div style="font-size: 13px; color: #4a5563; margin-bottom: 20px">
+            No tickets were issued and you were not charged. You can retry from
+            the same order — your details are saved.
+          </div>
+          <button
+            type="button"
+            id="ecdEdgeRetry"
+            class="btn-primary"
+            style="width: 100%; padding: 13px; font-size: 13px"
+          >
+            Retry Payment
+          </button>
+        </div>
+
+        <!-- Already Confirmed (paid, but opened from a stale payment link) -->
+        <div
+          id="ecdEdgeAlready"
+          class="edge-card"
+          style="display: none; border: 1px solid #c3f7d7; text-align: center"
+          hidden
+        >
+          <div
+            class="edge-icon"
+            style="
+              background: #e6fbee;
+              border: 1px solid #c3f7d7;
+              color: #04c44e;
+              font-size: 20px;
+              margin: 0 auto 16px;
+            "
+          >
+            ✓
+          </div>
+          <div style="font-weight: 800; font-size: 18px; margin-bottom: 8px">
+            This booking is already confirmed
+          </div>
+          <div style="font-size: 13px; color: #4a5563; margin-bottom: 20px">
+            You opened a payment link for a completed booking. Your tickets are
+            ready.
+          </div>
+          <button
+            type="button"
+            id="ecdEdgeViewTickets"
+            class="btn-primary"
+            style="width: 100%; padding: 13px; font-size: 13px"
+          >
+            View My Tickets
+          </button>
+        </div>
+
+        <!-- Invalid / missing access -->
+        <div
+          id="ecdEdgeInvalid"
+          class="edge-card"
+          style="display: none; border: 1px solid #d5dae0; text-align: center"
+          hidden
+        >
+          <div
+            class="edge-icon"
+            style="
+              background: #f4f6f8;
+              border: 1px solid #d5dae0;
+              color: #6b747e;
+              margin: 0 auto 16px;
+            "
+          >
+            ?
+          </div>
+          <div style="font-weight: 800; font-size: 18px; margin-bottom: 8px">
+            We could not open this booking
+          </div>
+          <div style="font-size: 13px; color: #4a5563; margin-bottom: 20px">
+            The link may have expired or been mistyped. Look up your booking
+            instead:
+          </div>
+          <div
+            style="
+              display: flex;
+              flex-direction: column;
+              gap: 8px;
+              text-align: left;
+            "
+          >
+            <label for="ecdLookupEmail" class="visually-hidden">Email</label>
+            <input
+              id="ecdLookupEmail"
+              type="email"
+              placeholder="Email"
+              aria-label="Email"
+              autocomplete="email"
+              style="
+                border: 1px solid #d5dae0;
+                border-radius: 8px;
+                padding: 11px 12px;
+                font-size: 13px;
+              "
+            />
+            <label for="ecdLookupOrder" class="visually-hidden"
+              >Order number</label
+            >
+            <input
+              id="ecdLookupOrder"
+              type="text"
+              placeholder="Order number"
+              aria-label="Order number"
+              style="
+                border: 1px solid #d5dae0;
+                border-radius: 8px;
+                padding: 11px 12px;
+                font-size: 13px;
+              "
+            />
+            <p
+              id="ecdLookupError"
+              style="display: none; font-size: 12px; color: #b3362e; margin: 0"
+            ></p>
+            <button
+              type="button"
+              id="ecdEdgeFindBooking"
+              class="btn-primary"
+              style="padding: 12px; font-size: 13px"
+            >
+              Find My Booking
+            </button>
+          </div>
+        </div>
+
+        <!-- Cancelled / refunded -->
+        <div
+          id="ecdEdgeRefunded"
+          class="edge-card"
+          style="display: none; border: 1px solid #d5dae0; text-align: left"
+          hidden
+        >
+          <div
+            style="
+              display: flex;
+              align-items: center;
+              gap: 10px;
+              margin-bottom: 14px;
+            "
+          >
+            <span
+              style="
+                border-radius: 999px;
+                padding: 3px 12px;
+                font-size: 11px;
+                font-weight: 600;
+                background: #f4f6f8;
+                border: 1px solid #d5dae0;
+                color: #6b747e;
+              "
+              >Cancelled</span
+            >
+          </div>
+          <div style="font-weight: 800; font-size: 18px; margin-bottom: 8px">
+            This booking is no longer active
+          </div>
+          <div style="font-size: 13px; color: #4a5563; margin-bottom: 16px">
+            QR codes are no longer valid and are hidden. Contact support if you
+            need a receipt or refund note.
+          </div>
+          <div
+            style="
+              border: 1px dashed #d5dae0;
+              border-radius: 10px;
+              padding: 20px;
+              text-align: center;
+              font-family:
+                JetBrains Mono,
+                monospace;
+              font-size: 10px;
+              letter-spacing: 0.08em;
+              text-transform: uppercase;
+              color: #9aa1a9;
+              margin-bottom: 16px;
+            "
+          >
+            QR hidden — ticket not valid
+          </div>
+          <div style="display: flex; gap: 8px">
+            <a
+              href="mailto:info@trafficmena.com?subject=ECD%20receipt"
+              class="btn-secondary"
+              style="
+                flex: 1;
+                padding: 11px;
+                font-size: 12px;
+                text-align: center;
+                text-decoration: none;
+              "
+              >Contact support</a
+            >
+            <a
+              href="tickets.html"
+              class="btn-secondary"
+              style="
+                flex: 1;
+                padding: 11px;
+                font-size: 12px;
+                text-align: center;
+                text-decoration: none;
+              "
+              >Book again</a
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FOOTER -->
+    <site-footer></site-footer>
+
+    <!-- Scripts -->
+    <script src="prices.js"></script>
+    <script src="ecd-api.js"></script>
+    <!-- Real scannable QR (encodes ticket serial) -->
+    <script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script>
+    <script>
+      // ==========================================
+      // 01. HYDRATE FROM ECD API
+      // ==========================================
+      function generateQRPath(seed) {
+        var N = 25;
+        var s = seed || 1;
+        function rnd() {
+          s = (s * 1664525 + 1013904223) & 0xffffffff;
+          return (s >>> 0) / 0xffffffff;
+        }
+        var d = "";
+        function box(x, y, size) {
+          d += "M" + x + " " + y + "h" + size + "v" + size + "h-" + size + "z";
+        }
+        function inFinder(x, y) {
+          return (
+            (x < 8 && y < 8) || (x >= N - 8 && y < 8) || (x < 8 && y >= N - 8)
+          );
+        }
+        function finder(ox, oy) {
+          for (var i = 0; i < 7; i++) {
+            box(ox + i, oy, 1);
+            box(ox + i, oy + 6, 1);
+          }
+          for (var j = 1; j < 6; j++) {
+            box(ox, oy + j, 1);
+            box(ox + 6, oy + j, 1);
+          }
+          box(ox + 2, oy + 2, 3);
+        }
+        finder(0, 0);
+        finder(N - 7, 0);
+        finder(0, N - 7);
+        for (var y = 0; y < N; y++) {
+          for (var x = 0; x < N; x++) {
+            if (inFinder(x, y)) continue;
+            if (rnd() > 0.52) box(x, y, 1);
+          }
+        }
+        return d;
+      }
+
+      function hashSerial(serial) {
+        var h = 0;
+        for (var i = 0; i < serial.length; i++) {
+          h = (h * 31 + serial.charCodeAt(i)) >>> 0;
+        }
+        return h || 1;
+      }
+
+      function renderQrSvg(payload) {
+        if (typeof qrcode === "function") {
+          try {
+            var qr = qrcode(0, "M");
+            qr.addData(String(payload));
+            qr.make();
+            // 4px module, 2 module quiet zone
+            return qr.createSvgTag(4, 2);
+          } catch (e) {
+            console.warn("[ecd] qrcode failed", e);
+          }
+        }
+        // Fallback decorative pattern if CDN blocked
+        return (
+          '<svg viewBox="0 0 25 25" width="156" height="156" style="display:block" shape-rendering="crispEdges" role="img" aria-label="Ticket QR code">' +
+          '<path fill="#101010" d="' +
+          generateQRPath(hashSerial(payload)) +
+          '"></path></svg>'
+        );
+      }
+
+      function renderTicketCards(tickets, ticketName) {
+        var grid = document.getElementById("ecdTicketsGrid");
+        if (!grid) return;
+        grid.innerHTML = "";
+        var bookingUrl =
+          (window.__ecdBooking && window.__ecdBooking.bookingPageUrl) || "";
+        (tickets || []).forEach(function (t, idx) {
+          var card = document.createElement("div");
+          card.className = "ticket-card";
+          var serial = t.serial || "ecd-00000000-000000-unknown";
+          var qrPayload = t.qrPayload || bookingUrl || serial;
+          var name = t.attendeeName || "Attendee " + (idx + 1);
+          var pass = t.ticketName || ticketName || "Pass";
+          var status = t.status === "active" ? "Active" : t.status || "Held";
+          card.innerHTML =
+            '<div class="ticket-card-head"><div>' +
+            '<div style="font-weight:700;font-size:16px;color:#ffffff">' +
+            name +
+            "</div>" +
+            '<div class="font-mono" style="font-size:10px;letter-spacing:.08em;color:#05ef62;text-transform:uppercase">' +
+            pass +
+            "</div></div>" +
+            '<span style="border-radius:999px;padding:4px 12px;font-size:11px;font-weight:600;background:#e6fbee;border:1px solid #c3f7d7;color:#04c44e">' +
+            status +
+            "</span></div>" +
+            '<div class="ticket-card-body"><div><div class="qr-box" style="display:flex;justify-content:center;align-items:center;background:#fff;padding:8px;border-radius:8px">' +
+            renderQrSvg(qrPayload) +
+            "</div>" +
+            '<div style="text-align:center;font-family:JetBrains Mono,monospace;font-size:10px;letter-spacing:.06em;color:#6b747e;margin-top:8px">' +
+            serial +
+            "</div></div>" +
+            '<div style="display:flex;flex-direction:column;gap:12px">' +
+            '<div style="display:flex;align-items:center;gap:8px">' +
+            '<span class="font-mono" style="font-size:12px;letter-spacing:.06em;color:#101010">' +
+            serial +
+            "</span>" +
+            '<button type="button" class="copy-ticket-btn" data-copy="' +
+            serial +
+            '" style="background:none;border:none;color:#04c44e;font-family:Manrope,sans-serif;font-weight:600;font-size:12px;cursor:pointer">Copy</button></div>' +
+            '<div style="font-size:13px;color:#4a5563;line-height:1.7">ECommerce Day 2026 · 22 October 2026<br />Venue details will be announced soon.</div>' +
+            (bookingUrl
+              ? '<div style="font-family:JetBrains Mono,monospace;font-size:10px;color:#6b747e;word-break:break-all;line-height:1.4">' +
+                bookingUrl +
+                "</div>"
+              : "") +
+            '<div style="display:flex;flex-direction:column;gap:8px">' +
+            '<button type="button" class="btn-primary ecd-print-ticket" style="padding:10px;font-size:13px">Download PDF</button>' +
+            '<div style="display:flex;gap:8px">' +
+            '<button type="button" class="btn-secondary ecd-email-ticket" data-copy="' +
+            serial +
+            '" data-email="' +
+            (t.attendeeEmail || "") +
+            '" data-name="' +
+            name.replace(/"/g, "&quot;") +
+            '" style="flex:1;padding:9px;font-size:12px">Email Ticket</button>' +
+            '<button type="button" class="btn-secondary" disabled title="Coming soon" style="flex:1;padding:9px;font-size:12px;opacity:.5;cursor:not-allowed">Add to Wallet</button>' +
+            "</div></div></div></div>";
+          grid.appendChild(card);
+          var svg = card.querySelector(".qr-box svg");
+          if (svg) {
+            svg.setAttribute("width", "156");
+            svg.setAttribute("height", "156");
+            svg.style.display = "block";
+            svg.setAttribute("aria-label", "QR for " + serial);
+          }
+        });
+
+        document.querySelectorAll(".copy-ticket-btn").forEach(function (btn) {
+          setupCopyButton(btn, "Copy");
+        });
+        document.querySelectorAll(".ecd-print-ticket").forEach(function (btn) {
+          btn.addEventListener("click", function () {
+            window.print();
+          });
+        });
+        document.querySelectorAll(".ecd-email-ticket").forEach(function (btn) {
+          btn.addEventListener("click", function () {
+            var serial = this.getAttribute("data-copy") || "";
+            var email = this.getAttribute("data-email") || "";
+            var name = this.getAttribute("data-name") || "";
+            var order = currentOrderCode();
+            var subject = "ECommerce Day 2026 ticket " + serial;
+            var body =
+              "Ticket for " +
+              name +
+              "\nSerial: " +
+              serial +
+              "\nOrder: " +
+              order +
+              "\nBooking page: " +
+              ((window.__ecdBooking && window.__ecdBooking.bookingPageUrl) ||
+                "") +
+              "\n\nShow this QR at entry.";
+            if (email) {
+              window.location.href =
+                "mailto:" +
+                encodeURIComponent(email) +
+                "?subject=" +
+                encodeURIComponent(subject) +
+                "&body=" +
+                encodeURIComponent(body);
+            } else {
+              try {
+                if (navigator.clipboard) navigator.clipboard.writeText(serial);
+              } catch (e) {}
+            }
+            flashButton(this, "Opened ✓", "Email Ticket");
+          });
+        });
+      }
+
+      function setupCopyButton(btn, originalText) {
+        btn.addEventListener("click", function () {
+          var text = this.getAttribute("data-copy");
+          try {
+            if (navigator.clipboard) navigator.clipboard.writeText(text);
+          } catch (e) {}
+          var self = this;
+          self.textContent = "Copied ✓";
+          self.classList.add("copied-feedback");
+          setTimeout(function () {
+            self.textContent = originalText;
+            self.classList.remove("copied-feedback");
+          }, 1500);
+        });
+      }
+
+      async function hydrateFromApi() {
+        var params = new URLSearchParams(window.location.search);
+        var urlStatus = (params.get("status") || "").toLowerCase();
+        var access = params.get("access") || "";
+        if (access) {
+          try {
+            sessionStorage.setItem("ecd2026_access", access);
+          } catch (e) {}
+        }
+        var order =
+          params.get("order") ||
+          (window.EcdApi &&
+            EcdApi.getStoredBooking() &&
+            EcdApi.getStoredBooking().orderCode);
+
+        if (!order || !window.EcdApi) {
+          if (window.EventPrices) {
+            var booking = EventPrices.loadBooking();
+            if (booking) {
+              document.getElementById("confirmFirstName").textContent =
+                booking.firstName || "Guest";
+              document.getElementById("confirmOrderId").textContent =
+                "TICKET " + (booking.orderId || "");
+            }
+          }
+          showEdgeState("invalid");
+          return;
+        }
+
+        try {
+          var data = await EcdApi.fetchBooking(
+            order,
+            null,
+            access || undefined,
+          );
+          window.__ecdBooking = data;
+          applyBookingToSuccessUi(data);
+
+          var payStatus = (data.paymentStatus || "").toLowerCase();
+          if (payStatus === "paid") {
+            if (urlStatus === "pending" || urlStatus === "failed") {
+              showEdgeState("already");
+            } else {
+              showSuccessFlow();
+            }
+            return;
+          }
+          if (payStatus === "cancelled") {
+            showEdgeState("refunded");
+            return;
+          }
+          if (
+            payStatus === "failed" ||
+            payStatus === "expired" ||
+            urlStatus === "failed"
+          ) {
+            showEdgeState("failed");
+            return;
+          }
+          showEdgeState("pending");
+        } catch (err) {
+          console.warn("[ecd] booking hydrate failed", err);
+          window.__ecdBooking = null;
+          showEdgeState("invalid");
+        }
+      }
+
+      function applyBookingToSuccessUi(data) {
+        document.getElementById("confirmFirstName").textContent =
+          data.buyerFirstName || "Guest";
+        document.getElementById("confirmQtyText").textContent =
+          data.qty === 1 ? "1 ticket" : data.qty + " tickets";
+        var primaryId =
+          (data.tickets && data.tickets[0] && data.tickets[0].serial) ||
+          data.orderCode;
+        document.getElementById("confirmOrderId").textContent =
+          "TICKET " + primaryId;
+        var copyBtn = document.getElementById("confirmCopyOrder");
+        if (copyBtn) copyBtn.setAttribute("data-copy", primaryId);
+        document.getElementById("confirmMaskedEmail").textContent =
+          data.maskedEmail || "";
+        var sumOrder = document.getElementById("summaryOrderId");
+        if (sumOrder) sumOrder.textContent = primaryId;
+        var sumPay = document.getElementById("summaryPayRef");
+        if (sumPay)
+          sumPay.textContent = data.paymentRef || "PAY-" + data.orderCode;
+
+        var sumPurchased = document.getElementById("summaryPurchased");
+        if (sumPurchased) {
+          var when = data.paidAt || data.createdAt;
+          if (when) {
+            try {
+              sumPurchased.textContent = new Date(when).toLocaleString(
+                "en-GB",
+                {
+                  timeZone: "Africa/Cairo",
+                  dateStyle: "long",
+                  timeStyle: "short",
+                },
+              );
+            } catch (e) {
+              sumPurchased.textContent = when;
+            }
+          }
+        }
+
+        var sumMethod = document.getElementById("summaryMethod");
+        if (sumMethod) {
+          var method = data.paymentMethodName || "";
+          if (/ECD_SIMULATE/i.test(method)) method = "Test payment";
+          else if (method.indexOf(":") > -1) method = method.split(":").pop();
+          sumMethod.textContent = method || "Online payment";
+        }
+
+        var invoicePill = document.getElementById("invoiceStatusPill");
+        var invoiceDetails = document.getElementById("invoiceDetails");
+        if (data.form && data.form.needInvoice) {
+          if (invoicePill) {
+            invoicePill.textContent = "On file";
+            invoicePill.style.background = "#e6fbee";
+            invoicePill.style.borderColor = "#c3f7d7";
+            invoicePill.style.color = "#04c44e";
+          }
+          if (invoiceDetails) {
+            invoiceDetails.innerHTML =
+              "Company: " +
+              (data.form.invoiceCompany || data.form.company || "—") +
+              " · Tax ID: " +
+              (data.form.taxId || "—") +
+              "<br/>Billing address: " +
+              (data.form.billingAddress || "—");
+          }
+        } else if (invoiceDetails) {
+          invoiceDetails.textContent = "No invoice details on this booking.";
+        }
+
+        var isFj = data.ticketType === "fj";
+        var workshopSection = document.getElementById("workshopSection");
+        var workshopCard = document.getElementById("workshopActionCard");
+        if (workshopSection) workshopSection.style.display = isFj ? "" : "none";
+        if (workshopCard) workshopCard.style.display = isFj ? "" : "none";
+
+        if (isFj && data.workshops && data.workshops.length) {
+          window.__ecdSavedWorkshops = {
+            orderCode: data.orderCode,
+            workshops: data.workshops,
+          };
+          if (typeof applySavedWorkshopsFromBooking === "function") {
+            applySavedWorkshopsFromBooking(data.workshops, data.orderCode);
+            if (typeof applyResSelectionHighlight === "function") {
+              applyResSelectionHighlight();
+            }
+          }
+        } else {
+          window.__ecdSavedWorkshops = null;
+        }
+
+        if (window.EventPrices) {
+          EventPrices.applyTotals({
+            ticketId: data.ticketType,
+            ticket: EventPrices.getTicket(data.ticketType),
+            unit: data.unitPriceCents / 100,
+            qty: data.qty,
+            discount: data.discountCents / 100,
+            total: data.totalCents / 100,
+          });
+        }
+        if (data.paymentStatus === "paid") {
+          renderTicketCards(data.tickets, data.ticketName);
+        } else {
+          var grid = document.getElementById("ecdTicketsGrid");
+          if (grid) grid.innerHTML = "";
+        }
+      }
+
+      function supportMailto(subject, body) {
+        var order = currentOrderCode();
+        var data = window.__ecdBooking;
+        var lines = [
+          body || "",
+          "",
+          "Order: " + (order || "—"),
+          data && data.buyerEmail ? "Buyer email: " + data.buyerEmail : "",
+          data && data.buyerName ? "Buyer name: " + data.buyerName : "",
+        ]
+          .filter(Boolean)
+          .join("\n");
+        window.location.href =
+          "mailto:info@trafficmena.com?subject=" +
+          encodeURIComponent(subject) +
+          "&body=" +
+          encodeURIComponent(lines);
+      }
+
+      function flashButton(btn, okText, restoreText, ms) {
+        if (!btn) return;
+        var original = restoreText || btn.textContent;
+        btn.textContent = okText;
+        setTimeout(function () {
+          btn.textContent = original;
+        }, ms || 2200);
+      }
+
+      function downloadCalendar() {
+        var event =
+          (window.__ecdBooking && window.__ecdBooking.event) ||
+          (window.EcdApi && EcdApi.CONFIG.EVENT);
+        if (window.EcdApi) EcdApi.downloadIcs(event);
+      }
+
+      function lookupBooking(orderEl, emailEl, errEl) {
+        var order = ((orderEl && orderEl.value) || "").trim();
+        var email = ((emailEl && emailEl.value) || "").trim();
+        if (errEl) {
+          errEl.style.display = "none";
+          errEl.textContent = "";
+        }
+        if (!order) {
+          if (errEl) {
+            errEl.textContent = "Enter your order number.";
+            errEl.style.display = "block";
+          } else {
+            alert("Enter your order number.");
+          }
+          return;
+        }
+        var url =
+          "booking-confirmation.html?order=" + encodeURIComponent(order);
+        if (email) url += "&email=" + encodeURIComponent(email);
+        window.location.href = url;
+      }
+
+      function bindConfirmationActions() {
+        var byId = function (id) {
+          return document.getElementById(id);
+        };
+
+        function on(id, fn) {
+          var el = byId(id);
+          if (el) el.addEventListener("click", fn);
+        }
+
+        on("viewMyTicketBtn", function () {
+          var el = byId("yourTicketsSection");
+          if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+        });
+
+        on("addToCalendarBtn", downloadCalendar);
+        on("actionAddCalendar", downloadCalendar);
+        on("workshopAddCalendarBtn", downloadCalendar);
+        on("actionDownloadPdf", function () {
+          window.print();
+        });
+        on("receiptDownloadBtn", function () {
+          window.print();
+        });
+        on("actionActivatePlatform", function () {
+          window.open("https://www.trafficmena.com", "_blank", "noopener");
+        });
+        on("btnActivateAccount", function () {
+          window.open("https://www.trafficmena.com", "_blank", "noopener");
+        });
+        on("btnLoginPlatform", function () {
+          window.open("https://www.trafficmena.com", "_blank", "noopener");
+        });
+        on("actionReserveWorkshops", function () {
+          var el = byId("workshopSection");
+          if (el) {
+            el.style.display = "";
+            el.scrollIntoView({ behavior: "smooth", block: "start" });
+          }
+        });
+        on("actionOpenGuide", function () {
+          var el = document.querySelector(".section-bg-alt .split-2b");
+          if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+          else window.location.href = "agenda.html";
+        });
+
+        function resendHandler(e) {
+          var btn = e.currentTarget;
+          var data = window.__ecdBooking;
+          if (!data) {
+            supportMailto(
+              "ECommerce Day 2026 — resend confirmation",
+              "Please resend my booking confirmation and ticket QR emails.",
+            );
+            return;
+          }
+          supportMailto(
+            "ECommerce Day 2026 — resend tickets " + data.orderCode,
+            "Please resend ticket QR emails for order " +
+              data.orderCode +
+              " to the attendee addresses on file.",
+          );
+          flashButton(btn, "Request opened ✓", btn.textContent);
+        }
+        on("heroResendEmail", resendHandler);
+        on("helpResendEmail", resendHandler);
+        on("btnPlatformResend", resendHandler);
+
+        on("invoiceCorrectionBtn", function () {
+          supportMailto(
+            "ECommerce Day 2026 — invoice correction",
+            "Please correct my invoice details for this booking.",
+          );
+        });
+        on("btnEditContact", function () {
+          supportMailto(
+            "ECommerce Day 2026 — edit contact details",
+            "Please update my phone/company on this booking.",
+          );
+        });
+        on("btnChangeAttendee", function () {
+          supportMailto(
+            "ECommerce Day 2026 — change attendee",
+            "Please change an attendee name/email on this booking (new QR required).",
+          );
+        });
+        on("btnChangeEmail", function () {
+          supportMailto(
+            "ECommerce Day 2026 — change email",
+            "Please change the attendee/buyer email on this booking.",
+          );
+        });
+        on("btnRequestRefund", function () {
+          supportMailto(
+            "ECommerce Day 2026 — refund request",
+            "I would like to request a refund for this booking. I understand approval is not guaranteed.",
+          );
+        });
+
+        on("helpFindBooking", function () {
+          lookupBooking(byId("helpLookupOrder"), byId("helpLookupEmail"), null);
+        });
+
+        on("btnSignOutShared", function () {
+          if (window.EcdApi && EcdApi.clearSession) EcdApi.clearSession();
+          window.__ecdBooking = null;
+          showEdgeState("invalid");
+          var orderInput = byId("ecdLookupOrder");
+          if (orderInput) orderInput.value = "";
+        });
+
+        var edgeCheck = byId("ecdEdgeCheckStatus");
+        if (edgeCheck) {
+          edgeCheck.addEventListener("click", async function () {
+            edgeCheck.disabled = true;
+            edgeCheck.textContent = "Checking…";
+            try {
+              var stored = window.EcdApi && EcdApi.getStoredBooking();
+              var bookingId = stored && stored.bookingId;
+              if (bookingId && window.EcdApi) {
+                await EcdApi.verify(bookingId);
+              }
+              await hydrateFromApi();
+            } catch (e) {
+              console.warn("[ecd] check status failed", e);
+            } finally {
+              edgeCheck.disabled = false;
+              edgeCheck.textContent = "Check Status";
+            }
+          });
+        }
+
+        on("ecdEdgeRetry", function () {
+          var order = currentOrderCode();
+          window.location.href =
+            "checkout.html" +
+            (order
+              ? "?order=" + encodeURIComponent(order) + "&status=retry"
+              : "");
+        });
+
+        on("ecdEdgeViewTickets", function () {
+          showSuccessFlow();
+          var el = byId("yourTicketsSection");
+          if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+        });
+
+        on("ecdEdgeFindBooking", function () {
+          lookupBooking(
+            byId("ecdLookupOrder"),
+            byId("ecdLookupEmail"),
+            byId("ecdLookupError"),
+          );
+        });
+      }
+
+      function setPanelVisible(el, on) {
+        if (!el) return;
+        el.hidden = !on;
+        el.style.display = on ? "block" : "none";
+      }
+
+      function showSuccessFlow() {
+        setPanelVisible(document.getElementById("ecdSuccessFlow"), true);
+        setPanelVisible(document.getElementById("ecdEdgeState"), false);
+        [
+          "ecdEdgePending",
+          "ecdEdgeFailed",
+          "ecdEdgeAlready",
+          "ecdEdgeInvalid",
+          "ecdEdgeRefunded",
+        ].forEach(function (id) {
+          setPanelVisible(document.getElementById(id), false);
+        });
+      }
+
+      function showEdgeState(kind) {
+        setPanelVisible(document.getElementById("ecdSuccessFlow"), false);
+        setPanelVisible(document.getElementById("ecdEdgeState"), true);
+        var map = {
+          pending: "ecdEdgePending",
+          failed: "ecdEdgeFailed",
+          already: "ecdEdgeAlready",
+          invalid: "ecdEdgeInvalid",
+          refunded: "ecdEdgeRefunded",
+        };
+        Object.keys(map).forEach(function (k) {
+          setPanelVisible(document.getElementById(map[k]), k === kind);
+        });
+        if (kind === "invalid") {
+          var orderInput = document.getElementById("ecdLookupOrder");
+          var params = new URLSearchParams(window.location.search);
+          if (orderInput && params.get("order")) {
+            orderInput.value = params.get("order");
+          }
+        }
+      }
+
+      function currentOrderCode() {
+        var params = new URLSearchParams(window.location.search);
+        return (
+          params.get("order") ||
+          (window.__ecdBooking && window.__ecdBooking.orderCode) ||
+          (window.EcdApi &&
+            EcdApi.getStoredBooking() &&
+            EcdApi.getStoredBooking().orderCode) ||
+          ""
+        );
+      }
+
+      document.querySelectorAll(".copy-order-btn").forEach(function (btn) {
+        setupCopyButton(btn, "Copy");
+      });
+
+      bindConfirmationActions();
+
+      // Default: hide success until hydrate decides (avoids flash of demo content)
+      setPanelVisible(document.getElementById("ecdSuccessFlow"), false);
+      hydrateFromApi();
+
+      // ==========================================
+      // 05. WORKSHOP RESERVATION — from GET /api/ecd/content workshops
+      // ==========================================
+      var resSelection = {}; // { slotIndex: sessionSlug }
+      var TRACK_META = {
+        2: { label: "CLICKED", color: "#05ef62", text: "#04c44e" },
+        3: { label: "CONFIRMED", color: "#006681", text: "#4fc3e0" },
+        4: { label: "DELIVERED", color: "#ffb020", text: "#ffb020" },
+      };
+
+      function escHtml(s) {
+        return String(s || "")
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;");
+      }
+
+      function timeSortKey(t) {
+        var m = String(t || "").match(/^(\d{1,2}):(\d{2})$/);
+        if (!m) return 9999;
+        var h = Number(m[1]);
+        var min = Number(m[2]);
+        if (h >= 1 && h <= 10) h += 12;
+        return h * 60 + min;
+      }
+
+      function updateReservationUI() {
+        var count = Object.keys(resSelection).length;
+        var btn = document.getElementById("confirmWorkshopsBtn");
+        if (!btn) return;
+        btn.textContent = "Confirm My Workshops (" + count + " selected)";
+        if (count > 0) {
+          btn.disabled = false;
+          btn.style.background = "#05ef62";
+          btn.style.color = "#101010";
+          btn.style.cursor = "pointer";
+        } else {
+          btn.disabled = true;
+          btn.style.background = "#3a3a3a";
+          btn.style.color = "#6b747e";
+          btn.style.cursor = "not-allowed";
+        }
+      }
+
+      function bindResButtons() {
+        document.querySelectorAll(".res-btn").forEach(function (btn) {
+          btn.addEventListener("click", function () {
+            if (this.disabled) return;
+            var slot = this.getAttribute("data-slot");
+            var slug = this.getAttribute("data-slug");
+
+            if (resSelection[slot] === slug) {
+              delete resSelection[slot];
+            } else {
+              resSelection[slot] = slug;
+            }
+
+            document
+              .querySelectorAll('.res-btn[data-slot="' + slot + '"]')
+              .forEach(function (b) {
+                b.style.background = "#181818";
+                b.style.borderColor = "#3a3a3a";
+                var titleEl = b.querySelector(".res-btn-title");
+                if (titleEl) titleEl.style.color = "#ffffff";
+                b.setAttribute("aria-pressed", "false");
+              });
+
+            if (resSelection[slot] !== undefined) {
+              this.style.background = "#ffffff";
+              this.style.borderColor = "#05ef62";
+              var titleEl = this.querySelector(".res-btn-title");
+              if (titleEl) titleEl.style.color = "#101010";
+              this.setAttribute("aria-pressed", "true");
+            }
+
+            updateReservationUI();
+          });
+        });
+      }
+
+      function applyResSelectionHighlight() {
+        Object.keys(resSelection).forEach(function (slot) {
+          var slug = resSelection[slot];
+          var btn = document.querySelector(
+            '.res-btn[data-slot="' + slot + '"][data-slug="' + slug + '"]',
+          );
+          if (!btn) return;
+          btn.style.background = "#ffffff";
+          btn.style.borderColor = "#05ef62";
+          var titleEl = btn.querySelector(".res-btn-title");
+          if (titleEl) titleEl.style.color = "#101010";
+          btn.setAttribute("aria-pressed", "true");
+        });
+        updateReservationUI();
+      }
+
+      function applySavedWorkshopsFromBooking(workshops, orderCode) {
+        var selection = {};
+        var times = [];
+        (workshops || []).forEach(function (w) {
+          if (w && w.timeLabel && times.indexOf(w.timeLabel) === -1) {
+            times.push(w.timeLabel);
+          }
+        });
+        times.sort(function (a, b) {
+          return timeSortKey(a) - timeSortKey(b);
+        });
+        (workshops || []).forEach(function (w) {
+          if (!w || !w.slug) return;
+          var slotIdx = times.indexOf(w.timeLabel);
+          if (slotIdx >= 0) selection[slotIdx] = w.slug;
+        });
+        resSelection = selection;
+        var wbId =
+          "WB-" +
+          String(orderCode || "")
+            .replace(/^ECD-?/i, "")
+            .slice(0, 12);
+        if (!wbId || wbId === "WB-") wbId = "WB-SAVED";
+        var wbEl = document.getElementById("wbIdDisplay");
+        if (wbEl) wbEl.textContent = wbId;
+        var notC = document.getElementById("resNotConfirmed");
+        var conf = document.getElementById("resConfirmed");
+        if (notC) notC.style.display = "none";
+        if (conf) conf.style.display = "block";
+        try {
+          sessionStorage.setItem(
+            "ecd2026_workshops",
+            JSON.stringify({
+              orderCode: orderCode,
+              bookingId: wbId,
+              selection: selection,
+              workshops: workshops,
+              at: new Date().toISOString(),
+            }),
+          );
+        } catch (e) {}
+      }
+
+      function renderWorkshopSlots(workshops) {
+        var container = document.getElementById("resSlotsContainer");
+        if (!container) return;
+
+        var list = (workshops || []).filter(function (w) {
+          return w && w.fullJourneyOnly && w.trackIndex >= 2;
+        });
+
+        if (!list.length) {
+          container.innerHTML =
+            '<p style="color:#9aa1a9;font-size:14px;margin:0">Workshop schedule will be announced soon.</p>';
+          return;
+        }
+
+        var times = [];
+        list.forEach(function (w) {
+          if (times.indexOf(w.timeLabel) === -1) times.push(w.timeLabel);
+        });
+        times.sort(function (a, b) {
+          return timeSortKey(a) - timeSortKey(b);
+        });
+
+        var html = "";
+        times.forEach(function (time, slotIdx) {
+          var atTime = list
+            .filter(function (w) {
+              return w.timeLabel === time;
+            })
+            .sort(function (a, b) {
+              return a.trackIndex - b.trackIndex;
+            });
+
+          html +=
+            '<div><div class="font-mono" style="font-size:11px;letter-spacing:0.1em;color:#ffffff;margin-bottom:10px">Slot ' +
+            (slotIdx + 1) +
+            ' <span style="color:#6b747e">— pick one</span></div>';
+          html += '<div class="grid-3-cols">';
+
+          atTime.forEach(function (w) {
+            var meta = TRACK_META[w.trackIndex] || {
+              label: "TRACK",
+              color: "#6b747e",
+              text: "#6b747e",
+            };
+            var status = w.seatStatus || "Available";
+            var available = w.available !== false;
+            var badgeBg = "#e6fbee";
+            var badgeBorder = "#c3f7d7";
+            var badgeColor = "#04c44e";
+            if (status === "Few Seats") {
+              badgeBg = "#fff4de";
+              badgeBorder = "#ffb020";
+              badgeColor = "#8a5a00";
+            }
+            if (status === "Fully Booked") {
+              badgeBg = "#f4f6f8";
+              badgeBorder = "#d5dae0";
+              badgeColor = "#6b747e";
+            }
+            html +=
+              '<button type="button" class="res-btn" data-slot="' +
+              slotIdx +
+              '" data-slug="' +
+              escHtml(w.slug) +
+              '" data-track="' +
+              w.trackIndex +
+              '" aria-pressed="false"' +
+              (available ? "" : " disabled") +
+              ' style="background:#181818;border:1px solid #3a3a3a;color:#ffffff' +
+              (available ? "" : ";opacity:0.45;cursor:not-allowed") +
+              '">';
+            html +=
+              '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px">';
+            html +=
+              '<span style="display:flex;align-items:center;gap:6px;font-family:JetBrains Mono,monospace;font-size:9px;letter-spacing:0.08em;color:' +
+              meta.text +
+              '"><span style="width:7px;height:7px;border-radius:50%;background:' +
+              meta.color +
+              '"></span>' +
+              meta.label +
+              "</span>";
+            html +=
+              '<span style="border-radius:999px;padding:2px 8px;font-size:10px;font-weight:600;background:' +
+              badgeBg +
+              ";border:1px solid " +
+              badgeBorder +
+              ";color:" +
+              badgeColor +
+              '">' +
+              escHtml(status) +
+              "</span>";
+            html += "</div>";
+            html +=
+              '<div class="res-btn-title" style="font-weight:700;font-size:13px;line-height:1.4;color:#ffffff">' +
+              escHtml(w.title) +
+              "</div></button>";
+          });
+
+          html += "</div></div>";
+        });
+
+        container.innerHTML = html;
+        bindResButtons();
+        applyResSelectionHighlight();
+      }
+
+      function loadWorkshopsFromApi() {
+        if (!window.EcdApi || !EcdApi.fetchContent) {
+          var el = document.getElementById("resSlotsLoading");
+          if (el) el.textContent = "Workshops unavailable (API not loaded).";
+          return;
+        }
+        EcdApi.fetchContent()
+          .then(function (data) {
+            renderWorkshopSlots((data && data.workshops) || []);
+            if (
+              window.__ecdSavedWorkshops &&
+              window.__ecdSavedWorkshops.workshops &&
+              window.__ecdSavedWorkshops.workshops.length
+            ) {
+              applySavedWorkshopsFromBooking(
+                window.__ecdSavedWorkshops.workshops,
+                window.__ecdSavedWorkshops.orderCode,
+              );
+              applyResSelectionHighlight();
+            }
+          })
+          .catch(function (err) {
+            console.warn("[confirmation] workshops", err);
+            var container = document.getElementById("resSlotsContainer");
+            if (container) {
+              container.innerHTML =
+                '<p style="color:#9aa1a9;font-size:14px;margin:0">Could not load workshops. Refresh to try again.</p>';
+            }
+          });
+      }
+
+      document
+        .getElementById("confirmWorkshopsBtn")
+        .addEventListener("click", async function () {
+          var btn = this;
+          var order = currentOrderCode();
+          var slugs = Object.keys(resSelection).map(function (k) {
+            return resSelection[k];
+          });
+          if (!order || !slugs.length) return;
+          if (!window.EcdApi || !EcdApi.reserveWorkshops) {
+            alert("Workshop API unavailable. Refresh and try again.");
+            return;
+          }
+          btn.disabled = true;
+          btn.textContent = "Saving…";
+          try {
+            var result = await EcdApi.reserveWorkshops(order, slugs);
+            var wbId =
+              "WB-ECD26-" + String(1000 + Math.floor(Math.random() * 9000));
+            document.getElementById("wbIdDisplay").textContent = wbId;
+            document.getElementById("resNotConfirmed").style.display = "none";
+            document.getElementById("resConfirmed").style.display = "block";
+            try {
+              sessionStorage.setItem(
+                "ecd2026_workshops",
+                JSON.stringify({
+                  orderCode: order,
+                  bookingId: wbId,
+                  selection: resSelection,
+                  workshops: (result && result.workshops) || [],
+                  at: new Date().toISOString(),
+                }),
+              );
+            } catch (e) {}
+          } catch (err) {
+            var msg =
+              (err && err.message) || "Could not save workshops. Try again.";
+            alert(msg);
+            btn.disabled = false;
+            updateReservationUI();
+            if (err && err.code === "WORKSHOP_FULL") {
+              loadWorkshopsFromApi();
+            }
+          }
+        });
+
+      document
+        .getElementById("editWorkshopsBtn")
+        .addEventListener("click", function () {
+          document.getElementById("resNotConfirmed").style.display = "block";
+          document.getElementById("resConfirmed").style.display = "none";
+        });
+
+      // ==========================================
+      // 06. INITIAL STATE + restore local workshop hold
+      // ==========================================
+      updateReservationUI();
+      try {
+        var savedWs = sessionStorage.getItem("ecd2026_workshops");
+        if (savedWs) {
+          var parsed = JSON.parse(savedWs);
+          if (
+            parsed &&
+            parsed.orderCode &&
+            parsed.orderCode === currentOrderCode() &&
+            parsed.selection
+          ) {
+            resSelection = parsed.selection;
+            document.getElementById("wbIdDisplay").textContent =
+              parsed.bookingId || "WB-ECD26-0000";
+            document.getElementById("resNotConfirmed").style.display = "none";
+            document.getElementById("resConfirmed").style.display = "block";
+          }
+        }
+      } catch (e) {}
+
+      loadWorkshopsFromApi();
+    </script>
+  </body>
+</html>

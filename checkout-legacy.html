@@ -1,0 +1,3271 @@
+﻿<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>TrafficMENA — ECommerce Day 2026 · Checkout</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=IBM+Plex+Sans+Arabic:wght@400;500;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <script src="prices.js"></script>
+    <script src="ecd-api.js"></script>
+    <script src="ecd-content.js"></script>
+
+    <style>
+      #ecdOverlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        z-index: 200;
+        background: rgba(16, 16, 16, 0.45);
+        align-items: center;
+        justify-content: center;
+        padding: 24px;
+      }
+      #ecdOverlay.open {
+        display: flex;
+      }
+      #ecdOverlayCard {
+        background: #fff;
+        border-radius: 16px;
+        border: 1px solid #d5dae0;
+        max-width: 420px;
+        width: 100%;
+        padding: 28px 24px;
+        text-align: center;
+        box-shadow: 0 16px 48px rgba(16, 16, 16, 0.18);
+      }
+      #ecdMethodList {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        margin-bottom: 16px;
+      }
+      .ecd-method-option {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        border: 1px solid #d5dae0;
+        border-radius: 10px;
+        padding: 12px 14px;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: 600;
+      }
+      .ecd-method-option.active {
+        border-color: #101010;
+        background: #f4f6f8;
+      }
+      #ecdWalletField {
+        display: none;
+        margin-bottom: 14px;
+      }
+      #designStatesGallery {
+        display: none;
+      }
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        margin: 0;
+        font-family: "Manrope", "IBM Plex Sans Arabic", sans-serif;
+        color: #101010;
+        background-color: #ffffff;
+        overflow-x: hidden;
+      }
+      a {
+        color: #04c44e;
+        text-decoration: none;
+      }
+      a:hover {
+        color: #006681;
+      }
+      input::placeholder {
+        color: #9aa1a9;
+      }
+      input,
+      select,
+      textarea,
+      button {
+        font-family: "Manrope", sans-serif;
+      }
+      .container {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 0 24px;
+      }
+      .font-mono {
+        font-family: "JetBrains Mono", monospace;
+      }
+
+      /* Buttons */
+      .btn-primary {
+        background: #05ef62;
+        border: none;
+        color: #101010;
+        border-radius: 10px;
+        padding: 14px 26px;
+        font-family: "Manrope", sans-serif;
+        font-weight: 600;
+        font-size: 15px;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        transition: background 0.2s;
+      }
+      .btn-primary:hover {
+        background: #04d657;
+      }
+      .btn-secondary {
+        background: #ffffff;
+        border: 1px solid #101010;
+        color: #101010;
+        border-radius: 10px;
+        padding: 14px 26px;
+        font-family: "Manrope", sans-serif;
+        font-weight: 600;
+        font-size: 15px;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        transition: background 0.2s;
+      }
+      .btn-secondary:hover {
+        background: #f4f6f8;
+      }
+
+      /* ==========================================
+         01. HEADER
+         ========================================== */
+      .brand {
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+        width: fit-content;
+      }
+
+      .brand img {
+        height: 38px;
+        width: auto;
+        display: block;
+      }
+
+      .checkout-header {
+        border-bottom: 1px solid #e6eaee;
+        background: #ffffff;
+      }
+      .checkout-header-inner {
+        max-width: 1280px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: 1fr auto 1fr;
+        align-items: center;
+        padding: 14px 24px;
+        gap: 16px;
+      }
+      .secure-badge {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-family: "JetBrains Mono", monospace;
+        font-size: 11px;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: #101010;
+      }
+      .header-links {
+        display: flex;
+        justify-content: flex-end;
+        gap: 24px;
+        font-size: 13px;
+        font-weight: 600;
+      }
+
+      /* ==========================================
+         02. FORM ELEMENTS
+         ========================================== */
+      .form-field {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+      }
+      .form-label {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 10px;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: #6b747e;
+      }
+      .form-input {
+        border: 1px solid #d5dae0;
+        border-radius: 10px;
+        padding: 12px 14px;
+        font-size: 14px;
+        color: #101010;
+        outline-color: #05ef62;
+        width: 100%;
+        background: #ffffff;
+      }
+      .form-input:disabled {
+        background: #f4f6f8;
+        cursor: not-allowed;
+      }
+      .form-input.error {
+        border-color: #c4342d;
+      }
+      .form-error {
+        font-size: 11px;
+        color: #b3362e;
+      }
+
+      /* ==========================================
+         03. LAYOUT
+         ========================================== */
+      .checkout-body {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 48px 24px 96px;
+        display: grid;
+        grid-template-columns: 1fr 420px;
+        gap: 48px;
+        align-items: start;
+      }
+      .checkout-left {
+        display: flex;
+        flex-direction: column;
+        gap: 40px;
+      }
+      .checkout-right {
+        position: sticky;
+        top: 24px;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+      }
+
+      /* ==========================================
+         04. STEP HEADER
+         ========================================== */
+      .step-header {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 20px;
+      }
+      .step-num {
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        background: #101010;
+        color: #05ef62;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: "JetBrains Mono", monospace;
+        font-size: 12px;
+        flex: none;
+      }
+      .step-title {
+        font-size: 22px;
+        font-weight: 800;
+        margin: 0;
+      }
+
+      /* ==========================================
+         05. CARD
+         ========================================== */
+      .card {
+        border: 1px solid #d5dae0;
+        border-radius: 14px;
+        padding: 28px;
+      }
+      .form-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 18px;
+      }
+      .form-grid-full {
+        grid-column: 1 / -1;
+      }
+
+      /* ==========================================
+         06. ATTENDEE CARD
+         ========================================== */
+      .attendee-card {
+        border: 1px solid #d5dae0;
+        border-radius: 14px;
+        padding: 24px 28px;
+      }
+      .attendee-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+      }
+
+      /* ==========================================
+         07. ERROR SUMMARY
+         ========================================== */
+      .error-summary {
+        border: 1px solid #e2a9a5;
+        background: #fbedec;
+        border-radius: 12px;
+        padding: 16px 20px;
+      }
+      .error-summary-title {
+        font-weight: 700;
+        font-size: 14px;
+        color: #b3362e;
+        margin-bottom: 6px;
+      }
+      .error-summary-item {
+        font-size: 12px;
+        color: #b3362e;
+      }
+
+      /* ==========================================
+         08. PAYMENT
+         ========================================== */
+      .method-buttons {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 22px;
+      }
+      .method-btn {
+        flex: 1;
+        background: #ffffff;
+        border: 1px solid #d5dae0;
+        border-radius: 12px;
+        padding: 16px;
+        font-family: "Manrope", sans-serif;
+        font-weight: 700;
+        font-size: 14px;
+        color: #101010;
+        cursor: pointer;
+        transition: all 0.15s;
+      }
+      .method-btn.active {
+        background: #101010;
+        border-color: #101010;
+        color: #ffffff;
+      }
+      .hosted-fields {
+        border: 1px dashed #d5dae0;
+        background: #f4f6f8;
+        border-radius: 12px;
+        padding: 26px;
+        margin-bottom: 20px;
+      }
+      .hosted-placeholder {
+        height: 44px;
+        background: #ffffff;
+        border: 1px solid #e6eaee;
+        border-radius: 8px;
+      }
+      .hosted-row {
+        display: flex;
+        gap: 10px;
+      }
+      .hosted-row > div {
+        flex: 1;
+      }
+
+      /* ==========================================
+         09. ORDER SUMMARY
+         ========================================== */
+      .summary-card {
+        border: 1px solid #d5dae0;
+        border-radius: 16px;
+        overflow: hidden;
+      }
+      .summary-head {
+        background: #101010;
+        padding: 14px 22px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 8px;
+      }
+      .summary-body {
+        padding: 22px;
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+      }
+      .qty-stepper {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .qty-btn {
+        width: 32px;
+        height: 32px;
+        border: 1px solid #d5dae0;
+        border-radius: 8px;
+        background: #ffffff;
+        font-size: 16px;
+        cursor: pointer;
+        color: #101010;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .qty-value {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 14px;
+        min-width: 16px;
+        text-align: center;
+      }
+      .value-card {
+        border: 1px solid #c3f7d7;
+        background: #e6fbee;
+        border-radius: 14px;
+        padding: 18px 20px;
+      }
+
+      /* ==========================================
+         10. STICKY PAY BAR (MOBILE)
+         ========================================== */
+      .mobile-pay-bar {
+        position: sticky;
+        bottom: 0;
+        z-index: 60;
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(12px);
+        border-top: 1px solid #e6eaee;
+        padding: 12px 16px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      .mobile-pay-bar-total {
+        flex: 1;
+      }
+      .mobile-pay-bar-label {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 9px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: #6b747e;
+      }
+      .mobile-pay-bar-value {
+        font-weight: 800;
+        font-size: 16px;
+        color: #101010;
+      }
+
+      /* ==========================================
+         11. MOBILE ORDER SUMMARY ACCORDION
+         ========================================== */
+      .mobile-summary {
+        position: sticky;
+        top: 0;
+        z-index: 40;
+        background: #101010;
+        padding: 12px 16px;
+      }
+      .mobile-summary-toggle {
+        width: 100%;
+        background: none;
+        border: none;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        cursor: pointer;
+        padding: 0;
+      }
+      .mobile-summary-toggle span {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 10px;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: #ffffff;
+      }
+      .mobile-summary-timer {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 9px;
+        letter-spacing: 0.08em;
+        color: #05ef62;
+        margin-top: 4px;
+      }
+      .mobile-summary-body {
+        border-top: 1px solid #3a3a3a;
+        margin-top: 10px;
+        padding-top: 10px;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        font-size: 12px;
+        color: #e6eaee;
+      }
+
+      /* ==========================================
+         12. MOBILE STAGE NAV
+         ========================================== */
+      .mobile-stage-nav {
+        position: sticky;
+        top: 0;
+        z-index: 39;
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        border-bottom: 1px solid #e6eaee;
+        padding: 10px 24px;
+        display: flex;
+        gap: 6px;
+        max-width: 1280px;
+        margin: 0 auto;
+      }
+      @media (max-width: 768px) {
+        .mobile-stage-nav {
+          top: 64px;
+          padding: 10px 16px;
+        }
+      }
+      .stage-btn {
+        flex: 1;
+        background: #ffffff;
+        border: 1px solid #d5dae0;
+        border-radius: 999px;
+        padding: 8px 4px;
+        font-family: "Manrope", sans-serif;
+        font-weight: 600;
+        font-size: 11px;
+        color: #101010;
+        cursor: pointer;
+        transition: all 0.15s;
+      }
+      .stage-btn.active {
+        background: #101010;
+        border-color: #101010;
+        color: #ffffff;
+      }
+
+      /* ==========================================
+         13. MOBILE HEADER
+         ========================================== */
+      .mobile-header {
+        border-bottom: 1px solid #e6eaee;
+        display: none;
+        align-items: center;
+        justify-content: space-between;
+        padding: 12px 16px;
+
+        @media (max-width: 768px) {
+          display: flex;
+        }
+      }
+      .mobile-header-links {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px 16px;
+        border-bottom: 1px solid #e6eaee;
+        font-size: 12px;
+        font-weight: 600;
+      }
+
+      /* ==========================================
+         14. EDGE STATES
+         ========================================== */
+      .state-card {
+        background: #ffffff;
+        border-radius: 16px;
+        padding: 40px 32px;
+        text-align: center;
+        box-shadow: 0 2px 16px rgba(16, 16, 16, 0.06);
+      }
+      .state-icon {
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 18px;
+        font-size: 18px;
+        font-weight: 700;
+      }
+      .spinner {
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        border: 3px solid #e6eaee;
+        border-top-color: #05ef62;
+        margin: 0 auto 18px;
+        animation: spin 1s linear infinite;
+      }
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      /* ==========================================
+         15. RESPONSIVE BREAKPOINTS
+         ========================================== */
+      @media (max-width: 1024px) {
+        .checkout-body {
+          grid-template-columns: 1fr;
+        }
+        .checkout-right {
+          position: static;
+          order: -1;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .checkout-body {
+          padding: 24px 16px 40px;
+          gap: 24px;
+        }
+        .checkout-header-inner {
+          grid-template-columns: 1fr auto;
+        }
+        .checkout-header-inner .secure-badge {
+          display: none;
+        }
+        .header-links {
+          gap: 16px;
+          font-size: 12px;
+        }
+        .card,
+        .attendee-card {
+          padding: 18px;
+        }
+        .form-grid,
+        .attendee-grid {
+          grid-template-columns: 1fr;
+        }
+        .step-title {
+          font-size: 18px;
+        }
+        .method-buttons {
+          flex-direction: column;
+        }
+        .hosted-fields {
+          padding: 18px;
+        }
+        .mobile-pay-bar {
+          padding: 12px 16px;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .container {
+          padding: 0 18px;
+        }
+        .btn-primary,
+        .btn-secondary {
+          padding: 12px 20px;
+          font-size: 14px;
+        }
+        .state-card {
+          padding: 28px 20px;
+        }
+        .mobile-pay-bar-value {
+          font-size: 14px;
+        }
+      }
+
+      /* ==========================================
+         16. MOBILE MENU
+         ========================================== */
+      .mobile-menu-toggle {
+        display: none;
+        background: none;
+        border: 1px solid #e6eaee;
+        border-radius: 8px;
+        padding: 8px;
+        cursor: pointer;
+        flex-direction: column;
+        gap: 4px;
+      }
+      .mobile-menu-toggle span {
+        width: 18px;
+        height: 2px;
+        background: #101010;
+      }
+
+      /* Mobile / desktop visibility */
+      .mobile-only {
+        display: none;
+      }
+      .desktop-only {
+        display: block;
+      }
+
+      @media (max-width: 768px) {
+        .mobile-only {
+          display: block;
+        }
+        .desktop-only {
+          display: none;
+        }
+      }
+
+      /* ==========================================
+         17. INTERESTS CHIPS
+         ========================================== */
+      .interest-chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        border-radius: 999px;
+        padding: 6px 13px;
+        font-family: "Manrope", sans-serif;
+        font-weight: 600;
+        font-size: 12px;
+        cursor: pointer;
+        border: 1px solid #d5dae0;
+        background: #ffffff;
+        color: #101010;
+        transition: all 0.15s;
+      }
+      .interest-chip.active {
+        background: #101010;
+        border-color: #101010;
+        color: #ffffff;
+      }
+      .interest-dot {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        flex: none;
+      }
+
+      /* ==========================================
+         18. CHECKOUT RIGHT MOBILE ORDER
+         ========================================== */
+      @media (max-width: 768px) {
+        .checkout-right-mobile {
+          display: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- ==================== DESKTOP HEADER ==================== -->
+    <div class="checkout-header desktop-only">
+      <div class="checkout-header-inner">
+        <a href="index.html" class="brand" aria-label="ECommerce Day home">
+          <img
+            src="assets/ecommerce-day-logo.png"
+            alt="E-commerce Day by TrafficMENA"
+          />
+        </a>
+
+        <div class="secure-badge">
+          <svg
+            width="14"
+            height="14"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="#04c44e"
+            stroke-width="2"
+          >
+            <rect x="4" y="11" width="16" height="10" rx="2"></rect>
+            <path d="M8 11V7a4 4 0 0 1 8 0v4"></path>
+          </svg>
+          Secure Checkout
+        </div>
+        <div class="header-links">
+          <a href="tickets.html" style="color: #1f2630">← Back to Tickets</a>
+          <a href="#" style="color: #04c44e">Need help?</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== MOBILE HEADER ==================== -->
+    <div class="mobile-header">
+      <a href="index.html" class="brand" aria-label="ECommerce Day home">
+        <img
+          src="assets/ecommerce-day-logo.png"
+          alt="E-commerce Day by TrafficMENA"
+        />
+      </a>
+
+      <div
+        style="
+          display: flex;
+          align-items: center;
+          gap: 6px;
+          font-family: &quot;JetBrains Mono&quot;, monospace;
+          font-size: 9px;
+          letter-spacing: 0.08em;
+          text-transform: uppercase;
+          color: #101010;
+        "
+      >
+        <svg
+          width="12"
+          height="12"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="#04c44e"
+          stroke-width="2"
+        >
+          <rect x="4" y="11" width="16" height="10" rx="2"></rect>
+          <path d="M8 11V7a4 4 0 0 1 8 0v4"></path>
+        </svg>
+        Secure
+      </div>
+    </div>
+    <div class="mobile-header-links mobile-only">
+      <a href="tickets.html" style="color: #1f2630">← Back to Tickets</a>
+      <a href="#" style="color: #04c44e">Need help?</a>
+    </div>
+
+    <!-- ==================== MOBILE STICKY ORDER SUMMARY ==================== -->
+    <div class="mobile-summary mobile-only" id="mobileSummary">
+      <button class="mobile-summary-toggle" id="mobileSummaryToggle">
+        <span id="mobileSummaryText"
+          ><span class="price-ticket-name">All Access Pass</span> ×
+          <span class="price-qty">1</span> —
+          <span class="price-total" data-suffix=" EGP">[Total] EGP</span></span
+        >
+        <span id="mobileSummaryIcon" style="color: #05ef62; font-size: 14px"
+          >+</span
+        >
+      </button>
+      <div class="mobile-summary-timer">
+        SEATS HELD FOR <span id="mobileTimer">12:00</span>
+      </div>
+      <div
+        class="mobile-summary-body"
+        id="mobileSummaryBody"
+        style="display: none"
+      >
+        <div style="display: flex; justify-content: space-between">
+          <span>Unit price</span
+          ><span class="price-unit" data-suffix=" EGP">[Final Price] EGP</span>
+        </div>
+        <div style="display: flex; justify-content: space-between">
+          <span>Quantity</span
+          ><span>× <span id="mobileQty" class="price-qty">1</span></span>
+        </div>
+        <div
+          style="
+            display: flex;
+            justify-content: space-between;
+            color: #05ef62;
+            display: none;
+          "
+          id="mobilePromoRow"
+        >
+          <span>Discount (<span id="mobilePromoCode"></span>)</span
+          ><span class="price-discount" data-minus="1" data-suffix=" EGP"
+            >− [Discount] EGP</span
+          >
+        </div>
+        <div style="display: flex; justify-content: space-between">
+          <span>Fees &amp; tax</span><span>Included</span>
+        </div>
+        <div
+          style="
+            display: flex;
+            justify-content: space-between;
+            font-weight: 700;
+            color: #ffffff;
+          "
+        >
+          <span>Total</span
+          ><span id="mobileTotal" class="price-total" data-suffix=" EGP"
+            >[Total] EGP</span
+          >
+        </div>
+        <div style="font-size: 11px; color: #9aa1a9">
+          22 October 2026 · Cairo · Venue details will be announced soon.
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== STAGE NAV (desktop + mobile) ==================== -->
+    <div class="mobile-stage-nav" id="mobileStageNav">
+      <button type="button" class="stage-btn active" data-stage="1">
+        1 · Order
+      </button>
+      <button type="button" class="stage-btn" data-stage="2">
+        2 · Attendee
+      </button>
+      <button type="button" class="stage-btn" data-stage="3">
+        3 · Payment
+      </button>
+    </div>
+
+    <!-- ==================== CHECKOUT BODY ==================== -->
+    <div class="checkout-body">
+      <!-- ==================== LEFT COLUMN ==================== -->
+      <div class="checkout-left">
+        <!-- Error summary -->
+        <div
+          id="errorSummary"
+          class="error-summary"
+          style="display: none"
+          role="alert"
+        >
+          <div class="error-summary-title">
+            Please fix the following before paying:
+          </div>
+          <div id="errorList"></div>
+        </div>
+
+        <!-- STEP 1: Buyer details -->
+        <div id="step1">
+          <div class="step-header">
+            <span class="step-num">1</span>
+            <h2 class="step-title">Buyer details</h2>
+          </div>
+          <div class="card">
+            <div class="form-grid">
+              <div class="form-field">
+                <label class="form-label" for="b-name">Full name *</label>
+                <input
+                  class="form-input"
+                  id="b-name"
+                  type="text"
+                  data-buyer="name"
+                />
+                <span class="form-error" data-error="bname"></span>
+              </div>
+              <div class="form-field">
+                <label class="form-label" for="b-email">Email *</label>
+                <input
+                  class="form-input"
+                  id="b-email"
+                  type="email"
+                  placeholder="name@company.com"
+                  data-buyer="email"
+                />
+                <span class="form-error" data-error="bemail"></span>
+              </div>
+              <div class="form-field">
+                <label class="form-label" for="b-mobile">Mobile number *</label>
+                <div style="display: flex; gap: 8px">
+                  <select
+                    id="cc-select"
+                    aria-label="Country code"
+                    style="
+                      border: 1px solid #d5dae0;
+                      border-radius: 10px;
+                      padding: 12px 10px;
+                      font-size: 14px;
+                      background: #ffffff;
+                      outline-color: #05ef62;
+                      width: 96px;
+                    "
+                  >
+                    <option>+20</option>
+                    <option>+966</option>
+                    <option>+971</option>
+                    <option>+965</option>
+                    <option>+974</option>
+                    <option>+962</option>
+                  </select>
+                  <input
+                    class="form-input"
+                    id="b-mobile"
+                    type="tel"
+                    inputmode="tel"
+                    data-buyer="mobile"
+                    style="flex: 1"
+                  />
+                </div>
+                <span class="form-error" data-error="bmobile"></span>
+              </div>
+              <div class="form-field">
+                <label class="form-label" for="b-country">Country *</label>
+                <select class="form-input" id="b-country" data-buyer="country">
+                  <option value="">Select country</option>
+                  <option>Egypt</option>
+                  <option>Saudi Arabia</option>
+                  <option>UAE</option>
+                  <option>Kuwait</option>
+                  <option>Qatar</option>
+                  <option>Jordan</option>
+                  <option>Other</option>
+                </select>
+                <span class="form-error" data-error="bcountry"></span>
+              </div>
+              <div class="form-field">
+                <label class="form-label" for="b-company">Company</label>
+                <input
+                  class="form-input"
+                  id="b-company"
+                  type="text"
+                  data-buyer="company"
+                />
+              </div>
+              <div class="form-field">
+                <label class="form-label" for="b-title">Job title</label>
+                <input
+                  class="form-input"
+                  id="b-title"
+                  type="text"
+                  data-buyer="title"
+                />
+              </div>
+              <label
+                class="form-grid-full"
+                style="
+                  display: flex;
+                  gap: 10px;
+                  align-items: center;
+                  cursor: pointer;
+                  font-size: 14px;
+                  font-weight: 600;
+                  color: #101010;
+                "
+              >
+                <input
+                  type="checkbox"
+                  id="invoiceCheck"
+                  style="width: 18px; height: 18px; accent-color: #05ef62"
+                />
+                Need an invoice?
+              </label>
+              <div
+                class="form-grid-full"
+                id="invoiceFields"
+                style="display: none"
+              >
+                <div
+                  class="form-grid"
+                  style="border-top: 1px solid #e6eaee; padding-top: 18px"
+                >
+                  <div class="form-field">
+                    <label class="form-label" for="b-invco"
+                      >Company name (invoice)</label
+                    >
+                    <input
+                      class="form-input"
+                      id="b-invco"
+                      type="text"
+                      data-buyer="invCompany"
+                    />
+                  </div>
+                  <div class="form-field">
+                    <label class="form-label" for="b-tax">Tax ID</label>
+                    <input
+                      class="form-input"
+                      id="b-tax"
+                      type="text"
+                      data-buyer="taxId"
+                    />
+                  </div>
+                  <div class="form-field form-grid-full">
+                    <label class="form-label" for="b-billing"
+                      >Billing address</label
+                    >
+                    <input
+                      class="form-input"
+                      id="b-billing"
+                      type="text"
+                      data-buyer="billing"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            style="
+              display: flex;
+              justify-content: flex-end;
+              gap: 12px;
+              margin-top: 20px;
+            "
+          >
+            <button type="button" class="btn-primary" id="step1ContinueBtn">
+              Continue to Attendees →
+            </button>
+          </div>
+        </div>
+
+        <!-- STEP 2: Attendee details -->
+        <div id="step2" style="display: none">
+          <div class="step-header">
+            <span class="step-num">2</span>
+            <h2 class="step-title">Attendee details</h2>
+            <a
+              href="#"
+              style="
+                margin-left: auto;
+                font-size: 12px;
+                font-weight: 600;
+                color: #04c44e;
+              "
+              >Ticket transfer policy</a
+            >
+          </div>
+          <label
+            style="
+              display: flex;
+              gap: 10px;
+              align-items: center;
+              cursor: pointer;
+              font-size: 14px;
+              font-weight: 600;
+              color: #101010;
+              margin-bottom: 16px;
+            "
+          >
+            <input
+              type="checkbox"
+              id="attendingCheck"
+              checked
+              style="width: 18px; height: 18px; accent-color: #05ef62"
+            />
+            I am attending (use my details for Attendee 1)
+          </label>
+          <div
+            id="attendeesContainer"
+            style="display: flex; flex-direction: column; gap: 16px"
+          ></div>
+          <div
+            style="
+              display: flex;
+              justify-content: space-between;
+              gap: 12px;
+              margin-top: 20px;
+              flex-wrap: wrap;
+            "
+          >
+            <button type="button" class="btn-secondary" id="step2BackBtn">
+              ← Back
+            </button>
+            <button type="button" class="btn-primary" id="step2ContinueBtn">
+              Continue to Payment →
+            </button>
+          </div>
+        </div>
+
+        <!-- Promo -->
+        <div id="promoSection">
+          <button
+            id="openPromoBtn"
+            style="
+              background: none;
+              border: none;
+              font-family: Manrope, sans-serif;
+              font-weight: 600;
+              font-size: 14px;
+              color: #04c44e;
+              cursor: pointer;
+              padding: 0;
+            "
+          >
+            Have a promo code?
+          </button>
+          <div
+            id="promoBox"
+            style="
+              display: none;
+              border: 1px solid #d5dae0;
+              border-radius: 14px;
+              padding: 22px 28px;
+            "
+          >
+            <div class="form-label" style="margin-bottom: 10px">Promo code</div>
+            <div style="display: flex; gap: 10px; max-width: 420px">
+              <input
+                id="promoInput"
+                type="text"
+                placeholder="Enter code"
+                aria-label="Promo code"
+                style="
+                  flex: 1;
+                  border: 1px solid #d5dae0;
+                  border-radius: 10px;
+                  padding: 12px 14px;
+                  font-size: 14px;
+                  outline-color: #05ef62;
+                  text-transform: uppercase;
+                "
+              />
+              <button
+                id="applyPromoBtn"
+                style="
+                  background: #101010;
+                  border: none;
+                  color: #ffffff;
+                  border-radius: 10px;
+                  padding: 12px 22px;
+                  font-family: Manrope, sans-serif;
+                  font-weight: 600;
+                  font-size: 13px;
+                  cursor: pointer;
+                "
+              >
+                Apply
+              </button>
+            </div>
+            <div
+              id="promoMessage"
+              style="
+                margin-top: 10px;
+                font-size: 13px;
+                font-weight: 600;
+                color: #6b747e;
+              "
+            ></div>
+            <button
+              id="removePromoBtn"
+              style="
+                display: none;
+                background: none;
+                border: none;
+                font-size: 12px;
+                font-weight: 600;
+                color: #6b747e;
+                cursor: pointer;
+                padding: 6px 0 0;
+                text-decoration: underline;
+              "
+            >
+              Remove code
+            </button>
+            <div
+              style="
+                margin-top: 10px;
+                font-family: &quot;JetBrains Mono&quot;, monospace;
+                font-size: 9px;
+                letter-spacing: 0.06em;
+                color: #9aa1a9;
+              "
+            >
+              DEMO — TRY: LAUNCH · EXPIRED · LIMIT · CTONLY · ANYTHING ELSE =
+              INVALID
+            </div>
+          </div>
+        </div>
+
+        <!-- STEP 3: Payment -->
+        <div id="step3" style="display: none">
+          <div class="step-header">
+            <span class="step-num">3</span>
+            <h2 class="step-title">Payment</h2>
+            <span
+              style="
+                font-family: &quot;JetBrains Mono&quot;, monospace;
+                font-size: 9px;
+                letter-spacing: 0.08em;
+                text-transform: uppercase;
+                color: #6b747e;
+              "
+              >Methods shown depend on approved provider</span
+            >
+          </div>
+          <div class="card">
+            <div class="form-label" style="margin-bottom: 10px">
+              Select payment method
+            </div>
+            <div id="ecdMethodList">
+              <div style="font-size: 13px; color: #6b747e">
+                Loading payment methods…
+              </div>
+            </div>
+            <div id="ecdWalletField" class="form-field">
+              <label class="form-label" for="ecd-wallet-phone"
+                >Wallet mobile (Egypt) *</label
+              >
+              <input
+                class="form-input"
+                id="ecd-wallet-phone"
+                type="tel"
+                placeholder="+2010xxxxxxxx"
+              />
+              <span class="form-error" data-error="wallet"></span>
+            </div>
+            <div
+              id="ecdPayCodes"
+              style="
+                display: none;
+                border: 1px solid #ffb020;
+                background: #fff4de;
+                border-radius: 10px;
+                padding: 12px 14px;
+                margin-bottom: 14px;
+                font-size: 13px;
+                text-align: left;
+              "
+            ></div>
+            <div class="hosted-fields" style="display: none">
+              <div class="form-label" style="margin-bottom: 14px">
+                Hosted payment fields — rendered by the provider (PCI-DSS)
+              </div>
+            </div>
+            <label
+              style="
+                display: flex;
+                gap: 12px;
+                align-items: flex-start;
+                cursor: pointer;
+                font-size: 13px;
+                line-height: 1.7;
+                color: #1f2630;
+                margin-bottom: 10px;
+              "
+            >
+              <input
+                type="checkbox"
+                id="consentCheck"
+                style="
+                  width: 18px;
+                  height: 18px;
+                  margin-top: 2px;
+                  accent-color: #05ef62;
+                "
+              />
+              <span
+                >I agree to the <a href="#">Terms</a>,
+                <a href="#">Ticket Policy</a>, <a href="#">Refund Policy</a>,
+                and <a href="#">Privacy Policy</a>. *</span
+              >
+            </label>
+            <span class="form-error" data-error="consent"></span>
+            <label
+              style="
+                display: flex;
+                gap: 12px;
+                align-items: flex-start;
+                cursor: pointer;
+                font-size: 13px;
+                line-height: 1.7;
+                color: #4a5563;
+                margin: 8px 0 16px;
+              "
+            >
+              <input
+                type="checkbox"
+                id="newsCheck"
+                style="
+                  width: 18px;
+                  height: 18px;
+                  margin-top: 2px;
+                  accent-color: #05ef62;
+                "
+              />
+              <span>Send me TrafficMENA news &amp; events (optional).</span>
+            </label>
+            <div
+              style="
+                font-size: 12px;
+                line-height: 1.8;
+                color: #6b747e;
+                margin-bottom: 20px;
+              "
+            >
+              This event is photographed and recorded — see
+              <a href="#">Recording &amp; Photography Policy</a>.<br />
+              Full Journey does not guarantee a seat in every workshop;
+              reservation is after payment and subject to capacity.
+            </div>
+            <button
+              id="payBtn"
+              disabled
+              style="
+                width: 100%;
+                background: #e6eaee;
+                border: none;
+                color: #9aa1a9;
+                border-radius: 10px;
+                padding: 16px;
+                font-family: Manrope, sans-serif;
+                font-weight: 700;
+                font-size: 16px;
+                cursor: not-allowed;
+              "
+            >
+              Pay
+              <span class="price-total" data-suffix=" EGP">[Total] EGP</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ==================== RIGHT COLUMN (Order Summary) ==================== -->
+      <div class="checkout-right desktop-only">
+        <div class="summary-card">
+          <div class="summary-head">
+            <span
+              class="font-mono"
+              style="
+                font-size: 11px;
+                letter-spacing: 0.1em;
+                text-transform: uppercase;
+                color: #ffffff;
+              "
+              >Order Summary</span
+            >
+            <span
+              class="font-mono"
+              style="font-size: 11px; letter-spacing: 0.08em; color: #05ef62"
+              >SEATS HELD FOR <span id="desktopTimer">12:00</span></span
+            >
+          </div>
+          <div class="summary-body">
+            <div>
+              <div style="font-weight: 700; font-size: 15px; color: #101010">
+                ECommerce Day 2026
+              </div>
+              <div style="font-size: 12px; color: #6b747e; line-height: 1.7">
+                22 October 2026 · Cairo<br />Venue details will be announced
+                soon.
+              </div>
+            </div>
+            <div
+              style="
+                border-top: 1px solid #e6eaee;
+                padding-top: 14px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+              "
+            >
+              <div>
+                <div
+                  style="font-weight: 700; font-size: 14px; color: #101010"
+                  id="desktopTicketName"
+                >
+                  All Access Pass
+                </div>
+                <div
+                  style="font-size: 12px; color: #04c44e; font-weight: 600"
+                  id="desktopTicketTag"
+                >
+                  Learn it. Work on it. Apply it.
+                </div>
+              </div>
+              <div class="qty-stepper" aria-label="Quantity">
+                <button
+                  class="qty-btn"
+                  id="qtyDown"
+                  aria-label="Decrease quantity"
+                >
+                  −
+                </button>
+                <span class="qty-value" id="desktopQty">1</span>
+                <button
+                  class="qty-btn"
+                  id="qtyUp"
+                  aria-label="Increase quantity"
+                >
+                  +
+                </button>
+              </div>
+            </div>
+            <div
+              style="
+                display: flex;
+                flex-direction: column;
+                gap: 8px;
+                font-size: 13px;
+                border-top: 1px solid #e6eaee;
+                padding-top: 14px;
+              "
+            >
+              <div style="display: flex; justify-content: space-between">
+                <span style="color: #4a5563">Unit price</span
+                ><span
+                  class="price-unit"
+                  style="font-weight: 600; color: #101010"
+                  data-suffix=" EGP"
+                  >[Final Price] EGP</span
+                >
+              </div>
+              <div style="display: flex; justify-content: space-between">
+                <span style="color: #4a5563">Quantity</span
+                ><span style="font-weight: 600; color: #101010"
+                  >× <span id="desktopQty2" class="price-qty">1</span></span
+                >
+              </div>
+              <div
+                id="desktopPromoRow"
+                style="display: none; justify-content: space-between"
+              >
+                <span style="color: #04c44e"
+                  >Discount (<span id="desktopPromoCode"></span>)</span
+                ><span
+                  class="price-discount"
+                  style="font-weight: 600; color: #04c44e"
+                  data-minus="1"
+                  data-suffix=" EGP"
+                  >− [Discount] EGP</span
+                >
+              </div>
+              <div style="display: flex; justify-content: space-between">
+                <span style="color: #4a5563">Fees &amp; tax</span
+                ><span style="font-weight: 600; color: #6b747e"
+                  >Included in price</span
+                >
+              </div>
+            </div>
+            <div
+              style="
+                border-top: 1px solid #e6eaee;
+                padding-top: 14px;
+                display: flex;
+                justify-content: space-between;
+                align-items: baseline;
+              "
+            >
+              <span style="font-weight: 700; font-size: 15px">Total</span>
+              <span
+                class="price-total"
+                style="font-weight: 800; font-size: 20px; color: #101010"
+                id="desktopTotal"
+                data-suffix=" EGP"
+                >[Total] EGP</span
+              >
+            </div>
+            <a
+              href="#"
+              style="font-size: 13px; font-weight: 600; color: #04c44e"
+              >Change Ticket / Quantity</a
+            >
+            <div style="display: flex; gap: 8px">
+              <button
+                class="ticket-chip active"
+                data-ticket="fj"
+                style="
+                  flex: 1;
+                  background: #101010;
+                  border: 1px solid #101010;
+                  border-radius: 8px;
+                  padding: 8px;
+                  font-family: Manrope, sans-serif;
+                  font-weight: 600;
+                  font-size: 11px;
+                  color: #ffffff;
+                  cursor: pointer;
+                "
+              >
+                All Access Pass
+              </button>
+              <button
+                class="ticket-chip"
+                data-ticket="ct"
+                style="
+                  flex: 1;
+                  background: #ffffff;
+                  border: 1px solid #d5dae0;
+                  border-radius: 8px;
+                  padding: 8px;
+                  font-family: Manrope, sans-serif;
+                  font-weight: 600;
+                  font-size: 11px;
+                  color: #101010;
+                  cursor: pointer;
+                "
+              >
+                Conference Pass
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="value-card">
+          <div
+            class="font-mono"
+            style="
+              font-size: 9px;
+              letter-spacing: 0.1em;
+              text-transform: uppercase;
+              color: #04c44e;
+              margin-bottom: 8px;
+            "
+          >
+            Your pass includes
+          </div>
+          <div
+            style="font-size: 13px; line-height: 1.8; color: #1f2630"
+            id="desktopValueReminder"
+          >
+            Main Stage + all recordings + Workshop Templates &amp; Files +
+            workshop entry &amp; seat reservation + hands-on work + full outputs
+            + 1-year platform access.
+          </div>
+          <ul
+            id="checkoutPackageFeatures"
+            hidden
+            style="
+              margin: 10px 0 0;
+              padding-left: 18px;
+              font-size: 12px;
+              line-height: 1.7;
+              color: #1f2630;
+            "
+          ></ul>
+          <div
+            id="desktopFjNote"
+            style="
+              font-size: 12px;
+              color: #4a5563;
+              margin-top: 8px;
+              border-top: 1px solid #c3f7d7;
+              padding-top: 8px;
+            "
+          >
+            Workshop access grants eligibility; you pick your workshops after
+            payment based on capacity.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== MOBILE STICKY PAY BAR ==================== -->
+    <div class="mobile-pay-bar mobile-only">
+      <div class="mobile-pay-bar-total">
+        <div class="mobile-pay-bar-label">Total</div>
+        <div class="mobile-pay-bar-value" id="mobilePayTotal">
+          <span class="price-total" data-suffix=" EGP">[Total] EGP</span>
+        </div>
+      </div>
+      <button
+        id="mobilePayBtn"
+        disabled
+        style="
+          background: #e6eaee;
+          border: none;
+          color: #9aa1a9;
+          border-radius: 10px;
+          padding: 14px 22px;
+          font-family: Manrope, sans-serif;
+          font-weight: 700;
+          font-size: 14px;
+          cursor: not-allowed;
+          flex: none;
+        "
+      >
+        Pay <span class="price-total" data-suffix=" EGP">[Total] EGP</span>
+      </button>
+    </div>
+
+    <!-- Live payment status overlay (uses design-state copy) -->
+    <div
+      id="ecdOverlay"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="ecdOverlayTitle"
+    >
+      <div id="ecdOverlayCard">
+        <div id="ecdOverlayIcon" style="margin-bottom: 12px"></div>
+        <div
+          id="ecdOverlayTitle"
+          style="font-weight: 800; font-size: 18px; margin-bottom: 8px"
+        ></div>
+        <div
+          id="ecdOverlayBody"
+          style="font-size: 13px; color: #4a5563; margin-bottom: 18px"
+        ></div>
+        <div
+          id="ecdOverlayActions"
+          style="
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+          "
+        ></div>
+      </div>
+    </div>
+
+    <!-- ==================== EDGE STATES SECTION (design reference, hidden in production) ==================== -->
+    <div id="designStatesGallery" class="container" style="padding: 72px 24px">
+      <div
+        class="font-mono"
+        style="
+          font-size: 12px;
+          letter-spacing: 0.1em;
+          text-transform: uppercase;
+          color: #6b747e;
+          margin-bottom: 32px;
+        "
+      >
+        Payment, hold &amp; recovery states
+      </div>
+      <div
+        style="
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+          gap: 24px;
+        "
+      >
+        <!-- Processing -->
+        <div class="state-card" style="border: 1px solid #d5dae0">
+          <div class="spinner"></div>
+          <div style="font-weight: 800; font-size: 18px; margin-bottom: 8px">
+            Processing your payment…
+          </div>
+          <div style="font-size: 13px; color: #4a5563; margin-bottom: 18px">
+            Do not close this page.
+          </div>
+          <button
+            disabled
+            style="
+              width: 100%;
+              background: #e6eaee;
+              border: none;
+              color: #9aa1a9;
+              border-radius: 10px;
+              padding: 14px;
+              font-family: Manrope, sans-serif;
+              font-weight: 700;
+              font-size: 14px;
+              cursor: not-allowed;
+            "
+          >
+            Pay [Total] EGP
+          </button>
+        </div>
+
+        <!-- Succeeded -->
+        <div class="state-card" style="border: 1px solid #c3f7d7">
+          <div
+            class="state-icon"
+            style="
+              background: #e6fbee;
+              border: 1px solid #c3f7d7;
+              color: #04c44e;
+              font-size: 22px;
+            "
+          >
+            ✓
+          </div>
+          <div style="font-weight: 800; font-size: 18px; margin-bottom: 8px">
+            Payment succeeded
+          </div>
+          <div style="font-size: 13px; color: #4a5563">
+            Taking you to your booking confirmation…
+          </div>
+        </div>
+
+        <!-- Failed -->
+        <div class="state-card" style="border: 1px solid #e2a9a5">
+          <div
+            class="state-icon"
+            style="
+              background: #fbedec;
+              border: 1px solid #e2a9a5;
+              color: #b3362e;
+              font-size: 20px;
+            "
+          >
+            ✕
+          </div>
+          <div style="font-weight: 800; font-size: 18px; margin-bottom: 8px">
+            Payment didn't go through
+          </div>
+          <div style="font-size: 13px; color: #4a5563; margin-bottom: 20px">
+            Your card was not charged. This is usually a bank decline or a
+            timeout.
+          </div>
+          <div style="display: flex; gap: 10px">
+            <button
+              class="btn-primary"
+              style="flex: 1; padding: 13px; font-size: 13px"
+            >
+              Retry Payment
+            </button>
+            <button
+              class="btn-secondary"
+              style="flex: 1; padding: 13px; font-size: 13px"
+            >
+              Change Method
+            </button>
+          </div>
+        </div>
+
+        <!-- Cancelled -->
+        <div class="state-card" style="border: 1px solid #d5dae0">
+          <div
+            class="state-icon"
+            style="
+              background: #f4f6f8;
+              border: 1px solid #d5dae0;
+              color: #6b747e;
+              font-size: 20px;
+            "
+          >
+            –
+          </div>
+          <div style="font-weight: 800; font-size: 18px; margin-bottom: 8px">
+            Payment cancelled
+          </div>
+          <div style="font-size: 13px; color: #4a5563; margin-bottom: 20px">
+            You cancelled at the payment step. Your seats are still held for the
+            remaining time.
+          </div>
+          <button
+            class="btn-primary"
+            style="width: 100%; padding: 13px; font-size: 13px"
+          >
+            Return to Payment
+          </button>
+        </div>
+
+        <!-- Pending -->
+        <div class="state-card" style="border: 1px solid #ffb020">
+          <div
+            class="state-icon"
+            style="
+              background: #fff4de;
+              border: 1px solid #ffb020;
+              color: #8a5a00;
+            "
+          >
+            ⏱
+          </div>
+          <div style="font-weight: 800; font-size: 18px; margin-bottom: 8px">
+            We're verifying your payment
+          </div>
+          <div style="font-size: 13px; color: #4a5563; margin-bottom: 20px">
+            This can take a moment with some methods. We'll email you the result
+            either way.
+          </div>
+          <button
+            class="btn-secondary"
+            style="width: 100%; padding: 13px; font-size: 13px"
+          >
+            Check Status
+          </button>
+        </div>
+
+        <!-- Duplicate -->
+        <div class="state-card" style="border: 1px solid #d5dae0">
+          <div
+            class="state-icon"
+            style="
+              background: #f4f6f8;
+              border: 1px solid #d5dae0;
+              color: #101010;
+            "
+          >
+            ≡
+          </div>
+          <div style="font-weight: 800; font-size: 18px; margin-bottom: 8px">
+            This booking already exists
+          </div>
+          <div style="font-size: 13px; color: #4a5563; margin-bottom: 20px">
+            We found a completed booking with the same details — you were not
+            charged twice.
+          </div>
+          <button
+            class="btn-primary"
+            style="width: 100%; padding: 13px; font-size: 13px"
+          >
+            View My Booking
+          </button>
+        </div>
+
+        <!-- Hold expired -->
+        <div class="state-card" style="border: 1px solid #d5dae0">
+          <div
+            class="font-mono"
+            style="
+              font-size: 11px;
+              letter-spacing: 0.1em;
+              color: #6b747e;
+              margin-bottom: 14px;
+            "
+          >
+            SEATS HELD FOR 00:00
+          </div>
+          <div style="font-weight: 800; font-size: 18px; margin-bottom: 8px">
+            Your hold expired — we re-checked availability.
+          </div>
+          <div style="font-size: 13px; color: #4a5563; margin-bottom: 20px">
+            Your details are saved. Continue to hold seats again at current
+            availability.
+          </div>
+          <button
+            class="btn-primary"
+            style="width: 100%; padding: 13px; font-size: 13px"
+          >
+            Continue
+          </button>
+        </div>
+
+        <!-- Sold out interstitial -->
+        <div class="state-card" style="border: 1px solid #d5dae0">
+          <span
+            style="
+              display: inline-block;
+              border-radius: 999px;
+              padding: 4px 12px;
+              font-size: 12px;
+              font-weight: 600;
+              background: #f4f6f8;
+              border: 1px solid #d5dae0;
+              color: #4a5563;
+              margin-bottom: 14px;
+            "
+            >Fully Booked</span
+          >
+          <div style="font-weight: 800; font-size: 18px; margin-bottom: 8px">
+            This ticket sold out while you were checking out
+          </div>
+          <div style="font-size: 13px; color: #4a5563; margin-bottom: 20px">
+            You were not charged. Join the waiting list and we'll contact you if
+            seats open.
+          </div>
+          <div style="display: flex; gap: 10px">
+            <button
+              class="btn-secondary"
+              style="flex: 1; padding: 13px; font-size: 13px"
+            >
+              Return to Tickets
+            </button>
+            <button
+              class="btn-primary"
+              style="flex: 1; padding: 13px; font-size: 13px"
+            >
+              Join Waiting List
+            </button>
+          </div>
+        </div>
+
+        <!-- Price changed interstitial -->
+        <div class="state-card" style="border: 1px solid #ffb020">
+          <div style="font-weight: 800; font-size: 18px; margin-bottom: 8px">
+            The price was updated
+          </div>
+          <div style="font-size: 13px; color: #4a5563; margin-bottom: 16px">
+            The ticket price changed while you were checking out. Please
+            re-confirm before paying.
+          </div>
+          <div
+            style="
+              border: 1px solid #e6eaee;
+              border-radius: 10px;
+              padding: 12px;
+              display: flex;
+              justify-content: space-between;
+              font-size: 13px;
+              margin-bottom: 20px;
+            "
+          >
+            <span style="color: #6b747e">New total</span
+            ><span style="font-weight: 800; color: #101010">[Total] EGP</span>
+          </div>
+          <button
+            class="btn-primary"
+            style="width: 100%; padding: 13px; font-size: 13px"
+          >
+            Confirm New Total &amp; Continue
+          </button>
+        </div>
+
+        <!-- Resume banner -->
+        <div
+          style="
+            grid-column: 1 / -1;
+            background: #101010;
+            border-radius: 12px;
+            padding: 16px 22px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            box-shadow: 0 2px 16px rgba(16, 16, 16, 0.1);
+            flex-wrap: wrap;
+          "
+        >
+          <svg
+            width="18"
+            height="18"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="#05ef62"
+            stroke-width="2"
+            stroke-linecap="round"
+          >
+            <path d="M4 4v6h6 M20 20v-6h-6"></path>
+            <path
+              d="M20 9A8 8 0 0 0 5.6 5.6L4 10 M4 15a8 8 0 0 0 14.4 3.4L20 14"
+            ></path>
+          </svg>
+          <div style="flex: 1; min-width: 200px">
+            <div style="font-weight: 700; font-size: 14px; color: #ffffff">
+              Connection restored — your checkout was saved.
+            </div>
+            <div style="font-size: 12px; color: #9aa1a9">
+              Your details and seat hold are intact. Pick up where you left off.
+            </div>
+          </div>
+          <button
+            class="btn-primary"
+            style="padding: 11px 20px; font-size: 13px"
+          >
+            Resume Checkout
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== SCRIPTS ==================== -->
+    <script>
+      // ==========================================
+      // 00. STATE
+      // ==========================================
+      var state = {
+        ticket: "fj",
+        qty: 1,
+        attending: true,
+        invoice: false,
+        cc: "+20",
+        buyer: {
+          name: "",
+          email: "",
+          mobile: "",
+          country: "",
+          company: "",
+          title: "",
+          invCompany: "",
+          taxId: "",
+          billing: "",
+        },
+        attendees: [],
+        promoOpen: false,
+        promoCode: "",
+        promoState: null,
+        appliedCode: "",
+        consent: false,
+        news: false,
+        tried: false,
+        stage: 1,
+        mSummaryOpen: false,
+        secs: 720,
+        method: "Cards",
+        paymentMethodId: null,
+        paymentMethods: [],
+        walletPhone: "",
+        paying: false,
+        sessionReady: false,
+      };
+
+      // Prefill ticket from ?ticket=ct|fj
+      (function () {
+        try {
+          var params = new URLSearchParams(window.location.search);
+          var t = (params.get("ticket") || "").toLowerCase();
+          if (t === "ct" || t === "fj") state.ticket = t;
+        } catch (e) {}
+      })();
+
+      function blankAtt() {
+        return {
+          name: "",
+          email: "",
+          mobile: "",
+          role: "",
+          company: "",
+          access: "",
+          interests: [],
+        };
+      }
+
+      function getIsFj() {
+        return state.ticket === "fj";
+      }
+
+      function getTicketName() {
+        var pkg = window.EventPrices && EventPrices.getPackage(state.ticket);
+        if (pkg && pkg.displayName) return pkg.displayName;
+        if (window.EventPrices) {
+          return EventPrices.getTicket(state.ticket).name;
+        }
+        return getIsFj() ? "All Access Pass" : "Conference Pass";
+      }
+
+      function getTicketTag() {
+        var pkg = window.EventPrices && EventPrices.getPackage(state.ticket);
+        if (pkg && pkg.tagline) return pkg.tagline;
+        if (window.EventPrices) {
+          return EventPrices.getTicket(state.ticket).tagline;
+        }
+        return getIsFj()
+          ? "Learn it. Work on it. Apply it."
+          : "See the whole system.";
+      }
+
+      function getValueReminder() {
+        var pkg = window.EventPrices && EventPrices.getPackage(state.ticket);
+        if (pkg) {
+          if (pkg.description) return pkg.description;
+          var included = (pkg.features || [])
+            .filter(function (f) {
+              return f.kind === "included";
+            })
+            .map(function (f) {
+              return f.label;
+            });
+          if (included.length) return included.join(" · ");
+        }
+        return getIsFj()
+          ? "Main Stage + all recordings + Workshop Templates & Files + workshop entry & seat reservation + hands-on work + full outputs + 1-year platform access."
+          : "Main Stage + all session recordings + Workshop Templates & Files + 3-month platform access.";
+      }
+
+      function renderPackageFeatures() {
+        var list = document.getElementById("checkoutPackageFeatures");
+        if (!list) return;
+        list.innerHTML = "";
+        var pkg = window.EventPrices && EventPrices.getPackage(state.ticket);
+        if (!pkg || !pkg.features || !pkg.features.length) {
+          list.hidden = true;
+          return;
+        }
+        list.hidden = false;
+        pkg.features
+          .filter(function (f) {
+            return f.kind === "included";
+          })
+          .forEach(function (f) {
+            var li = document.createElement("li");
+            li.textContent = f.label;
+            if (f.emphasis) li.style.fontWeight = "700";
+            list.appendChild(li);
+          });
+      }
+
+      // ==========================================
+      // 01. ERRORS
+      // ==========================================
+      function getErrors(stage) {
+        var e = {};
+        var b = state.buyer;
+        var checkStage = stage || state.stage;
+        if (checkStage >= 1) {
+          if (!b.name) e.bname = "Buyer full name is required.";
+          if (!b.email) e.bemail = "Buyer email is required.";
+          else if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(b.email))
+            e.bemail = "Enter a valid buyer email.";
+          if (!b.mobile) e.bmobile = "Buyer mobile is required.";
+          if (!b.country) e.bcountry = "Buyer country is required.";
+        }
+
+        if (checkStage >= 2) {
+          for (var i = 0; i < state.qty; i++) {
+            var locked = state.attending && i === 0;
+            var a = locked
+              ? { name: b.name, email: b.email, mobile: b.mobile }
+              : state.attendees[i] || blankAtt();
+            if (!locked) {
+              if (!a.name)
+                e["aname" + i] = "Attendee " + (i + 1) + " name is required.";
+              if (!a.email)
+                e["aemail" + i] = "Attendee " + (i + 1) + " email is required.";
+              if (!a.mobile)
+                e["amobile" + i] =
+                  "Attendee " + (i + 1) + " mobile is required.";
+            }
+          }
+        }
+        if (checkStage >= 3) {
+          if (!state.consent)
+            e.consent = "You must agree to the policies to pay.";
+          if (!state.paymentMethodId)
+            e.wallet = e.wallet || "Select a payment method.";
+        }
+        return e;
+      }
+
+      function showErrors(stage) {
+        var errs = state.tried ? getErrors(stage) : {};
+        var list = Object.values(errs);
+        var summary = document.getElementById("errorSummary");
+        var listEl = document.getElementById("errorList");
+        if (list.length > 0) {
+          listEl.innerHTML = "";
+          list.forEach(function (msg) {
+            var div = document.createElement("div");
+            div.className = "error-summary-item";
+            div.textContent = "• " + msg;
+            listEl.appendChild(div);
+          });
+          summary.style.display = "block";
+        } else {
+          summary.style.display = "none";
+        }
+        // Field-level errors
+        document.querySelectorAll(".form-error").forEach(function (el) {
+          el.textContent = "";
+        });
+        Object.keys(errs).forEach(function (key) {
+          document
+            .querySelectorAll('[data-error="' + key + '"]')
+            .forEach(function (el) {
+              el.textContent = errs[key];
+            });
+        });
+      }
+
+      // ==========================================
+      // 02. RENDER ATTENDEES
+      // ==========================================
+      function renderAttendees() {
+        var container = document.getElementById("attendeesContainer");
+        var emails = [];
+        var html = "";
+        var errs = state.tried ? getErrors() : {};
+
+        for (var i = 0; i < state.qty; i++) {
+          var locked = state.attending && i === 0;
+          var raw = state.attendees[i] || blankAtt();
+          var val = locked
+            ? {
+                ...raw,
+                name: state.buyer.name,
+                email: state.buyer.email,
+                mobile: state.buyer.mobile,
+              }
+            : raw;
+          var dup = val.email && emails.indexOf(val.email.toLowerCase()) !== -1;
+          if (val.email) emails.push(val.email.toLowerCase());
+
+          var nameErr = errs["aname" + i] || "";
+          var emailErr = errs["aemail" + i] || "";
+          var mobileErr = errs["amobile" + i] || "";
+
+          var tracks = [
+            { name: "Main Stage", dot: "#101010" },
+            { name: "CLICKED", dot: "#05ef62" },
+            { name: "CONFIRMED", dot: "#006681" },
+            { name: "DELIVERED", dot: "#ffb020" },
+          ];
+          var interestHtml = tracks
+            .map(function (t) {
+              var on = (val.interests || []).indexOf(t.name) !== -1;
+              var activeClass = on ? "active" : "";
+              return (
+                '<button type="button" class="interest-chip ' +
+                activeClass +
+                '" data-att="' +
+                i +
+                '" data-interest="' +
+                t.name +
+                '" style="' +
+                (on
+                  ? "background: #101010; border-color: #101010; color: #ffffff;"
+                  : "") +
+                '">' +
+                '<span class="interest-dot" style="background: ' +
+                t.dot +
+                ';"></span>' +
+                t.name +
+                "</button>"
+              );
+            })
+            .join("");
+
+          html += '<div class="attendee-card">';
+          html +=
+            '<div style="display: flex; align-items: center; gap: 10px; margin-bottom: 18px;">';
+          html +=
+            '<span class="font-mono" style="font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: #101010;">Attendee ' +
+            (i + 1) +
+            "</span>";
+          if (locked) {
+            html +=
+              '<span style="background: #e6fbee; border: 1px solid #c3f7d7; border-radius: 999px; padding: 2px 10px; font-size: 11px; font-weight: 600; color: #04c44e;">You — copied from buyer</span>';
+          }
+          html += "</div>";
+          html += '<div class="attendee-grid">';
+          html +=
+            '<div class="form-field"><label class="form-label">Attendee name *</label><input type="text" value="' +
+            (val.name || "") +
+            '" data-att="' +
+            i +
+            '" data-field="name" ' +
+            (locked ? "disabled" : "") +
+            ' style="border: 1px solid ' +
+            (nameErr ? "#c4342d" : "#d5dae0") +
+            "; border-radius: 10px; padding: 12px 14px; font-size: 14px; outline-color: #05ef62; background: " +
+            (locked ? "#f4f6f8" : "#ffffff") +
+            '; width: 100%;"><span class="form-error" data-error="aname' +
+            i +
+            '">' +
+            nameErr +
+            "</span></div>";
+          html +=
+            '<div class="form-field"><label class="form-label">Attendee email *</label><input type="email" value="' +
+            (val.email || "") +
+            '" data-att="' +
+            i +
+            '" data-field="email" ' +
+            (locked ? "disabled" : "") +
+            ' style="border: 1px solid ' +
+            (emailErr ? "#c4342d" : "#d5dae0") +
+            "; border-radius: 10px; padding: 12px 14px; font-size: 14px; outline-color: #05ef62; background: " +
+            (locked ? "#f4f6f8" : "#ffffff") +
+            '; width: 100%;"><span class="form-error" data-error="aemail' +
+            i +
+            '">' +
+            emailErr +
+            "</span>";
+          if (dup)
+            html +=
+              '<span style="font-size: 11px; color: #8a5a00; background: #fff4de; border: 1px solid #ffb020; border-radius: 6px; padding: 4px 8px;">This email is already used for another attendee — tickets are individual. You can continue.</span>';
+          html += "</div>";
+          html +=
+            '<div class="form-field"><label class="form-label">Attendee mobile *</label><input type="tel" inputmode="tel" value="' +
+            (val.mobile || "") +
+            '" data-att="' +
+            i +
+            '" data-field="mobile" ' +
+            (locked ? "disabled" : "") +
+            ' style="border: 1px solid ' +
+            (mobileErr ? "#c4342d" : "#d5dae0") +
+            "; border-radius: 10px; padding: 12px 14px; font-size: 14px; outline-color: #05ef62; background: " +
+            (locked ? "#f4f6f8" : "#ffffff") +
+            '; width: 100%;"><span class="form-error" data-error="amobile' +
+            i +
+            '">' +
+            mobileErr +
+            "</span></div>";
+          html +=
+            '<div class="form-field"><label class="form-label">Role</label><select data-att="' +
+            i +
+            '" data-field="role" style="border: 1px solid #d5dae0; border-radius: 10px; padding: 12px 14px; font-size: 14px; background: #ffffff; outline-color: #05ef62; width: 100%;"><option value="">Select role</option><option' +
+            (val.role === "Founder" ? " selected" : "") +
+            ">Founder</option><option" +
+            (val.role === "Operator" ? " selected" : "") +
+            ">Operator</option><option" +
+            (val.role === "Marketer" ? " selected" : "") +
+            ">Marketer</option><option" +
+            (val.role === "Other" ? " selected" : "") +
+            ">Other</option></select></div>";
+          html +=
+            '<div class="form-field"><label class="form-label">Company</label><input type="text" value="' +
+            (val.company || "") +
+            '" data-att="' +
+            i +
+            '" data-field="company" style="border: 1px solid #d5dae0; border-radius: 10px; padding: 12px 14px; font-size: 14px; outline-color: #05ef62; width: 100%;"></div>';
+          html +=
+            '<div class="form-field"><label class="form-label">Accessibility needs</label><input type="text" value="' +
+            (val.access || "") +
+            '" data-att="' +
+            i +
+            '" data-field="access" placeholder="Optional" style="border: 1px solid #d5dae0; border-radius: 10px; padding: 12px 14px; font-size: 14px; outline-color: #05ef62; width: 100%;"></div>';
+          html +=
+            '<div class="form-grid-full"><div class="form-label" style="margin-bottom: 8px;">Interests</div><div style="display: flex; gap: 8px; flex-wrap: wrap;">' +
+            interestHtml +
+            "</div></div>";
+          html += "</div></div>";
+        }
+        container.innerHTML = html;
+        bindAttendeeInputs();
+      }
+
+      function bindAttendeeInputs() {
+        document.querySelectorAll("[data-att]").forEach(function (el) {
+          if (el.tagName === "INPUT" || el.tagName === "SELECT") {
+            el.addEventListener("input", function () {
+              var i = parseInt(this.getAttribute("data-att"));
+              var field = this.getAttribute("data-field");
+              if (!state.attendees[i]) state.attendees[i] = blankAtt();
+              state.attendees[i][field] = this.value;
+            });
+            el.addEventListener("change", function () {
+              var i = parseInt(this.getAttribute("data-att"));
+              var field = this.getAttribute("data-field");
+              if (!state.attendees[i]) state.attendees[i] = blankAtt();
+              state.attendees[i][field] = this.value;
+            });
+          }
+        });
+        document.querySelectorAll(".interest-chip").forEach(function (btn) {
+          btn.addEventListener("click", function () {
+            var i = parseInt(this.getAttribute("data-att"));
+            var name = this.getAttribute("data-interest");
+            if (!state.attendees[i]) state.attendees[i] = blankAtt();
+            var interests = state.attendees[i].interests || [];
+            var idx = interests.indexOf(name);
+            if (idx === -1) interests.push(name);
+            else interests.splice(idx, 1);
+            state.attendees[i].interests = interests;
+            renderAttendees();
+          });
+        });
+      }
+
+      // ==========================================
+      // 03. RENDER BUYER
+      // ==========================================
+      function bindBuyerInputs() {
+        document.querySelectorAll("[data-buyer]").forEach(function (el) {
+          el.addEventListener("input", function () {
+            var field = this.getAttribute("data-buyer");
+            state.buyer[field] = this.value;
+            if (state.attending) {
+              renderAttendees();
+            }
+          });
+          el.addEventListener("change", function () {
+            var field = this.getAttribute("data-buyer");
+            state.buyer[field] = this.value;
+            if (state.attending) {
+              renderAttendees();
+            }
+          });
+        });
+        var ccSelect = document.getElementById("cc-select");
+        if (ccSelect) {
+          ccSelect.addEventListener("change", function () {
+            state.cc = this.value;
+          });
+        }
+        var invoiceCheck = document.getElementById("invoiceCheck");
+        if (invoiceCheck) {
+          invoiceCheck.addEventListener("change", function () {
+            state.invoice = this.checked;
+            document.getElementById("invoiceFields").style.display = this
+              .checked
+              ? "block"
+              : "none";
+          });
+        }
+        var attendingCheck = document.getElementById("attendingCheck");
+        if (attendingCheck) {
+          attendingCheck.addEventListener("change", function () {
+            state.attending = this.checked;
+            renderAttendees();
+          });
+        }
+      }
+
+      // ==========================================
+      // 04. PROMO
+      // ==========================================
+      function bindPromo() {
+        document
+          .getElementById("openPromoBtn")
+          .addEventListener("click", function () {
+            document.getElementById("promoBox").style.display = "block";
+            this.style.display = "none";
+          });
+        document
+          .getElementById("applyPromoBtn")
+          .addEventListener("click", function () {
+            var code = document
+              .getElementById("promoInput")
+              .value.trim()
+              .toUpperCase();
+            var map = {
+              LAUNCH: "valid",
+              EXPIRED: "expired",
+              LIMIT: "limit",
+              CTONLY: "na",
+            };
+            var s = code ? map[code] || "invalid" : "invalid";
+            state.promoState = s;
+            state.appliedCode = s === "valid" ? code : "";
+            renderPromo();
+          });
+        document
+          .getElementById("removePromoBtn")
+          .addEventListener("click", function () {
+            state.promoState = "removed";
+            state.appliedCode = "";
+            state.promoCode = "";
+            document.getElementById("promoInput").value = "";
+            renderPromo();
+          });
+      }
+
+      function renderPromo() {
+        var msgs = {
+          valid: {
+            m: "Code applied — discount reflected in your total.",
+            c: "#04c44e",
+          },
+          invalid: {
+            m: "This code is not valid. Check the spelling and try again.",
+            c: "#b3362e",
+          },
+          expired: { m: "This code has expired.", c: "#b3362e" },
+          na: {
+            m: "This code is not applicable to this ticket type.",
+            c: "#8a5a00",
+          },
+          limit: { m: "This code has reached its usage limit.", c: "#b3362e" },
+          removed: { m: "Promo code removed.", c: "#6b747e" },
+        };
+        var pm = state.promoState
+          ? msgs[state.promoState]
+          : { m: "", c: "#6b747e" };
+        var msgEl = document.getElementById("promoMessage");
+        msgEl.textContent = pm.m;
+        msgEl.style.color = pm.c;
+        document.getElementById("removePromoBtn").style.display =
+          state.promoState === "valid" ? "inline-block" : "none";
+
+        // Update summary displays
+        var promoRows = ["desktopPromoRow", "mobilePromoRow"];
+        promoRows.forEach(function (id) {
+          var el = document.getElementById(id);
+          if (el)
+            el.style.display = state.promoState === "valid" ? "flex" : "none";
+        });
+        var codes = ["desktopPromoCode", "mobilePromoCode"];
+        codes.forEach(function (id) {
+          var el = document.getElementById(id);
+          if (el) el.textContent = state.appliedCode;
+        });
+        updatePrices();
+      }
+
+      // ==========================================
+      // 05. QUANTITY & TICKET TYPE
+      // ==========================================
+      function updatePrices() {
+        if (!window.EventPrices) return;
+        var promo = state.promoState === "valid" ? state.appliedCode : "";
+        var totals = EventPrices.calcTotals(state.ticket, state.qty, promo);
+        EventPrices.applyTotals(totals);
+      }
+
+      function updateSummary() {
+        document.getElementById("desktopQty").textContent = state.qty;
+        document.getElementById("desktopQty2").textContent = state.qty;
+        document.getElementById("mobileQty").textContent = state.qty;
+        document.getElementById("desktopTicketName").textContent =
+          getTicketName();
+        document.getElementById("desktopTicketTag").textContent =
+          getTicketTag();
+        document.getElementById("desktopValueReminder").textContent =
+          getValueReminder();
+        document.getElementById("desktopFjNote").style.display = getIsFj()
+          ? "block"
+          : "none";
+        renderPackageFeatures();
+
+        document.querySelectorAll(".ticket-chip").forEach(function (btn) {
+          var isActive = btn.getAttribute("data-ticket") === state.ticket;
+          btn.style.background = isActive ? "#101010" : "#ffffff";
+          btn.style.borderColor = isActive ? "#101010" : "#d5dae0";
+          btn.style.color = isActive ? "#ffffff" : "#101010";
+          var chipPkg =
+            window.EventPrices &&
+            EventPrices.getPackage(btn.getAttribute("data-ticket"));
+          if (chipPkg && chipPkg.displayName) {
+            btn.textContent = chipPkg.displayName;
+          }
+        });
+
+        updatePrices();
+        renderAttendees();
+      }
+
+      document.getElementById("qtyUp").addEventListener("click", function () {
+        state.qty = Math.min(10, state.qty + 1);
+        updateSummary();
+      });
+      document.getElementById("qtyDown").addEventListener("click", function () {
+        state.qty = Math.max(1, state.qty - 1);
+        updateSummary();
+      });
+      document.querySelectorAll(".ticket-chip").forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          state.ticket = this.getAttribute("data-ticket");
+          updateSummary();
+        });
+      });
+
+      // ==========================================
+      // 06. TIMER
+      // ==========================================
+      setInterval(function () {
+        state.secs = Math.max(0, state.secs - 1);
+        var mm = String(Math.floor(state.secs / 60)).padStart(2, "0");
+        var ss = String(state.secs % 60).padStart(2, "0");
+        document.getElementById("desktopTimer").textContent = mm + ":" + ss;
+        document.getElementById("mobileTimer").textContent = mm + ":" + ss;
+      }, 1000);
+
+      // ==========================================
+      // 07. MOBILE SUMMARY ACCORDION
+      // ==========================================
+      document
+        .getElementById("mobileSummaryToggle")
+        .addEventListener("click", function () {
+          state.mSummaryOpen = !state.mSummaryOpen;
+          document.getElementById("mobileSummaryBody").style.display =
+            state.mSummaryOpen ? "flex" : "none";
+          document.getElementById("mobileSummaryIcon").textContent =
+            state.mSummaryOpen ? "−" : "+";
+        });
+
+      // ==========================================
+      // 08. STAGES + ECD BACKEND
+      // ==========================================
+      function assembleMobile(local, cc) {
+        var digits = String(local || "").replace(/\D/g, "");
+        if (digits.startsWith("0")) digits = digits.slice(1);
+        var code = String(cc || "+20").replace(/\s/g, "");
+        if (!code.startsWith("+")) code = "+" + code;
+        return code + digits;
+      }
+
+      function buildAttendeesPayload() {
+        var list = [];
+        for (var i = 0; i < state.qty; i++) {
+          var locked = state.attending && i === 0;
+          var a = state.attendees[i] || blankAtt();
+          list.push({
+            name: locked ? state.buyer.name : a.name,
+            email: locked ? state.buyer.email : a.email,
+            mobile: locked
+              ? assembleMobile(state.buyer.mobile, state.cc)
+              : assembleMobile(a.mobile, state.cc),
+            company: a.company || state.buyer.company || null,
+            title: a.role || a.title || state.buyer.title || null,
+            interests: a.interests || [],
+          });
+        }
+        return list;
+      }
+
+      function showOverlay(opts) {
+        var overlay = document.getElementById("ecdOverlay");
+        document.getElementById("ecdOverlayIcon").innerHTML = opts.icon || "";
+        document.getElementById("ecdOverlayTitle").textContent =
+          opts.title || "";
+        document.getElementById("ecdOverlayBody").textContent = opts.body || "";
+        var actions = document.getElementById("ecdOverlayActions");
+        actions.innerHTML = "";
+        (opts.actions || []).forEach(function (action) {
+          var btn = document.createElement("button");
+          btn.type = "button";
+          btn.className = action.primary ? "btn-primary" : "btn-secondary";
+          btn.textContent = action.label;
+          btn.style.padding = "12px 18px";
+          btn.style.fontSize = "13px";
+          btn.addEventListener("click", action.onClick);
+          actions.appendChild(btn);
+        });
+        overlay.classList.add("open");
+      }
+
+      function hideOverlay() {
+        document.getElementById("ecdOverlay").classList.remove("open");
+      }
+
+      function renderPaymentMethods(methods) {
+        state.paymentMethods = methods || [];
+        var list = document.getElementById("ecdMethodList");
+        if (!list) return;
+        if (!methods || !methods.length) {
+          list.innerHTML =
+            '<div style="font-size:13px;color:#b3362e">No payment methods available. Check backend Fawaterk config.</div>';
+          return;
+        }
+        list.innerHTML = "";
+        methods.forEach(function (m, idx) {
+          var btn = document.createElement("button");
+          btn.type = "button";
+          btn.className =
+            "ecd-method-option" +
+            (state.paymentMethodId === m.paymentId ||
+            (!state.paymentMethodId && idx === 0)
+              ? " active"
+              : "");
+          btn.setAttribute("data-method-id", String(m.paymentId));
+          btn.innerHTML =
+            (m.logo
+              ? '<img src="' +
+                m.logo +
+                '" alt="" width="28" height="28" style="object-fit:contain" />'
+              : "") +
+            "<span>" +
+            (m.name_en || m.name_ar || "Method " + m.paymentId) +
+            "</span>";
+          btn.addEventListener("click", function () {
+            state.paymentMethodId = m.paymentId;
+            state.method = m.name_en || "Payment";
+            document
+              .querySelectorAll(".ecd-method-option")
+              .forEach(function (el) {
+                el.classList.toggle(
+                  "active",
+                  el.getAttribute("data-method-id") === String(m.paymentId),
+                );
+              });
+            var wallet = /wallet/i.test(m.name_en || "");
+            document.getElementById("ecdWalletField").style.display = wallet
+              ? "block"
+              : "none";
+          });
+          list.appendChild(btn);
+          if (!state.paymentMethodId && idx === 0) {
+            state.paymentMethodId = m.paymentId;
+            state.method = m.name_en || "Payment";
+            var wallet0 = /wallet/i.test(m.name_en || "");
+            document.getElementById("ecdWalletField").style.display = wallet0
+              ? "block"
+              : "none";
+          }
+        });
+      }
+
+      async function ensureCheckoutSession() {
+        if (!window.EcdApi) throw new Error("EcdApi not loaded");
+        // Wait for admin package prices/names before computing clientTotalCents
+        if (window.EcdContent && typeof EcdContent.ready === "function") {
+          try {
+            await EcdContent.ready();
+          } catch (e) {
+            /* fallback to prices.js defaults */
+          }
+        } else if (window.EventPrices && EventPrices.whenPackagesReady) {
+          await Promise.race([
+            EventPrices.whenPackagesReady(),
+            new Promise(function (resolve) {
+              setTimeout(resolve, 4000);
+            }),
+          ]);
+        }
+        if (window.EventPrices && EventPrices.PACKAGES) {
+          // Re-bind active ticket labels without re-fetch
+          var active = EventPrices.getPackage(state.ticket);
+          if (active) {
+            EventPrices.TICKETS[state.ticket].name =
+              active.displayName || EventPrices.TICKETS[state.ticket].name;
+            EventPrices.TICKETS[state.ticket].tagline =
+              active.tagline || EventPrices.TICKETS[state.ticket].tagline;
+            if (typeof active.priceEgp === "number") {
+              if (state.ticket === "ct") {
+                EventPrices.PRICES.controlTower = active.priceEgp;
+              } else {
+                EventPrices.PRICES.fullJourney = active.priceEgp;
+              }
+            }
+          }
+        }
+        updateSummary();
+
+        var promo = state.promoState === "valid" ? state.appliedCode : "";
+        var clientTotalCents = EcdApi.centsFromPricesJs(
+          state.ticket,
+          state.qty,
+          promo,
+        );
+        if (clientTotalCents == null) {
+          throw new Error("Ticket price is not available yet. Please refresh.");
+        }
+        var payload = {
+          ticketType: state.ticket,
+          qty: state.qty,
+          promoCode: promo || null,
+          clientTotalCents: clientTotalCents,
+          buyer: {
+            name: state.buyer.name,
+            email: state.buyer.email,
+            mobile: assembleMobile(state.buyer.mobile, state.cc),
+            countryCode: state.cc,
+            country: state.buyer.country,
+            company: state.buyer.company || null,
+            title: state.buyer.title || null,
+            needInvoice: !!state.invoice,
+            invoiceCompany: state.buyer.invCompany || null,
+            taxId: state.buyer.taxId || null,
+            billingAddress: state.buyer.billing || null,
+          },
+          attendees: buildAttendeesPayload(),
+        };
+        var data = await EcdApi.createSession(payload);
+        state.sessionReady = true;
+        return data;
+      }
+
+      async function enterPaymentStage() {
+        showOverlay({
+          icon: '<div class="spinner" style="margin:0 auto 8px"></div>',
+          title: "Preparing checkout…",
+          body: "Creating your secure session. Do not close this page.",
+          actions: [],
+        });
+        try {
+          await ensureCheckoutSession();
+          var methods = await EcdApi.fetchPaymentMethods();
+          renderPaymentMethods(methods);
+          hideOverlay();
+          showStage(3);
+        } catch (err) {
+          var code = err && err.code;
+          if (code === "price_changed") {
+            var newTotal =
+              err.payload &&
+              err.payload.error &&
+              err.payload.error.data &&
+              err.payload.error.data.amountFormatted;
+            showOverlay({
+              title: "The price was updated",
+              body:
+                "The ticket price changed while you were checking out. New total: " +
+                (newTotal || "[Total] EGP"),
+              actions: [
+                {
+                  label: "Confirm New Total & Continue",
+                  primary: true,
+                  onClick: function () {
+                    hideOverlay();
+                    updatePrices();
+                    enterPaymentStage();
+                  },
+                },
+              ],
+            });
+            return;
+          }
+          showOverlay({
+            title: "Could not start checkout",
+            body: (err && err.message) || "Please try again.",
+            actions: [{ label: "Close", primary: true, onClick: hideOverlay }],
+          });
+        }
+      }
+
+      function showStage(stage) {
+        state.stage = stage;
+        document.getElementById("step1").style.display =
+          stage === 1 ? "block" : "none";
+        document.getElementById("step2").style.display =
+          stage === 2 ? "block" : "none";
+        document.getElementById("step3").style.display =
+          stage === 3 ? "block" : "none";
+
+        document.querySelectorAll(".stage-btn").forEach(function (btn) {
+          var s = parseInt(btn.getAttribute("data-stage"));
+          var active = s === stage;
+          btn.classList.toggle("active", active);
+          if (active) {
+            btn.style.background = "#101010";
+            btn.style.borderColor = "#101010";
+            btn.style.color = "#ffffff";
+          } else {
+            btn.style.background = "#ffffff";
+            btn.style.borderColor = "#d5dae0";
+            btn.style.color = "#101010";
+          }
+        });
+
+        // Sticky bottom bar: Continue on steps 1–2, Pay on step 3
+        var mobilePayBtn = document.getElementById("mobilePayBtn");
+        if (mobilePayBtn) {
+          if (stage < 3) {
+            mobilePayBtn.disabled = false;
+            mobilePayBtn.style.background = "#05ef62";
+            mobilePayBtn.style.color = "#101010";
+            mobilePayBtn.style.cursor = "pointer";
+            mobilePayBtn.innerHTML =
+              stage === 1 ? "Continue to Attendees →" : "Continue to Payment →";
+          } else {
+            mobilePayBtn.innerHTML =
+              'Pay <span class="price-total" data-suffix=" EGP">[Total] EGP</span>';
+            updatePayButton();
+            updatePrices();
+          }
+        }
+      }
+
+      function goToStage(s) {
+        if (s === 2) {
+          state.tried = true;
+          showErrors(1);
+          if (Object.keys(getErrors(1)).length > 0) return;
+          showStage(2);
+          return;
+        }
+        if (s === 3) {
+          state.tried = true;
+          showErrors(2);
+          if (Object.keys(getErrors(2)).length > 0) {
+            showStage(2);
+            return;
+          }
+          enterPaymentStage();
+          return;
+        }
+        showStage(s);
+      }
+
+      document.querySelectorAll(".stage-btn").forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          goToStage(parseInt(this.getAttribute("data-stage")));
+        });
+      });
+
+      var step1Continue = document.getElementById("step1ContinueBtn");
+      if (step1Continue) {
+        step1Continue.addEventListener("click", function () {
+          goToStage(2);
+        });
+      }
+      var step2Continue = document.getElementById("step2ContinueBtn");
+      if (step2Continue) {
+        step2Continue.addEventListener("click", function () {
+          goToStage(3);
+        });
+      }
+      var step2Back = document.getElementById("step2BackBtn");
+      if (step2Back) {
+        step2Back.addEventListener("click", function () {
+          showStage(1);
+        });
+      }
+
+      function updatePayButton() {
+        var canPay = state.consent && !state.paying;
+        var btns = ["payBtn", "mobilePayBtn"];
+        btns.forEach(function (id) {
+          var btn = document.getElementById(id);
+          if (!btn) return;
+          btn.disabled = !canPay;
+          btn.style.background = canPay ? "#05ef62" : "#e6eaee";
+          btn.style.color = canPay ? "#101010" : "#9aa1a9";
+          btn.style.cursor = canPay ? "pointer" : "not-allowed";
+        });
+      }
+
+      document
+        .getElementById("consentCheck")
+        .addEventListener("change", function () {
+          state.consent = this.checked;
+          updatePayButton();
+        });
+      document
+        .getElementById("newsCheck")
+        .addEventListener("change", function () {
+          state.news = this.checked;
+        });
+
+      function pollVerify(orderCode, bookingId) {
+        var tries = 0;
+        async function tick() {
+          tries += 1;
+          try {
+            var result = await EcdApi.verify(bookingId);
+            if (result.status === "paid") {
+              clearInterval(timer);
+              showOverlay({
+                icon: '<div style="width:48px;height:48px;border-radius:999px;background:#e6fbee;border:1px solid #c3f7d7;color:#04c44e;display:flex;align-items:center;justify-content:center;margin:0 auto;font-size:22px">✓</div>',
+                title: "Payment succeeded",
+                body: "Taking you to your booking confirmation…",
+                actions: [],
+              });
+              setTimeout(function () {
+                var url =
+                  "booking-confirmation.html?order=" +
+                  encodeURIComponent(orderCode);
+                if (result.access) {
+                  url += "&access=" + encodeURIComponent(result.access);
+                  try {
+                    sessionStorage.setItem("ecd2026_access", result.access);
+                  } catch (e) {}
+                }
+                window.location.href = url;
+              }, 700);
+              return true;
+            }
+            if (result.status === "expired" || result.status === "failed") {
+              clearInterval(timer);
+              showOverlay({
+                title: "Payment didn't go through",
+                body: "Your card was not charged. This is usually a bank decline or a timeout.",
+                actions: [
+                  {
+                    label: "Retry Payment",
+                    primary: true,
+                    onClick: function () {
+                      hideOverlay();
+                      handlePay(true);
+                    },
+                  },
+                  { label: "Change Method", onClick: hideOverlay },
+                ],
+              });
+              return true;
+            }
+            if (tries >= 40) {
+              clearInterval(timer);
+              showOverlay({
+                title: "We're verifying your payment",
+                body: "This can take a moment with some methods. We'll email you the result either way.",
+                actions: [
+                  {
+                    label: "Check Status",
+                    primary: true,
+                    onClick: function () {
+                      hideOverlay();
+                      pollVerify(orderCode, bookingId);
+                    },
+                  },
+                ],
+              });
+              return true;
+            }
+          } catch (e) {
+            if (tries >= 40) clearInterval(timer);
+          }
+          return false;
+        }
+        var timer = setInterval(function () {
+          tick();
+        }, 3000);
+        tick();
+      }
+
+      async function handlePay(forceNewCode) {
+        if (state.paying) return;
+        state.tried = true;
+        showErrors();
+        var errs = getErrors(3);
+        if (Object.keys(errs).length > 0) {
+          showStage(3);
+          return;
+        }
+        if (!window.EcdApi) return;
+
+        var selected = state.paymentMethods.find(function (m) {
+          return m.paymentId === state.paymentMethodId;
+        });
+        var isWallet = selected && /wallet/i.test(selected.name_en || "");
+        var walletPhone = (
+          document.getElementById("ecd-wallet-phone").value || ""
+        ).trim();
+        if (isWallet && !walletPhone) {
+          document.querySelector('[data-error="wallet"]').textContent =
+            "Wallet mobile is required.";
+          return;
+        }
+
+        state.paying = true;
+        updatePayButton();
+        showOverlay({
+          icon: '<div class="spinner" style="margin:0 auto 8px"></div>',
+          title: "Processing your payment…",
+          body: "Do not close this page.",
+          actions: [],
+        });
+
+        try {
+          if (!state.sessionReady || !EcdApi.getToken()) {
+            await ensureCheckoutSession();
+          }
+          var result = await EcdApi.pay({
+            paymentMethodId: state.paymentMethodId,
+            walletPhone: isWallet ? walletPhone : undefined,
+            forceNewCode: !!forceNewCode,
+          });
+
+          if (result.status === "duplicate") {
+            showOverlay({
+              title: "This booking already exists",
+              body: "We found a completed booking with the same details — you were not charged twice.",
+              actions: [
+                {
+                  label: "View My Booking",
+                  primary: true,
+                  onClick: function () {
+                    window.location.href =
+                      "booking-confirmation.html?order=" +
+                      encodeURIComponent(result.orderCode);
+                  },
+                },
+              ],
+            });
+            return;
+          }
+
+          if (result.redirectUrl) {
+            window.location.href = result.redirectUrl;
+            return;
+          }
+
+          var codes = [];
+          if (result.fawryCode) codes.push("Fawry: " + result.fawryCode);
+          if (result.amanCode) codes.push("Aman: " + result.amanCode);
+          if (result.masaryCode) codes.push("Masary: " + result.masaryCode);
+          if (result.meezaReference)
+            codes.push("Meeza: " + result.meezaReference);
+          var codesBox = document.getElementById("ecdPayCodes");
+          if (codes.length) {
+            codesBox.style.display = "block";
+            codesBox.innerHTML =
+              "<strong>Complete payment with this reference</strong><br/>" +
+              codes.join("<br/>");
+          }
+
+          showOverlay({
+            icon: '<div style="width:48px;height:48px;border-radius:999px;background:#fff4de;border:1px solid #ffb020;color:#8a5a00;display:flex;align-items:center;justify-content:center;margin:0 auto;font-size:18px">⏱</div>',
+            title: "We're verifying your payment",
+            body:
+              (result.simulated
+                ? "Test mode: click Check Status to mark this booking paid. "
+                : "") +
+              (codes.length
+                ? "Use the reference shown on this page, then wait for confirmation. "
+                : "") +
+              "This can take a moment with some methods.",
+            actions: [
+              {
+                label: "Check Status",
+                primary: true,
+                onClick: function () {
+                  pollVerify(result.orderCode, result.bookingId);
+                },
+              },
+            ],
+          });
+          pollVerify(result.orderCode, result.bookingId);
+        } catch (err) {
+          var code = err && err.code;
+          if (code === "hold_expired") {
+            showOverlay({
+              title: "Your hold expired — we re-checked availability.",
+              body: "Your details are saved. Continue to hold seats again at current availability.",
+              actions: [
+                {
+                  label: "Continue",
+                  primary: true,
+                  onClick: function () {
+                    hideOverlay();
+                    state.sessionReady = false;
+                    enterPaymentStage();
+                  },
+                },
+              ],
+            });
+          } else if (code === "failed" || code === "FAILED") {
+            showOverlay({
+              title: "Payment didn't go through",
+              body:
+                (err && err.message) ||
+                "Your card was not charged. This is usually a bank decline or a timeout.",
+              actions: [
+                {
+                  label: "Retry Payment",
+                  primary: true,
+                  onClick: function () {
+                    hideOverlay();
+                    handlePay(true);
+                  },
+                },
+                { label: "Change Method", onClick: hideOverlay },
+              ],
+            });
+          } else {
+            showOverlay({
+              title: "Could not complete payment",
+              body: (err && err.message) || "Please try again.",
+              actions: [
+                {
+                  label: "Return to Payment",
+                  primary: true,
+                  onClick: hideOverlay,
+                },
+              ],
+            });
+          }
+        } finally {
+          state.paying = false;
+          updatePayButton();
+        }
+      }
+
+      document.getElementById("payBtn").addEventListener("click", function () {
+        handlePay(false);
+      });
+      document
+        .getElementById("mobilePayBtn")
+        .addEventListener("click", function () {
+          if (state.stage < 3) {
+            goToStage(state.stage + 1);
+            return;
+          }
+          handlePay(false);
+        });
+
+      document.querySelectorAll(".ticket-chip").forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          state.sessionReady = false;
+        });
+      });
+
+      bindBuyerInputs();
+      bindPromo();
+      renderAttendees();
+      updateSummary();
+      updatePayButton();
+      showStage(1);
+
+      // Refresh summary when CMS packages arrive (price + name + features)
+      window.addEventListener("ecd:packages-ready", function () {
+        updateSummary();
+        updatePayButton();
+      });
+      if (window.EcdContent && typeof EcdContent.ready === "function") {
+        EcdContent.ready()
+          .then(function () {
+            updateSummary();
+            updatePayButton();
+          })
+          .catch(function () {
+            updateSummary();
+          });
+      }
+
+      (function () {
+        try {
+          var params = new URLSearchParams(window.location.search);
+          var status = (params.get("status") || "").toLowerCase();
+          var order = params.get("order");
+          if (status === "failed") {
+            showOverlay({
+              title: "Payment didn't go through",
+              body: "Your card was not charged. This is usually a bank decline or a timeout.",
+              actions: [
+                {
+                  label: "Retry Payment",
+                  primary: true,
+                  onClick: function () {
+                    hideOverlay();
+                    showStage(3);
+                  },
+                },
+              ],
+            });
+          } else if (status === "pending" && order) {
+            showOverlay({
+              title: "We're verifying your payment",
+              body: "This can take a moment with some methods.",
+              actions: [
+                {
+                  label: "Check Status",
+                  primary: true,
+                  onClick: function () {
+                    var stored = EcdApi.getStoredBooking();
+                    pollVerify(order, stored && stored.bookingId);
+                  },
+                },
+              ],
+            });
+          } else if (status === "success" && order) {
+            window.location.href =
+              "booking-confirmation.html?order=" + encodeURIComponent(order);
+          }
+        } catch (e) {}
+      })();
+    </script>
+  </body>
+</html>

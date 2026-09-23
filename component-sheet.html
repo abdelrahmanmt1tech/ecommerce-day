@@ -1,0 +1,1354 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>TrafficMENA — ECommerce Day 2026 · Component Sheet</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=IBM+Plex+Sans+Arabic:wght@400;500;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      /* ==========================================
+         00. RESET & BASE STYLES
+         ========================================== */
+      *, *::before, *::after {
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        margin: 0;
+        font-family: "Manrope", "IBM Plex Sans Arabic", sans-serif;
+        color: #101010;
+        background-color: #ffffff;
+        overflow-x: hidden;
+      }
+      a {
+        color: #04c44e;
+        text-decoration: none;
+      }
+      a:hover {
+        color: #006681;
+      }
+      input::placeholder {
+        color: #9aa1a9;
+      }
+      input,
+      select,
+      textarea,
+      button {
+        font-family: "Manrope", sans-serif;
+      }
+      .font-mono {
+        font-family: "JetBrains Mono", monospace;
+      }
+
+      /* ==========================================
+         01. LAYOUT
+         ========================================== */
+      .sheet-wrap {
+        padding: 48px;
+      }
+      .sheet-card {
+        background: #ffffff;
+        box-shadow: 0 2px 24px rgba(16, 16, 16, 0.08);
+        padding: 56px;
+        max-width: 1480px;
+        margin: 0 auto;
+      }
+
+      /* Section headers */
+      .sheet-label {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 12px;
+      }
+      .sheet-label .indicator {
+        width: 24px;
+        height: 2px;
+        background: #05ef62;
+        flex: none;
+      }
+      .sheet-label span {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 12px;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: #6b747e;
+      }
+      .sheet-title {
+        font-size: 40px;
+        line-height: 1.05;
+        font-weight: 700;
+        margin: 0 0 48px;
+      }
+      .section-heading {
+        font-size: 20px;
+        font-weight: 800;
+        margin: 0 0 20px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .section-heading::before {
+        content: "";
+        width: 20px;
+        height: 2px;
+        background: #05ef62;
+        flex: none;
+      }
+
+      /* ==========================================
+         02. BUTTONS
+         ========================================== */
+      .btn-primary {
+        background: #05ef62;
+        border: none;
+        color: #101010;
+        border-radius: 10px;
+        font-weight: 600;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        transition: background 0.2s;
+      }
+      .btn-primary:hover {
+        background: #04d657;
+      }
+      .btn-secondary {
+        background: #ffffff;
+        border: 1px solid #101010;
+        color: #101010;
+        border-radius: 10px;
+        font-weight: 600;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        transition: background 0.2s;
+      }
+      .btn-secondary:hover {
+        background: #f4f6f8;
+      }
+      @keyframes ecd-spin {
+        to { transform: rotate(360deg); }
+      }
+      .spinner {
+        width: 14px;
+        height: 14px;
+        border-radius: 50%;
+        border: 2px solid rgba(16, 16, 16, 0.25);
+        border-top-color: #101010;
+        display: inline-block;
+        animation: ecd-spin 0.8s linear infinite;
+      }
+
+      /* ==========================================
+         03. PILLS
+         ========================================== */
+      .track-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        border-radius: 999px;
+        padding: 6px 14px;
+        font-family: "JetBrains Mono", monospace;
+        font-size: 11px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+      .status-pill {
+        border-radius: 999px;
+        padding: 5px 13px;
+        font-size: 12px;
+        font-weight: 600;
+        display: inline-block;
+      }
+
+      /* ==========================================
+         04. SESSION CARDS
+         ========================================== */
+      .session-card {
+        background: #ffffff;
+        border: 1px solid #d5dae0;
+        border-radius: 14px;
+        padding: 20px;
+      }
+
+      /* ==========================================
+         05. SPEAKER CARDS
+         ========================================== */
+      .speaker-card {
+        width: 240px;
+        background: #ffffff;
+        border: 1px solid #d5dae0;
+        border-radius: 14px;
+        overflow: hidden;
+      }
+
+      /* ==========================================
+         06. TICKET / COMPARISON
+         ========================================== */
+      .ticket-card {
+        border: 1px solid #d5dae0;
+        border-radius: 16px;
+        padding: 28px;
+      }
+      .ticket-card-featured {
+        border: 2px solid #101010;
+        border-radius: 16px;
+        padding: 28px;
+        position: relative;
+        box-shadow: 0 10px 32px rgba(16, 16, 16, 0.1);
+      }
+      .cmp-grid {
+        display: grid;
+        grid-template-columns: 2fr 1fr 1fr;
+        padding: 10px 20px;
+        border-bottom: 1px solid #e6eaee;
+        font-size: 13px;
+        align-items: center;
+      }
+
+      /* ==========================================
+         07. FORM
+         ========================================== */
+      .form-label {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 10px;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: #6b747e;
+      }
+      .form-input {
+        border: 1px solid #d5dae0;
+        border-radius: 10px;
+        padding: 12px 14px;
+        font-size: 14px;
+        outline-color: #05ef62;
+        width: 100%;
+        background: #ffffff;
+      }
+      .form-input:focus {
+        outline: 2px solid #05ef62;
+        outline-offset: 1px;
+      }
+      .qty-btn {
+        width: 36px;
+        height: 36px;
+        border: 1px solid #d5dae0;
+        border-radius: 8px;
+        background: #ffffff;
+        font-size: 16px;
+        cursor: pointer;
+        color: #101010;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .qty-btn:hover {
+        background: #f4f6f8;
+      }
+
+      /* ==========================================
+         08. ACCORDION / SEGMENTED / CHIPS
+         ========================================== */
+      .accordion-item {
+        border-bottom: 1px solid #e6eaee;
+      }
+      .accordion-toggle {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: none;
+        border: none;
+        padding: 16px 18px;
+        cursor: pointer;
+        text-align: left;
+      }
+      .segmented {
+        display: inline-flex;
+        background: #f4f6f8;
+        border: 1px solid #e6eaee;
+        border-radius: 12px;
+        padding: 4px;
+        gap: 4px;
+      }
+      .segmented button {
+        border: none;
+        border-radius: 9px;
+        padding: 9px 18px;
+        font-weight: 600;
+        font-size: 13px;
+        cursor: pointer;
+        transition: all 0.15s;
+      }
+      .chip {
+        background: #ffffff;
+        border: 1px solid #d5dae0;
+        border-radius: 999px;
+        padding: 7px 15px;
+        font-weight: 600;
+        font-size: 12px;
+        color: #101010;
+        cursor: pointer;
+        transition: all 0.15s;
+      }
+      .chip.active {
+        background: #101010;
+        border-color: #101010;
+        color: #ffffff;
+      }
+
+      /* ==========================================
+         09. SEARCH
+         ========================================== */
+      .search-wrap {
+        position: relative;
+        width: 340px;
+        max-width: 100%;
+      }
+      .search-wrap svg {
+        position: absolute;
+        left: 13px;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+      .search-wrap input {
+        width: 100%;
+        border: 1px solid #d5dae0;
+        border-radius: 10px;
+        padding: 12px 38px;
+        font-size: 14px;
+        outline-color: #05ef62;
+      }
+      .search-clear {
+        position: absolute;
+        right: 8px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        background: #f4f6f8;
+        border: 1px solid #e6eaee;
+        color: #4a5563;
+        font-size: 13px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      /* ==========================================
+         10. CHROME (nav, bands, footer)
+         ========================================== */
+      .announcement-bar-demo {
+        background: #101010;
+        color: #ffffff;
+        padding: 10px 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        font-size: 13px;
+        border-radius: 10px;
+      }
+      .nav-demo {
+        background: rgba(255, 255, 255, 0.85);
+        backdrop-filter: blur(12px);
+        border: 1px solid #e6eaee;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 14px 24px;
+        gap: 16px;
+        flex-wrap: wrap;
+      }
+      .nav-demo-links {
+        display: flex;
+        gap: 28px;
+        font-size: 14px;
+        font-weight: 600;
+      }
+      .nav-demo-links a {
+        color: #101010;
+      }
+      .footer-demo {
+        border: 1px solid #e6eaee;
+        border-radius: 14px;
+        padding: 40px 32px 24px;
+      }
+
+      /* ==========================================
+         11. EMPTY STATES
+         ========================================== */
+      .empty-tile {
+        border: 1px dashed #d5dae0;
+        background: #f4f6f8;
+        border-radius: 12px;
+        padding: 28px 20px;
+        text-align: center;
+      }
+
+      /* ==========================================
+         12. RESPONSIVE BREAKPOINTS
+         ========================================== */
+      @media (max-width: 1200px) {
+        .sheet-card {
+          padding: 40px 32px;
+        }
+        .sheet-title {
+          font-size: 34px;
+        }
+        .grid-4-cols,
+        .grid-5-cols {
+          grid-template-columns: repeat(2, 1fr) !important;
+        }
+        .grid-3-cols {
+          grid-template-columns: repeat(2, 1fr) !important;
+        }
+      }
+
+      @media (max-width: 900px) {
+        .sheet-wrap {
+          padding: 24px 16px;
+        }
+        .sheet-card {
+          padding: 32px 20px;
+        }
+        .sheet-title {
+          font-size: 28px;
+          margin-bottom: 32px;
+        }
+
+        /* Stack grids */
+        .grid-4-cols,
+        .grid-5-cols,
+        .grid-3-cols,
+        .grid-2-cols {
+          grid-template-columns: 1fr !important;
+        }
+
+        /* Nav demo stacks */
+        .nav-demo {
+          flex-direction: column;
+          align-items: stretch;
+        }
+        .nav-demo-links {
+          flex-wrap: wrap;
+          gap: 14px;
+          justify-content: center;
+        }
+
+        /* Comparison mobile */
+        .cmp-grid {
+          grid-template-columns: 1fr !important;
+          gap: 4px;
+        }
+
+        /* Footer stacks */
+        .footer-grid-demo {
+          grid-template-columns: 1fr 1fr !important;
+          gap: 24px !important;
+        }
+      }
+
+      @media (max-width: 600px) {
+        .sheet-wrap {
+          padding: 12px 8px;
+        }
+        .sheet-card {
+          padding: 24px 16px;
+        }
+        .sheet-title {
+          font-size: 24px;
+        }
+        .section-heading {
+          font-size: 17px;
+        }
+        .footer-grid-demo {
+          grid-template-columns: 1fr !important;
+        }
+        .speaker-card {
+          width: 100%;
+        }
+        .ticket-card,
+        .ticket-card-featured {
+          padding: 22px 20px;
+        }
+        .search-wrap {
+          width: 100%;
+        }
+      }
+
+      /* Utility responsive helpers */
+      .row-flex {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        flex-wrap: wrap;
+      }
+      .grid-4-cols {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 16px;
+      }
+      .grid-5-cols {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 14px;
+      }
+      .grid-3-cols {
+        display: grid;
+        grid-template-columns: repeat(3, 320px);
+        gap: 20px;
+      }
+      .grid-2-cols {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 14px;
+      }
+    </style>
+  </head>
+  <body>
+
+    <div class="sheet-wrap">
+      <div class="sheet-card">
+
+        <!-- ==================== HEADER ==================== -->
+        <div style="margin-bottom: 48px;">
+          <div class="sheet-label">
+            <span class="indicator"></span>
+            <span>ECommerce Day 2026 — Component Sheet</span>
+          </div>
+          <h1 class="sheet-title">UI Components</h1>
+        </div>
+
+        <!-- ==================== BUTTONS ==================== -->
+        <div style="margin-bottom: 56px;">
+          <h2 class="section-heading">Buttons</h2>
+          <div style="display: flex; flex-direction: column; gap: 16px;">
+
+            <!-- SM -->
+            <div class="row-flex">
+              <span class="font-mono" style="font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: #6b747e; width: 72px; flex: none;">SM · 36px</span>
+              <button class="btn-primary" style="height: 36px; padding: 0 16px; font-size: 13px;">Book Your Ticket</button>
+              <button class="btn-secondary" style="height: 36px; padding: 0 16px; font-size: 13px;">Become a Sponsor</button>
+              <span style="background: #101010; border-radius: 12px; padding: 8px 10px; display: inline-flex;">
+                <button class="btn-primary" style="height: 36px; padding: 0 16px; font-size: 13px;">Dark-band Primary</button>
+              </span>
+              <button disabled style="background: #e6eaee; border: none; color: #9aa1a9; border-radius: 10px; height: 36px; padding: 0 16px; font-size: 13px; cursor: not-allowed;">Disabled</button>
+              <button disabled class="btn-primary" style="height: 36px; padding: 0 16px; font-size: 13px; opacity: 0.85; cursor: wait;">
+                <span class="spinner"></span> Processing…
+              </button>
+            </div>
+
+            <!-- MD -->
+            <div class="row-flex">
+              <span class="font-mono" style="font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: #6b747e; width: 72px; flex: none;">MD · 44px</span>
+              <button class="btn-primary" style="height: 44px; padding: 0 22px; font-size: 14px;">Book Your Ticket</button>
+              <button class="btn-secondary" style="height: 44px; padding: 0 22px; font-size: 14px;">Become a Sponsor</button>
+              <span style="background: #101010; border-radius: 12px; padding: 8px 10px; display: inline-flex;">
+                <button class="btn-primary" style="height: 44px; padding: 0 22px; font-size: 14px;">Dark-band Primary</button>
+              </span>
+              <button disabled style="background: #e6eaee; border: none; color: #9aa1a9; border-radius: 10px; height: 44px; padding: 0 22px; font-size: 14px; cursor: not-allowed;">Disabled</button>
+              <button disabled class="btn-primary" style="height: 44px; padding: 0 22px; font-size: 14px; opacity: 0.85; cursor: wait;">
+                <span class="spinner"></span> Processing…
+              </button>
+            </div>
+
+            <!-- LG -->
+            <div class="row-flex">
+              <span class="font-mono" style="font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: #6b747e; width: 72px; flex: none;">LG · 52px</span>
+              <button class="btn-primary" style="height: 52px; padding: 0 28px; font-size: 16px;">Book Your Ticket</button>
+              <button class="btn-secondary" style="height: 52px; padding: 0 28px; font-size: 16px;">Become a Sponsor</button>
+              <span style="background: #101010; border-radius: 12px; padding: 8px 10px; display: inline-flex;">
+                <button class="btn-primary" style="height: 52px; padding: 0 28px; font-size: 16px;">Dark-band Primary</button>
+              </span>
+              <button disabled style="background: #e6eaee; border: none; color: #9aa1a9; border-radius: 10px; height: 52px; padding: 0 28px; font-size: 16px; cursor: not-allowed;">Disabled</button>
+              <button disabled class="btn-primary" style="height: 52px; padding: 0 28px; font-size: 16px; opacity: 0.85; cursor: wait;">
+                <span class="spinner"></span> Processing…
+              </button>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- ==================== PILLS ==================== -->
+        <div style="margin-bottom: 56px;">
+          <h2 class="section-heading">Track pills</h2>
+          <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 28px;">
+            <span class="track-pill" style="background: #101010; border: 1px solid #101010; color: #ffffff;">
+              <span style="width: 8px; height: 8px; border-radius: 50%; background: #05ef62;"></span>The Control Tower
+            </span>
+            <span class="track-pill" style="background: #ffffff; border: 1px solid #d5dae0; color: #04c44e;">
+              <span style="width: 8px; height: 8px; border-radius: 50%; background: #05ef62;"></span>CLICKED
+            </span>
+            <span class="track-pill" style="background: #ffffff; border: 1px solid #d5dae0; color: #006681;">
+              <span style="width: 8px; height: 8px; border-radius: 50%; background: #006681;"></span>CONFIRMED
+            </span>
+            <span class="track-pill" style="background: #ffffff; border: 1px solid #d5dae0; color: #8a5a00;">
+              <span style="width: 8px; height: 8px; border-radius: 50%; background: #ffb020;"></span>DELIVERED
+            </span>
+          </div>
+
+          <h2 class="section-heading">Status pills</h2>
+          <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+            <span class="status-pill" style="background: #e6fbee; border: 1px solid #c3f7d7; color: #04c44e;">Confirmed</span>
+            <span class="status-pill" style="background: #f4f6f8; border: 1px solid #e6eaee; color: #6b747e;">Coming Soon</span>
+            <span class="status-pill" style="background: #fff4de; border: 1px solid #ffb020; color: #8a5a00;">Almost Full</span>
+            <span class="status-pill" style="background: #f4f6f8; border: 1px solid #d5dae0; color: #4a5563;">Fully Booked</span>
+            <span class="status-pill" style="background: #ffffff; border: 1px solid #d5dae0; color: #4a5563;">Waitlist</span>
+            <span class="status-pill" style="background: #f4f6f8; border: 1px solid #e6eaee; color: #4a5563;">Recorded</span>
+            <span class="status-pill" style="background: #e6fbee; border: 1px solid #c3f7d7; color: #04c44e;">Templates Included</span>
+            <span class="status-pill" style="background: #ffffff; border: 1px solid #d5dae0; color: #101010;">All Tickets</span>
+            <span class="status-pill" style="background: #101010; border: 1px solid #101010; color: #05ef62;">Full Journey Only</span>
+            <span class="status-pill" style="background: #e6fbee; border: 1px solid #c3f7d7; color: #04c44e;">Active</span>
+            <span class="status-pill" style="background: #fff4de; border: 1px solid #ffb020; color: #8a5a00;">Pending</span>
+            <span class="status-pill" style="background: #fbedec; border: 1px solid #e2a9a5; color: #b3362e;">Failed</span>
+            <span class="status-pill" style="background: #f4f6f8; border: 1px solid #d5dae0; color: #6b747e;">Refunded</span>
+            <span class="status-pill" style="background: #101010; border: 1px solid #101010; color: #05ef62;">Checked in</span>
+          </div>
+        </div>
+
+        <!-- ==================== SESSION CARDS ==================== -->
+        <div style="margin-bottom: 56px;">
+          <h2 class="section-heading">Session card</h2>
+          <div class="grid-4-cols">
+            <!-- Default -->
+            <div class="session-card">
+              <div class="font-mono" style="font-size: 9px; letter-spacing: 0.08em; text-transform: uppercase; color: #6b747e; margin-bottom: 6px;">Default</div>
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                <span class="font-mono" style="font-size: 11px; letter-spacing: 0.08em; color: #101010;">SLOT 2</span>
+                <span class="status-pill" style="background: #f4f6f8; border: 1px solid #e6eaee; color: #4a5563;">Workshop</span>
+              </div>
+              <div style="font-weight: 700; font-size: 15px; line-height: 1.4; margin-bottom: 8px;">CRO and Live Store Teardown</div>
+              <span class="track-pill" style="background: #ffffff; border: 1px solid #d5dae0; color: #006681; margin-bottom: 10px;">
+                <span style="width: 7px; height: 7px; border-radius: 50%; background: #006681;"></span>CONFIRMED
+              </span>
+              <div style="display: flex; align-items: center; gap: 8px; margin: 10px 0;">
+                <span style="width: 26px; height: 26px; border-radius: 50%; background: #101010; color: #ffffff; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; flex: none;">SA</span>
+                <span style="font-size: 12px; color: #4a5563;">Speaker to be announced</span>
+              </div>
+              <div style="font-size: 12px; line-height: 1.6; color: #4a5563; margin-bottom: 12px;">Leave with a teardown checklist applied to a real store.</div>
+              <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+                <span class="status-pill" style="background: #101010; border: 1px solid #101010; color: #05ef62;">Full Journey Only</span>
+                <span class="status-pill" style="background: #e6fbee; border: 1px solid #c3f7d7; color: #04c44e;">Confirmed</span>
+                <span class="status-pill" style="background: #f4f6f8; border: 1px solid #e6eaee; color: #4a5563;">Recorded</span>
+              </div>
+            </div>
+
+            <!-- Hover -->
+            <div class="session-card" style="box-shadow: 0 10px 28px rgba(16,16,16,.12);">
+              <div class="font-mono" style="font-size: 9px; letter-spacing: 0.08em; text-transform: uppercase; color: #6b747e; margin-bottom: 6px;">Hover — shadow on</div>
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                <span class="font-mono" style="font-size: 11px; letter-spacing: 0.08em; color: #101010;">SLOT 2</span>
+                <span class="status-pill" style="background: #f4f6f8; border: 1px solid #e6eaee; color: #4a5563;">Workshop</span>
+              </div>
+              <div style="font-weight: 700; font-size: 15px; line-height: 1.4; margin-bottom: 8px;">CRO and Live Store Teardown</div>
+              <span class="track-pill" style="background: #ffffff; border: 1px solid #d5dae0; color: #006681; margin-bottom: 10px;">
+                <span style="width: 7px; height: 7px; border-radius: 50%; background: #006681;"></span>CONFIRMED
+              </span>
+              <div style="display: flex; align-items: center; gap: 8px; margin: 10px 0;">
+                <span style="width: 26px; height: 26px; border-radius: 50%; background: #101010; color: #ffffff; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; flex: none;">SA</span>
+                <span style="font-size: 12px; color: #4a5563;">Speaker to be announced</span>
+              </div>
+              <div style="font-size: 12px; line-height: 1.6; color: #4a5563; margin-bottom: 12px;">Leave with a teardown checklist applied to a real store.</div>
+              <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+                <span class="status-pill" style="background: #101010; border: 1px solid #101010; color: #05ef62;">Full Journey Only</span>
+                <span class="status-pill" style="background: #e6fbee; border: 1px solid #c3f7d7; color: #04c44e;">Confirmed</span>
+                <span class="status-pill" style="background: #f4f6f8; border: 1px solid #e6eaee; color: #4a5563;">Recorded</span>
+              </div>
+            </div>
+
+            <!-- All tickets -->
+            <div class="session-card">
+              <div class="font-mono" style="font-size: 9px; letter-spacing: 0.08em; text-transform: uppercase; color: #6b747e; margin-bottom: 6px;">All tickets</div>
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                <span class="font-mono" style="font-size: 11px; letter-spacing: 0.08em; color: #101010;">SLOT 2</span>
+                <span class="status-pill" style="background: #f4f6f8; border: 1px solid #e6eaee; color: #4a5563;">Workshop</span>
+              </div>
+              <div style="font-weight: 700; font-size: 15px; line-height: 1.4; margin-bottom: 8px;">CRO and Live Store Teardown</div>
+              <span class="track-pill" style="background: #ffffff; border: 1px solid #d5dae0; color: #006681; margin-bottom: 10px;">
+                <span style="width: 7px; height: 7px; border-radius: 50%; background: #006681;"></span>CONFIRMED
+              </span>
+              <div style="display: flex; align-items: center; gap: 8px; margin: 10px 0;">
+                <span style="width: 26px; height: 26px; border-radius: 50%; background: #101010; color: #ffffff; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; flex: none;">SA</span>
+                <span style="font-size: 12px; color: #4a5563;">Speaker to be announced</span>
+              </div>
+              <div style="font-size: 12px; line-height: 1.6; color: #4a5563; margin-bottom: 12px;">Leave with a teardown checklist applied to a real store.</div>
+              <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+                <span class="status-pill" style="background: #ffffff; border: 1px solid #d5dae0; color: #101010;">All Tickets</span>
+                <span class="status-pill" style="background: #f4f6f8; border: 1px solid #e6eaee; color: #6b747e;">Coming Soon</span>
+                <span class="status-pill" style="background: #f4f6f8; border: 1px solid #e6eaee; color: #4a5563;">Recorded</span>
+              </div>
+            </div>
+
+            <!-- Fully booked -->
+            <div class="session-card" style="opacity: 0.72;">
+              <div class="font-mono" style="font-size: 9px; letter-spacing: 0.08em; text-transform: uppercase; color: #6b747e; margin-bottom: 6px;">Fully booked</div>
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                <span class="font-mono" style="font-size: 11px; letter-spacing: 0.08em; color: #101010;">SLOT 2</span>
+                <span class="status-pill" style="background: #f4f6f8; border: 1px solid #e6eaee; color: #4a5563;">Workshop</span>
+              </div>
+              <div style="font-weight: 700; font-size: 15px; line-height: 1.4; margin-bottom: 8px;">CRO and Live Store Teardown</div>
+              <span class="track-pill" style="background: #ffffff; border: 1px solid #d5dae0; color: #006681; margin-bottom: 10px;">
+                <span style="width: 7px; height: 7px; border-radius: 50%; background: #006681;"></span>CONFIRMED
+              </span>
+              <div style="display: flex; align-items: center; gap: 8px; margin: 10px 0;">
+                <span style="width: 26px; height: 26px; border-radius: 50%; background: #101010; color: #ffffff; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; flex: none;">SA</span>
+                <span style="font-size: 12px; color: #4a5563;">Speaker to be announced</span>
+              </div>
+              <div style="font-size: 12px; line-height: 1.6; color: #4a5563; margin-bottom: 12px;">Leave with a teardown checklist applied to a real store.</div>
+              <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+                <span class="status-pill" style="background: #101010; border: 1px solid #101010; color: #05ef62;">Full Journey Only</span>
+                <span class="status-pill" style="background: #f4f6f8; border: 1px solid #d5dae0; color: #4a5563;">Fully Booked</span>
+                <span class="status-pill" style="background: #f4f6f8; border: 1px solid #e6eaee; color: #4a5563;">Recorded</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ==================== SPEAKER CARDS ==================== -->
+        <div style="margin-bottom: 56px;">
+          <h2 class="section-heading">Speaker card</h2>
+          <div style="display: flex; gap: 16px; flex-wrap: wrap; align-items: stretch;">
+            <!-- Photo card -->
+            <div class="speaker-card">
+              <div style="width: 240px; height: 300px; background: linear-gradient(135deg, #e6eaee 0%, #d5dae0 100%); display: flex; align-items: center; justify-content: center; color: #6b747e; font-size: 13px; max-width: 100%;">
+                Speaker portrait 4:5
+              </div>
+              <div style="padding: 16px;">
+                <div style="font-weight: 700; font-size: 15px;">[Speaker Name]</div>
+                <div style="font-size: 12px; color: #4a5563; margin-bottom: 8px;">[Role] · [Company]</div>
+                <span class="track-pill" style="border: 1px solid #d5dae0; color: #04c44e;">
+                  <span style="width: 7px; height: 7px; border-radius: 50%; background: #05ef62;"></span>CLICKED
+                </span>
+                <div style="font-size: 12px; font-weight: 600; color: #04c44e; margin-top: 10px;">[Session title] →</div>
+              </div>
+            </div>
+
+            <!-- Initials fallback -->
+            <div class="speaker-card">
+              <div style="width: 240px; height: 300px; background: #f4f6f8; display: flex; align-items: center; justify-content: center; max-width: 100%;">
+                <span style="width: 88px; height: 88px; border-radius: 50%; background: #101010; color: #ffffff; display: flex; align-items: center; justify-content: center; font-size: 28px; font-weight: 700;">MN</span>
+              </div>
+              <div style="padding: 16px;">
+                <div style="font-weight: 700; font-size: 15px;">[Speaker Name]</div>
+                <div style="font-size: 12px; color: #4a5563; margin-bottom: 8px;">Initials fallback — no photo</div>
+                <span class="track-pill" style="border: 1px solid #d5dae0; color: #8a5a00;">
+                  <span style="width: 7px; height: 7px; border-radius: 50%; background: #ffb020;"></span>DELIVERED
+                </span>
+              </div>
+            </div>
+
+            <!-- More coming -->
+            <div style="flex: 1; min-width: 320px; border: 1px dashed #d5dae0; background: #f4f6f8; border-radius: 14px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; padding: 40px;">
+              <div style="font-weight: 700; font-size: 18px; color: #101010; text-align: center;">More speakers will be announced soon</div>
+              <button class="btn-secondary" style="padding: 11px 20px; font-size: 13px;">Get updates</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ==================== TICKET CARDS + COMPARISON ==================== -->
+        <div style="margin-bottom: 56px;">
+          <h2 class="section-heading">Ticket cards + comparison</h2>
+
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 340px)); gap: 20px; margin-bottom: 28px;">
+            <!-- Control Tower Pass -->
+            <div class="ticket-card" style="margin-top: 14px;">
+              <div class="font-mono" style="font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: #6b747e; margin-bottom: 8px;">Control Tower Pass</div>
+              <div style="font-size: 18px; font-weight: 800; margin-bottom: 4px;">The Main Stage Experience</div>
+              <div style="font-size: 13px; font-weight: 600; color: #4a5563; margin-bottom: 14px;">See the whole system.</div>
+              <div style="font-size: 26px; font-weight: 800; margin-bottom: 16px;">[Final Price] <span style="font-size: 14px; font-weight: 600; color: #6b747e;">EGP</span></div>
+              <button class="btn-secondary" style="width: 100%; padding: 13px; font-size: 13px;">Book Control Tower Pass</button>
+            </div>
+
+            <!-- Full Journey Pass -->
+            <div class="ticket-card-featured">
+              <span class="font-mono" style="position: absolute; top: -12px; left: 28px; background: #101010; color: #05ef62; border-radius: 999px; padding: 4px 12px; font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase;">Most Complete Experience</span>
+              <div class="font-mono" style="font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: #04c44e; margin-bottom: 8px;">Full Journey Pass</div>
+              <div style="font-size: 18px; font-weight: 800; margin-bottom: 4px;">The Complete ECommerce Day Experience</div>
+              <div style="font-size: 13px; font-weight: 600; color: #4a5563; margin-bottom: 14px;">Learn it. Work on it. Apply it.</div>
+              <div style="font-size: 26px; font-weight: 800; margin-bottom: 16px;">[Final Price] <span style="font-size: 14px; font-weight: 600; color: #6b747e;">EGP</span></div>
+              <button class="btn-primary" style="width: 100%; padding: 13px; font-size: 13px;">Book Full Journey Pass</button>
+            </div>
+          </div>
+
+          <div style="display: flex; gap: 20px; align-items: flex-start; flex-wrap: wrap;">
+            <!-- Full comparison table -->
+            <div style="width: 100%; max-width: 640px; border: 1px solid #d5dae0; border-radius: 16px; overflow: hidden;">
+              <div style="display: grid; grid-template-columns: 2fr 1fr 1fr; background: #f4f6f8; border-bottom: 1px solid #e6eaee; padding: 12px 20px; font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: #6b747e;">
+                <span>Feature</span><span>Control Tower</span><span>Full Journey</span>
+              </div>
+              <div class="cmp-grid"><span style="font-weight: 500; color: #1f2630;">Access to The Control Tower</span><span style="font-weight: 600; color: #101010;">Yes</span><span style="font-weight: 600; color: #101010;">Yes</span></div>
+              <div class="cmp-grid"><span style="font-weight: 500; color: #1f2630;">Access to Workshop Tracks</span><span style="font-weight: 600; color: #6b747e;">No</span><span style="font-weight: 600; color: #101010;">Yes</span></div>
+              <div class="cmp-grid"><span style="font-weight: 500; color: #1f2630;">Workshop seat reservation</span><span style="font-weight: 600; color: #6b747e;">No</span><span style="font-weight: 600; color: #101010;">Yes</span></div>
+              <div class="cmp-grid"><span style="font-weight: 500; color: #1f2630;">Exercises &amp; Live Builds</span><span style="font-weight: 600; color: #6b747e;">No</span><span style="font-weight: 600; color: #101010;">Yes</span></div>
+              <div class="cmp-grid"><span style="font-weight: 500; color: #1f2630;">All session recordings</span><span style="font-weight: 600; color: #101010;">Yes</span><span style="font-weight: 600; color: #101010;">Yes</span></div>
+              <div class="cmp-grid"><span style="font-weight: 500; color: #1f2630;">Workshop Templates &amp; Files</span><span style="font-weight: 600; color: #101010;">Yes</span><span style="font-weight: 600; color: #101010;">Yes</span></div>
+              <div class="cmp-grid"><span style="font-weight: 500; color: #1f2630;">Platform access duration</span><span style="font-weight: 600; color: #101010;">3 months</span><span style="font-weight: 600; color: #101010;">1 year</span></div>
+              <div class="cmp-grid"><span style="font-weight: 500; color: #1f2630;">Session Summaries</span><span style="font-weight: 600; color: #101010;">Basic</span><span style="font-weight: 600; color: #101010;">Full</span></div>
+              <div class="cmp-grid"><span style="font-weight: 500; color: #1f2630;">ECommerce Action Pack</span><span style="font-weight: 600; color: #101010;">Basic</span><span style="font-weight: 600; color: #101010;">Full</span></div>
+              <div class="cmp-grid" style="border-bottom: none;"><span style="font-weight: 500; color: #1f2630;">ECommerce Report</span><span style="font-weight: 600; color: #101010;">Summary</span><span style="font-weight: 600; color: #101010;">Full report</span></div>
+            </div>
+
+            <!-- Mobile grouped variant -->
+            <div style="width: 100%; max-width: 320px; display: flex; flex-direction: column; gap: 10px;">
+              <div class="font-mono" style="font-size: 9px; letter-spacing: 0.08em; text-transform: uppercase; color: #6b747e;">Mobile grouped variant</div>
+
+              <div style="border: 1px solid #d5dae0; border-radius: 12px; overflow: hidden;">
+                <div style="background: #f4f6f8; border-bottom: 1px solid #e6eaee; padding: 9px 14px; font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; color: #6b747e;">Access &amp; Workshops</div>
+                <div style="padding: 10px 14px; border-bottom: 1px solid #e6eaee;">
+                  <div style="font-weight: 600; font-size: 12px; color: #1f2630; margin-bottom: 4px;">Access to The Control Tower</div>
+                  <div style="display: flex; justify-content: space-between; font-size: 11px;"><span style="color: #6b747e;">CT: <span style="color: #101010; font-weight: 600;">Yes</span></span><span style="color: #6b747e;">FJ: <span style="color: #101010; font-weight: 600;">Yes</span></span></div>
+                </div>
+                <div style="padding: 10px 14px; border-bottom: 1px solid #e6eaee;">
+                  <div style="font-weight: 600; font-size: 12px; color: #1f2630; margin-bottom: 4px;">Access to Workshop Tracks</div>
+                  <div style="display: flex; justify-content: space-between; font-size: 11px;"><span style="color: #6b747e;">CT: <span style="color: #6b747e; font-weight: 600;">No</span></span><span style="color: #6b747e;">FJ: <span style="color: #101010; font-weight: 600;">Yes</span></span></div>
+                </div>
+                <div style="padding: 10px 14px; border-bottom: 1px solid #e6eaee;">
+                  <div style="font-weight: 600; font-size: 12px; color: #1f2630; margin-bottom: 4px;">Workshop seat reservation</div>
+                  <div style="display: flex; justify-content: space-between; font-size: 11px;"><span style="color: #6b747e;">CT: <span style="color: #6b747e; font-weight: 600;">No</span></span><span style="color: #6b747e;">FJ: <span style="color: #101010; font-weight: 600;">Yes</span></span></div>
+                </div>
+                <div style="padding: 10px 14px;">
+                  <div style="font-weight: 600; font-size: 12px; color: #1f2630; margin-bottom: 4px;">Exercises &amp; Live Builds</div>
+                  <div style="display: flex; justify-content: space-between; font-size: 11px;"><span style="color: #6b747e;">CT: <span style="color: #6b747e; font-weight: 600;">No</span></span><span style="color: #6b747e;">FJ: <span style="color: #101010; font-weight: 600;">Yes</span></span></div>
+                </div>
+              </div>
+
+              <div style="border: 1px solid #d5dae0; border-radius: 12px; overflow: hidden;">
+                <div style="background: #f4f6f8; border-bottom: 1px solid #e6eaee; padding: 9px 14px; font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; color: #6b747e;">Recordings &amp; Files</div>
+                <div style="padding: 10px 14px; border-bottom: 1px solid #e6eaee;">
+                  <div style="font-weight: 600; font-size: 12px; color: #1f2630; margin-bottom: 4px;">All session recordings</div>
+                  <div style="display: flex; justify-content: space-between; font-size: 11px;"><span style="color: #6b747e;">CT: <span style="color: #101010; font-weight: 600;">Yes</span></span><span style="color: #6b747e;">FJ: <span style="color: #101010; font-weight: 600;">Yes</span></span></div>
+                </div>
+                <div style="padding: 10px 14px;">
+                  <div style="font-weight: 600; font-size: 12px; color: #1f2630; margin-bottom: 4px;">Workshop Templates &amp; Files</div>
+                  <div style="display: flex; justify-content: space-between; font-size: 11px;"><span style="color: #6b747e;">CT: <span style="color: #101010; font-weight: 600;">Yes</span></span><span style="color: #6b747e;">FJ: <span style="color: #101010; font-weight: 600;">Yes</span></span></div>
+                </div>
+              </div>
+
+              <div style="border: 1px solid #d5dae0; border-radius: 12px; overflow: hidden;">
+                <div style="background: #f4f6f8; border-bottom: 1px solid #e6eaee; padding: 9px 14px; font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; color: #6b747e;">Platform &amp; Materials</div>
+                <div style="padding: 10px 14px; border-bottom: 1px solid #e6eaee;">
+                  <div style="font-weight: 600; font-size: 12px; color: #1f2630; margin-bottom: 4px;">Platform access duration</div>
+                  <div style="display: flex; justify-content: space-between; font-size: 11px;"><span style="color: #6b747e;">CT: <span style="color: #101010; font-weight: 600;">3 months</span></span><span style="color: #6b747e;">FJ: <span style="color: #101010; font-weight: 600;">1 year</span></span></div>
+                </div>
+                <div style="padding: 10px 14px; border-bottom: 1px solid #e6eaee;">
+                  <div style="font-weight: 600; font-size: 12px; color: #1f2630; margin-bottom: 4px;">Session Summaries</div>
+                  <div style="display: flex; justify-content: space-between; font-size: 11px;"><span style="color: #6b747e;">CT: <span style="color: #101010; font-weight: 600;">Basic</span></span><span style="color: #6b747e;">FJ: <span style="color: #101010; font-weight: 600;">Full</span></span></div>
+                </div>
+                <div style="padding: 10px 14px; border-bottom: 1px solid #e6eaee;">
+                  <div style="font-weight: 600; font-size: 12px; color: #1f2630; margin-bottom: 4px;">ECommerce Action Pack</div>
+                  <div style="display: flex; justify-content: space-between; font-size: 11px;"><span style="color: #6b747e;">CT: <span style="color: #101010; font-weight: 600;">Basic</span></span><span style="color: #6b747e;">FJ: <span style="color: #101010; font-weight: 600;">Full</span></span></div>
+                </div>
+                <div style="padding: 10px 14px;">
+                  <div style="font-weight: 600; font-size: 12px; color: #1f2630; margin-bottom: 4px;">ECommerce Report</div>
+                  <div style="display: flex; justify-content: space-between; font-size: 11px;"><span style="color: #6b747e;">CT: <span style="color: #101010; font-weight: 600;">Summary</span></span><span style="color: #6b747e;">FJ: <span style="color: #101010; font-weight: 600;">Full report</span></span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ==================== PARTNER LOGO CARDS ==================== -->
+        <div style="margin-bottom: 56px;">
+          <h2 class="section-heading">Partner logo cards</h2>
+          <div style="display: flex; gap: 16px; align-items: flex-end; flex-wrap: wrap;">
+            <div>
+              <div class="font-mono" style="font-size: 9px; letter-spacing: 0.08em; text-transform: uppercase; color: #6b747e; margin-bottom: 6px;">Title</div>
+              <div style="width: 340px; max-width: 100%; height: 140px; border: 1px solid #d5dae0; border-radius: 14px; display: flex; align-items: center; justify-content: center;">
+                <span class="font-mono" style="font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: #6b747e;">[Title Partner logo]</span>
+              </div>
+            </div>
+            <div>
+              <div class="font-mono" style="font-size: 9px; letter-spacing: 0.08em; text-transform: uppercase; color: #6b747e; margin-bottom: 6px;">Strategic</div>
+              <div style="width: 260px; max-width: 100%; height: 104px; border: 1px solid #d5dae0; border-radius: 12px; display: flex; align-items: center; justify-content: center;">
+                <span class="font-mono" style="font-size: 9px; letter-spacing: 0.08em; text-transform: uppercase; color: #6b747e;">[Logo]</span>
+              </div>
+            </div>
+            <div>
+              <div class="font-mono" style="font-size: 9px; letter-spacing: 0.08em; text-transform: uppercase; color: #6b747e; margin-bottom: 6px;">Growth</div>
+              <div style="width: 190px; max-width: 100%; height: 84px; border: 1px solid #d5dae0; border-radius: 12px; display: flex; align-items: center; justify-content: center;">
+                <span class="font-mono" style="font-size: 9px; letter-spacing: 0.08em; text-transform: uppercase; color: #6b747e;">[Logo]</span>
+              </div>
+            </div>
+            <div>
+              <div class="font-mono" style="font-size: 9px; letter-spacing: 0.08em; text-transform: uppercase; color: #006681; margin-bottom: 6px;">Community</div>
+              <div style="width: 150px; max-width: 100%; height: 68px; border: 1px dashed #d5dae0; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                <span class="font-mono" style="font-size: 8px; letter-spacing: 0.08em; text-transform: uppercase; color: #6b747e;">[Community]</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ==================== TILES & CALLOUTS ==================== -->
+        <div style="margin-bottom: 56px;">
+          <h2 class="section-heading">Tiles &amp; callouts</h2>
+
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 14px; margin-bottom: 16px;">
+            <div style="background: #e6fbee; border: 1px solid #c3f7d7; border-radius: 12px; padding: 20px;">
+              <div style="font-weight: 800; font-size: 26px; color: #101010; margin-bottom: 4px;">400+</div>
+              <div class="font-mono" style="font-size: 9px; letter-spacing: 0.08em; text-transform: uppercase; color: #04c44e;">Stat tile (mint) — hours of content</div>
+            </div>
+            <div style="background: #ffffff; border: 1px solid #d5dae0; border-radius: 12px; padding: 20px;">
+              <div style="width: 24px; height: 2px; background: #05ef62; margin-bottom: 12px;"></div>
+              <div style="font-weight: 700; font-size: 14px; margin-bottom: 4px;">One Full Day</div>
+              <div style="font-size: 12px; color: #4a5563;">Fact tile — format</div>
+            </div>
+            <div style="grid-column: 1 / -1; background: #e6fbee; border: 1px solid #c3f7d7; border-radius: 12px; padding: 16px 20px; display: flex; gap: 12px; align-items: flex-start;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#04c44e" stroke-width="2" style="flex: none; margin-top: 2px;">
+                <circle cx="12" cy="12" r="9"></circle>
+                <path d="M12 8h.01M12 11v5" stroke-linecap="round"></path>
+              </svg>
+              <div style="font-size: 13px; line-height: 1.7; color: #1f2630;"><strong>Mint callout.</strong> Even if sessions overlap, recordings and files are available to all attendees after the event.</div>
+            </div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 14px; max-width: 900px;">
+            <div style="background: #ffffff; border: 1px solid #d5dae0; border-left: 3px solid #006681; border-radius: 10px; padding: 14px 18px; font-size: 13px; line-height: 1.7; color: #1f2630;">
+              <strong>Info callout.</strong> Some sessions run in parallel — pick per slot and catch the rest on the platform.
+            </div>
+            <div style="background: #ffffff; border: 1px solid #d5dae0; border-left: 3px solid #ffb020; border-radius: 10px; padding: 14px 18px; font-size: 13px; line-height: 1.7; color: #1f2630;">
+              <strong>Warning callout.</strong> Buying the pass does not reserve a workshop seat — reservation opens after payment.
+            </div>
+          </div>
+        </div>
+
+        <!-- ==================== FORM FIELDS ==================== -->
+        <div style="margin-bottom: 56px;">
+          <h2 class="section-heading">Form fields</h2>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 320px)); gap: 20px;">
+
+            <!-- Text -->
+            <div class="form-field">
+              <label class="form-label" for="cs-text">Full name *</label>
+              <input id="cs-text" class="form-input" type="text" placeholder="Your full name">
+            </div>
+
+            <!-- Select -->
+            <div class="form-field">
+              <label class="form-label" for="cs-select">Country *</label>
+              <select id="cs-select" class="form-input">
+                <option>Select country</option>
+                <option>Egypt</option>
+                <option>Saudi Arabia</option>
+              </select>
+            </div>
+
+            <!-- Phone -->
+            <div class="form-field">
+              <label class="form-label" for="cs-phone">Mobile number *</label>
+              <div style="display: flex; gap: 8px;">
+                <select aria-label="Country code" style="border: 1px solid #d5dae0; border-radius: 10px; padding: 12px 10px; font-size: 14px; background: #ffffff; width: 88px;">
+                  <option>+20</option>
+                  <option>+966</option>
+                  <option>+971</option>
+                </select>
+                <input id="cs-phone" class="form-input" type="tel" placeholder="1X XXX XXXX" style="flex: 1; min-width: 0;">
+              </div>
+            </div>
+
+            <!-- Error -->
+            <div class="form-field">
+              <span class="form-label" style="color: #b3362e;">Work email * — error</span>
+              <input type="email" value="name@" aria-label="Work email error" style="border: 1px solid #c4342d; border-radius: 10px; padding: 12px 14px; font-size: 14px; outline-color: #c4342d; width: 100%;">
+              <span class="form-error" style="font-size: 11px; color: #b3362e;">Enter a valid email address.</span>
+            </div>
+
+            <!-- Success -->
+            <div class="form-field">
+              <span class="form-label" style="color: #04c44e;">Work email — success</span>
+              <div style="position: relative;">
+                <input type="email" value="name@company.com" aria-label="Work email valid" style="width: 100%; border: 1px solid #c3f7d7; border-radius: 10px; padding: 12px 38px 12px 14px; font-size: 14px; outline-color: #05ef62;">
+                <span style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); color: #04c44e; font-weight: 700;">✓</span>
+              </div>
+            </div>
+
+            <!-- File upload -->
+            <div class="form-field">
+              <span class="form-label">File upload</span>
+              <div style="border: 1px dashed #d5dae0; border-radius: 10px; padding: 11px 14px; font-size: 12px; color: #6b747e; display: flex; align-items: center; gap: 10px;">
+                <button style="background: #f4f6f8; border: 1px solid #d5dae0; border-radius: 8px; padding: 7px 12px; font-weight: 600; font-size: 12px; color: #101010; cursor: pointer; flex: none;">Choose file</button>
+                PDF, PPTX — max 10 MB
+              </div>
+            </div>
+
+            <!-- Checkbox + Radio -->
+            <div style="display: flex; flex-direction: column; gap: 10px;">
+              <label style="display: flex; gap: 10px; align-items: flex-start; cursor: pointer; font-size: 13px; line-height: 1.6; color: #1f2630;">
+                <input type="checkbox" style="width: 18px; height: 18px; margin-top: 1px; accent-color: #05ef62;">
+                <span>I agree to the <a href="#">Terms</a> and <a href="#">Privacy Policy</a>. (always unchecked)</span>
+              </label>
+              <div style="display: flex; gap: 16px; flex-wrap: wrap;">
+                <label style="display: flex; gap: 8px; align-items: center; cursor: pointer; font-size: 13px;"><input type="radio" name="cs-radio" style="width: 16px; height: 16px; accent-color: #05ef62;">Email</label>
+                <label style="display: flex; gap: 8px; align-items: center; cursor: pointer; font-size: 13px;"><input type="radio" name="cs-radio" style="width: 16px; height: 16px; accent-color: #05ef62;">Phone</label>
+                <label style="display: flex; gap: 8px; align-items: center; cursor: pointer; font-size: 13px;"><input type="radio" name="cs-radio" style="width: 16px; height: 16px; accent-color: #05ef62;">WhatsApp</label>
+              </div>
+            </div>
+
+            <!-- Quantity stepper -->
+            <div class="form-field">
+              <span class="form-label">Quantity stepper</span>
+              <div style="display: flex; align-items: center; gap: 10px;">
+                <button class="qty-btn" id="qtyDown" aria-label="Decrease">−</button>
+                <span class="font-mono" id="qtyValue" style="font-size: 15px; min-width: 18px; text-align: center;">1</span>
+                <button class="qty-btn" id="qtyUp" aria-label="Increase">+</button>
+              </div>
+            </div>
+
+            <!-- Promo code -->
+            <div class="form-field">
+              <span class="form-label">Promo code (live — try LAUNCH / EXPIRED / LIMIT)</span>
+              <div style="display: flex; gap: 8px;">
+                <input id="promoInput" class="form-input" type="text" placeholder="Promo code" style="text-transform: uppercase; flex: 1; min-width: 0;">
+                <button id="promoApply" style="background: #101010; border: none; color: #ffffff; border-radius: 10px; padding: 12px 18px; font-weight: 600; font-size: 12px; cursor: pointer; flex: none;">Apply</button>
+              </div>
+              <span id="promoMsg" style="font-size: 12px; font-weight: 600; color: #6b747e;"></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- ==================== ACCORDION + CONTROLS ==================== -->
+        <div style="margin-bottom: 56px;">
+          <h2 class="section-heading">Accordion, segmented, chips, search</h2>
+          <div style="display: flex; gap: 24px; flex-wrap: wrap; align-items: flex-start;">
+
+            <!-- Accordion -->
+            <div style="width: 460px; max-width: 100%; border: 1px solid #d5dae0; border-radius: 14px; overflow: hidden;">
+              <div class="accordion-item">
+                <button class="accordion-toggle">
+                  <span style="font-weight: 700; font-size: 14px; color: #101010;">Closed accordion item</span>
+                  <span style="color: #04c44e; font-size: 18px;">+</span>
+                </button>
+              </div>
+              <div class="accordion-item" style="border-bottom: none;">
+                <button class="accordion-toggle" aria-expanded="true" id="openAccordion">
+                  <span style="font-weight: 700; font-size: 14px; color: #101010;">Open accordion item</span>
+                  <span style="color: #04c44e; font-size: 18px;">−</span>
+                </button>
+                <p style="font-size: 13px; line-height: 1.8; color: #4a5563; margin: 0; padding: 0 18px 14px;">Answer text sits here with a comfortable reading measure and calm secondary color.</p>
+                <div style="display: flex; align-items: center; gap: 12px; padding: 0 18px 16px; flex-wrap: wrap;">
+                  <span style="font-size: 11px; color: #6b747e;">Was this answer helpful?</span>
+                  <button class="btn-secondary" style="border-radius: 999px; padding: 4px 13px; font-size: 11px;">Yes</button>
+                  <button class="btn-secondary" style="border-radius: 999px; padding: 4px 13px; font-size: 11px;">No</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Controls -->
+            <div style="display: flex; flex-direction: column; gap: 18px;">
+
+              <!-- Segmented -->
+              <div>
+                <div class="font-mono" style="font-size: 9px; letter-spacing: 0.08em; text-transform: uppercase; color: #6b747e; margin-bottom: 8px;">Segmented control (live)</div>
+                <div class="segmented" id="segmentedControl">
+                  <button class="seg-btn active" data-seg="0" style="background: #ffffff; color: #101010; box-shadow: 0 1px 4px rgba(16,16,16,.12);">Timeline View</button>
+                  <button class="seg-btn" data-seg="1" style="background: transparent; color: #101010; box-shadow: none;">Track View</button>
+                </div>
+              </div>
+
+              <!-- Filter chips -->
+              <div>
+                <div class="font-mono" style="font-size: 9px; letter-spacing: 0.08em; text-transform: uppercase; color: #6b747e; margin-bottom: 8px;">Filter chips (live multi-select)</div>
+                <div style="display: flex; gap: 8px; flex-wrap: wrap; max-width: 480px;" id="filterChips">
+                  <button class="chip" data-chip="Keynotes">Keynotes</button>
+                  <button class="chip" data-chip="Panels">Panels</button>
+                  <button class="chip" data-chip="Workshops">Workshops</button>
+                  <button class="chip active" data-chip="CRO">CRO</button>
+                  <button class="chip" data-chip="SEO">SEO</button>
+                  <button class="chip" data-chip="Retention">Retention</button>
+                </div>
+              </div>
+
+              <!-- Search -->
+              <div>
+                <div class="font-mono" style="font-size: 9px; letter-spacing: 0.08em; text-transform: uppercase; color: #6b747e; margin-bottom: 8px;">Search input with clear (live)</div>
+                <div class="search-wrap">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#6b747e" stroke-width="2">
+                    <circle cx="11" cy="11" r="7"></circle>
+                    <path d="m20 20-3.5-3.5" stroke-linecap="round"></path>
+                  </svg>
+                  <label for="cs-search" style="position: absolute; left: -9999px;">Search</label>
+                  <input id="cs-search" type="text" placeholder="Search sessions, speakers…">
+                  <button class="search-clear" id="searchClear" aria-label="Clear search" style="display: none;">×</button>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- ==================== CHROME ==================== -->
+        <div style="margin-bottom: 56px;">
+          <h2 class="section-heading">Announcement bar, nav, CTA bars, ink band, footer</h2>
+          <div style="display: flex; flex-direction: column; gap: 20px;">
+
+            <!-- Announcement bar -->
+            <div class="announcement-bar-demo">
+              <span style="width: 8px; height: 8px; border-radius: 50%; background: #05ef62; flex: none;"></span>
+              ECommerce Day is happening on 22 October 2026 — Booking is now open.
+              <button aria-label="Dismiss" style="background: none; border: none; color: #9aa1a9; font-size: 15px; cursor: pointer; margin-left: 8px;">×</button>
+            </div>
+
+            <!-- Nav -->
+            <div class="nav-demo">
+              <div style="display: flex; align-items: center; gap: 10px;">
+                <div style="width: 28px; height: 28px; border-radius: 7px; background: #101010; display: flex; align-items: center; justify-content: center; color: #05ef62; font-weight: 800; font-size: 13px; flex: none;">T</div>
+                <span style="font-weight: 700; font-size: 16px;">TrafficMENA</span>
+              </div>
+              <nav class="nav-demo-links">
+                <a href="#">Agenda</a>
+                <a href="#">Speakers</a>
+                <a href="#" style="border-bottom: 2px solid #05ef62; padding-bottom: 2px;">Tickets</a>
+                <a href="#">Sponsors</a>
+                <a href="#">FAQ</a>
+              </nav>
+              <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+                <button class="btn-secondary" style="padding: 10px 18px; font-size: 13px;">Become a Sponsor</button>
+                <button class="btn-primary" style="padding: 10px 18px; font-size: 13px;">Book Your Ticket</button>
+              </div>
+            </div>
+
+            <!-- Mobile frame + ink CTA band -->
+            <div style="display: flex; gap: 20px; align-items: flex-start; flex-wrap: wrap;">
+
+              <!-- Mobile frame -->
+              <div style="width: 390px; max-width: 100%; border: 1px solid #e6eaee; border-radius: 12px; overflow: hidden;">
+                <div style="background: rgba(255, 255, 255, 0.9); border-bottom: 1px solid #e6eaee; display: flex; align-items: center; justify-content: space-between; padding: 12px 16px;">
+                  <div style="display: flex; align-items: center; gap: 8px;">
+                    <div style="width: 24px; height: 24px; border-radius: 6px; background: #101010; display: flex; align-items: center; justify-content: center; color: #05ef62; font-weight: 800; font-size: 11px; flex: none;">T</div>
+                    <span style="font-weight: 700; font-size: 14px;">TrafficMENA</span>
+                  </div>
+                  <button aria-label="Open menu" style="background: none; border: 1px solid #e6eaee; border-radius: 8px; padding: 8px 10px; cursor: pointer; display: flex; flex-direction: column; gap: 4px;">
+                    <span style="width: 16px; height: 2px; background: #101010; display: block;"></span>
+                    <span style="width: 16px; height: 2px; background: #101010; display: block;"></span>
+                    <span style="width: 16px; height: 2px; background: #101010; display: block;"></span>
+                  </button>
+                </div>
+                <div style="height: 48px; background: #f4f6f8; display: flex; align-items: center; justify-content: center; font-family: 'JetBrains Mono', monospace; font-size: 9px; letter-spacing: 0.08em; color: #9aa1a9;">PAGE CONTENT</div>
+                <div style="background: rgba(255, 255, 255, 0.92); border-top: 1px solid #e6eaee; padding: 12px 16px; display: flex; align-items: center; gap: 12px;">
+                  <div style="flex: 1;">
+                    <div class="font-mono" style="font-size: 9px; letter-spacing: 0.08em; text-transform: uppercase; color: #6b747e;">22 Oct 2026 · Cairo</div>
+                    <div style="font-weight: 700; font-size: 13px;">ECommerce Day 2026</div>
+                  </div>
+                  <button class="btn-primary" style="padding: 13px 20px; font-size: 13px; flex: none;">Book Your Ticket</button>
+                </div>
+              </div>
+
+              <!-- Ink CTA band -->
+              <div style="flex: 1; min-width: 280px; background: #101010; border-radius: 14px; padding: 48px 32px; text-align: center;">
+                <h3 style="font-size: 26px; line-height: 1.2; font-weight: 700; color: #ffffff; margin: 0 0 24px;">Ink CTA band headline.</h3>
+                <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
+                  <button class="btn-primary" style="padding: 14px 24px; font-size: 14px;">Book Your Ticket</button>
+                  <button class="btn-secondary" style="background: transparent; color: #ffffff; border-color: #ffffff; padding: 14px 24px; font-size: 14px;">Explore the Agenda</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Footer -->
+            <div class="footer-demo">
+              <div class="footer-grid-demo" style="display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr 1.2fr 1.2fr; gap: 28px; margin-bottom: 32px;">
+                <div>
+                  <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 12px;">
+                    <div style="width: 28px; height: 28px; border-radius: 7px; background: #101010; display: flex; align-items: center; justify-content: center; color: #05ef62; font-weight: 800; font-size: 13px; flex: none;">T</div>
+                    <span style="font-weight: 700; font-size: 15px;">TrafficMENA</span>
+                  </div>
+                  <div style="font-size: 12px; line-height: 1.7; color: #6b747e; max-width: 24ch;">ECommerce Day 2026 — one day, the whole order journey.</div>
+                </div>
+                <div>
+                  <div class="font-mono" style="font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: #6b747e; margin-bottom: 12px;">Navigation</div>
+                  <div style="display: flex; flex-direction: column; gap: 8px; font-size: 13px; font-weight: 500;"><a href="#" style="color: #1f2630;">Agenda</a><a href="#" style="color: #1f2630;">Speakers</a><a href="#" style="color: #1f2630;">Tickets</a><a href="#" style="color: #1f2630;">Sponsors</a><a href="#" style="color: #1f2630;">FAQ</a></div>
+                </div>
+                <div>
+                  <div class="font-mono" style="font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: #6b747e; margin-bottom: 12px;">Support</div>
+                  <div style="display: flex; flex-direction: column; gap: 8px; font-size: 13px; font-weight: 500;"><a href="#" style="color: #1f2630;">Contact</a><a href="#" style="color: #1f2630;">FAQ</a></div>
+                </div>
+                <div>
+                  <div class="font-mono" style="font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: #6b747e; margin-bottom: 12px;">Social</div>
+                  <div style="display: flex; flex-direction: column; gap: 8px; font-size: 13px; font-weight: 500;"><a href="#" style="color: #1f2630;">LinkedIn</a><a href="#" style="color: #1f2630;">Instagram</a><a href="#" style="color: #1f2630;">Facebook</a><a href="#" style="color: #1f2630;">YouTube</a></div>
+                </div>
+                <div>
+                  <div class="font-mono" style="font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: #6b747e; margin-bottom: 12px;">Legal</div>
+                  <div style="display: flex; flex-direction: column; gap: 8px; font-size: 13px; font-weight: 500;"><a href="#" style="color: #1f2630;">Terms</a><a href="#" style="color: #1f2630;">Privacy</a><a href="#" style="color: #1f2630;">Refund &amp; Cancellation</a><a href="#" style="color: #1f2630;">Ticket &amp; Entry</a><a href="#" style="color: #1f2630;">Recording &amp; Photography</a></div>
+                </div>
+                <div>
+                  <div class="font-mono" style="font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: #6b747e; margin-bottom: 12px;">Sponsor Enquiries</div>
+                  <div style="display: flex; flex-direction: column; gap: 8px; font-size: 13px; font-weight: 500;">
+                    <a href="mailto:info@trafficmena.com" style="color: #1f2630;">info@trafficmena.com</a>
+                    <span style="color: #1f2630;">01118111793</span>
+                    <a href="#" style="color: #04c44e;">Become a Sponsor →</a>
+                  </div>
+                </div>
+              </div>
+              <div style="border-top: 1px solid #e6eaee; padding-top: 18px; display: flex; justify-content: space-between; font-size: 12px; color: #6b747e; flex-wrap: wrap; gap: 8px;">
+                <span>© TrafficMENA 2026</span>
+                <span>trafficmena.com</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- ==================== EMPTY STATES ==================== -->
+        <div>
+          <h2 class="section-heading">Placeholder / empty states</h2>
+          <div class="grid-4-cols">
+            <div class="empty-tile">
+              <div class="font-mono" style="font-size: 9px; letter-spacing: 0.08em; text-transform: uppercase; color: #6b747e; margin-bottom: 10px;">Venue</div>
+              <div style="font-weight: 700; font-size: 14px; color: #101010;">Venue details will be announced soon.</div>
+            </div>
+            <div class="empty-tile">
+              <div class="font-mono" style="font-size: 9px; letter-spacing: 0.08em; text-transform: uppercase; color: #6b747e; margin-bottom: 10px;">Speakers</div>
+              <div style="font-weight: 700; font-size: 14px; color: #101010;">Speaker lineup will be announced soon.</div>
+            </div>
+            <div class="empty-tile">
+              <div class="font-mono" style="font-size: 9px; letter-spacing: 0.08em; text-transform: uppercase; color: #04c44e; margin-bottom: 10px;">Partnerships</div>
+              <div style="font-weight: 700; font-size: 14px; color: #101010;">Partnerships Opening Soon</div>
+            </div>
+            <div class="empty-tile">
+              <div class="font-mono" style="font-size: 9px; letter-spacing: 0.08em; text-transform: uppercase; color: #6b747e; margin-bottom: 10px;">Price token</div>
+              <div style="font-weight: 800; font-size: 20px; color: #101010;">[Final Price] <span style="font-size: 13px; font-weight: 600; color: #6b747e;">EGP</span></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ==================== SCRIPTS ==================== -->
+    <script>
+      // ==========================================
+      // 01. QUANTITY STEPPER
+      // ==========================================
+      (function() {
+        var qty = 1;
+        var qtyVal = document.getElementById('qtyValue');
+        var up = document.getElementById('qtyUp');
+        var down = document.getElementById('qtyDown');
+        if (up && down && qtyVal) {
+          up.addEventListener('click', function() {
+            qty = Math.min(10, qty + 1);
+            qtyVal.textContent = qty;
+          });
+          down.addEventListener('click', function() {
+            qty = Math.max(1, qty - 1);
+            qtyVal.textContent = qty;
+          });
+        }
+      })();
+
+      // ==========================================
+      // 02. PROMO CODE
+      // ==========================================
+      (function() {
+        var input = document.getElementById('promoInput');
+        var applyBtn = document.getElementById('promoApply');
+        var msgEl = document.getElementById('promoMsg');
+        if (applyBtn && input && msgEl) {
+          applyBtn.addEventListener('click', function() {
+            var code = input.value.trim().toUpperCase();
+            var map = { LAUNCH: 'valid', EXPIRED: 'expired', LIMIT: 'limit', CTONLY: 'na' };
+            var state = code ? (map[code] || 'invalid') : 'invalid';
+            var msgs = {
+              valid: { m: '✓ Code applied — discount reflected in the total.', c: '#04c44e' },
+              invalid: { m: 'This code is not valid.', c: '#b3362e' },
+              expired: { m: 'This code has expired.', c: '#b3362e' },
+              limit: { m: 'This code has reached its usage limit.', c: '#b3362e' },
+              na: { m: 'Not applicable to this ticket type.', c: '#8a5a00' }
+            };
+            msgEl.textContent = msgs[state].m;
+            msgEl.style.color = msgs[state].c;
+          });
+        }
+      })();
+
+      // ==========================================
+      // 03. SEGMENTED CONTROL
+      // ==========================================
+      (function() {
+        var btns = document.querySelectorAll('.seg-btn');
+        btns.forEach(function(btn) {
+          btn.addEventListener('click', function() {
+            btns.forEach(function(b) {
+              b.style.background = 'transparent';
+              b.style.boxShadow = 'none';
+              b.classList.remove('active');
+            });
+            this.style.background = '#ffffff';
+            this.style.boxShadow = '0 1px 4px rgba(16,16,16,.12)';
+            this.classList.add('active');
+          });
+        });
+      })();
+
+      // ==========================================
+      // 04. FILTER CHIPS
+      // ==========================================
+      (function() {
+        document.querySelectorAll('#filterChips .chip').forEach(function(chip) {
+          chip.addEventListener('click', function() {
+            this.classList.toggle('active');
+          });
+        });
+      })();
+
+      // ==========================================
+      // 05. SEARCH CLEAR
+      // ==========================================
+      (function() {
+        var input = document.getElementById('cs-search');
+        var clearBtn = document.getElementById('searchClear');
+        if (input && clearBtn) {
+          input.addEventListener('input', function() {
+            clearBtn.style.display = this.value.length > 0 ? 'flex' : 'none';
+          });
+          clearBtn.addEventListener('click', function() {
+            input.value = '';
+            clearBtn.style.display = 'none';
+            input.focus();
+          });
+        }
+      })();
+
+      // ==========================================
+      // 06. ACCORDION TOGGLE (demo)
+      // ==========================================
+      (function() {
+        document.querySelectorAll('.accordion-toggle').forEach(function(btn) {
+          btn.addEventListener('click', function() {
+            var isOpen = this.getAttribute('aria-expanded') === 'true';
+            if (this.nextElementSibling) {
+              // Only handle the open accordion item demo
+              if (this.id === 'openAccordion') {
+                this.setAttribute('aria-expanded', !isOpen);
+                var icon = this.querySelector('span:last-child');
+                if (icon) icon.textContent = isOpen ? '+' : '−';
+                var content = this.nextElementSibling;
+                if (content) {
+                  if (content.tagName === 'P') {
+                    content.style.display = isOpen ? 'none' : 'block';
+                  }
+                }
+              }
+            }
+          });
+        });
+      })();
+    </script>
+
+  </body>
+</html>

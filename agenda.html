@@ -1,0 +1,3044 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>TrafficMENA — ECommerce Day 2026 · Agenda</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=IBM+Plex+Sans+Arabic:wght@400;500;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- ✅ Reusable navbar -->
+    <script src="navbar.js" defer></script>
+    <!-- ✅ Reusable footer -->
+    <script src="footer.js" defer></script>
+
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        margin: 0;
+        font-family: "Manrope", "IBM Plex Sans Arabic", sans-serif;
+        color: #101010;
+        background-color: #ffffff;
+        overflow-x: hidden;
+      }
+      a {
+        color: #04c44e;
+        text-decoration: none;
+      }
+      a:hover {
+        color: #006681;
+      }
+      .container {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 0 24px;
+      }
+      .font-mono {
+        font-family: "JetBrains Mono", monospace;
+      }
+
+      /* Buttons */
+      .btn-primary {
+        background: #05ef62;
+        border: none;
+        color: #101010;
+        border-radius: 10px;
+        padding: 14px 26px;
+        font-family: "Manrope", sans-serif;
+        font-weight: 600;
+        font-size: 15px;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        transition: background 0.2s;
+        text-decoration: none;
+      }
+      .btn-primary:hover {
+        background: #04d657;
+        color: #101010;
+      }
+      .btn-secondary {
+        background: #ffffff;
+        border: 1px solid #101010;
+        color: #101010;
+        border-radius: 10px;
+        padding: 14px 26px;
+        font-family: "Manrope", sans-serif;
+        font-weight: 600;
+        font-size: 15px;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        transition: background 0.2s;
+        text-decoration: none;
+      }
+      .btn-secondary:hover {
+        background: #f4f6f8;
+        color: #101010;
+      }
+
+      /* Sections & Utilities */
+      .section-padding {
+        padding-block: 80px !important;
+      }
+      .section-bg-alt {
+        background: #f4f6f8;
+        border-top: 1px solid #e6eaee;
+        border-bottom: 1px solid #e6eaee;
+      }
+      .section-bg-dark {
+        background: #101010;
+        color: #ffffff;
+      }
+      .section-label {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 16px;
+      }
+      .section-label .indicator {
+        width: 24px;
+        height: 2px;
+        background: #05ef62;
+        flex: none;
+      }
+      .section-label span {
+        font-size: 12px;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: #6b747e;
+      }
+      .section-bg-dark .section-label span {
+        color: #05ef62;
+      }
+      .section-title {
+        font-size: 36px;
+        line-height: 1.2;
+        font-weight: 700;
+        margin: 0 0 32px;
+      }
+
+      /* HERO */
+      .hero-title {
+        font-size: 56px;
+        line-height: 1.02;
+        font-weight: 700;
+        margin: 0 0 20px;
+        max-width: 20ch;
+      }
+      .hero-meta {
+        display: flex;
+        gap: 20px;
+        font-family: "JetBrains Mono", monospace;
+        font-size: 12px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: #101010;
+        flex-wrap: wrap;
+        margin-bottom: 32px;
+      }
+
+      /* VIEW SWITCHER */
+      .view-switcher-wrap {
+        z-index: 40;
+        background: rgba(255, 255, 255, 0.92);
+        backdrop-filter: blur(12px);
+        border-top: 1px solid #e6eaee;
+        border-bottom: 1px solid #e6eaee;
+      }
+      .view-switcher-inner {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        padding: 16px 24px;
+      }
+      .filter-row {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+        align-items: center;
+      }
+
+      /* GRIDS */
+      .grid-5-cols {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 16px;
+      }
+      .grid-4-cols {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 16px;
+      }
+      .grid-2-cols {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 14px;
+      }
+      .cmp-grid {
+        display: grid;
+        grid-template-columns: 2fr 1fr 1fr;
+        padding: 13px 24px;
+        border-bottom: 1px solid #e6eaee;
+        font-size: 14px;
+        align-items: center;
+      }
+
+      /* RESPONSIVE */
+      @media (max-width: 1024px) {
+        .hero-title {
+          font-size: 44px;
+        }
+        .grid-5-cols,
+        .grid-4-cols {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+
+      @media (max-width: 768px) {
+        .section-padding {
+          padding: 48px 0;
+        }
+        .hero-title {
+          font-size: 32px;
+          line-height: 1.2;
+          max-width: none;
+        }
+        .section-title {
+          font-size: 26px;
+          margin-bottom: 24px;
+        }
+        .grid-5-cols,
+        .grid-4-cols,
+        .grid-2-cols {
+          grid-template-columns: 1fr;
+        }
+        .cmp-grid {
+          grid-template-columns: 1fr;
+          gap: 4px;
+          padding: 14px 18px;
+        }
+        .cmp-grid span:first-child {
+          font-weight: 700;
+          margin-bottom: 4px;
+        }
+        .hero-meta {
+          gap: 8px;
+          font-size: 11px;
+        }
+        .hero-meta span {
+          width: 100%;
+        }
+        .session-detail-grid {
+          grid-template-columns: 1fr !important;
+          gap: 24px !important;
+        }
+        .session-detail-panel {
+          width: 100% !important;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .container {
+          padding: 0 18px;
+        }
+        .hero-title {
+          font-size: 28px;
+        }
+        .btn-primary,
+        .btn-secondary {
+          padding: 12px 20px;
+          font-size: 14px;
+        }
+        .view-switcher-inner {
+          padding: 12px 18px;
+        }
+        .cmp-grid {
+          padding: 12px 14px;
+          font-size: 13px;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .timeline-columns {
+          display: flex !important;
+          overflow-x: auto;
+          gap: 14px;
+          padding-bottom: 8px;
+          scroll-snap-type: x mandatory;
+          -webkit-overflow-scrolling: touch;
+        }
+        .timeline-columns > div {
+          min-width: 280px;
+          scroll-snap-align: start;
+        }
+        .timeline-sticky-header {
+          position: static !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- ✅ Reusable Navbar -->
+    <site-navbar current="agenda"></site-navbar>
+
+    <!-- Hero -->
+    <div class="container" style="padding: 72px 24px 48px">
+      <div class="section-label">
+        <span class="indicator"></span>
+        <span class="font-mono">ECommerce Day 2026 Agenda</span>
+      </div>
+      <h1 class="hero-title">
+        One full day covering the order journey, from the first
+        <span style="color: #04c44e">click</span> to delivery and retention.
+      </h1>
+      <p
+        style="
+          font-size: 18px;
+          line-height: 1.7;
+          color: #4a5563;
+          margin: 0 0 28px;
+          max-width: 62ch;
+        "
+      >
+        The agenda runs across two stages and three workshop rooms. Choose what
+        you attend on the day, and catch up on the rest on the platform.
+      </p>
+      <div class="hero-meta">
+        <span>5 November 2026</span>
+        <span style="color: #d5dae0">·</span>
+        <span>Offline in Cairo</span>
+        <span style="color: #d5dae0">·</span>
+        <span>Two stages and three workshop rooms</span>
+        <span style="color: #d5dae0">·</span>
+        <span>All Sessions Recorded</span>
+      </div>
+      <div style="display: flex; gap: 14px; flex-wrap: wrap">
+        <a href="tickets.html" class="btn-primary">Book Your Ticket</a>
+        <a href="tickets.html" class="btn-secondary">Compare Tickets</a>
+      </div>
+    </div>
+
+    <!-- Notice -->
+    <div class="container" style="padding: 0 24px 40px">
+      <div
+        style="
+          background: #e6fbee;
+          border: 1px solid #c3f7d7;
+          border-radius: 12px;
+          padding: 20px 24px;
+          display: flex;
+          gap: 16px;
+          align-items: flex-start;
+        "
+      >
+        <svg
+          width="22"
+          height="22"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="#04c44e"
+          stroke-width="1.8"
+          style="flex: none; margin-top: 2px"
+        >
+          <circle cx="12" cy="12" r="9"></circle>
+          <path d="M12 8h.01 M12 11v5" stroke-linecap="round"></path>
+        </svg>
+        <div style="font-size: 14px; line-height: 1.7; color: #1f2630">
+          <div style="margin-bottom: 6px">
+            Some sessions run in parallel. Recordings of
+            <strong>all sessions</strong> plus
+            <strong>Workshop Templates &amp; Files</strong> are available to all
+            attendees on the platform after the event.
+          </div>
+          <div style="color: #4a5563">
+            Standard Pass covers both stages. Full Journey Pass adds the
+            workshops, which you reserve in advance because the rooms are
+            limited.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- View Switcher & Filters (Sticky) -->
+    <div class="view-switcher-wrap">
+      <div class="container view-switcher-inner" style="padding-block: 20px">
+        <div
+          style="
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            flex-wrap: wrap;
+          "
+        >
+          <div
+            role="tablist"
+            aria-label="Agenda view"
+            style="
+              display: inline-flex;
+              border: 1px solid #d5dae0;
+              border-radius: 10px;
+              overflow: hidden;
+            "
+          >
+            <button
+              id="btnTimeline"
+              role="tab"
+              aria-selected="true"
+              style="
+                background: #101010;
+                color: #ffffff;
+                border: none;
+                padding: 9px 18px;
+                font-family: Manrope, sans-serif;
+                font-weight: 600;
+                font-size: 13px;
+                cursor: pointer;
+              "
+            >
+              Timeline View
+            </button>
+            <button
+              id="btnRoom"
+              role="tab"
+              aria-selected="false"
+              style="
+                background: #ffffff;
+                color: #101010;
+                border: none;
+                border-left: 1px solid #d5dae0;
+                padding: 9px 18px;
+                font-family: Manrope, sans-serif;
+                font-weight: 600;
+                font-size: 13px;
+                cursor: pointer;
+              "
+            >
+              Room View
+            </button>
+          </div>
+          <div style="display: flex; align-items: center; gap: 16px">
+            <span
+              class="font-mono"
+              id="resultCount"
+              style="
+                font-size: 11px;
+                letter-spacing: 0.08em;
+                text-transform: uppercase;
+                color: #6b747e;
+              "
+              >30 sessions</span
+            >
+            <button
+              id="clearFilters"
+              style="
+                background: none;
+                border: none;
+                font-family: Manrope, sans-serif;
+                font-weight: 600;
+                font-size: 13px;
+                color: #04c44e;
+                cursor: pointer;
+                padding: 0;
+              "
+            >
+              Clear filters
+            </button>
+          </div>
+        </div>
+        <div class="filter-row">
+          <span
+            class="font-mono"
+            style="
+              font-size: 10px;
+              letter-spacing: 0.08em;
+              text-transform: uppercase;
+              color: #6b747e;
+              margin-right: 4px;
+            "
+            >Workshops</span
+          >
+          <button
+            class="room-chip active"
+            data-room="0"
+            style="
+              display: flex;
+              align-items: center;
+              gap: 6px;
+              background: #101010;
+              border: 1px solid #101010;
+              border-radius: 999px;
+              padding: 6px 13px;
+              font-family: Manrope, sans-serif;
+              font-weight: 600;
+              font-size: 12px;
+              color: #ffffff;
+              cursor: pointer;
+            "
+          >
+            <span
+              style="
+                width: 7px;
+                height: 7px;
+                border-radius: 50%;
+                background: #6b747e;
+              "
+            ></span
+            >All Sessions
+          </button>
+          <button
+            class="room-chip"
+            data-room="1"
+            style="
+              display: flex;
+              align-items: center;
+              gap: 6px;
+              background: #ffffff;
+              border: 1px solid #d5dae0;
+              border-radius: 999px;
+              padding: 6px 13px;
+              font-family: Manrope, sans-serif;
+              font-weight: 600;
+              font-size: 12px;
+              color: #101010;
+              cursor: pointer;
+            "
+          >
+            <span
+              style="
+                width: 7px;
+                height: 7px;
+                border-radius: 50%;
+                background: #101010;
+              "
+            ></span
+            >Main Stage
+          </button>
+          <button
+            class="room-chip"
+            data-room="2"
+            style="
+              display: flex;
+              align-items: center;
+              gap: 6px;
+              background: #ffffff;
+              border: 1px solid #d5dae0;
+              border-radius: 999px;
+              padding: 6px 13px;
+              font-family: Manrope, sans-serif;
+              font-weight: 600;
+              font-size: 12px;
+              color: #101010;
+              cursor: pointer;
+            "
+          >
+            <span
+              style="
+                width: 7px;
+                height: 7px;
+                border-radius: 50%;
+                background: #4a5563;
+              "
+            ></span
+            >Second Stage
+          </button>
+          <button
+            class="room-chip"
+            data-room="3"
+            style="
+              display: flex;
+              align-items: center;
+              gap: 6px;
+              background: #ffffff;
+              border: 1px solid #d5dae0;
+              border-radius: 999px;
+              padding: 6px 13px;
+              font-family: Manrope, sans-serif;
+              font-weight: 600;
+              font-size: 12px;
+              color: #101010;
+              cursor: pointer;
+            "
+          >
+            <span
+              style="
+                width: 7px;
+                height: 7px;
+                border-radius: 50%;
+                background: #05ef62;
+              "
+            ></span
+            >Acquisition workshops
+          </button>
+          <button
+            class="room-chip"
+            data-room="4"
+            style="
+              display: flex;
+              align-items: center;
+              gap: 6px;
+              background: #ffffff;
+              border: 1px solid #d5dae0;
+              border-radius: 999px;
+              padding: 6px 13px;
+              font-family: Manrope, sans-serif;
+              font-weight: 600;
+              font-size: 12px;
+              color: #101010;
+              cursor: pointer;
+            "
+          >
+            <span
+              style="
+                width: 7px;
+                height: 7px;
+                border-radius: 50%;
+                background: #006681;
+              "
+            ></span
+            >CRO &amp; Retention workshops
+          </button>
+          <button
+            class="room-chip"
+            data-room="5"
+            style="
+              display: flex;
+              align-items: center;
+              gap: 6px;
+              background: #ffffff;
+              border: 1px solid #d5dae0;
+              border-radius: 999px;
+              padding: 6px 13px;
+              font-family: Manrope, sans-serif;
+              font-weight: 600;
+              font-size: 12px;
+              color: #101010;
+              cursor: pointer;
+            "
+          >
+            <span
+              style="
+                width: 7px;
+                height: 7px;
+                border-radius: 50%;
+                background: #ffb020;
+              "
+            ></span
+            >Operations &amp; Logistics workshops
+          </button>
+          <span
+            style="width: 1px; height: 20px; background: #e6eaee; margin: 0 6px"
+          ></span>
+          <span
+            class="font-mono"
+            style="
+              font-size: 10px;
+              letter-spacing: 0.08em;
+              text-transform: uppercase;
+              color: #6b747e;
+              margin-right: 4px;
+            "
+            >Formats</span
+          >
+          <button
+            class="fmt-chip"
+            data-fmt="Keynote"
+            style="
+              background: #ffffff;
+              border: 1px solid #d5dae0;
+              border-radius: 999px;
+              padding: 6px 13px;
+              font-family: Manrope, sans-serif;
+              font-weight: 600;
+              font-size: 12px;
+              color: #101010;
+              cursor: pointer;
+            "
+          >
+            Keynotes
+          </button>
+          <button
+            class="fmt-chip"
+            data-fmt="Panel"
+            style="
+              background: #ffffff;
+              border: 1px solid #d5dae0;
+              border-radius: 999px;
+              padding: 6px 13px;
+              font-family: Manrope, sans-serif;
+              font-weight: 600;
+              font-size: 12px;
+              color: #101010;
+              cursor: pointer;
+            "
+          >
+            Panels
+          </button>
+          <button
+            class="fmt-chip"
+            data-fmt="Solo Talk"
+            style="
+              background: #ffffff;
+              border: 1px solid #d5dae0;
+              border-radius: 999px;
+              padding: 6px 13px;
+              font-family: Manrope, sans-serif;
+              font-weight: 600;
+              font-size: 12px;
+              color: #101010;
+              cursor: pointer;
+            "
+          >
+            Solo Talks
+          </button>
+          <button
+            class="fmt-chip"
+            data-fmt="Workshop"
+            style="
+              background: #ffffff;
+              border: 1px solid #d5dae0;
+              border-radius: 999px;
+              padding: 6px 13px;
+              font-family: Manrope, sans-serif;
+              font-weight: 600;
+              font-size: 12px;
+              color: #101010;
+              cursor: pointer;
+            "
+          >
+            Workshops
+          </button>
+          <span
+            class="font-mono"
+            style="
+              font-size: 10px;
+              letter-spacing: 0.06em;
+              color: #6b747e;
+              margin-left: auto;
+            "
+            >* Selection updates the URL, filtered views are shareable</span
+          >
+        </div>
+      </div>
+    </div>
+
+    <!-- Room Intros (5 cards) -->
+    <div class="container" style="padding: 56px 24px 48px">
+      <div class="grid-5-cols">
+        <div
+          style="
+            border: 1px solid #d5dae0;
+            border-top: 3px solid #101010;
+            border-radius: 12px;
+            padding: 22px 20px;
+          "
+        >
+          <div
+            style="
+              display: flex;
+              align-items: center;
+              gap: 8px;
+              margin-bottom: 12px;
+            "
+          >
+            <span
+              style="
+                width: 9px;
+                height: 9px;
+                border-radius: 50%;
+                background: #101010;
+              "
+            ></span>
+            <span
+              class="font-mono"
+              style="font-size: 11px; letter-spacing: 0.12em; color: #101010"
+              >MAIN STAGE</span
+            >
+          </div>
+          <div
+            style="
+              font-weight: 700;
+              font-size: 16px;
+              color: #101010;
+              margin-bottom: 10px;
+              line-height: 1.35;
+            "
+          >
+            The full picture of the business
+          </div>
+          <div
+            style="
+              font-size: 13px;
+              color: #4a5563;
+              line-height: 1.6;
+              margin-bottom: 14px;
+            "
+          >
+            Founders, leaders, decision makers
+          </div>
+          <div style="display: flex; align-items: center; gap: 8px">
+            <span
+              class="font-mono"
+              style="font-size: 11px; letter-spacing: 0.08em; color: #101010"
+              >Stage</span
+            >
+            <span
+              class="font-mono"
+              style="
+                font-size: 9px;
+                letter-spacing: 0.08em;
+                text-transform: uppercase;
+                background: #f4f6f8;
+                border: 1px solid #e6eaee;
+                border-radius: 4px;
+                padding: 2px 6px;
+                color: #6b747e;
+              "
+              >Draft</span
+            >
+          </div>
+        </div>
+        <div
+          style="
+            border: 1px solid #d5dae0;
+            border-top: 3px solid #4a5563;
+            border-radius: 12px;
+            padding: 22px 20px;
+          "
+        >
+          <div
+            style="
+              display: flex;
+              align-items: center;
+              gap: 8px;
+              margin-bottom: 12px;
+            "
+          >
+            <span
+              style="
+                width: 9px;
+                height: 9px;
+                border-radius: 50%;
+                background: #4a5563;
+              "
+            ></span>
+            <span
+              class="font-mono"
+              style="font-size: 11px; letter-spacing: 0.12em; color: #4a5563"
+              >SECOND STAGE</span
+            >
+          </div>
+          <div
+            style="
+              font-weight: 700;
+              font-size: 16px;
+              color: #101010;
+              margin-bottom: 10px;
+              line-height: 1.35;
+            "
+          >
+            Local brands on what actually happened
+          </div>
+          <div
+            style="
+              font-size: 13px;
+              color: #4a5563;
+              line-height: 1.6;
+              margin-bottom: 14px;
+            "
+          >
+            Anyone who wants the detail behind a result
+          </div>
+          <div style="display: flex; align-items: center; gap: 8px">
+            <span
+              class="font-mono"
+              style="font-size: 11px; letter-spacing: 0.08em; color: #101010"
+              >Stage</span
+            >
+            <span
+              class="font-mono"
+              style="
+                font-size: 9px;
+                letter-spacing: 0.08em;
+                text-transform: uppercase;
+                background: #f4f6f8;
+                border: 1px solid #e6eaee;
+                border-radius: 4px;
+                padding: 2px 6px;
+                color: #6b747e;
+              "
+              >Draft</span
+            >
+          </div>
+        </div>
+        <div
+          style="
+            border: 1px solid #d5dae0;
+            border-top: 3px solid #05ef62;
+            border-radius: 12px;
+            padding: 22px 20px;
+          "
+        >
+          <div
+            style="
+              display: flex;
+              align-items: center;
+              gap: 8px;
+              margin-bottom: 12px;
+            "
+          >
+            <span
+              style="
+                width: 9px;
+                height: 9px;
+                border-radius: 50%;
+                background: #05ef62;
+              "
+            ></span>
+            <span
+              class="font-mono"
+              style="font-size: 11px; letter-spacing: 0.12em; color: #04c44e"
+              >ACQUISITION</span
+            >
+          </div>
+          <div
+            style="
+              font-weight: 700;
+              font-size: 16px;
+              color: #101010;
+              margin-bottom: 10px;
+              line-height: 1.35;
+            "
+          >
+            Build the system that brings demand
+          </div>
+          <div
+            style="
+              font-size: 13px;
+              color: #4a5563;
+              line-height: 1.6;
+              margin-bottom: 14px;
+            "
+          >
+            Marketing, performance, SEO, content
+          </div>
+          <div style="display: flex; align-items: center; gap: 8px">
+            <span
+              class="font-mono"
+              style="font-size: 11px; letter-spacing: 0.08em; color: #101010"
+              >Workshops</span
+            >
+            <span
+              class="font-mono"
+              style="
+                font-size: 9px;
+                letter-spacing: 0.08em;
+                text-transform: uppercase;
+                background: #f4f6f8;
+                border: 1px solid #e6eaee;
+                border-radius: 4px;
+                padding: 2px 6px;
+                color: #6b747e;
+              "
+              >Draft</span
+            >
+          </div>
+        </div>
+        <div
+          style="
+            border: 1px solid #d5dae0;
+            border-top: 3px solid #006681;
+            border-radius: 12px;
+            padding: 22px 20px;
+          "
+        >
+          <div
+            style="
+              display: flex;
+              align-items: center;
+              gap: 8px;
+              margin-bottom: 12px;
+            "
+          >
+            <span
+              style="
+                width: 9px;
+                height: 9px;
+                border-radius: 50%;
+                background: #006681;
+              "
+            ></span>
+            <span
+              class="font-mono"
+              style="font-size: 11px; letter-spacing: 0.12em; color: #006681"
+              >CRO &amp; RETENTION</span
+            >
+          </div>
+          <div
+            style="
+              font-weight: 700;
+              font-size: 16px;
+              color: #101010;
+              margin-bottom: 10px;
+              line-height: 1.35;
+            "
+          >
+            Turn visits into orders, and orders into repeat customers
+          </div>
+          <div
+            style="
+              font-size: 13px;
+              color: #4a5563;
+              line-height: 1.6;
+              margin-bottom: 14px;
+            "
+          >
+            Product, design, CRO, growth
+          </div>
+          <div style="display: flex; align-items: center; gap: 8px">
+            <span
+              class="font-mono"
+              style="font-size: 11px; letter-spacing: 0.08em; color: #101010"
+              >Workshops</span
+            >
+            <span
+              class="font-mono"
+              style="
+                font-size: 9px;
+                letter-spacing: 0.08em;
+                text-transform: uppercase;
+                background: #f4f6f8;
+                border: 1px solid #e6eaee;
+                border-radius: 4px;
+                padding: 2px 6px;
+                color: #6b747e;
+              "
+              >Draft</span
+            >
+          </div>
+        </div>
+        <div
+          style="
+            border: 1px solid #d5dae0;
+            border-top: 3px solid #ffb020;
+            border-radius: 12px;
+            padding: 22px 20px;
+          "
+        >
+          <div
+            style="
+              display: flex;
+              align-items: center;
+              gap: 8px;
+              margin-bottom: 12px;
+            "
+          >
+            <span
+              style="
+                width: 9px;
+                height: 9px;
+                border-radius: 50%;
+                background: #ffb020;
+              "
+            ></span>
+            <span
+              class="font-mono"
+              style="font-size: 11px; letter-spacing: 0.12em; color: #8a5a00"
+              >OPERATIONS &amp; LOGISTICS</span
+            >
+          </div>
+          <div
+            style="
+              font-weight: 700;
+              font-size: 16px;
+              color: #101010;
+              margin-bottom: 10px;
+              line-height: 1.35;
+            "
+          >
+            Deliver on time and protect the margin
+          </div>
+          <div
+            style="
+              font-size: 13px;
+              color: #4a5563;
+              line-height: 1.6;
+              margin-bottom: 14px;
+            "
+          >
+            Operations, CX, fulfillment, retention
+          </div>
+          <div style="display: flex; align-items: center; gap: 8px">
+            <span
+              class="font-mono"
+              style="font-size: 11px; letter-spacing: 0.08em; color: #101010"
+              >Workshops</span
+            >
+            <span
+              class="font-mono"
+              style="
+                font-size: 9px;
+                letter-spacing: 0.08em;
+                text-transform: uppercase;
+                background: #f4f6f8;
+                border: 1px solid #e6eaee;
+                border-radius: 4px;
+                padding: 2px 6px;
+                color: #6b747e;
+              "
+              >Draft</span
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== TIMELINE VIEW ==================== -->
+    <div id="timelineView" class="container" style="padding: 0 24px 16px">
+      <div
+        id="timelineColumns"
+        class="timeline-columns"
+        style="
+          display: grid;
+          grid-template-columns: repeat(5, 1fr);
+          gap: 12px;
+          align-items: start;
+        "
+      >
+        <p id="timelineLoading" style="grid-column: 1 / -1; color: #6b747e; font-size: 14px; margin: 8px 0">
+          Loading agenda…
+        </p>
+      </div>
+    </div>
+
+    <!-- ==================== ROOM VIEW ==================== -->
+    <div
+      id="roomView"
+      class="container"
+      style="padding: 0 24px 16px; display: none"
+    >
+      <div
+        style="display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap"
+      >
+        <button
+          class="tv-room-btn active"
+          data-tv="0"
+          style="
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: #101010;
+            border: 1px solid #101010;
+            border-radius: 999px;
+            padding: 8px 16px;
+            font-family: Manrope, sans-serif;
+            font-weight: 600;
+            font-size: 13px;
+            color: #ffffff;
+            cursor: pointer;
+          "
+        >
+          <span
+            style="
+              width: 8px;
+              height: 8px;
+              border-radius: 50%;
+              background: #101010;
+            "
+          ></span
+          >Main Stage
+        </button>
+        <button
+          class="tv-room-btn"
+          data-tv="1"
+          style="
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: #ffffff;
+            border: 1px solid #d5dae0;
+            border-radius: 999px;
+            padding: 8px 16px;
+            font-family: Manrope, sans-serif;
+            font-weight: 600;
+            font-size: 13px;
+            color: #101010;
+            cursor: pointer;
+          "
+        >
+          <span
+            style="
+              width: 8px;
+              height: 8px;
+              border-radius: 50%;
+              background: #4a5563;
+            "
+          ></span
+          >Second Stage
+        </button>
+        <button
+          class="tv-room-btn"
+          data-tv="2"
+          style="
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: #ffffff;
+            border: 1px solid #d5dae0;
+            border-radius: 999px;
+            padding: 8px 16px;
+            font-family: Manrope, sans-serif;
+            font-weight: 600;
+            font-size: 13px;
+            color: #101010;
+            cursor: pointer;
+          "
+        >
+          <span
+            style="
+              width: 8px;
+              height: 8px;
+              border-radius: 50%;
+              background: #05ef62;
+            "
+          ></span
+          >Acquisition
+        </button>
+        <button
+          class="tv-room-btn"
+          data-tv="3"
+          style="
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: #ffffff;
+            border: 1px solid #d5dae0;
+            border-radius: 999px;
+            padding: 8px 16px;
+            font-family: Manrope, sans-serif;
+            font-weight: 600;
+            font-size: 13px;
+            color: #101010;
+            cursor: pointer;
+          "
+        >
+          <span
+            style="
+              width: 8px;
+              height: 8px;
+              border-radius: 50%;
+              background: #006681;
+            "
+          ></span
+          >CRO &amp; Retention
+        </button>
+        <button
+          class="tv-room-btn"
+          data-tv="4"
+          style="
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: #ffffff;
+            border: 1px solid #d5dae0;
+            border-radius: 999px;
+            padding: 8px 16px;
+            font-family: Manrope, sans-serif;
+            font-weight: 600;
+            font-size: 13px;
+            color: #101010;
+            cursor: pointer;
+          "
+        >
+          <span
+            style="
+              width: 8px;
+              height: 8px;
+              border-radius: 50%;
+              background: #ffb020;
+            "
+          ></span
+          >Operations &amp; Logistics
+        </button>
+      </div>
+      <div id="roomPanels"></div>
+      <div
+        style="
+          font-size: 12px;
+          color: #6b747e;
+          padding: 16px 2px 0;
+          font-style: italic;
+        "
+      >
+        Times shown are working times and may change before the final run of
+        show.
+      </div>
+    </div>
+
+    <!-- ==================== SESSION DETAILS PANEL (Dynamic) ==================== -->
+    <div class="container" style="padding: 72px 24px">
+      <div class="section-label">
+        <span class="indicator"></span>
+        <span class="font-mono">Session Details</span>
+      </div>
+      <div
+        class="session-detail-grid"
+        style="
+          display: grid;
+          grid-template-columns: 1fr 480px;
+          gap: 48px;
+          align-items: start;
+        "
+      >
+        <div>
+          <h2
+            style="
+              font-size: 36px;
+              line-height: 1.1;
+              font-weight: 700;
+              margin: 0 0 16px;
+            "
+          >
+            Every session opens a detail panel
+          </h2>
+          <p
+            style="
+              font-size: 16px;
+              line-height: 1.7;
+              color: #4a5563;
+              max-width: 52ch;
+              margin: 0 0 20px;
+            "
+          >
+            Click any session card in the timeline or room view — the panel on
+            the right updates automatically.
+          </p>
+          <div
+            class="font-mono"
+            style="
+              font-size: 11px;
+              letter-spacing: 0.08em;
+              color: #6b747e;
+              line-height: 2;
+            "
+          >
+            CONTENTS — DESCRIPTION · WHAT YOU'LL LEARN · PRACTICAL OUTPUT<br />SPEAKER
+            · TIME &amp; ROOM · REQUIRED TOOLS · LEVEL · RESERVATION
+          </div>
+        </div>
+        <div
+          class="session-detail-panel"
+          id="sessionPanel"
+          style="
+            border: 1px solid #d5dae0;
+            border-radius: 16px;
+            box-shadow: 0 12px 40px rgba(16, 16, 16, 0.1);
+            overflow: hidden;
+            width: 480px;
+          "
+        >
+          <!-- Header -->
+          <div
+            style="
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              padding: 16px 20px;
+              border-bottom: 1px solid #e6eaee;
+            "
+          >
+            <span
+              id="spRoomPill"
+              style="
+                display: flex;
+                align-items: center;
+                gap: 6px;
+                border: 1px solid #e6eaee;
+                border-radius: 999px;
+                padding: 3px 10px;
+                font-family: &quot;JetBrains Mono&quot;, monospace;
+                font-size: 9px;
+                letter-spacing: 0.06em;
+                color: #101010;
+              "
+            >
+              <span
+                id="spRoomDot"
+                style="
+                  width: 6px;
+                  height: 6px;
+                  border-radius: 50%;
+                  background: #101010;
+                "
+              ></span>
+              <span id="spRoomName">Main Stage</span>
+            </span>
+            <button
+              aria-label="Close panel"
+              style="
+                background: none;
+                border: none;
+                font-size: 18px;
+                color: #6b747e;
+                cursor: pointer;
+              "
+            >
+              ×
+            </button>
+          </div>
+
+          <!-- Body -->
+          <div style="padding: 24px 20px">
+            <div
+              style="
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                margin-bottom: 12px;
+              "
+            >
+              <span
+                class="font-mono"
+                id="spTime"
+                style="font-size: 11px; letter-spacing: 0.08em; color: #101010"
+                >11:20</span
+              >
+              <span
+                id="spFmt"
+                style="
+                  border: 1px solid #e6eaee;
+                  border-radius: 999px;
+                  padding: 3px 10px;
+                  font-family: &quot;JetBrains Mono&quot;, monospace;
+                  font-size: 9px;
+                  letter-spacing: 0.06em;
+                  text-transform: uppercase;
+                  color: #4a5563;
+                "
+                >Keynote</span
+              >
+              <span
+                id="spAccess"
+                style="
+                  border-radius: 999px;
+                  padding: 3px 10px;
+                  font-size: 11px;
+                  font-weight: 600;
+                  background: #f4f6f8;
+                  border: 1px solid #e6eaee;
+                  color: #4a5563;
+                "
+                >All Tickets</span
+              >
+            </div>
+
+            <h3
+              id="spTitle"
+              style="
+                font-size: 22px;
+                line-height: 1.3;
+                font-weight: 700;
+                margin: 0 0 12px;
+              "
+            >
+              Topic will be announced
+            </h3>
+
+            <!-- ✅ قسم الوصف مخفي -->
+            <div id="spDescSection" style="display: none">
+              <p
+                id="spDesc"
+                style="
+                  font-size: 14px;
+                  line-height: 1.7;
+                  color: #4a5563;
+                  margin: 0 0 20px;
+                "
+              ></p>
+            </div>
+
+            <!-- ✅ قسم What you'll learn مخفي -->
+            <div id="spLearnSection" style="display: none">
+              <div
+                class="font-mono"
+                style="
+                  font-size: 10px;
+                  letter-spacing: 0.1em;
+                  text-transform: uppercase;
+                  color: #6b747e;
+                  margin-bottom: 10px;
+                "
+              >
+                What you'll learn
+              </div>
+              <div
+                id="spLearn"
+                style="
+                  display: flex;
+                  flex-direction: column;
+                  gap: 8px;
+                  margin-bottom: 20px;
+                "
+              ></div>
+            </div>
+
+            <!-- ✅ قسم Practical output مخفي -->
+            <div id="spOutputSection" style="display: none">
+              <div
+                style="
+                  background: #e6fbee;
+                  border: 1px solid #c3f7d7;
+                  border-radius: 10px;
+                  padding: 12px 14px;
+                  margin-bottom: 20px;
+                "
+              >
+                <div
+                  class="font-mono"
+                  style="
+                    font-size: 9px;
+                    letter-spacing: 0.1em;
+                    text-transform: uppercase;
+                    color: #04c44e;
+                    margin-bottom: 4px;
+                  "
+                >
+                  Practical output
+                </div>
+                <div
+                  id="spOutput"
+                  style="font-size: 13px; font-weight: 600; color: #101010"
+                >
+                  Market snapshot in the ECommerce Report
+                </div>
+              </div>
+            </div>
+
+            <div
+              style="
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                border: 1px solid #e6eaee;
+                border-radius: 10px;
+                padding: 12px 14px;
+                margin-bottom: 16px;
+              "
+            >
+              <span
+                style="
+                  width: 40px;
+                  height: 40px;
+                  border-radius: 50%;
+                  background: #f4f6f8;
+                  border: 1px solid #e6eaee;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  font-family: &quot;JetBrains Mono&quot;, monospace;
+                  font-size: 10px;
+                  color: #6b747e;
+                  flex: none;
+                "
+                >TBA</span
+              >
+              <div>
+                <div style="font-weight: 700; font-size: 14px; color: #101010">
+                  Speaker will be announced
+                </div>
+                <div style="font-size: 12px; color: #6b747e">
+                  Speaker details coming soon
+                </div>
+              </div>
+            </div>
+
+            <div
+              style="
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 10px;
+                margin-bottom: 20px;
+              "
+            >
+              <div
+                style="
+                  border: 1px solid #e6eaee;
+                  border-radius: 10px;
+                  padding: 10px 12px;
+                "
+              >
+                <div
+                  class="font-mono"
+                  style="
+                    font-size: 9px;
+                    letter-spacing: 0.08em;
+                    text-transform: uppercase;
+                    color: #6b747e;
+                    margin-bottom: 4px;
+                  "
+                >
+                  Time &amp; Room
+                </div>
+                <div
+                  id="spTimeRoom"
+                  style="font-size: 12px; font-weight: 600; color: #101010"
+                >
+                  11:20 · Main Stage
+                </div>
+              </div>
+              <div
+                style="
+                  border: 1px solid #e6eaee;
+                  border-radius: 10px;
+                  padding: 10px 12px;
+                "
+              >
+                <div
+                  class="font-mono"
+                  style="
+                    font-size: 9px;
+                    letter-spacing: 0.08em;
+                    text-transform: uppercase;
+                    color: #6b747e;
+                    margin-bottom: 4px;
+                  "
+                >
+                  Required tools
+                </div>
+                <div
+                  id="spTools"
+                  style="font-size: 12px; font-weight: 600; color: #101010"
+                >
+                  None
+                </div>
+              </div>
+              <div
+                style="
+                  border: 1px solid #e6eaee;
+                  border-radius: 10px;
+                  padding: 10px 12px;
+                "
+              >
+                <div
+                  class="font-mono"
+                  style="
+                    font-size: 9px;
+                    letter-spacing: 0.08em;
+                    text-transform: uppercase;
+                    color: #6b747e;
+                    margin-bottom: 4px;
+                  "
+                >
+                  Content level
+                </div>
+                <div
+                  id="spLevel"
+                  style="font-size: 12px; font-weight: 600; color: #101010"
+                >
+                  All levels
+                </div>
+              </div>
+              <div
+                style="
+                  border: 1px solid #e6eaee;
+                  border-radius: 10px;
+                  padding: 10px 12px;
+                "
+              >
+                <div
+                  class="font-mono"
+                  style="
+                    font-size: 9px;
+                    letter-spacing: 0.08em;
+                    text-transform: uppercase;
+                    color: #6b747e;
+                    margin-bottom: 4px;
+                  "
+                >
+                  After the event
+                </div>
+                <div style="font-size: 12px; font-weight: 600; color: #101010">
+                  Recorded · Templates Included
+                </div>
+              </div>
+            </div>
+
+            <button id="spCta" class="btn-primary" style="width: 100%">
+              Add to My Day
+            </button>
+            <div
+              id="spCtaNote"
+              style="
+                text-align: center;
+                font-size: 11px;
+                color: #6b747e;
+                margin-top: 10px;
+              "
+            >
+              Included with all tickets
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Recordings & Resources -->
+    <div style="background: #e6fbee; border-bottom: 1px solid #c3f7d7">
+      <div class="container section-padding">
+        <div class="section-label">
+          <span class="indicator"></span>
+          <span class="font-mono" style="color: #04c44e"
+            >Recordings &amp; Resources</span
+          >
+        </div>
+        <h2 class="section-title" style="max-width: 24ch">
+          You won't lose a single session to a schedule conflict.
+        </h2>
+        <p
+          style="
+            font-size: 15px;
+            color: #4a5563;
+            margin: 0 0 36px;
+            max-width: 60ch;
+          "
+        >
+          Every session is recorded. The platform is a content hub for
+          recordings and files only.
+        </p>
+        <div class="grid-2-cols" style="max-width: 820px">
+          <div
+            style="
+              background: #ffffff;
+              border: 1px solid #c3f7d7;
+              border-radius: 12px;
+              padding: 24px;
+            "
+          >
+            <div
+              class="font-mono"
+              style="
+                font-size: 10px;
+                letter-spacing: 0.12em;
+                text-transform: uppercase;
+                color: #6b747e;
+                margin-bottom: 10px;
+              "
+            >
+              Standard Pass
+            </div>
+            <div
+              style="
+                font-weight: 800;
+                font-size: 26px;
+                color: #101010;
+                margin-bottom: 6px;
+              "
+            >
+              Both stages
+            </div>
+            <div style="font-size: 13px; color: #4a5563">
+              recordings of the Main Stage and the Second Stage, plus Workshop
+              Templates &amp; Files
+            </div>
+          </div>
+          <div
+            style="
+              background: #ffffff;
+              border: 1px solid #c3f7d7;
+              border-radius: 12px;
+              padding: 24px;
+            "
+          >
+            <div
+              class="font-mono"
+              style="
+                font-size: 10px;
+                letter-spacing: 0.12em;
+                text-transform: uppercase;
+                color: #04c44e;
+                margin-bottom: 10px;
+              "
+            >
+              Full Journey Pass
+            </div>
+            <div
+              style="
+                font-weight: 800;
+                font-size: 26px;
+                color: #101010;
+                margin-bottom: 6px;
+              "
+            >
+              All five rooms
+            </div>
+            <div style="font-size: 13px; color: #4a5563">
+              every recording plus 6 months in the past paid content library
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Plan Your Day -->
+    <div class="container section-padding">
+      <div class="section-label">
+        <span class="indicator"></span>
+        <span class="font-mono">Plan Your Day</span>
+      </div>
+      <h2 class="section-title">Logistics, in one place</h2>
+      <div class="grid-4-cols">
+        <div
+          style="
+            border: 1px solid #d5dae0;
+            border-radius: 12px;
+            padding: 22px 20px;
+          "
+        >
+          <div
+            class="font-mono"
+            style="
+              font-size: 10px;
+              letter-spacing: 0.12em;
+              text-transform: uppercase;
+              color: #04c44e;
+              margin-bottom: 14px;
+            "
+          >
+            Event Timing
+          </div>
+          <div
+            style="
+              display: flex;
+              flex-direction: column;
+              gap: 10px;
+              font-size: 13px;
+              color: #1f2630;
+            "
+          >
+            <div style="display: flex; justify-content: space-between">
+              <span>Registration</span
+              ><span class="font-mono" style="font-size: 10px; color: #6b747e"
+                >TO BE CONFIRMED</span
+              >
+            </div>
+            <div style="display: flex; justify-content: space-between">
+              <span>Opening</span
+              ><span class="font-mono" style="font-size: 10px; color: #6b747e"
+                >TO BE CONFIRMED</span
+              >
+            </div>
+            <div style="display: flex; justify-content: space-between">
+              <span>Sessions</span
+              ><span class="font-mono" style="font-size: 10px; color: #6b747e"
+                >TO BE CONFIRMED</span
+              >
+            </div>
+            <div style="display: flex; justify-content: space-between">
+              <span>Closing</span
+              ><span class="font-mono" style="font-size: 10px; color: #6b747e"
+                >TO BE CONFIRMED</span
+              >
+            </div>
+            <div style="display: flex; justify-content: space-between">
+              <span>Networking</span
+              ><span class="font-mono" style="font-size: 10px; color: #6b747e"
+                >TO BE CONFIRMED</span
+              >
+            </div>
+          </div>
+        </div>
+        <div
+          style="
+            border: 1px solid #d5dae0;
+            border-radius: 12px;
+            padding: 22px 20px;
+          "
+        >
+          <div
+            class="font-mono"
+            style="
+              font-size: 10px;
+              letter-spacing: 0.12em;
+              text-transform: uppercase;
+              color: #04c44e;
+              margin-bottom: 14px;
+            "
+          >
+            Venue
+          </div>
+          <div
+            style="
+              background: #f4f6f8;
+              border: 1px dashed #d5dae0;
+              border-radius: 10px;
+              height: 96px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              margin-bottom: 12px;
+            "
+          >
+            <span
+              class="font-mono"
+              style="
+                font-size: 10px;
+                letter-spacing: 0.08em;
+                text-transform: uppercase;
+                color: #6b747e;
+              "
+              >Map of Creativa Innovation Hub, coming soon</span
+            >
+          </div>
+          <div style="font-size: 13px; color: #4a5563; line-height: 1.7">
+            Creativa Innovation Hub, Giza.<br /><span style="color: #6b747e"
+              >Entrance, parking and accessibility info will follow.</span
+            >
+          </div>
+        </div>
+        <div
+          style="
+            border: 1px solid #d5dae0;
+            border-radius: 12px;
+            padding: 22px 20px;
+          "
+        >
+          <div
+            class="font-mono"
+            style="
+              font-size: 10px;
+              letter-spacing: 0.12em;
+              text-transform: uppercase;
+              color: #04c44e;
+              margin-bottom: 14px;
+            "
+          >
+            Room Guide
+          </div>
+          <div
+            style="
+              display: flex;
+              flex-direction: column;
+              gap: 10px;
+              font-size: 13px;
+              color: #1f2630;
+            "
+          >
+            <div style="display: flex; align-items: center; gap: 8px">
+              <span
+                style="
+                  width: 8px;
+                  height: 8px;
+                  border-radius: 50%;
+                  background: #101010;
+                "
+              ></span
+              >Main Stage
+            </div>
+            <div style="display: flex; align-items: center; gap: 8px">
+              <span
+                style="
+                  width: 8px;
+                  height: 8px;
+                  border-radius: 50%;
+                  background: #4a5563;
+                "
+              ></span
+              >Second Stage
+            </div>
+            <div style="display: flex; align-items: center; gap: 8px">
+              <span
+                style="
+                  width: 8px;
+                  height: 8px;
+                  border-radius: 50%;
+                  background: #05ef62;
+                "
+              ></span
+              >Acquisition workshops
+            </div>
+            <div style="display: flex; align-items: center; gap: 8px">
+              <span
+                style="
+                  width: 8px;
+                  height: 8px;
+                  border-radius: 50%;
+                  background: #006681;
+                "
+              ></span
+              >CRO &amp; Retention workshops
+            </div>
+            <div style="display: flex; align-items: center; gap: 8px">
+              <span
+                style="
+                  width: 8px;
+                  height: 8px;
+                  border-radius: 50%;
+                  background: #ffb020;
+                "
+              ></span
+              >Operations &amp; Logistics workshops
+            </div>
+            <div style="color: #4a5563">
+              Registration · Sponsors Area · Prayer Room · Help Desk
+            </div>
+          </div>
+        </div>
+        <div
+          style="
+            border: 1px solid #d5dae0;
+            border-radius: 12px;
+            padding: 22px 20px;
+          "
+        >
+          <div
+            class="font-mono"
+            style="
+              font-size: 10px;
+              letter-spacing: 0.12em;
+              text-transform: uppercase;
+              color: #04c44e;
+              margin-bottom: 14px;
+            "
+          >
+            Before You Arrive
+          </div>
+          <div
+            style="
+              display: flex;
+              flex-direction: column;
+              gap: 10px;
+              font-size: 13px;
+              color: #1f2630;
+              line-height: 1.6;
+            "
+          >
+            <div style="display: flex; gap: 8px">
+              <span style="color: #04c44e">✓</span>Have your QR ticket ready on
+              your phone
+            </div>
+            <div style="display: flex; gap: 8px">
+              <span style="color: #04c44e">✓</span>Reserve your workshops in
+              advance
+            </div>
+            <div style="display: flex; gap: 8px">
+              <span style="color: #04c44e">✓</span>Bring a laptop if your
+              workshop needs one
+            </div>
+            <div style="display: flex; gap: 8px">
+              <span style="color: #04c44e">✓</span>Arrive early — registration
+              takes time
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Ticket Comparison -->
+    <div class="section-bg-alt">
+      <div class="container section-padding">
+        <div class="section-label">
+          <span class="indicator"></span>
+          <span class="font-mono">Tickets</span>
+        </div>
+        <h2 class="section-title">Which pass fits your day?</h2>
+        <p style="font-size: 14px; color: #6b747e; margin: 0 0 36px">
+          Attending workshops offline requires the Full Journey Pass.
+        </p>
+        <div
+          style="
+            background: #ffffff;
+            border: 1px solid #d5dae0;
+            border-radius: 16px;
+            overflow: hidden;
+            max-width: 960px;
+            margin-bottom: 28px;
+          "
+        >
+          <div
+            class="cmp-grid"
+            style="
+              background: #f4f6f8;
+              font-family: &quot;JetBrains Mono&quot;, monospace;
+              font-size: 11px;
+              letter-spacing: 0.1em;
+              text-transform: uppercase;
+              color: #6b747e;
+              font-weight: 400;
+            "
+          >
+            <span>Feature</span><span>Standard Pass</span
+            ><span>Full Journey Pass</span>
+          </div>
+          <div class="cmp-grid">
+            <span style="font-weight: 500; color: #1f2630"
+              >Access to the Main Stage</span
+            ><span style="color: #006681; font-weight: 600">Yes</span
+            ><span style="color: #006681; font-weight: 600">Yes</span>
+          </div>
+          <div class="cmp-grid">
+            <span style="font-weight: 500; color: #1f2630"
+              >Access to the Second Stage</span
+            ><span style="color: #006681; font-weight: 600">Yes</span
+            ><span style="color: #006681; font-weight: 600">Yes</span>
+          </div>
+          <div class="cmp-grid">
+            <span style="font-weight: 500; color: #1f2630"
+              >Access to the Workshops</span
+            ><span style="color: #6b747e; font-weight: 600">No</span
+            ><span style="color: #006681; font-weight: 600">Yes</span>
+          </div>
+          <div class="cmp-grid">
+            <span style="font-weight: 500; color: #1f2630"
+              >Workshop seat reservation</span
+            ><span style="color: #6b747e; font-weight: 600">No</span
+            ><span style="color: #006681; font-weight: 600">Yes</span>
+          </div>
+          <div class="cmp-grid">
+            <span style="font-weight: 500; color: #1f2630"
+              >Exercises &amp; Live Builds</span
+            ><span style="color: #6b747e; font-weight: 600">No</span
+            ><span style="color: #006681; font-weight: 600">Yes</span>
+          </div>
+          <div class="cmp-grid">
+            <span style="font-weight: 500; color: #1f2630"
+              >Stage recordings, Main and Second</span
+            ><span style="color: #006681; font-weight: 600">Yes</span
+            ><span style="color: #006681; font-weight: 600">Yes</span>
+          </div>
+          <div class="cmp-grid">
+            <span style="font-weight: 500; color: #1f2630"
+              >Workshop recordings</span
+            ><span style="color: #6b747e; font-weight: 600">No</span
+            ><span style="color: #006681; font-weight: 600">Yes</span>
+          </div>
+          <div class="cmp-grid">
+            <span style="font-weight: 500; color: #1f2630"
+              >Workshop Templates &amp; Files</span
+            ><span style="color: #006681; font-weight: 600">Yes</span
+            ><span style="color: #006681; font-weight: 600">Yes</span>
+          </div>
+          <div class="cmp-grid">
+            <span style="font-weight: 500; color: #1f2630"
+              >Past paid content library</span
+            ><span style="color: #6b747e; font-weight: 600">No</span
+            ><span style="color: #006681; font-weight: 600">6 months</span>
+          </div>
+          <div class="cmp-grid">
+            <span style="font-weight: 500; color: #1f2630"
+              >Session Summaries</span
+            ><span style="color: #006681; font-weight: 600">Basic</span
+            ><span style="color: #006681; font-weight: 600">Full</span>
+          </div>
+          <div class="cmp-grid">
+            <span style="font-weight: 500; color: #1f2630"
+              >ECommerce Action Pack</span
+            ><span style="color: #006681; font-weight: 600">Basic</span
+            ><span style="color: #006681; font-weight: 600">Full</span>
+          </div>
+          <div class="cmp-grid" style="border-bottom: none">
+            <span style="font-weight: 500; color: #1f2630"
+              >ECommerce Report</span
+            ><span style="color: #006681; font-weight: 600">Summary</span
+            ><span style="color: #006681; font-weight: 600">Full report</span>
+          </div>
+        </div>
+        <div style="display: flex; gap: 14px; flex-wrap: wrap">
+          <a href="tickets.html" class="btn-secondary">Book Standard Pass</a>
+          <a href="tickets.html" class="btn-primary">Book Full Journey Pass</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- FAQ -->
+    <div class="container section-padding">
+      <div class="section-label">
+        <span class="indicator"></span>
+        <span class="font-mono">Agenda FAQ</span>
+      </div>
+      <h2 class="section-title">Before you plan</h2>
+      <div style="max-width: 860px; border-top: 1px solid #e6eaee">
+        <div style="border-bottom: 1px solid #e6eaee">
+          <button
+            onclick="
+              this.nextElementSibling.style.display =
+                this.nextElementSibling.style.display === 'block'
+                  ? 'none'
+                  : 'block'
+            "
+            aria-expanded="false"
+            style="
+              width: 100%;
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              gap: 16px;
+              background: none;
+              border: none;
+              padding: 20px 4px;
+              cursor: pointer;
+              text-align: left;
+            "
+          >
+            <span
+              style="
+                font-family: Manrope, sans-serif;
+                font-weight: 700;
+                font-size: 16px;
+                color: #101010;
+              "
+              >Which workshops can I attend with each ticket?</span
+            >
+            <span style="color: #04c44e; font-size: 20px; flex: none">+</span>
+          </button>
+          <p
+            style="
+              display: none;
+              font-size: 15px;
+              line-height: 1.8;
+              color: #4a5563;
+              margin: 0;
+              padding: 0 4px 22px;
+              max-width: 70ch;
+            "
+          >
+            The Standard Pass covers the Main Stage and the Second Stage for the
+            full day. The Full Journey Pass adds all three workshops:
+            Acquisition, CRO &amp; Retention and Operations &amp; Logistics.
+          </p>
+        </div>
+        <div style="border-bottom: 1px solid #e6eaee">
+          <button
+            onclick="
+              this.nextElementSibling.style.display =
+                this.nextElementSibling.style.display === 'block'
+                  ? 'none'
+                  : 'block'
+            "
+            aria-expanded="false"
+            style="
+              width: 100%;
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              gap: 16px;
+              background: none;
+              border: none;
+              padding: 20px 4px;
+              cursor: pointer;
+              text-align: left;
+            "
+          >
+            <span
+              style="
+                font-family: Manrope, sans-serif;
+                font-weight: 700;
+                font-size: 16px;
+                color: #101010;
+              "
+              >How do workshop reservations work, and what if a workshop is
+              full?</span
+            >
+            <span style="color: #04c44e; font-size: 20px; flex: none">+</span>
+          </button>
+          <p
+            style="
+              display: none;
+              font-size: 15px;
+              line-height: 1.8;
+              color: #4a5563;
+              margin: 0;
+              padding: 0 4px 22px;
+              max-width: 70ch;
+            "
+          >
+            You reserve workshops after payment because the rooms are limited.
+            Buying the pass does not auto-reserve a seat. If a workshop is fully
+            booked you can join the waiting list, and its recording remains
+            available to you on the platform.
+          </p>
+        </div>
+        <div style="border-bottom: 1px solid #e6eaee">
+          <button
+            onclick="
+              this.nextElementSibling.style.display =
+                this.nextElementSibling.style.display === 'block'
+                  ? 'none'
+                  : 'block'
+            "
+            aria-expanded="false"
+            style="
+              width: 100%;
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              gap: 16px;
+              background: none;
+              border: none;
+              padding: 20px 4px;
+              cursor: pointer;
+              text-align: left;
+            "
+          >
+            <span
+              style="
+                font-family: Manrope, sans-serif;
+                font-weight: 700;
+                font-size: 16px;
+                color: #101010;
+              "
+              >Can I upgrade from Standard Pass to Full Journey Pass?</span
+            >
+            <span style="color: #04c44e; font-size: 20px; flex: none">+</span>
+          </button>
+          <p
+            style="
+              display: none;
+              font-size: 15px;
+              line-height: 1.8;
+              color: #4a5563;
+              margin: 0;
+              padding: 0 4px 22px;
+              max-width: 70ch;
+            "
+          >
+            Yes, you can upgrade before the event. Workshop places after
+            upgrading depend on what is still open, so reserve as early as you
+            can.
+          </p>
+        </div>
+        <div style="border-bottom: 1px solid #e6eaee">
+          <button
+            onclick="
+              this.nextElementSibling.style.display =
+                this.nextElementSibling.style.display === 'block'
+                  ? 'none'
+                  : 'block'
+            "
+            aria-expanded="false"
+            style="
+              width: 100%;
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              gap: 16px;
+              background: none;
+              border: none;
+              padding: 20px 4px;
+              cursor: pointer;
+              text-align: left;
+            "
+          >
+            <span
+              style="
+                font-family: Manrope, sans-serif;
+                font-weight: 700;
+                font-size: 16px;
+                color: #101010;
+              "
+              >When are recordings available, and for how long?</span
+            >
+            <span style="color: #04c44e; font-size: 20px; flex: none">+</span>
+          </button>
+          <p
+            style="
+              display: none;
+              font-size: 15px;
+              line-height: 1.8;
+              color: #4a5563;
+              margin: 0;
+              padding: 0 4px 22px;
+              max-width: 70ch;
+            "
+          >
+            Recordings are published on the platform after the event. The
+            Standard Pass covers the Main Stage and Second Stage recordings. The
+            Full Journey Pass covers those plus the workshop recordings, and
+            adds 6 months in the past paid content library.
+          </p>
+        </div>
+        <div style="border-bottom: 1px solid #e6eaee">
+          <button
+            onclick="
+              this.nextElementSibling.style.display =
+                this.nextElementSibling.style.display === 'block'
+                  ? 'none'
+                  : 'block'
+            "
+            aria-expanded="false"
+            style="
+              width: 100%;
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              gap: 16px;
+              background: none;
+              border: none;
+              padding: 20px 4px;
+              cursor: pointer;
+              text-align: left;
+            "
+          >
+            <span
+              style="
+                font-family: Manrope, sans-serif;
+                font-weight: 700;
+                font-size: 16px;
+                color: #101010;
+              "
+              >Do all tickets get the Workshop Templates &amp; Files?</span
+            >
+            <span style="color: #04c44e; font-size: 20px; flex: none">+</span>
+          </button>
+          <p
+            style="
+              display: none;
+              font-size: 15px;
+              line-height: 1.8;
+              color: #4a5563;
+              margin: 0;
+              padding: 0 4px 22px;
+              max-width: 70ch;
+            "
+          >
+            Yes. Workshop Templates &amp; Files are included with both ticket
+            types on the platform.
+          </p>
+        </div>
+        <div style="border-bottom: 1px solid #e6eaee">
+          <button
+            onclick="
+              this.nextElementSibling.style.display =
+                this.nextElementSibling.style.display === 'block'
+                  ? 'none'
+                  : 'block'
+            "
+            aria-expanded="false"
+            style="
+              width: 100%;
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              gap: 16px;
+              background: none;
+              border: none;
+              padding: 20px 4px;
+              cursor: pointer;
+              text-align: left;
+            "
+          >
+            <span
+              style="
+                font-family: Manrope, sans-serif;
+                font-weight: 700;
+                font-size: 16px;
+                color: #101010;
+              "
+              >Can session times or speakers change?</span
+            >
+            <span style="color: #04c44e; font-size: 20px; flex: none">+</span>
+          </button>
+          <p
+            style="
+              display: none;
+              font-size: 15px;
+              line-height: 1.8;
+              color: #4a5563;
+              margin: 0;
+              padding: 0 4px 22px;
+              max-width: 70ch;
+            "
+          >
+            Times shown are working times. The final run of show is published
+            before the event, and registered attendees are notified of any
+            changes.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Final CTA -->
+    <div class="section-bg-dark">
+      <div class="container section-padding" style="text-align: center">
+        <h2
+          style="
+            font-size: 34px;
+            line-height: 1.3;
+            font-weight: 700;
+            color: #ffffff;
+            margin: 0 auto 36px;
+            max-width: 30ch;
+          "
+        >
+          Pick the sessions you'll attend, the platform keeps the rest.
+        </h2>
+        <div
+          style="
+            display: flex;
+            gap: 14px;
+            justify-content: center;
+            flex-wrap: wrap;
+          "
+        >
+          <a
+            href="tickets.html"
+            class="btn-primary"
+            style="padding: 15px 28px; font-size: 16px"
+          >
+            Book Your Ticket
+          </a>
+          <a
+            href="tickets.html"
+            class="btn-secondary"
+            style="
+              background: transparent;
+              color: #ffffff;
+              border-color: #ffffff;
+              padding: 15px 28px;
+              font-size: 16px;
+            "
+          >
+            Compare Ticket Types
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- FOOTER -->
+    <site-footer></site-footer>
+
+    <!-- Scripts -->
+    <script src="ecd-api.js"></script>
+    <script>
+      // ==========================================
+      // 00. DATA
+      // ==========================================
+      var rooms = [
+        {
+          name: "Main Stage",
+          color: "#101010",
+          text: "#101010",
+          kind: "Stage",
+        },
+        {
+          name: "Second Stage",
+          color: "#4a5563",
+          text: "#4a5563",
+          kind: "Stage",
+        },
+        {
+          name: "Acquisition",
+          color: "#05ef62",
+          text: "#04c44e",
+          kind: "Workshops",
+        },
+        {
+          name: "CRO & Retention",
+          color: "#006681",
+          text: "#006681",
+          kind: "Workshops",
+        },
+        {
+          name: "Operations & Logistics",
+          color: "#ffb020",
+          text: "#8a5a00",
+          kind: "Workshops",
+        },
+      ];
+
+      var sessions = []; // hydrated from GET /api/ecd/content
+
+      function mapApiSession(s) {
+        return {
+          id: s.slug,
+          tr: s.trackIndex,
+          time: s.timeLabel,
+          fmt: s.format || "Session",
+          cat: s.category || "",
+          title: s.title || "Topic will be announced",
+          speaker: s.speakerLabel || "Speaker will be announced",
+          topics: s.topics || [],
+          desc: s.description || "",
+          learn: s.learn || [],
+          output: s.output || "—",
+          tools: s.tools || "None",
+          level: s.level || "All levels",
+          fullJourneyOnly: !!s.fullJourneyOnly,
+        };
+      }
+
+      var state = {
+        fRoom: 0,
+        fFmt: null,
+        tvRoom: 0,
+        view: "timeline",
+        selectedSession: "m1",
+      };
+
+      // ==========================================
+      // 01. HELPERS
+      // ==========================================
+      function esc(s) {
+        return String(s)
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;");
+      }
+
+      function matchSession(s) {
+        if (state.fRoom !== 0 && s.tr !== state.fRoom - 1) return false;
+        if (state.fFmt && s.fmt !== state.fFmt) return false;
+        return true;
+      }
+
+      function accessPill(tr) {
+        if (tr <= 1) {
+          return '<span style="border-radius:999px;padding:3px 10px;font-size:11px;font-weight:600;background:#f4f6f8;border:1px solid #e6eaee;color:#4a5563;">All Tickets</span>';
+        }
+        return '<span style="border-radius:999px;padding:3px 10px;font-size:11px;font-weight:600;background:#101010;border:1px solid #101010;color:#05ef62;">Full Journey Only</span>';
+      }
+
+      // ==========================================
+      // 02. SESSION DETAIL PANEL — from CMS
+      // ==========================================
+      function updateSessionPanel(sessionId) {
+        var s = sessions.find(function (x) {
+          return x.id === sessionId;
+        });
+        if (!s) return;
+        var room = rooms[s.tr] || rooms[0];
+        state.selectedSession = sessionId;
+
+        document.getElementById("spRoomName").textContent = room.name;
+        document.getElementById("spRoomDot").style.background = room.color;
+
+        document.getElementById("spTime").textContent = s.time;
+        document.getElementById("spFmt").textContent = s.fmt;
+
+        var accessEl = document.getElementById("spAccess");
+        if (s.tr <= 1) {
+          accessEl.textContent = "All Tickets";
+          accessEl.style.background = "#f4f6f8";
+          accessEl.style.borderColor = "#e6eaee";
+          accessEl.style.color = "#4a5563";
+        } else {
+          accessEl.textContent = "Full Journey Only";
+          accessEl.style.background = "#101010";
+          accessEl.style.borderColor = "#101010";
+          accessEl.style.color = "#05ef62";
+        }
+
+        document.getElementById("spTitle").textContent = s.title;
+        document.getElementById("spDesc").textContent = s.desc || "";
+        document.getElementById("spOutput").textContent = s.output || "—";
+
+        var learnEl = document.getElementById("spLearn");
+        learnEl.innerHTML = "";
+        (s.learn || []).forEach(function (item) {
+          var li = document.createElement("li");
+          li.textContent = item;
+          learnEl.appendChild(li);
+        });
+
+        document.getElementById("spTimeRoom").textContent =
+          s.time + " · " + room.name;
+        document.getElementById("spTools").textContent = s.tools || "None";
+        document.getElementById("spLevel").textContent =
+          s.level || "All levels";
+
+        var cta = document.getElementById("spCta");
+        var note = document.getElementById("spCtaNote");
+        if (s.tr <= 1) {
+          cta.textContent = "Add to My Day";
+          note.textContent = "Included with all tickets";
+        } else {
+          cta.textContent = "Reserve My Place";
+          note.textContent =
+            "Full Journey Pass · reserve in advance · limited rooms";
+        }
+      }
+
+      function sessionCardHtml(s, r, compact) {
+        var pad = compact ? "14px" : "20px";
+        var titleSize = compact ? "13px" : "17px";
+        return (
+          '<button type="button" class="session-card" data-session="' +
+          esc(s.id) +
+          '" style="text-align:left;background:#ffffff;border:1px solid #d5dae0;border-radius:12px;padding:' +
+          pad +
+          ';cursor:pointer;font-family:Manrope,sans-serif;display:block;width:100%;transition:box-shadow .2s;">' +
+          '<div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;flex-wrap:wrap;">' +
+          '<span class="font-mono" style="font-size:10px;letter-spacing:.08em;color:#101010;">' +
+          esc(s.time) +
+          "</span>" +
+          "<span style=\"border:1px solid #e6eaee;border-radius:999px;padding:2px 8px;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.06em;text-transform:uppercase;color:#4a5563;\">" +
+          esc(s.fmt) +
+          "</span></div>" +
+          '<div style="font-weight:700;font-size:' +
+          titleSize +
+          ';line-height:1.4;color:#101010;margin-bottom:8px;">' +
+          esc(s.title) +
+          "</div>" +
+          '<div style="font-size:11px;color:#6b747e;margin-bottom:10px;">' +
+          esc(s.speaker) +
+          "</div>" +
+          '<div style="display:flex;gap:6px;flex-wrap:wrap;">' +
+          accessPill(s.tr) +
+          "</div></button>"
+        );
+      }
+
+      // ==========================================
+      // 03. RENDER TIMELINE + ROOM VIEW (from API)
+      // ==========================================
+      function renderTimeline() {
+        var container = document.getElementById("timelineColumns");
+        if (!container) return;
+        var headers = [
+          "MAIN STAGE",
+          "SECOND STAGE",
+          "ACQUISITION",
+          "CRO & RETENTION",
+          "OPERATIONS & LOGISTICS",
+        ];
+        // Main Stage markers from data.text (Opening / Breaks / Closing)
+        var mainMarkers = [
+          { time: "11:00", label: "Opening", beforeSlug: "m1" },
+          { time: "1:10", label: "Break — Choose Your Status", beforeSlug: "m4" },
+          { time: "3:20", label: "Break", beforeSlug: "m7" },
+          { time: "5:20", label: "Break", beforeSlug: "m10" },
+          { time: "6:50", label: "Closing", afterSlug: "m11" },
+        ];
+
+        function markerHtml(m) {
+          return (
+            '<div style="background:#f4f6f8;border:1px dashed #d5dae0;border-radius:10px;padding:10px 14px;display:flex;gap:10px;align-items:center;">' +
+            '<span class="font-mono" style="font-size:10px;letter-spacing:0.08em;color:#6b747e;">' +
+            esc(m.time) +
+            "</span>" +
+            '<span style="font-size:12px;font-weight:600;color:#6b747e;">' +
+            esc(m.label) +
+            "</span></div>"
+          );
+        }
+
+        var html = "";
+        rooms.forEach(function (r, ri) {
+          var list = sessions
+            .filter(function (s) {
+              return s.tr === ri && matchSession(s);
+            })
+            .slice()
+            .sort(function (a, b) {
+              function key(t) {
+                var m = String(t || "").match(/^(\d{1,2}):(\d{2})$/);
+                if (!m) return 9999;
+                var h = Number(m[1]);
+                var min = Number(m[2]);
+                if (h >= 1 && h <= 10) h += 12;
+                return h * 60 + min;
+              }
+              return key(a.time) - key(b.time);
+            });
+
+          html += "<div>";
+          html +=
+            '<div class="timeline-sticky-header" style="z-index:5;background:#101010;border-radius:10px;padding:12px 14px;display:flex;align-items:center;gap:8px;margin-bottom:12px;">' +
+            '<span style="width:9px;height:9px;border-radius:50%;background:' +
+            r.color +
+            ';border:1px solid #3a3a3a;"></span>' +
+            '<span class="font-mono" style="font-size:11px;letter-spacing:0.1em;color:#ffffff;">' +
+            esc(headers[ri] || r.name) +
+            "</span></div>";
+          html +=
+            '<div style="display:flex;flex-direction:column;gap:10px;">';
+
+          if (!list.length && ri !== 0) {
+            html +=
+              '<p style="font-size:12px;color:#6b747e;margin:0;">Coming soon</p>';
+          } else {
+            list.forEach(function (s) {
+              if (ri === 0) {
+                mainMarkers.forEach(function (m) {
+                  if (m.beforeSlug === s.id) html += markerHtml(m);
+                });
+              }
+              html += sessionCardHtml(s, r, true);
+              if (ri === 0) {
+                mainMarkers.forEach(function (m) {
+                  if (m.afterSlug === s.id) html += markerHtml(m);
+                });
+              }
+            });
+          }
+          html += "</div></div>";
+        });
+        container.innerHTML = html;
+        bindSessionCards();
+      }
+
+      function renderRoomView() {
+        var container = document.getElementById("roomPanels");
+        if (!container) return;
+        var html = "";
+        rooms.forEach(function (r, ri) {
+          var visible = state.tvRoom === ri;
+          var list = sessions.filter(function (s) {
+            return s.tr === ri && matchSession(s);
+          });
+          html +=
+            '<div class="tv-panel" data-tv-panel="' +
+            ri +
+            '" style="display:' +
+            (visible ? "grid" : "none") +
+            ';grid-template-columns:repeat(2,1fr);gap:14px;">';
+          if (!list.length) {
+            html +=
+              '<p style="grid-column:1/-1;font-size:13px;color:#6b747e;">Coming soon</p>';
+          } else {
+            list.forEach(function (s) {
+              html += sessionCardHtml(s, r, false);
+            });
+          }
+          html += "</div>";
+        });
+        container.innerHTML = html;
+        bindSessionCards();
+      }
+
+      function refreshAgendaViews() {
+        renderTimeline();
+        renderRoomView();
+        var resultCount = document.getElementById("resultCount");
+        if (resultCount) {
+          resultCount.textContent =
+            sessions.filter(matchSession).length + " sessions";
+        }
+        if (sessions.length) {
+          var still =
+            sessions.find(function (s) {
+              return s.id === state.selectedSession;
+            }) || sessions[0];
+          updateSessionPanel(still.id);
+        }
+      }
+
+      function loadSessionsFromApi() {
+        if (!window.EcdApi || !EcdApi.fetchContent) {
+          var el = document.getElementById("timelineLoading");
+          if (el) el.textContent = "Agenda unavailable (API not loaded).";
+          return;
+        }
+        EcdApi.fetchContent()
+          .then(function (data) {
+            var list = (data && data.sessions) || [];
+            sessions = list.map(mapApiSession);
+            if (data && data.rooms && data.rooms.length) {
+              data.rooms.forEach(function (apiRoom) {
+                if (rooms[apiRoom.index]) {
+                  rooms[apiRoom.index].name = apiRoom.name
+                    .replace(/\s+workshops$/i, "")
+                    .trim();
+                  if (apiRoom.color) rooms[apiRoom.index].color = apiRoom.color;
+                  if (apiRoom.text) rooms[apiRoom.index].text = apiRoom.text;
+                }
+              });
+            }
+            refreshAgendaViews();
+          })
+          .catch(function (err) {
+            console.warn("[agenda] content", err);
+            var el = document.getElementById("timelineLoading");
+            if (el) {
+              el.textContent =
+                "Could not load agenda. Refresh to try again.";
+            }
+          });
+      }
+
+      // ==========================================
+      // 04. BIND ROOM TAB BUTTONS
+      // ==========================================
+      function bindRoomTabs() {
+        document.querySelectorAll(".tv-room-btn").forEach(function (btn) {
+          btn.addEventListener("click", function () {
+            var idx = parseInt(this.getAttribute("data-tv"));
+            state.tvRoom = idx;
+            document.querySelectorAll(".tv-room-btn").forEach(function (b) {
+              b.classList.remove("active");
+              b.style.background = "#ffffff";
+              b.style.color = "#101010";
+              b.style.borderColor = "#d5dae0";
+            });
+            this.classList.add("active");
+            this.style.background = "#101010";
+            this.style.color = "#ffffff";
+            this.style.borderColor = "#101010";
+            renderRoomView();
+          });
+        });
+      }
+
+      // ==========================================
+      // 05. VIEW SWITCHER
+      // ==========================================
+      function bindViewSwitcher() {
+        var btnTimeline = document.getElementById("btnTimeline");
+        var btnRoom = document.getElementById("btnRoom");
+        var timelineView = document.getElementById("timelineView");
+        var roomView = document.getElementById("roomView");
+
+        function setView(view) {
+          state.view = view;
+          if (view === "timeline") {
+            timelineView.style.display = "block";
+            roomView.style.display = "none";
+            btnTimeline.style.background = "#101010";
+            btnTimeline.style.color = "#ffffff";
+            btnTimeline.setAttribute("aria-selected", "true");
+            btnRoom.style.background = "#ffffff";
+            btnRoom.style.color = "#101010";
+            btnRoom.setAttribute("aria-selected", "false");
+          } else {
+            timelineView.style.display = "none";
+            roomView.style.display = "block";
+            btnRoom.style.background = "#101010";
+            btnRoom.style.color = "#ffffff";
+            btnRoom.setAttribute("aria-selected", "true");
+            btnTimeline.style.background = "#ffffff";
+            btnTimeline.style.color = "#101010";
+            btnTimeline.setAttribute("aria-selected", "false");
+          }
+        }
+
+        btnTimeline.addEventListener("click", function () {
+          setView("timeline");
+        });
+        btnRoom.addEventListener("click", function () {
+          setView("room");
+        });
+      }
+
+      // ==========================================
+      // 06. FILTER CHIPS
+      // ==========================================
+      function bindFilters() {
+        var roomChips = document.querySelectorAll(".room-chip");
+        var fmtChips = document.querySelectorAll(".fmt-chip");
+        var resultCount = document.getElementById("resultCount");
+        var clearBtn = document.getElementById("clearFilters");
+
+        function updateCount() {
+          refreshAgendaViews();
+        }
+
+        roomChips.forEach(function (chip) {
+          chip.addEventListener("click", function () {
+            roomChips.forEach(function (c) {
+              c.classList.remove("active");
+              c.style.background = "#ffffff";
+              c.style.borderColor = "#d5dae0";
+              c.style.color = "#101010";
+            });
+            this.classList.add("active");
+            this.style.background = "#101010";
+            this.style.borderColor = "#101010";
+            this.style.color = "#ffffff";
+            state.fRoom = parseInt(this.getAttribute("data-room"));
+            updateCount();
+          });
+        });
+
+        fmtChips.forEach(function (chip) {
+          chip.addEventListener("click", function () {
+            var v = this.getAttribute("data-fmt");
+            if (state.fFmt === v) {
+              state.fFmt = null;
+              this.classList.remove("active");
+              this.style.background = "#ffffff";
+              this.style.borderColor = "#d5dae0";
+              this.style.color = "#101010";
+            } else {
+              state.fFmt = v;
+              fmtChips.forEach(function (c) {
+                c.classList.remove("active");
+                c.style.background = "#ffffff";
+                c.style.borderColor = "#d5dae0";
+                c.style.color = "#101010";
+              });
+              this.classList.add("active");
+              this.style.background = "#101010";
+              this.style.borderColor = "#101010";
+              this.style.color = "#ffffff";
+            }
+            updateCount();
+          });
+        });
+
+        clearBtn.addEventListener("click", function () {
+          state.fRoom = 0;
+          state.fFmt = null;
+          roomChips.forEach(function (c) {
+            c.classList.remove("active");
+            c.style.background = "#ffffff";
+            c.style.borderColor = "#d5dae0";
+            c.style.color = "#101010";
+          });
+          roomChips[0].classList.add("active");
+          roomChips[0].style.background = "#101010";
+          roomChips[0].style.borderColor = "#101010";
+          roomChips[0].style.color = "#ffffff";
+          fmtChips.forEach(function (c) {
+            c.classList.remove("active");
+            c.style.background = "#ffffff";
+            c.style.borderColor = "#d5dae0";
+            c.style.color = "#101010";
+          });
+          updateCount();
+        });
+
+        updateCount();
+      }
+
+      // ==========================================
+      // 07. SESSION CARD CLICK → UPDATE PANEL
+      // ==========================================
+      function bindSessionCards() {
+        document.querySelectorAll(".session-card").forEach(function (card) {
+          card.addEventListener("click", function () {
+            var id = this.getAttribute("data-session");
+            if (id) updateSessionPanel(id);
+            var panel = document.querySelector(".session-detail-panel");
+            if (panel) {
+              panel.scrollIntoView({ behavior: "smooth", block: "center" });
+            }
+          });
+        });
+      }
+
+      // ==========================================
+      // 08. INIT
+      // ==========================================
+      bindViewSwitcher();
+      bindRoomTabs();
+      bindFilters();
+      loadSessionsFromApi();
+    </script>
+  </body>
+</html>

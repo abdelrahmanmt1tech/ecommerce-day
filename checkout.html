@@ -1,0 +1,1841 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TrafficMENA · Checkout</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <script src="prices.js"></script>
+    <script src="ecd-api.js"></script>
+    <script src="ecd-content.js"></script>
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      :root {
+        --green: #05ef62;
+        --green-dark: #04c44e;
+        --black: #101010;
+        --gray-50: #f9fafc;
+        --gray-100: #f4f6f8;
+        --gray-200: #e6eaee;
+        --gray-300: #d5dae0;
+        --gray-400: #9aa1a9;
+        --gray-500: #6b747e;
+        --gray-600: #4a5563;
+        --gray-700: #1f2630;
+        --red: #b3362e;
+        --red-light: #fbedec;
+        --red-border: #e2a9a5;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        background: var(--gray-50);
+        font-family: "Manrope", sans-serif;
+        color: var(--black);
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      a {
+        color: var(--green-dark);
+        text-decoration: none;
+        font-weight: 600;
+      }
+      a:hover {
+        color: #006681;
+      }
+      input,
+      select,
+      button {
+        font-family: "Manrope", sans-serif;
+      }
+      input::placeholder {
+        color: var(--gray-400);
+      }
+
+      /* ============ HEADER ============ */
+      .brand {
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+        width: fit-content;
+      }
+
+      .brand img {
+        height: 38px;
+        width: auto;
+        display: block;
+      }
+
+      .checkout-header {
+        width: 100%;
+        background: #ffffff;
+        border-bottom: 1px solid var(--gray-200);
+        padding: 14px 24px;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+      }
+      .header-inner {
+        max-width: 1280px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: 1fr auto 1fr;
+        align-items: center;
+        gap: 16px;
+      }
+      .header-left {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+      .logo-placeholder {
+        width: 28px;
+        height: 28px;
+        background: var(--gray-200);
+        border-radius: 7px;
+        flex-shrink: 0;
+      }
+      .brand-name {
+        font-weight: 700;
+        font-size: 16px;
+      }
+      .header-divider {
+        color: var(--gray-300);
+      }
+      .event-name {
+        font-size: 14px;
+        font-weight: 600;
+        color: var(--gray-600);
+      }
+      .secure-badge {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-family: "JetBrains Mono", monospace;
+        font-size: 11px;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--black);
+      }
+      .secure-badge svg {
+        width: 14px;
+        height: 14px;
+        stroke: var(--green-dark);
+        stroke-width: 2;
+        fill: none;
+      }
+      .header-right {
+        display: flex;
+        justify-content: flex-end;
+        gap: 24px;
+        font-size: 13px;
+        font-weight: 600;
+        flex-wrap: wrap;
+      }
+      .header-right a:first-child {
+        color: var(--gray-700);
+      }
+
+      @media (max-width: 900px) {
+        .header-inner {
+          grid-template-columns: 1fr auto;
+          gap: 10px;
+        }
+        .secure-badge {
+          grid-column: 1 / -1;
+          justify-self: center;
+          order: 3;
+        }
+        .header-right {
+          justify-content: flex-end;
+        }
+      }
+      @media (max-width: 600px) {
+        .checkout-header {
+          padding: 12px 16px;
+        }
+        .header-inner {
+          grid-template-columns: 1fr;
+          justify-items: start;
+          gap: 8px;
+        }
+        .header-right {
+          justify-content: flex-start;
+          gap: 16px;
+          font-size: 12px;
+        }
+        .secure-badge {
+          font-size: 10px;
+          justify-self: start;
+        }
+        .brand-name {
+          font-size: 14px;
+        }
+        .event-name {
+          font-size: 13px;
+        }
+      }
+
+      /* ============ MAIN LAYOUT ============ */
+      .checkout-main {
+        width: 100%;
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 32px 24px 96px;
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 400px;
+        gap: 40px;
+        align-items: start;
+      }
+      @media (max-width: 1024px) {
+        .checkout-main {
+          grid-template-columns: 1fr;
+          gap: 32px;
+          padding: 24px 16px 80px;
+        }
+      }
+      @media (max-width: 600px) {
+        .checkout-main {
+          padding: 16px 12px 80px;
+          gap: 24px;
+        }
+      }
+
+      .left-col {
+        display: flex;
+        flex-direction: column;
+        gap: 36px;
+        min-width: 0;
+      }
+
+      /* ============ ERROR SUMMARY ============ */
+      .error-summary {
+        border: 1px solid var(--red-border);
+        background: var(--red-light);
+        border-radius: 12px;
+        padding: 16px 20px;
+      }
+      .error-title {
+        font-weight: 700;
+        font-size: 14px;
+        color: var(--red);
+        margin-bottom: 6px;
+      }
+      .error-list {
+        display: flex;
+        flex-direction: column;
+        gap: 3px;
+      }
+      .error-list div {
+        font-size: 12px;
+        color: var(--red);
+      }
+
+      /* ============ SECTION HEADER ============ */
+      .section-header {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 20px;
+        flex-wrap: wrap;
+      }
+      .step-circle {
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        background: var(--black);
+        color: var(--green);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: "JetBrains Mono", monospace;
+        font-size: 12px;
+        font-weight: 600;
+        flex-shrink: 0;
+      }
+      .section-header h2 {
+        font-size: 22px;
+        font-weight: 800;
+        margin: 0;
+      }
+      @media (max-width: 600px) {
+        .section-header h2 {
+          font-size: 18px;
+        }
+        .section-header {
+          gap: 8px;
+          margin-bottom: 16px;
+        }
+      }
+      .step-label {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 10px;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--gray-500);
+        background: var(--gray-100);
+        padding: 2px 8px;
+        border-radius: 20px;
+      }
+
+      /* ============ FORM CARD ============ */
+      .form-card {
+        border: 1px solid var(--gray-300);
+        border-radius: 14px;
+        padding: 28px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 18px;
+        background: #ffffff;
+      }
+      @media (max-width: 700px) {
+        .form-card {
+          grid-template-columns: 1fr;
+          padding: 20px;
+          gap: 14px;
+        }
+      }
+      @media (max-width: 400px) {
+        .form-card {
+          padding: 16px;
+        }
+      }
+      .field {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        min-width: 0;
+      }
+      .field label {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 10px;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--gray-500);
+      }
+      .field input,
+      .field select {
+        width: 100%;
+        border: 1px solid var(--gray-300);
+        border-radius: 10px;
+        padding: 12px 14px;
+        font-size: 14px;
+        background: #ffffff;
+        outline: none;
+        transition:
+          border-color 0.15s,
+          box-shadow 0.15s;
+      }
+      .field input:focus,
+      .field select:focus {
+        border-color: var(--green);
+        box-shadow: 0 0 0 3px rgba(5, 239, 98, 0.15);
+      }
+      .field input.error,
+      .field select.error {
+        border-color: #c4342d;
+      }
+      .field .error-msg {
+        font-size: 11px;
+        color: var(--red);
+        min-height: 16px;
+      }
+      .full-width {
+        grid-column: 1 / -1;
+      }
+      .divider {
+        border-top: 1px solid var(--gray-200);
+        padding-top: 18px;
+        grid-column: 1 / -1;
+      }
+      .inline-group {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+      }
+      .inline-group select {
+        width: 96px;
+        flex-shrink: 0;
+      }
+      .inline-group input {
+        flex: 1;
+        min-width: 0;
+      }
+
+      /* ============ BUTTONS ============ */
+      .btn-primary {
+        background: var(--green);
+        border: none;
+        color: var(--black);
+        border-radius: 10px;
+        padding: 14px 26px;
+        font-weight: 600;
+        font-size: 15px;
+        cursor: pointer;
+        transition:
+          background 0.15s,
+          opacity 0.15s;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+      }
+      .btn-primary:hover {
+        background: #04d456;
+      }
+      .btn-primary:disabled {
+        background: var(--gray-200);
+        color: var(--gray-400);
+        cursor: not-allowed;
+      }
+
+      .btn-secondary {
+        background: #ffffff;
+        border: 1px solid var(--black);
+        color: var(--black);
+        border-radius: 10px;
+        padding: 13px 22px;
+        font-weight: 600;
+        font-size: 13px;
+        cursor: pointer;
+        transition: background 0.15s;
+      }
+      .btn-secondary:hover {
+        background: var(--gray-100);
+      }
+
+      .btn-link {
+        background: none;
+        border: none;
+        font-weight: 600;
+        font-size: 14px;
+        color: var(--green-dark);
+        cursor: pointer;
+        padding: 0;
+        text-align: left;
+      }
+      .btn-link:hover {
+        color: #006681;
+        text-decoration: underline;
+      }
+
+      .btn-chip {
+        flex: 1;
+        background: #ffffff;
+        border: 1px solid var(--gray-300);
+        border-radius: 8px;
+        padding: 8px 6px;
+        font-weight: 600;
+        font-size: 11px;
+        color: var(--black);
+        cursor: pointer;
+        transition: all 0.15s;
+        text-align: center;
+      }
+      .btn-chip.active {
+        background: var(--black);
+        border-color: var(--black);
+        color: #ffffff;
+      }
+
+      /* ============ PROMO ============ */
+      .promo-card {
+        border: 1px solid var(--gray-300);
+        border-radius: 14px;
+        padding: 22px 28px;
+        background: #ffffff;
+      }
+      @media (max-width: 600px) {
+        .promo-card {
+          padding: 18px;
+        }
+      }
+      .promo-label {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 10px;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--gray-500);
+        margin-bottom: 10px;
+      }
+      .promo-row {
+        display: flex;
+        gap: 10px;
+        max-width: 420px;
+      }
+      @media (max-width: 500px) {
+        .promo-row {
+          flex-wrap: wrap;
+        }
+      }
+      .promo-row input {
+        flex: 1;
+        min-width: 0;
+        border: 1px solid var(--gray-300);
+        border-radius: 10px;
+        padding: 12px 14px;
+        font-size: 14px;
+        text-transform: uppercase;
+        outline: none;
+      }
+      .promo-row input:focus {
+        border-color: var(--green);
+        box-shadow: 0 0 0 3px rgba(5, 239, 98, 0.15);
+      }
+      .promo-row button {
+        background: var(--black);
+        border: none;
+        color: #ffffff;
+        border-radius: 10px;
+        padding: 12px 22px;
+        font-weight: 600;
+        font-size: 13px;
+        cursor: pointer;
+        white-space: nowrap;
+      }
+      .promo-msg {
+        margin-top: 10px;
+        font-size: 13px;
+        font-weight: 600;
+      }
+
+      /* ============ PAYMENT ============ */
+      .method-row {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 22px;
+        flex-wrap: wrap;
+      }
+      .method-btn {
+        flex: 1;
+        min-width: 90px;
+        background: #ffffff;
+        border: 1px solid var(--gray-300);
+        border-radius: 12px;
+        padding: 16px 12px;
+        font-weight: 700;
+        font-size: 14px;
+        color: var(--black);
+        cursor: pointer;
+        transition: all 0.15s;
+      }
+      .method-btn.active {
+        background: var(--black);
+        border-color: var(--black);
+        color: #ffffff;
+      }
+
+      .hosted-fields {
+        border: 1px dashed var(--gray-300);
+        background: var(--gray-100);
+        border-radius: 12px;
+        padding: 26px;
+        margin-bottom: 20px;
+      }
+      .hosted-label {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 9px;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--gray-500);
+        margin-bottom: 14px;
+      }
+      .card-placeholder {
+        height: 44px;
+        background: #ffffff;
+        border: 1px solid var(--gray-200);
+        border-radius: 8px;
+        margin-bottom: 10px;
+      }
+      .card-row {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 10px;
+      }
+      .card-row .card-placeholder {
+        flex: 1;
+        margin-bottom: 0;
+      }
+      .hosted-note {
+        font-size: 11px;
+        color: var(--gray-500);
+        margin-top: 12px;
+      }
+
+      .checkbox-label {
+        display: flex;
+        gap: 12px;
+        align-items: flex-start;
+        cursor: pointer;
+        font-size: 13px;
+        line-height: 1.7;
+        color: var(--gray-700);
+        margin-bottom: 10px;
+      }
+      .checkbox-label input[type="checkbox"] {
+        width: 18px;
+        height: 18px;
+        margin-top: 2px;
+        accent-color: var(--green);
+        flex-shrink: 0;
+        cursor: pointer;
+      }
+      .checkbox-label.optional {
+        color: var(--gray-600);
+      }
+
+      .legal-note {
+        font-size: 12px;
+        line-height: 1.8;
+        color: var(--gray-500);
+        margin-bottom: 20px;
+      }
+
+      .pay-btn {
+        width: 100%;
+        background: var(--green);
+        border: none;
+        color: var(--black);
+        border-radius: 10px;
+        padding: 16px;
+        font-weight: 700;
+        font-size: 16px;
+        cursor: pointer;
+        transition:
+          background 0.15s,
+          opacity 0.15s;
+      }
+      .pay-btn:disabled {
+        background: var(--gray-200);
+        color: var(--gray-400);
+        cursor: not-allowed;
+      }
+      .pay-btn:not(:disabled):hover {
+        background: #04d456;
+      }
+
+      /* ============ ORDER SUMMARY ============ */
+      .order-summary {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        position: sticky;
+        top: 88px;
+        align-self: start;
+      }
+      @media (max-width: 1024px) {
+        .order-summary {
+          position: static;
+        }
+      }
+
+      .summary-card {
+        border: 1px solid var(--gray-300);
+        border-radius: 16px;
+        overflow: hidden;
+        background: #ffffff;
+      }
+      .summary-header {
+        background: var(--black);
+        padding: 14px 22px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 6px;
+      }
+      .summary-header span:first-child {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 11px;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: #ffffff;
+      }
+      .summary-header .timer {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 11px;
+        letter-spacing: 0.08em;
+        color: var(--green);
+      }
+      .summary-body {
+        padding: 22px;
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+      }
+      .summary-event {
+        font-weight: 700;
+        font-size: 15px;
+      }
+      .summary-meta {
+        font-size: 12px;
+        color: var(--gray-500);
+        line-height: 1.7;
+      }
+      .summary-ticket-row {
+        border-top: 1px solid var(--gray-200);
+        padding-top: 14px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+      .summary-ticket-name {
+        font-weight: 700;
+        font-size: 14px;
+      }
+      .summary-ticket-tag {
+        font-size: 12px;
+        color: var(--green-dark);
+        font-weight: 600;
+      }
+      .summary-one-ticket {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 10px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--gray-500);
+      }
+      .summary-prices {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        font-size: 13px;
+        border-top: 1px solid var(--gray-200);
+        padding-top: 14px;
+      }
+      .summary-prices .row {
+        display: flex;
+        justify-content: space-between;
+      }
+      .summary-prices .row .label {
+        color: var(--gray-600);
+      }
+      .summary-prices .row .value {
+        font-weight: 600;
+        color: var(--black);
+      }
+      .summary-prices .row .value.green {
+        color: var(--green-dark);
+      }
+      .summary-prices .row .value.muted {
+        color: var(--gray-500);
+      }
+      .summary-total {
+        border-top: 1px solid var(--gray-200);
+        padding-top: 14px;
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+      }
+      .summary-total .label {
+        font-weight: 700;
+        font-size: 15px;
+      }
+      .summary-total .value {
+        font-weight: 800;
+        font-size: 20px;
+      }
+      .summary-change {
+        font-size: 13px;
+        font-weight: 600;
+        color: var(--green-dark);
+      }
+      .chip-row {
+        display: flex;
+        gap: 8px;
+      }
+
+      .value-reminder {
+        border: 1px solid #c3f7d7;
+        background: #e6fbee;
+        border-radius: 14px;
+        padding: 18px 20px;
+      }
+      .value-reminder .label {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 9px;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--green-dark);
+        margin-bottom: 8px;
+      }
+      .value-reminder .text {
+        font-size: 13px;
+        line-height: 1.8;
+        color: var(--gray-700);
+      }
+      .value-reminder .sub {
+        font-size: 12px;
+        color: var(--gray-600);
+        margin-top: 8px;
+        border-top: 1px solid #c3f7d7;
+        padding-top: 8px;
+      }
+
+      /* ============ MOBILE STICKY BAR ============ */
+      .mobile-sticky-bar {
+        display: none;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 200;
+        background: rgba(255, 255, 255, 0.97);
+        backdrop-filter: blur(12px);
+        border-top: 1px solid var(--gray-200);
+        padding: 12px 16px;
+        gap: 12px;
+        align-items: center;
+        box-shadow: 0 -2px 12px rgba(16, 16, 16, 0.06);
+      }
+      @media (max-width: 1024px) {
+        .mobile-sticky-bar {
+          display: flex;
+        }
+        body {
+          padding-bottom: 80px;
+        }
+      }
+      .mobile-sticky-bar .total-info {
+        flex: 1;
+        min-width: 0;
+      }
+      .mobile-sticky-bar .total-label {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 9px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--gray-500);
+      }
+      .mobile-sticky-bar .total-value {
+        font-weight: 800;
+        font-size: 16px;
+      }
+      .mobile-sticky-bar button {
+        background: var(--green);
+        border: none;
+        color: var(--black);
+        border-radius: 10px;
+        padding: 14px 22px;
+        font-weight: 700;
+        font-size: 14px;
+        cursor: pointer;
+        flex-shrink: 0;
+      }
+      .mobile-sticky-bar button:disabled {
+        background: var(--gray-200);
+        color: var(--gray-400);
+        cursor: not-allowed;
+      }
+
+      /* ============ UTILS ============ */
+      .hidden {
+        display: none !important;
+      }
+      .text-muted {
+        color: var(--gray-500);
+      }
+      .w-full {
+        width: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- ============ HEADER ============ -->
+    <header class="checkout-header">
+      <div class="header-inner">
+        <a href="index.html" class="brand" aria-label="ECommerce Day home">
+          <img
+            src="assets/ecommerce-day-logo.png"
+            alt="E-commerce Day by TrafficMENA"
+          />
+        </a>
+        <div class="secure-badge">
+          <svg viewBox="0 0 24 24">
+            <rect x="4" y="11" width="16" height="10" rx="2"></rect>
+            <path d="M8 11V7a4 4 0 0 1 8 0v4"></path>
+          </svg>
+          Secure Checkout
+        </div>
+        <div class="header-right">
+          <a href="tickets.html">← Back to Tickets</a>
+          <a href="#">Need help?</a>
+        </div>
+      </div>
+    </header>
+
+    <!-- ============ MAIN ============ -->
+    <main class="checkout-main">
+      <!-- LEFT COLUMN -->
+      <div class="left-col">
+        <!-- Error summary -->
+        <div id="errorSummary" class="error-summary hidden">
+          <div class="error-title">Please fix the following before paying:</div>
+          <div class="error-list" id="errorList"></div>
+        </div>
+
+        <!-- Step 1: Your details -->
+        <section>
+          <div class="section-header">
+            <span class="step-circle">1</span>
+            <h2>Your details</h2>
+            <span class="step-label" id="subLabel">Step 1 of 2</span>
+          </div>
+
+          <!-- Sub-screen 1 -->
+          <div id="sub1">
+            <div class="form-card">
+              <div class="field">
+                <label for="country">Country *</label>
+                <select id="country" data-field="country">
+                  <option value="">Select country</option>
+                  <option>Egypt</option>
+                  <option>Saudi Arabia</option>
+                  <option>UAE</option>
+                  <option>Kuwait</option>
+                  <option>Qatar</option>
+                  <option>Jordan</option>
+                  <option>Other</option>
+                </select>
+                <span class="error-msg" data-error="country"></span>
+              </div>
+              <div class="field">
+                <label for="title">Job title *</label>
+                <select id="title" data-field="title">
+                  <option value="">Select your job title</option>
+                  <optgroup label="Business">
+                    <option>Founder / Business Owner</option>
+                    <option>Executive / C-level</option>
+                    <option>E-commerce Manager</option>
+                  </optgroup>
+                  <optgroup label="Marketing">
+                    <option>Marketing Manager</option>
+                    <option>Performance Marketing</option>
+                    <option>Growth Marketing</option>
+                    <option>SEO / Content</option>
+                  </optgroup>
+                  <optgroup label="Store &amp; Product">
+                    <option>CRO / UX / Product</option>
+                    <option>Analytics / Data</option>
+                  </optgroup>
+                  <optgroup label="Operations">
+                    <option>Operations / Fulfillment / CX</option>
+                  </optgroup>
+                  <optgroup label="Other">
+                    <option>Agency Owner / Freelancer</option>
+                    <option>Student / Career Switcher</option>
+                    <option>Other</option>
+                  </optgroup>
+                </select>
+                <span class="error-msg" data-error="title"></span>
+              </div>
+              <div class="divider">
+                <div class="form-card" style="border: none; padding: 0">
+                  <div class="field">
+                    <label for="name">Full name *</label>
+                    <input id="name" type="text" data-field="name" />
+                    <span class="error-msg" data-error="name"></span>
+                  </div>
+                  <div class="field">
+                    <label for="email">Email *</label>
+                    <input
+                      id="email"
+                      type="email"
+                      data-field="email"
+                      placeholder="name@company.com"
+                    />
+                    <span class="error-msg" data-error="email"></span>
+                  </div>
+                  <div class="field full-width">
+                    <label for="mobile">Mobile number *</label>
+                    <div class="inline-group">
+                      <select id="cc" data-field="cc" aria-label="Country code">
+                        <option>+20</option>
+                        <option>+966</option>
+                        <option>+971</option>
+                        <option>+965</option>
+                        <option>+974</option>
+                        <option>+962</option>
+                      </select>
+                      <input id="mobile" type="tel" data-field="mobile" />
+                    </div>
+                    <span class="error-msg" data-error="mobile"></span>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="full-width"
+                style="
+                  display: flex;
+                  align-items: center;
+                  gap: 16px;
+                  flex-wrap: wrap;
+                "
+              >
+                <button class="btn-primary" id="goSub2">Continue</button>
+                <span class="text-muted" style="font-size: 12px"
+                  >Two short screens, this is the first.</span
+                >
+              </div>
+            </div>
+          </div>
+
+          <!-- Sub-screen 2 -->
+          <div id="sub2" class="hidden">
+            <div class="form-card">
+              <div
+                class="full-width"
+                style="
+                  display: flex;
+                  align-items: center;
+                  justify-content: space-between;
+                  gap: 16px;
+                  border-bottom: 1px solid var(--gray-200);
+                  padding-bottom: 16px;
+                "
+              >
+                <div class="text-muted" style="font-size: 14px" id="subSummary">
+                  Your name · job title · country
+                </div>
+                <button class="btn-link" id="backSub1">Edit</button>
+              </div>
+              <div class="field">
+                <label for="company">Company *</label>
+                <input id="company" type="text" data-field="company" />
+                <span class="error-msg" data-error="company"></span>
+              </div>
+              <div class="field">
+                <label for="access">Accessibility needs</label>
+                <input
+                  id="access"
+                  type="text"
+                  data-field="access"
+                  placeholder="Optional"
+                />
+              </div>
+              <div class="field full-width">
+                <label for="store"
+                  >Which e-commerce store do you work on? *</label
+                >
+                <input
+                  id="store"
+                  type="text"
+                  data-field="store"
+                  placeholder="yourstore.com"
+                />
+                <span class="error-msg" data-error="store"></span>
+              </div>
+              <div class="field">
+                <label for="linkedin">LinkedIn profile</label>
+                <input
+                  id="linkedin"
+                  type="url"
+                  data-field="linkedin"
+                  placeholder="linkedin.com/in/you"
+                />
+              </div>
+              <div class="field">
+                <label for="facebook">Facebook profile</label>
+                <input
+                  id="facebook"
+                  type="url"
+                  data-field="facebook"
+                  placeholder="facebook.com/you"
+                />
+              </div>
+              <div class="full-width" style="margin-top: -6px">
+                <span
+                  style="
+                    font-size: 11px;
+                    line-height: 1.6;
+                    color: var(--gray-500);
+                  "
+                  >One of the two is enough, whichever you actually use.</span
+                >
+                <span
+                  class="error-msg"
+                  data-error="social"
+                  style="display: block"
+                ></span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Promo -->
+        <section>
+          <div id="promoClosed">
+            <button class="btn-link" id="openPromoBtn">
+              Have a promo code?
+            </button>
+          </div>
+          <div id="promoOpen" class="hidden">
+            <div class="promo-card">
+              <div class="promo-label">Promo code</div>
+              <div class="promo-row">
+                <input type="text" id="promoInput" placeholder="Enter code" />
+                <button id="applyPromoBtn">Apply</button>
+              </div>
+              <div class="promo-msg" id="promoMsg"></div>
+              <button
+                class="btn-link"
+                id="removePromoBtn"
+                style="
+                  font-size: 12px;
+                  color: var(--gray-500);
+                  text-decoration: underline;
+                  margin-top: 6px;
+                  display: none;
+                "
+              >
+                Remove code
+              </button>
+              <div
+                style="
+                  margin-top: 10px;
+                  font-family: &quot;JetBrains Mono&quot;, monospace;
+                  font-size: 9px;
+                  letter-spacing: 0.06em;
+                  color: var(--gray-400);
+                "
+              >
+                DEMO, TRY: LAUNCH · EXPIRED · LIMIT · CTONLY · ANYTHING ELSE =
+                INVALID
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Payment -->
+        <section>
+          <div class="section-header">
+            <span class="step-circle">2</span>
+            <h2>Payment</h2>
+            <span class="step-label" style="font-size: 9px"
+              >Methods shown depend on approved provider</span
+            >
+          </div>
+          <div class="form-card" style="display: block">
+            <div class="method-row" id="methodRow"></div>
+            <div id="ecdWalletField" style="display: none; margin: 12px 0">
+              <label class="field" style="display: block">
+                <span class="label">Wallet mobile *</span>
+                <input id="ecd-wallet-phone" type="tel" placeholder="01xxxxxxxxx" />
+              </label>
+            </div>
+            <div class="hosted-fields" id="hostedFieldsHint">
+              <div class="hosted-label">
+                After you click Pay you will be redirected to the secure payment page (PCI-DSS).
+              </div>
+              <div class="hosted-note">
+                Card / wallet data is entered with the payment provider. We never store card numbers.
+              </div>
+            </div>
+
+            <label class="checkbox-label">
+              <input type="checkbox" id="consentCheck" />
+              <span
+                >I agree to the <a href="#">Terms</a>,
+                <a href="#">Ticket Policy</a>, <a href="#">Refund Policy</a>,
+                and <a href="#">Privacy Policy</a>. *</span
+              >
+            </label>
+            <span
+              class="error-msg"
+              data-error="consent"
+              style="display: block; margin-bottom: 8px"
+            ></span>
+            <label class="checkbox-label optional">
+              <input type="checkbox" id="newsCheck" />
+              <span>Send me TrafficMENA news &amp; events (optional).</span>
+            </label>
+            <div class="legal-note">
+              This event is photographed and recorded, see
+              <a href="#">Recording &amp; Photography Policy</a>.<br />
+              Full Journey does not hold a place in every workshop. You reserve
+              after payment and the rooms are limited.
+            </div>
+            <button class="pay-btn" id="payBtn" disabled>
+              Pay <span class="price-total" data-suffix=" EGP">[Total] EGP</span>
+            </button>
+          </div>
+        </section>
+      </div>
+
+      <!-- RIGHT COLUMN: ORDER SUMMARY -->
+      <aside class="order-summary">
+        <div class="summary-card">
+          <div class="summary-header">
+            <span>Order Summary</span>
+            <span class="timer" id="timer">TICKETS HELD FOR 12:00</span>
+          </div>
+          <div class="summary-body">
+            <div>
+              <div class="summary-event">ECommerce Day 2026</div>
+              <div class="summary-meta" id="summaryEventMeta">
+                22 October 2026 · Cairo<br />Venue details will be announced soon.
+              </div>
+            </div>
+            <div class="summary-ticket-row">
+              <div>
+                <div class="summary-ticket-name" id="ticketName">
+                  Full Journey Pass
+                </div>
+                <div class="summary-ticket-tag" id="ticketTag">
+                  Learn it. Work on it. Apply it.
+                </div>
+              </div>
+              <div class="summary-one-ticket">One ticket</div>
+            </div>
+            <div class="summary-prices">
+              <div class="row">
+                <span class="label">Unit price</span
+                ><span class="value price-unit" data-suffix=" EGP">[Final Price] EGP</span>
+              </div>
+              <div class="row" id="discountRow" style="display: none">
+                <span class="label" style="color: var(--green-dark)"
+                  >Discount (<span id="appliedCode"></span>)</span
+                >
+                <span class="value green price-discount" data-minus="1" data-suffix=" EGP">− 0 EGP</span>
+              </div>
+              <div class="row">
+                <span class="label">Fees &amp; tax</span
+                ><span class="value muted">Included in price</span>
+              </div>
+            </div>
+            <div class="summary-total">
+              <span class="label">Total</span>
+              <span class="value price-total" id="totalLabel" data-suffix=" EGP">[Total] EGP</span>
+            </div>
+            <a href="#" class="summary-change">Change ticket</a>
+            <div class="chip-row" id="ticketChips"></div>
+          </div>
+        </div>
+        <div class="value-reminder">
+          <div class="label">Your pass includes</div>
+          <div class="text" id="valueReminder"></div>
+          <div class="sub" id="fjNote">
+            Full Journey lets you reserve workshops. You pick them after
+            payment, and the rooms are limited.
+          </div>
+        </div>
+      </aside>
+    </main>
+
+    <!-- ============ MOBILE STICKY PAY BAR ============ -->
+    <div class="mobile-sticky-bar">
+      <div class="total-info">
+        <div class="total-label">Total</div>
+        <div class="total-value price-total" id="mobileTotalSticky" data-suffix=" EGP">[Total] EGP</div>
+      </div>
+      <button id="mobilePayBtn" disabled>Pay <span class="price-total" data-suffix=" EGP">[Total] EGP</span></button>
+    </div>
+
+    <script>
+      (function () {
+        const state = {
+          ticket: "fj",
+          cc: "+20",
+          buyer: {
+            name: "",
+            email: "",
+            mobile: "",
+            country: "",
+            company: "",
+            title: "",
+            store: "",
+            linkedin: "",
+            facebook: "",
+            access: "",
+          },
+          promoOpen: false,
+          promoCode: "",
+          promoState: null,
+          appliedCode: "",
+          consent: false,
+          news: false,
+          tried: false,
+          tried1: false,
+          sub: 1,
+          secs: 720,
+          method: "Cards",
+          paymentMethodId: null,
+          paymentMethods: [],
+          walletPhone: "",
+          paying: false,
+        };
+
+        try {
+          var params = new URLSearchParams(window.location.search);
+          var t = (params.get("ticket") || "").toLowerCase();
+          if (t === "ct" || t === "fj") state.ticket = t;
+        } catch (e) {}
+
+        function getTicketName() {
+          if (window.EventPrices) {
+            var pkg = EventPrices.getPackage(state.ticket);
+            if (pkg && pkg.displayName) return pkg.displayName;
+            return EventPrices.getTicket(state.ticket).name;
+          }
+          return state.ticket === "fj" ? "Full Journey Pass" : "Control Tower Pass";
+        }
+        function getTicketTag() {
+          if (window.EventPrices) {
+            var pkg = EventPrices.getPackage(state.ticket);
+            if (pkg && pkg.tagline) return pkg.tagline;
+            return EventPrices.getTicket(state.ticket).tagline;
+          }
+          return state.ticket === "fj"
+            ? "Learn it. Work on it. Apply it."
+            : "See the whole system.";
+        }
+        function getValueReminder() {
+          if (window.EventPrices) {
+            var pkg = EventPrices.getPackage(state.ticket);
+            if (pkg) {
+              if (pkg.description) return pkg.description;
+              var included = (pkg.features || [])
+                .filter(function (f) { return f.kind === "included"; })
+                .map(function (f) { return f.label; });
+              if (included.length) return included.join(" · ");
+            }
+          }
+          return state.ticket === "fj"
+            ? "Both stages, workshops, recordings, templates, and continued platform access."
+            : "Both stages, recordings, and Workshop Templates & Files.";
+        }
+
+        function assembleMobile(mobile, cc) {
+          var m = String(mobile || "").replace(/\D/g, "");
+          var code = String(cc || "+20").replace(/\D/g, "");
+          if (m.indexOf("0") === 0) m = m.slice(1);
+          return "+" + code + m;
+        }
+
+        function updatePrices() {
+          if (!window.EventPrices) return;
+          var promo = state.promoState === "valid" ? state.appliedCode : "";
+          var totals = EventPrices.calcTotals(state.ticket, 1, promo);
+          EventPrices.applyTotals(totals);
+          var unitEls = document.querySelectorAll(".summary-prices .price-unit");
+          // applyTotals already filled .price-unit / .price-total
+          void unitEls;
+        }
+
+        function screen1Errors() {
+          const b = state.buyer;
+          const e = {};
+          if (!b.country) e.country = "Country is required.";
+          if (!b.title) e.title = "Pick the job title closest to your work.";
+          if (!b.name) e.name = "Your full name is required.";
+          if (!b.email) e.email = "Your email is required.";
+          else if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(b.email))
+            e.email = "Enter a valid email.";
+          if (!b.mobile) e.mobile = "Your mobile number is required.";
+          return e;
+        }
+        function allErrors() {
+          const b = state.buyer;
+          const e = {};
+          if (!b.name) e.name = "Your full name is required.";
+          if (!b.email) e.email = "Your email is required.";
+          else if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(b.email))
+            e.email = "Enter a valid email.";
+          if (!b.mobile) e.mobile = "Your mobile number is required.";
+          if (!b.country) e.country = "Country is required.";
+          if (!b.company)
+            e.company = "Company name is required. Freelance? Write freelance.";
+          if (!b.title) e.title = "Pick the job title closest to your work.";
+          if (!b.store)
+            e.store = "Tell us which store you work on, or write none.";
+          if (!b.linkedin && !b.facebook)
+            e.social = "Add a LinkedIn or a Facebook profile.";
+          if (!state.consent)
+            e.consent = "You must agree to the policies to pay.";
+          return e;
+        }
+
+        function renderAll() {
+          renderTicketChips();
+          renderMethodButtons();
+          renderSummary();
+          renderErrors();
+          renderPromo();
+          renderPayButtons();
+          renderSubScreens();
+          updateTimerDisplay();
+        }
+
+        function renderTicketChips() {
+          const chips = document.getElementById("ticketChips");
+          chips.innerHTML = "";
+          ["ct", "fj"].forEach(function (id) {
+            var name = id === "fj" ? "Full Journey Pass" : "Control Tower Pass";
+            if (window.EventPrices) {
+              var pkg = EventPrices.getPackage(id);
+              if (pkg && pkg.displayName) name = pkg.displayName;
+              else name = EventPrices.getTicket(id).name;
+            }
+            const isActive = state.ticket === id;
+            const btn = document.createElement("button");
+            btn.type = "button";
+            btn.className = "btn-chip" + (isActive ? " active" : "");
+            btn.textContent = name;
+            btn.setAttribute("data-ticket", id);
+            btn.onclick = function () {
+              state.ticket = id;
+              renderAll();
+            };
+            chips.appendChild(btn);
+          });
+        }
+
+        function renderMethodButtons() {
+          const row = document.getElementById("methodRow");
+          row.innerHTML = "";
+          var methods = state.paymentMethods;
+          if (!methods.length) {
+            row.innerHTML =
+              '<div style="font-size:13px;color:var(--gray-500)">Payment methods load after you continue…</div>';
+            return;
+          }
+          methods.forEach(function (m, idx) {
+            var id = m.paymentId;
+            var label = m.name_en || m.name_ar || "Method " + id;
+            const btn = document.createElement("button");
+            btn.type = "button";
+            btn.className =
+              "method-btn" +
+              (state.paymentMethodId === id ||
+              (!state.paymentMethodId && idx === 0)
+                ? " active"
+                : "");
+            btn.textContent = label;
+            btn.onclick = function () {
+              state.paymentMethodId = id;
+              state.method = label;
+              var wallet = /wallet/i.test(label);
+              document.getElementById("ecdWalletField").style.display = wallet
+                ? "block"
+                : "none";
+              renderMethodButtons();
+            };
+            row.appendChild(btn);
+            if (!state.paymentMethodId && idx === 0) {
+              state.paymentMethodId = id;
+              state.method = label;
+              document.getElementById("ecdWalletField").style.display =
+                /wallet/i.test(label) ? "block" : "none";
+            }
+          });
+        }
+
+        function renderSummary() {
+          const isFj = state.ticket === "fj";
+          document.getElementById("ticketName").textContent = getTicketName();
+          document.getElementById("ticketTag").textContent = getTicketTag();
+          document.getElementById("valueReminder").textContent =
+            getValueReminder();
+          document.getElementById("fjNote").style.display = isFj
+            ? "block"
+            : "none";
+          document.getElementById("discountRow").style.display =
+            state.promoState === "valid" ? "flex" : "none";
+          document.getElementById("appliedCode").textContent =
+            state.appliedCode;
+          updatePrices();
+        }
+
+        function renderErrors() {
+          let errs = {};
+          const e1 = screen1Errors();
+          const eAll = allErrors();
+          if (state.tried) {
+            errs = state.sub === 1 ? e1 : eAll;
+            if (state.sub === 1 && eAll.consent) errs.consent = eAll.consent;
+          } else if (state.tried1) {
+            errs = e1;
+          }
+          const errList = Object.values(errs).filter(Boolean);
+
+          const summary = document.getElementById("errorSummary");
+          const list = document.getElementById("errorList");
+          if (errList.length > 0) {
+            summary.classList.remove("hidden");
+            list.innerHTML = errList.map((e) => `<div>• ${e}</div>`).join("");
+          } else {
+            summary.classList.add("hidden");
+          }
+
+          document.querySelectorAll("[data-field]").forEach((el) => {
+            const key = el.dataset.field;
+            el.classList.toggle("error", !!errs[key]);
+          });
+          document.querySelectorAll("[data-error]").forEach((el) => {
+            el.textContent = errs[el.dataset.error] || "";
+          });
+          if (errs.social) {
+            document
+              .querySelectorAll(
+                '[data-field="linkedin"], [data-field="facebook"]',
+              )
+              .forEach((el) => el.classList.add("error"));
+          } else {
+            document
+              .querySelectorAll(
+                '[data-field="linkedin"], [data-field="facebook"]',
+              )
+              .forEach((el) => el.classList.remove("error"));
+          }
+          const consentErrEl = document.querySelector('[data-error="consent"]');
+          if (consentErrEl) consentErrEl.textContent = errs.consent || "";
+        }
+
+        function renderPromo() {
+          document
+            .getElementById("promoClosed")
+            .classList.toggle("hidden", state.promoOpen);
+          document
+            .getElementById("promoOpen")
+            .classList.toggle("hidden", !state.promoOpen);
+
+          const msgEl = document.getElementById("promoMsg");
+          const removeBtn = document.getElementById("removePromoBtn");
+          if (state.promoState) {
+            const map = {
+              valid: {
+                m: "Code applied, discount reflected in your total.",
+                c: "#04C44E",
+              },
+              invalid: {
+                m: "This code is not valid. Check the spelling and try again.",
+                c: "#B3362E",
+              },
+              expired: { m: "This code has expired.", c: "#B3362E" },
+              na: {
+                m: "This code is not applicable to this ticket type.",
+                c: "#8A5A00",
+              },
+              limit: {
+                m: "This code has reached its usage limit.",
+                c: "#B3362E",
+              },
+              removed: { m: "Promo code removed.", c: "#6B747E" },
+            };
+            const info = map[state.promoState] || { m: "", c: "#6B747E" };
+            msgEl.textContent = info.m;
+            msgEl.style.color = info.c;
+            removeBtn.style.display =
+              state.promoState === "valid" ? "block" : "none";
+          } else {
+            msgEl.textContent = "";
+            removeBtn.style.display = "none";
+          }
+        }
+
+        function renderPayButtons() {
+          const canPay = state.consent;
+          ["payBtn", "mobilePayBtn"].forEach((id) => {
+            const btn = document.getElementById(id);
+            if (btn) btn.disabled = !canPay;
+          });
+        }
+
+        function renderSubScreens() {
+          const d1 = document.getElementById("sub1");
+          const d2 = document.getElementById("sub2");
+          if (state.sub === 1) {
+            d1.classList.remove("hidden");
+            d2.classList.add("hidden");
+          } else {
+            d1.classList.add("hidden");
+            d2.classList.remove("hidden");
+          }
+          document.getElementById("subLabel").textContent =
+            state.sub === 1 ? "Step 1 of 2" : "Step 2 of 2";
+
+          const summaryText =
+            (state.buyer.name || "Your name") +
+            " · " +
+            (state.buyer.title || "job title") +
+            " · " +
+            (state.buyer.country || "country");
+          document.getElementById("subSummary").textContent = summaryText;
+        }
+
+        function updateTimerDisplay() {
+          const mm = String(Math.floor(state.secs / 60)).padStart(2, "0");
+          const ss = String(state.secs % 60).padStart(2, "0");
+          document.getElementById("timer").textContent =
+            "TICKETS HELD FOR " + mm + ":" + ss;
+        }
+
+        function bindField(selector, key) {
+          document.querySelectorAll(selector).forEach((el) => {
+            el.addEventListener("input", (e) => {
+              state.buyer[key] = e.target.value;
+              if (state.tried || state.tried1) renderErrors();
+            });
+            el.addEventListener("change", (e) => {
+              state.buyer[key] = e.target.value;
+              if (state.tried || state.tried1) renderErrors();
+            });
+          });
+        }
+
+        bindField("#country", "country");
+        bindField("#title", "title");
+        bindField("#name", "name");
+        bindField("#email", "email");
+        bindField("#mobile", "mobile");
+        bindField("#company", "company");
+        bindField("#access", "access");
+        bindField("#store", "store");
+        bindField("#linkedin", "linkedin");
+        bindField("#facebook", "facebook");
+
+        var ccEl = document.getElementById("cc");
+        if (ccEl) {
+          state.cc = ccEl.value || "+20";
+          ccEl.addEventListener("change", function (e) {
+            state.cc = e.target.value;
+          });
+          ccEl.addEventListener("input", function (e) {
+            state.cc = e.target.value;
+          });
+        }
+
+        document
+          .getElementById("consentCheck")
+          .addEventListener("change", (e) => {
+            state.consent = e.target.checked;
+            renderPayButtons();
+            if (state.tried) renderErrors();
+          });
+        document.getElementById("newsCheck").addEventListener("change", (e) => {
+          state.news = e.target.checked;
+        });
+
+        document.getElementById("goSub2").addEventListener("click", () => {
+          const errs = screen1Errors();
+          if (Object.keys(errs).length > 0) {
+            state.tried1 = true;
+            renderErrors();
+          } else {
+            state.tried1 = false;
+            state.sub = 2;
+            renderAll();
+          }
+        });
+        document.getElementById("backSub1").addEventListener("click", () => {
+          state.sub = 1;
+          renderAll();
+        });
+
+        document
+          .getElementById("openPromoBtn")
+          .addEventListener("click", () => {
+            state.promoOpen = true;
+            renderPromo();
+          });
+
+        document
+          .getElementById("applyPromoBtn")
+          .addEventListener("click", () => {
+            const code = (document.getElementById("promoInput").value || "")
+              .trim()
+              .toUpperCase();
+            // Server accepts LAUNCH only; other codes shown as UX states.
+            const map = {
+              LAUNCH: "valid",
+              EXPIRED: "expired",
+              LIMIT: "limit",
+              CTONLY: "na",
+            };
+            const s = code ? map[code] || "invalid" : "invalid";
+            state.promoState = s;
+            state.appliedCode = s === "valid" ? code : "";
+            renderAll();
+          });
+        document
+          .getElementById("removePromoBtn")
+          .addEventListener("click", () => {
+            state.promoState = "removed";
+            state.appliedCode = "";
+            document.getElementById("promoInput").value = "";
+            renderAll();
+          });
+
+        var walletInput = document.getElementById("ecd-wallet-phone");
+        if (walletInput) {
+          walletInput.addEventListener("input", function (e) {
+            state.walletPhone = e.target.value;
+          });
+        }
+
+        async function loadPaymentMethods() {
+          if (!window.EcdApi || !EcdApi.getToken()) return;
+          try {
+            var methods = await EcdApi.fetchPaymentMethods();
+            state.paymentMethods = Array.isArray(methods)
+              ? methods
+              : methods && methods.methods
+                ? methods.methods
+                : [];
+            renderMethodButtons();
+          } catch (err) {
+            console.warn("[checkout] payment methods", err);
+          }
+        }
+
+        async function ensureCheckoutSession() {
+          if (!window.EcdApi) throw new Error("EcdApi not loaded");
+          if (window.EcdContent && EcdContent.ready) {
+            try {
+              await EcdContent.ready();
+            } catch (e) {}
+          }
+          updatePrices();
+          var promo = state.promoState === "valid" ? state.appliedCode : "";
+          var clientTotalCents = EcdApi.centsFromPricesJs(state.ticket, 1, promo);
+          if (clientTotalCents == null) {
+            throw new Error("Ticket price unavailable. Refresh and try again.");
+          }
+          var payload = {
+            ticketType: state.ticket,
+            qty: 1,
+            promoCode: promo || null,
+            clientTotalCents: clientTotalCents,
+            buyer: {
+              name: state.buyer.name,
+              email: state.buyer.email,
+              mobile: assembleMobile(state.buyer.mobile, state.cc),
+              countryCode: state.cc || "+20",
+              country: state.buyer.country,
+              company: state.buyer.company,
+              title: state.buyer.title,
+              store: state.buyer.store,
+              linkedin: state.buyer.linkedin || null,
+              facebook: state.buyer.facebook || null,
+              access: state.buyer.access || null,
+              newsOptIn: !!state.news,
+            },
+          };
+          return EcdApi.createSession(payload);
+        }
+
+        async function handlePay() {
+          const errs = allErrors();
+          const s1Errs = screen1Errors();
+          state.tried = true;
+          if (Object.keys(s1Errs).length > 0) state.sub = 1;
+          renderAll();
+          if (Object.keys(errs).length > 0) return;
+          if (state.paying) return;
+          state.paying = true;
+          try {
+            await ensureCheckoutSession();
+            await loadPaymentMethods();
+            if (!state.paymentMethodId) {
+              alert("No payment methods available. Try again shortly.");
+              return;
+            }
+            var result = await EcdApi.pay({
+              paymentMethodId: state.paymentMethodId,
+              walletPhone: state.walletPhone || undefined,
+            });
+            if (result && result.redirectUrl) {
+              window.location.href = result.redirectUrl;
+              return;
+            }
+            // Test mode returns `simulated: true` (not `simulate`) and status pending.
+            if (
+              result &&
+              (result.simulated ||
+                result.status === "pending" ||
+                result.status === "paid")
+            ) {
+              var bookingId =
+                result.bookingId || (EcdApi.getStoredBooking() || {}).bookingId;
+              var verified = await EcdApi.verify(bookingId);
+              var order =
+                (verified && verified.orderCode) ||
+                result.orderCode ||
+                (EcdApi.getStoredBooking() || {}).orderCode;
+              if (order) {
+                var access =
+                  verified && verified.access
+                    ? "&access=" + encodeURIComponent(verified.access)
+                    : "";
+                window.location.href =
+                  "booking-confirmation.html?order=" +
+                  encodeURIComponent(order) +
+                  access;
+                return;
+              }
+            }
+            alert("Payment started. Follow on-screen instructions.");
+          } catch (err) {
+            var msg =
+              (err && err.message) || "Checkout failed. Please try again.";
+            if (err && err.code === "price_changed") {
+              msg = "Price changed. Totals refreshed — try Pay again.";
+              if (window.EcdContent) {
+                try {
+                  await EcdContent.boot(state.ticket);
+                } catch (e) {}
+              }
+              renderAll();
+            }
+            alert(msg);
+          } finally {
+            state.paying = false;
+          }
+        }
+        document.getElementById("payBtn").addEventListener("click", handlePay);
+        document
+          .getElementById("mobilePayBtn")
+          .addEventListener("click", handlePay);
+
+        setInterval(() => {
+          state.secs = Math.max(0, state.secs - 1);
+          updateTimerDisplay();
+        }, 1000);
+
+        window.addEventListener("ecd:packages-ready", function () {
+          renderAll();
+        });
+        if (window.EcdContent && EcdContent.ready) {
+          EcdContent.ready()
+            .then(function () {
+              renderAll();
+            })
+            .catch(function () {
+              renderAll();
+            });
+        }
+
+        renderAll();
+      })();
+    </script>
+  </body>
+</html>

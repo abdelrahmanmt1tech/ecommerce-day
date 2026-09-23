@@ -1,0 +1,2320 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>TrafficMENA — Become a Sponsor · ECommerce Day 2026</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=IBM+Plex+Sans+Arabic:wght@400;500;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Reusable navbar and footer (same as sponsors.html) -->
+    <script src="navbar.js" defer></script>
+    <script src="footer.js" defer></script>
+
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        margin: 0;
+        font-family: "Manrope", "IBM Plex Sans Arabic", sans-serif;
+        color: #101010;
+        background-color: #ffffff;
+        overflow-x: hidden;
+      }
+      a {
+        color: #04c44e;
+        text-decoration: none;
+      }
+      a:hover {
+        color: #006681;
+      }
+      input,
+      select,
+      textarea,
+      button {
+        font-family: "Manrope", sans-serif;
+      }
+      img {
+        max-width: 100%;
+      }
+      .container {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 0 24px;
+      }
+      .font-mono {
+        font-family: "JetBrains Mono", monospace;
+      }
+
+      /* Buttons */
+      .btn-primary {
+        background: #05ef62;
+        border: none;
+        color: #101010;
+        border-radius: 10px;
+        padding: 14px 26px;
+        font-weight: 600;
+        font-size: 15px;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        transition: background 0.2s;
+        text-decoration: none;
+      }
+      .btn-primary:hover {
+        background: #04d657;
+        color: #101010;
+      }
+      .btn-secondary {
+        background: #ffffff;
+        border: 1px solid #101010;
+        color: #101010;
+        border-radius: 10px;
+        padding: 14px 26px;
+        font-weight: 600;
+        font-size: 15px;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        transition: background 0.2s;
+        text-decoration: none;
+      }
+      .btn-secondary:hover {
+        background: #f4f6f8;
+        color: #101010;
+      }
+      .btn-dark {
+        background: #101010;
+        border: 1px solid #101010;
+        color: #ffffff;
+        border-radius: 10px;
+        padding: 14px 26px;
+        font-weight: 600;
+        font-size: 15px;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        transition: background 0.2s;
+      }
+      .btn-dark:hover {
+        background: #2a2a2a;
+      }
+
+      /* Section labels */
+      .section-label {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 16px;
+      }
+      .section-label .indicator {
+        width: 24px;
+        height: 2px;
+        background: #05ef62;
+        flex: none;
+      }
+      .section-label span {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 12px;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: #6b747e;
+      }
+      .section-title {
+        font-size: 36px;
+        line-height: 1.1;
+        font-weight: 700;
+        margin: 0 0 40px;
+      }
+
+      /* --------------------------------------------------
+         HERO
+      -------------------------------------------------- */
+      .hero {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 72px 24px 56px;
+      }
+      .hero-title {
+        font-size: 56px;
+        line-height: 1.02;
+        font-weight: 700;
+        margin: 0 0 20px;
+        max-width: 20ch;
+        text-wrap: pretty;
+      }
+      .hero-title span {
+        color: #04c44e;
+      }
+      .hero-sub {
+        font-size: 18px;
+        line-height: 1.7;
+        color: #4a5563;
+        margin: 0 0 28px;
+        max-width: 64ch;
+      }
+      .hero-actions {
+        display: flex;
+        gap: 14px;
+        margin-bottom: 24px;
+        flex-wrap: wrap;
+      }
+      .hero-meta {
+        display: flex;
+        gap: 20px;
+        font-family: "JetBrains Mono", monospace;
+        font-size: 12px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: #101010;
+        flex-wrap: wrap;
+        margin-bottom: 16px;
+      }
+      .hero-meta .sep {
+        color: #d5dae0;
+      }
+      .hero-note {
+        font-size: 14px;
+        color: #4a5563;
+        max-width: 60ch;
+      }
+
+      /* Sticky CTA bar */
+      .sticky-cta {
+        background: #101010;
+        padding: 12px 24px;
+      }
+      .sticky-cta-inner {
+        max-width: 1280px;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+      }
+      .sticky-cta-label {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 11px;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: #ffffff;
+      }
+
+      /* --------------------------------------------------
+         WHO IS IN THE ROOM
+      -------------------------------------------------- */
+      .room-band {
+        background: #f4f6f8;
+        border-top: 1px solid #e6eaee;
+        border-bottom: 1px solid #e6eaee;
+      }
+      .room-inner {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 80px 24px;
+      }
+      .room-sub {
+        font-size: 18px;
+        line-height: 1.7;
+        color: #4a5563;
+        margin: 0 0 32px;
+        max-width: 60ch;
+      }
+      .chips-wrap {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+        margin-bottom: 36px;
+        max-width: 900px;
+      }
+      .chip {
+        background: #ffffff;
+        border: 1px solid #d5dae0;
+        border-radius: 999px;
+        padding: 7px 15px;
+        font-size: 13px;
+        font-weight: 600;
+        color: #1f2630;
+      }
+      .stats-box {
+        background: #101010;
+        border-radius: 16px;
+        padding: 32px;
+        margin-bottom: 16px;
+      }
+      .stats-box-top-label {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 11px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: #05ef62;
+        margin-bottom: 4px;
+      }
+      .stats-box-sub-label {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 10px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: #6b747e;
+        margin-bottom: 28px;
+      }
+      .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(6, 1fr);
+        gap: 16px;
+      }
+      .stat-item {
+        border-left: 2px solid #3a3a3a;
+        padding-left: 16px;
+      }
+      .stat-value {
+        font-weight: 800;
+        font-size: 26px;
+        color: #ffffff;
+        line-height: 1.1;
+        margin-bottom: 6px;
+      }
+      .stat-label {
+        font-size: 12px;
+        line-height: 1.5;
+        color: #9aa1a9;
+      }
+      .room-cards {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+      }
+      .room-card {
+        background: #ffffff;
+        border: 1px solid #d5dae0;
+        border-radius: 12px;
+        padding: 24px;
+      }
+      .room-card-label {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 10px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: #04c44e;
+        margin-bottom: 14px;
+      }
+      .room-card-list {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        font-size: 14px;
+        color: #1f2630;
+      }
+      .room-card-list .dot-row {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        flex: none;
+      }
+      .room-card-foot {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 9px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: #6b747e;
+        margin-top: 10px;
+      }
+      .room-card-body {
+        font-size: 14px;
+        color: #1f2630;
+        line-height: 2;
+      }
+
+      /* --------------------------------------------------
+         WHAT A PARTNERSHIP GETS YOU
+      -------------------------------------------------- */
+      .gets-inner {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 88px 24px;
+      }
+      .gets-sub {
+        font-size: 18px;
+        line-height: 1.7;
+        color: #4a5563;
+        margin: 0 0 40px;
+        max-width: 60ch;
+      }
+      .gets-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+      }
+      .get-card {
+        border: 1px solid #d5dae0;
+        border-radius: 14px;
+        padding: 28px 26px;
+      }
+      .get-tag {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 10px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: #04c44e;
+        margin-bottom: 10px;
+      }
+      .get-goal {
+        font-weight: 700;
+        font-size: 20px;
+        line-height: 1.35;
+        color: #101010;
+        margin-bottom: 16px;
+      }
+      .get-block-label {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 9px;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: #6b747e;
+        margin-bottom: 4px;
+      }
+      .get-block-text {
+        font-size: 14px;
+        line-height: 1.7;
+        color: #1f2630;
+      }
+      .get-divider {
+        border-top: 1px solid #e6eaee;
+        padding-top: 12px;
+        margin-top: 12px;
+      }
+
+      /* --------------------------------------------------
+         PARTNER TIERS
+      -------------------------------------------------- */
+      .tiers-band {
+        background: #f4f6f8;
+        border-top: 1px solid #e6eaee;
+        border-bottom: 1px solid #e6eaee;
+      }
+      .tiers-inner {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 80px 24px;
+      }
+      .tiers-grid {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 14px;
+      }
+      .tier-card {
+        background: #ffffff;
+        border-radius: 14px;
+        padding: 26px 22px;
+      }
+      .tier-name {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 11px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        margin-bottom: 12px;
+      }
+      .tier-focus {
+        font-weight: 700;
+        font-size: 16px;
+        line-height: 1.4;
+        color: #101010;
+        margin-bottom: 14px;
+      }
+      .tier-suits {
+        font-size: 13px;
+        line-height: 1.7;
+        color: #4a5563;
+      }
+      .tier-suits strong {
+        color: #101010;
+      }
+      .addons-block {
+        border-top: 1px solid #d5dae0;
+        margin-top: 36px;
+        padding-top: 32px;
+      }
+      .addons-label {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 11px;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: #6b747e;
+        margin-bottom: 10px;
+      }
+      .addons-sub {
+        font-size: 14px;
+        line-height: 1.7;
+        color: #4a5563;
+        margin-bottom: 20px;
+        max-width: 60ch;
+      }
+      .addons-chips {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+      .addon-chip {
+        background: #ffffff;
+        border: 1px solid #d5dae0;
+        border-radius: 999px;
+        padding: 8px 16px;
+        font-size: 13px;
+        font-weight: 600;
+        color: #101010;
+      }
+      .addons-foot {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 10px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: #6b747e;
+        margin-top: 16px;
+      }
+
+      /* --------------------------------------------------
+         HOW IT WORKS
+      -------------------------------------------------- */
+      .how-inner {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 88px 24px;
+      }
+      .how-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 20px;
+      }
+      .step-rail {
+        display: flex;
+        align-items: center;
+        margin-bottom: 14px;
+      }
+      .step-num {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background: #101010;
+        color: #05ef62;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: "JetBrains Mono", monospace;
+        font-size: 12px;
+        flex: none;
+      }
+      .step-line {
+        flex: 1;
+        height: 2px;
+        background: #d5dae0;
+      }
+      .step-line.last {
+        background: transparent;
+      }
+      .step-title {
+        font-weight: 700;
+        font-size: 16px;
+        line-height: 1.4;
+        color: #101010;
+        margin-bottom: 6px;
+      }
+      .step-text {
+        font-size: 14px;
+        line-height: 1.7;
+        color: #4a5563;
+      }
+
+      /* --------------------------------------------------
+         FORM
+      -------------------------------------------------- */
+      .form-band {
+        background: #f4f6f8;
+        border-top: 1px solid #e6eaee;
+        border-bottom: 1px solid #e6eaee;
+      }
+      .form-inner {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 88px 24px;
+      }
+      .form-card {
+        max-width: 760px;
+        background: #ffffff;
+        border: 1px solid #d5dae0;
+        border-radius: 16px;
+        padding: 36px;
+      }
+      .progress-row {
+        display: flex;
+        gap: 8px;
+        margin-bottom: 32px;
+      }
+      .progress-item {
+        flex: 1;
+      }
+      .progress-bar {
+        height: 4px;
+        border-radius: 2px;
+        margin-bottom: 8px;
+      }
+      .progress-label {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 9px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+      .error-summary {
+        border: 1px solid #e2a9a5;
+        background: #fbedec;
+        border-radius: 10px;
+        padding: 14px 18px;
+        margin-bottom: 24px;
+      }
+      .error-summary-title {
+        font-weight: 700;
+        font-size: 13px;
+        color: #b3362e;
+        margin-bottom: 6px;
+      }
+      .error-summary-list {
+        display: flex;
+        flex-direction: column;
+        gap: 3px;
+      }
+      .error-summary-item {
+        font-size: 12px;
+        color: #b3362e;
+      }
+      .form-grid-2 {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 18px;
+      }
+      .form-field-full {
+        grid-column: 1 / -1;
+      }
+      .form-label {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 10px;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: #6b747e;
+        margin-bottom: 5px;
+        display: block;
+      }
+      .form-label .optional {
+        color: #9aa1a9;
+        text-transform: none;
+        letter-spacing: 0;
+      }
+      .form-input,
+      .form-select,
+      .form-textarea {
+        border: 1px solid #d5dae0;
+        border-radius: 10px;
+        padding: 12px 14px;
+        font-size: 14px;
+        color: #101010;
+        outline-color: #05ef62;
+        width: 100%;
+        background: #ffffff;
+      }
+      .form-input:focus,
+      .form-select:focus,
+      .form-textarea:focus {
+        outline: 2px solid #05ef62;
+        outline-offset: 1px;
+        border-color: #05ef62;
+      }
+      .form-input.error,
+      .form-select.error,
+      .form-textarea.error {
+        border-color: #c4342d;
+      }
+      .field-error {
+        font-size: 11px;
+        color: #b3362e;
+        margin-top: 4px;
+        display: block;
+      }
+      .form-actions {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 28px;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+      .form-actions-right {
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 28px;
+      }
+      .chip-group {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+      .chip-btn {
+        border-radius: 999px;
+        padding: 7px 14px;
+        font-weight: 600;
+        font-size: 12px;
+        cursor: pointer;
+        transition: 0.15s;
+        border: 1px solid #d5dae0;
+        background: #ffffff;
+        color: #101010;
+      }
+      .chip-btn.active {
+        background: #101010;
+        border-color: #101010;
+        color: #ffffff;
+      }
+      .chip-btn.green-active {
+        background: #e6fbee;
+        border-color: #04c44e;
+        color: #101010;
+      }
+      .chip-btn:focus-visible {
+        outline: 2px solid #05ef62;
+        outline-offset: 2px;
+      }
+      .consent-row {
+        display: flex;
+        gap: 12px;
+        align-items: flex-start;
+        cursor: pointer;
+        font-size: 13px;
+        line-height: 1.7;
+        color: #1f2630;
+      }
+      .consent-row input[type="checkbox"] {
+        width: 18px;
+        height: 18px;
+        margin-top: 2px;
+        accent-color: #05ef62;
+        flex: none;
+      }
+      .file-upload {
+        border: 1px dashed #d5dae0;
+        border-radius: 10px;
+        padding: 12px 14px;
+        font-size: 13px;
+        color: #6b747e;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .file-upload-btn {
+        background: #f4f6f8;
+        border: 1px solid #d5dae0;
+        border-radius: 8px;
+        padding: 7px 12px;
+        font-weight: 600;
+        font-size: 12px;
+        color: #101010;
+        cursor: pointer;
+        flex: none;
+      }
+      .success-box {
+        text-align: center;
+        padding: 32px 12px;
+      }
+      .success-icon {
+        width: 56px;
+        height: 56px;
+        border-radius: 50%;
+        background: #e6fbee;
+        border: 1px solid #c3f7d7;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 20px;
+        color: #04c44e;
+        font-size: 24px;
+        font-weight: 700;
+      }
+      .success-title {
+        font-size: 24px;
+        font-weight: 800;
+        margin: 0 0 10px;
+      }
+      .success-reqid {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 12px;
+        letter-spacing: 0.08em;
+        color: #101010;
+        margin-bottom: 14px;
+      }
+      .success-text {
+        font-size: 14px;
+        line-height: 1.8;
+        color: #4a5563;
+        margin: 0 0 8px;
+        max-width: 44ch;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      .success-foot {
+        font-size: 12px;
+        color: #6b747e;
+        margin: 0;
+      }
+      .submit-btn {
+        background: #05ef62;
+        border: none;
+        color: #101010;
+        border-radius: 10px;
+        padding: 14px 28px;
+        font-weight: 600;
+        font-size: 15px;
+        cursor: pointer;
+      }
+      .submit-btn:disabled {
+        background: #e6eaee;
+        color: #9aa1a9;
+        cursor: not-allowed;
+      }
+
+      /* --------------------------------------------------
+         FAQ
+      -------------------------------------------------- */
+      .faq-inner {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 88px 24px;
+      }
+      .faq-list {
+        max-width: 860px;
+        border-top: 1px solid #e6eaee;
+      }
+      .faq-item {
+        border-bottom: 1px solid #e6eaee;
+      }
+      .faq-question {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 16px;
+        background: none;
+        border: none;
+        padding: 18px 4px;
+        cursor: pointer;
+        text-align: left;
+      }
+      .faq-q-text {
+        font-weight: 700;
+        font-size: 15px;
+        color: #101010;
+      }
+      .faq-icon {
+        color: #04c44e;
+        font-size: 20px;
+        flex: none;
+      }
+      .faq-answer {
+        font-size: 14px;
+        line-height: 1.8;
+        color: #4a5563;
+        margin: 0;
+        padding: 0 4px 20px;
+        max-width: 70ch;
+      }
+
+      /* --------------------------------------------------
+         FINAL CTA
+      -------------------------------------------------- */
+      .final-cta {
+        background: #101010;
+      }
+      .final-cta-inner {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 88px 24px;
+        text-align: center;
+      }
+      .final-cta-title {
+        font-size: 38px;
+        line-height: 1.15;
+        font-weight: 700;
+        color: #ffffff;
+        margin: 0 auto 36px;
+        max-width: 22ch;
+      }
+      .final-cta-actions {
+        display: flex;
+        gap: 14px;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+      .final-cta .btn-primary {
+        padding: 15px 28px;
+        font-size: 16px;
+      }
+      .final-cta .btn-outline-light {
+        background: transparent;
+        border: 1px solid #ffffff;
+        color: #ffffff;
+        border-radius: 10px;
+        padding: 15px 28px;
+        font-weight: 600;
+        font-size: 16px;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        transition: background 0.2s;
+      }
+      .final-cta .btn-outline-light:hover {
+        background: rgba(255, 255, 255, 0.08);
+        color: #ffffff;
+      }
+
+      /* --------------------------------------------------
+         RESPONSIVE
+      -------------------------------------------------- */
+      @media (max-width: 1024px) {
+        .hero-title {
+          font-size: 42px;
+        }
+        .gets-grid {
+          grid-template-columns: 1fr 1fr;
+        }
+        .tiers-grid {
+          grid-template-columns: repeat(3, 1fr);
+        }
+        .stats-grid {
+          grid-template-columns: repeat(3, 1fr);
+        }
+        .how-grid {
+          grid-template-columns: repeat(2, 1fr);
+          gap: 28px;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .hero {
+          padding: 40px 20px 32px;
+        }
+        .hero-title {
+          font-size: 30px;
+          max-width: none;
+        }
+        .hero-sub {
+          font-size: 15px;
+        }
+        .hero-actions {
+          flex-direction: column;
+        }
+        .hero-actions .btn-primary,
+        .hero-actions .btn-secondary {
+          width: 100%;
+        }
+        .section-title {
+          font-size: 24px;
+          margin-bottom: 24px;
+        }
+        .room-inner {
+          padding: 48px 20px;
+        }
+        .room-sub {
+          font-size: 15px;
+        }
+        .stats-box {
+          padding: 24px 18px;
+        }
+        .stats-grid {
+          grid-template-columns: 1fr 1fr;
+          gap: 14px;
+        }
+        .stat-value {
+          font-size: 20px;
+        }
+        .room-cards {
+          grid-template-columns: 1fr;
+        }
+        .gets-inner {
+          padding: 48px 20px;
+        }
+        .gets-sub {
+          font-size: 15px;
+        }
+        .gets-grid {
+          grid-template-columns: 1fr;
+        }
+        .tiers-inner {
+          padding: 48px 20px;
+        }
+        .tiers-grid {
+          grid-template-columns: 1fr 1fr;
+          gap: 10px;
+        }
+        .tier-card {
+          padding: 18px 16px;
+        }
+        .tier-focus {
+          font-size: 14px;
+        }
+        .how-inner {
+          padding: 48px 20px;
+        }
+        .how-grid {
+          grid-template-columns: 1fr;
+          gap: 20px;
+        }
+        .form-inner {
+          padding: 48px 20px;
+        }
+        .form-card {
+          padding: 22px 18px;
+        }
+        .form-grid-2 {
+          grid-template-columns: 1fr;
+          gap: 14px;
+        }
+        .form-field-full {
+          grid-column: auto;
+        }
+        .form-actions {
+          flex-direction: column;
+        }
+        .form-actions .btn-secondary,
+        .form-actions .btn-primary {
+          width: 100%;
+        }
+        .form-actions-right .btn-primary {
+          width: 100%;
+        }
+        .faq-inner {
+          padding: 48px 20px;
+        }
+        .faq-q-text {
+          font-size: 13px;
+        }
+        .final-cta-inner {
+          padding: 56px 20px;
+        }
+        .final-cta-title {
+          font-size: 22px;
+        }
+        .final-cta-actions {
+          flex-direction: column;
+        }
+        .final-cta-actions .btn-primary,
+        .final-cta-actions .btn-outline-light {
+          width: 100%;
+        }
+        .sticky-cta-inner {
+          flex-direction: column;
+          align-items: stretch;
+          gap: 8px;
+        }
+        .sticky-cta-label {
+          text-align: center;
+        }
+        .sticky-cta .btn-primary {
+          width: 100%;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .container {
+          padding: 0 18px;
+        }
+        .hero-title {
+          font-size: 26px;
+        }
+        .btn-primary,
+        .btn-secondary {
+          padding: 12px 20px;
+          font-size: 14px;
+        }
+        .tiers-grid {
+          grid-template-columns: 1fr;
+        }
+        .stats-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Reusable Navbar (same as sponsors.html) -->
+    <site-navbar current="sponsors"></site-navbar>
+
+    <!-- ==================== HERO ==================== -->
+    <section class="hero">
+      <div class="section-label">
+        <span class="indicator"></span>
+        <span>Partnership Opportunities, ECommerce Day 2026</span>
+      </div>
+      <h1 class="hero-title">
+        Put your brand inside the
+        <span>e-commerce journey</span>.
+      </h1>
+      <p class="hero-sub">
+        Meet the founders, operators and specialists working on every step, from
+        customer acquisition to conversion, operations and delivery, and build a
+        presence tied to real value inside the day.
+      </p>
+      <div class="hero-actions">
+        <a href="#partnership-options" class="btn-primary"
+          >Explore Partnership Options ↓</a
+        >
+        <a href="#inquiry-form" class="btn-secondary"
+          >Talk to the Partnerships Team</a
+        >
+      </div>
+      <div class="hero-meta">
+        <span>Two stages, three workshop rooms</span>
+        <span class="sep">·</span>
+        <span>Recorded Content</span>
+        <span class="sep">·</span>
+        <span>Post-Event Platform</span>
+      </div>
+      <div class="hero-note">
+        Partnerships are tailored to your objectives. Submit your brief to
+        receive the most relevant proposal.
+      </div>
+    </section>
+
+    <!-- Sticky CTA bar -->
+    <div class="sticky-cta">
+      <div class="sticky-cta-inner">
+        <span class="sticky-cta-label"
+          >Partnership Opportunities, ECommerce Day 2026</span
+        >
+        <a
+          href="#partnership-options"
+          class="btn-primary"
+          style="padding: 11px 20px; font-size: 13px"
+          >Explore Partnership Options</a
+        >
+      </div>
+    </div>
+
+    <!-- ==================== WHO IS IN THE ROOM ==================== -->
+    <div class="room-band">
+      <div class="room-inner">
+        <div class="section-label">
+          <span class="indicator"></span>
+          <span>Who is in the room</span>
+        </div>
+        <h2 class="section-title" style="margin-bottom: 12px">
+          People who run stores, and the teams around them
+        </h2>
+        <p class="room-sub">
+          Founders, marketers, operators and the specialists they hire. One
+          offline day, five rooms, and the conversations that follow.
+        </p>
+
+        <div class="chips-wrap">
+          <span class="chip">Founders</span>
+          <span class="chip">Brand Owners</span>
+          <span class="chip">Operators</span>
+          <span class="chip">Marketing &amp; Growth</span>
+          <span class="chip">Product / CRO</span>
+          <span class="chip">CX</span>
+          <span class="chip">Logistics</span>
+          <span class="chip">Payments</span>
+          <span class="chip">Technology</span>
+          <span class="chip">Service Providers</span>
+        </div>
+
+        <!-- Stats box -->
+        <div class="stats-box">
+          <div class="stats-box-top-label">Across TrafficMENA programs</div>
+          <div class="stats-box-sub-label">
+            Organizer record, not a forecast for this edition
+          </div>
+          <div class="stats-grid">
+            <div class="stat-item">
+              <div class="stat-value">13</div>
+              <div class="stat-label">countries reached</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-value">3 + 5</div>
+              <div class="stat-label">offline workshops + online workshops</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-value">90+</div>
+              <div class="stat-label">sessions delivered</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-value">80+</div>
+              <div class="stat-label">speakers hosted</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-value">400+</div>
+              <div class="stat-label">hours of content</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-value">480</div>
+              <div class="stat-label">
+                attendees, Ramadan Iftar community event
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Rooms / The day -->
+        <div class="room-cards">
+          <div class="room-card">
+            <div class="room-card-label">The rooms</div>
+            <div class="room-card-list">
+              <div class="dot-row">
+                <span class="dot" style="background: #101010"></span>Main Stage
+              </div>
+              <div class="dot-row">
+                <span class="dot" style="background: #4a5563"></span>Second
+                Stage
+              </div>
+              <div class="dot-row">
+                <span class="dot" style="background: #05ef62"></span>Acquisition
+                workshops
+              </div>
+              <div class="dot-row">
+                <span class="dot" style="background: #006681"></span>CRO &amp;
+                Retention workshops
+              </div>
+              <div class="dot-row">
+                <span class="dot" style="background: #ffb020"></span>Operations
+                &amp; Logistics workshops
+              </div>
+            </div>
+            <div class="room-card-foot">
+              Room sizes announced with the agenda
+            </div>
+          </div>
+          <div class="room-card">
+            <div class="room-card-label">The day</div>
+            <div class="room-card-body">
+              Thursday 5 November 2026<br />
+              Creativa Innovation Hub, Giza<br />
+              Main Stage runs all day, workshops in the afternoon
+            </div>
+            <div class="room-card-foot">
+              Final run of show announced with the agenda
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== WHAT A PARTNERSHIP GETS YOU ==================== -->
+    <div class="gets-inner" id="partnership-options">
+      <div class="section-label">
+        <span class="indicator"></span>
+        <span>What a partnership gets you</span>
+      </div>
+      <h2 class="section-title" style="margin-bottom: 12px">
+        Four reasons brands partner with this day
+      </h2>
+      <p class="gets-sub">
+        Each one starts with a goal you came in with, then what we actually do
+        about it, then what you leave holding.
+      </p>
+
+      <div class="gets-grid">
+        <div class="get-card">
+          <div class="get-tag">Positioning</div>
+          <div class="get-goal">
+            Be known by the people who actually run stores
+          </div>
+          <div class="get-block-label">What we do</div>
+          <div class="get-block-text">
+            Your brand is named on the room they sit in all day, on the agenda
+            they plan around, and in the recap that reaches the wider list
+            afterwards.
+          </div>
+          <div class="get-divider">
+            <div class="get-block-label">What you leave with</div>
+            <div class="get-block-text">
+              A presence tied to a real experience, not a logo on a wall.
+            </div>
+          </div>
+        </div>
+
+        <div class="get-card">
+          <div class="get-tag">Product education</div>
+          <div class="get-goal">
+            Show what your product solves, to people with that problem
+          </div>
+          <div class="get-block-label">What we do</div>
+          <div class="get-block-text">
+            We place you where the problem gets discussed: acquisition,
+            conversion or operations. You run a stand, a demo, or a workshop
+            that gets editorial review first.
+          </div>
+          <div class="get-divider">
+            <div class="get-block-label">What you leave with</div>
+            <div class="get-block-text">
+              Conversations with teams already dealing with the thing you fix.
+            </div>
+          </div>
+        </div>
+
+        <div class="get-card">
+          <div class="get-tag">Pipeline</div>
+          <div class="get-goal">Leave with names worth calling</div>
+          <div class="get-block-label">What we do</div>
+          <div class="get-block-text">
+            QR touchpoints, demo booking and opt-in forms. Nobody gets an
+            attendee list, so every name you take home chose to give it.
+          </div>
+          <div class="get-divider">
+            <div class="get-block-label">What you leave with</div>
+            <div class="get-block-text">
+              Opt-in leads, plus the context of what they came for.
+            </div>
+          </div>
+        </div>
+
+        <div class="get-card">
+          <div class="get-tag">Authority</div>
+          <div class="get-goal">Be part of what the market quotes later</div>
+          <div class="get-block-label">What we do</div>
+          <div class="get-block-text">
+            Partner on the ECommerce Report, take a closed Executive Roundtable,
+            or sit inside the recorded content that stays on the platform after
+            the day.
+          </div>
+          <div class="get-divider">
+            <div class="get-block-label">What you leave with</div>
+            <div class="get-block-text">
+              Your name attached to the research and the recordings.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== PARTNER TIERS ==================== -->
+    <div class="tiers-band">
+      <div class="tiers-inner">
+        <div class="section-label">
+          <span class="indicator"></span>
+          <span>Partner tiers</span>
+        </div>
+        <h2 class="section-title" style="margin-bottom: 40px">
+          Five ways in, shaped around objectives, not checklists
+        </h2>
+
+        <div class="tiers-grid">
+          <div class="tier-card" style="border: 1px solid #101010">
+            <div class="tier-name" style="color: #101010">
+              Top Player Partner
+            </div>
+            <div class="tier-focus">
+              Named across the event, with a talk on the Main Stage
+            </div>
+            <div class="tier-suits">
+              <strong>Suits:</strong> one brand that wants its name on the whole
+              day.
+            </div>
+          </div>
+          <div class="tier-card" style="border: 1px solid #d5dae0">
+            <div class="tier-name" style="color: #04c44e">
+              Strategic Partner
+            </div>
+            <div class="tier-focus">
+              One part of the day, plus a stand and a stage moment
+            </div>
+            <div class="tier-suits">
+              <strong>Suits:</strong> companies tied to a specific stage of the
+              order.
+            </div>
+          </div>
+          <div class="tier-card" style="border: 1px solid #d5dae0">
+            <div class="tier-name" style="color: #006681">
+              Innovation Partner
+            </div>
+            <div class="tier-focus">
+              Product visibility where the problem gets discussed
+            </div>
+            <div class="tier-suits">
+              <strong>Suits:</strong> platforms and tools that solve one clear
+              problem.
+            </div>
+          </div>
+          <div class="tier-card" style="border: 1px solid #d5dae0">
+            <div class="tier-name" style="color: #8a5a00">
+              Empowerment Partner
+            </div>
+            <div class="tier-focus">
+              Presence in the room and a way to collect leads
+            </div>
+            <div class="tier-suits">
+              <strong>Suits:</strong> teams supporting merchants without owning
+              a stage.
+            </div>
+          </div>
+          <div class="tier-card" style="border: 1px solid #d5dae0">
+            <div class="tier-name" style="color: #4a5563">
+              Community Partner
+            </div>
+            <div class="tier-focus">
+              Brand listing, team passes, lead capture
+            </div>
+            <div class="tier-suits">
+              <strong>Suits:</strong> companies starting out with the community.
+            </div>
+          </div>
+        </div>
+
+        <div class="addons-block">
+          <div class="addons-label">Exclusive properties</div>
+          <div class="addons-sub">
+            Each one goes to a single brand, and each can be added on its own
+            without taking a full tier.
+          </div>
+          <div class="addons-chips">
+            <span class="addon-chip">Sponsored Workshop</span>
+            <span class="addon-chip">Executive Roundtable</span>
+            <span class="addon-chip">Dedicated Email Blast</span>
+            <span class="addon-chip">Dedicated Social Post</span>
+            <span class="addon-chip">Premium Booth Location</span>
+            <span class="addon-chip">Additional Sponsor Passes</span>
+            <span class="addon-chip">Custom Lead Generation</span>
+          </div>
+          <div class="addons-foot">
+            Custom activations are discussed on the call
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== HOW IT WORKS ==================== -->
+    <div class="how-inner">
+      <div class="section-label">
+        <span class="indicator"></span>
+        <span>How it works</span>
+      </div>
+      <h2 class="section-title" style="margin-bottom: 48px">
+        Four steps, and the first one takes two minutes
+      </h2>
+
+      <div class="how-grid">
+        <div class="how-step">
+          <div class="step-rail">
+            <span class="step-num">1</span>
+            <span class="step-line"></span>
+          </div>
+          <div class="step-title">Send a brief</div>
+          <div class="step-text">
+            The form below. Company, contact, and what you are trying to
+            achieve.
+          </div>
+        </div>
+        <div class="how-step">
+          <div class="step-rail">
+            <span class="step-num">2</span>
+            <span class="step-line"></span>
+          </div>
+          <div class="step-title">We talk</div>
+          <div class="step-text">
+            A short call to check the fit and hear the detail the form cannot
+            hold.
+          </div>
+        </div>
+        <div class="how-step">
+          <div class="step-rail">
+            <span class="step-num">3</span>
+            <span class="step-line"></span>
+          </div>
+          <div class="step-title">You get a proposal</div>
+          <div class="step-text">
+            A tier and the properties that match your objectives, priced in
+            writing.
+          </div>
+        </div>
+        <div class="how-step">
+          <div class="step-rail">
+            <span class="step-num">4</span>
+            <span class="step-line last"></span>
+          </div>
+          <div class="step-title">We build it</div>
+          <div class="step-text">
+            Activation planning, delivery on the day, and a report after it.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== INQUIRY FORM ==================== -->
+    <div class="form-band" id="inquiry-form">
+      <div class="form-inner">
+        <div class="section-label">
+          <span class="indicator"></span>
+          <span>Partnership Inquiry</span>
+        </div>
+        <h2 class="section-title" style="margin-bottom: 40px">
+          Tell us what you're trying to achieve
+        </h2>
+
+        <div class="form-card" id="formRoot">
+          <!-- The form is rendered by JavaScript -->
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== FAQ ==================== -->
+    <div class="faq-inner">
+      <div class="section-label">
+        <span class="indicator"></span>
+        <span>Partner FAQ</span>
+      </div>
+      <h2 class="section-title" style="margin-bottom: 40px">
+        Common partner questions
+      </h2>
+
+      <div class="faq-list" id="faqList"></div>
+    </div>
+
+    <!-- ==================== FINAL CTA ==================== -->
+    <div class="final-cta">
+      <div class="final-cta-inner">
+        <h2 class="final-cta-title">Start a partnership conversation.</h2>
+        <div class="final-cta-actions">
+          <a href="#inquiry-form" class="btn-primary"
+            >Start a Partnership Conversation</a
+          >
+          <a href="mailto:info@trafficmena.com" class="btn-outline-light"
+            >Talk to the Partnerships Team</a
+          >
+        </div>
+      </div>
+    </div>
+
+    <!-- Reusable Footer (same as sponsors.html) -->
+    <site-footer></site-footer>
+
+    <script src="ecd-api.js"></script>
+    <!-- ==================== JAVASCRIPT ==================== -->
+    <script>
+      (function () {
+        "use strict";
+
+        /* ==================================================
+           DATA
+        ================================================== */
+        var state = {
+          step: 1,
+          tried: false,
+          submitted: false,
+          consent: false,
+          reqId: "",
+          objectives: [],
+          level: null,
+          props: [],
+          contact: "Email",
+          f: {
+            company: "",
+            website: "",
+            sector: "",
+            country: "",
+            size: "",
+            name: "",
+            title: "",
+            email: "",
+            phone: "",
+            targetAud: "",
+            timing: "",
+            notes: "",
+            budget: "",
+          },
+        };
+
+        var outcomes = [
+          "Brand Positioning",
+          "Thought Leadership",
+          "Product Education",
+          "Lead Generation (opt-in only)",
+          "Executive Relationships",
+          "Content Reach",
+          "Community Support",
+        ];
+
+        var levelNames = [
+          "Top Player Partner",
+          "Strategic Partner",
+          "Innovation Partner",
+          "Empowerment Partner",
+          "Community Partner",
+        ];
+
+        var addOnNames = [
+          "Sponsored Workshop",
+          "Executive Roundtable",
+          "Dedicated Email Blast",
+          "Dedicated Social Post",
+          "Premium Booth Location",
+          "Additional Sponsor Passes",
+          "Custom Lead Generation",
+        ];
+
+        var propNames = [
+          "Main Stage",
+          "Acquisition workshops",
+          "CRO & Retention workshops",
+          "Operations & Logistics workshops",
+          "Leaders Lounge",
+          "Lanyard",
+          "Registration",
+          "Content Studio",
+          "Research",
+        ];
+
+        var reqLabels = {
+          company: "Company name",
+          sector: "Sector",
+          country: "Country",
+          size: "Company size",
+          name: "Full name",
+          title: "Job title",
+          email: "Work email",
+          phone: "Phone",
+        };
+
+        var faqData = [
+          {
+            q: "Can we build a custom partnership?",
+            a: "Yes. Beyond the listed levels and properties, custom activations are discussed during the discovery call.",
+          },
+          {
+            q: "Does sponsorship guarantee a speaker slot?",
+            a: "No. Stage participation is subject to topic fit and editorial approval, sponsorship does not buy stage time or promotional content.",
+          },
+          {
+            q: "Do we get attendee data?",
+            a: "No attendee lists are shared. Lead generation is opt-in only: attendees choose to share their data through QR touchpoints, demo bookings or opt-in forms.",
+          },
+          {
+            q: "Is category exclusivity available?",
+            a: "Category exclusivity can be discussed per level and property during the proposal stage.",
+          },
+          {
+            q: "Do partners appear in the recordings?",
+            a: "Supported experiences appear naturally in the recorded content per the agreed activation. Details are set in the agreement.",
+          },
+          {
+            q: "What does the Community Partner tier include?",
+            a: "It is the entry tier: your brand listed on the site and the digital agenda, passes for your team, and lead capture at the event. The talk and stage moments sit in the higher tiers.",
+          },
+          {
+            q: "Are there deadlines?",
+            a: "Activations need lead time, earlier conversations mean more options. Final deadlines are shared during the agreement stage.",
+          },
+        ];
+
+        /* ==================================================
+           HELPERS
+        ================================================== */
+        function qs(sel, root) {
+          return (root || document).querySelector(sel);
+        }
+        function qsa(sel, root) {
+          return Array.prototype.slice.call(
+            (root || document).querySelectorAll(sel),
+          );
+        }
+        function esc(s) {
+          return String(s || "")
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;");
+        }
+
+        function getErrors() {
+          var f = state.f;
+          var e = {};
+          if (state.step === 1) {
+            ["company", "sector", "country", "size"].forEach(function (k) {
+              if (!f[k]) e[k] = reqLabels[k] + " is required.";
+            });
+          }
+          if (state.step === 2) {
+            ["name", "title", "phone"].forEach(function (k) {
+              if (!f[k]) e[k] = reqLabels[k] + " is required.";
+            });
+            if (!f.email) e.email = "Work email is required.";
+            else if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(f.email))
+              e.email = "Enter a valid email address.";
+          }
+          if (state.step === 3) {
+            if (!state.objectives.length)
+              e.objectives = "Select at least one objective.";
+            if (!state.level) e.level = "Select a level.";
+            if (!state.consent) e.consent = "Consent is required to submit.";
+          }
+          return e;
+        }
+
+        /* ==================================================
+           FORM RENDERING
+        ================================================== */
+        function renderForm() {
+          var root = qs("#formRoot");
+          if (!root) return;
+
+          if (state.submitted) {
+            root.innerHTML =
+              '<div class="success-box">' +
+              '<div class="success-icon">✓</div>' +
+              '<h3 class="success-title">Your partnership brief is received.</h3>' +
+              '<div class="success-reqid">REQUEST ' +
+              esc(state.reqId) +
+              "</div>" +
+              '<p class="success-text">We\'ll review the fit and get back to you with the most relevant next step.</p>' +
+              '<p class="success-foot">We\'ll contact you at ' +
+              esc(state.f.email || "your work email") +
+              ".</p>" +
+              "</div>";
+            return;
+          }
+
+          var errs = state.tried ? getErrors() : {};
+          var errList = [];
+          for (var key in errs) {
+            if (errs.hasOwnProperty(key)) errList.push(errs[key]);
+          }
+
+          var stepLabels = ["1 · Company", "2 · Contact", "3 · Brief"];
+
+          var progressHTML = '<div class="progress-row">';
+          stepLabels.forEach(function (label, i) {
+            var stepNum = i + 1;
+            var barColor = stepNum <= state.step ? "#05ef62" : "#e6eaee";
+            var co = stepNum === state.step ? "#101010" : "#6b747e";
+            progressHTML +=
+              '<div class="progress-item">' +
+              '<div class="progress-bar" style="background:' +
+              barColor +
+              '"></div>' +
+              '<div class="progress-label" style="color:' +
+              co +
+              '">' +
+              label +
+              "</div>" +
+              "</div>";
+          });
+          progressHTML += "</div>";
+
+          var errorHTML = "";
+          if (errList.length) {
+            errorHTML =
+              '<div class="error-summary" role="alert">' +
+              '<div class="error-summary-title">Please fix the following:</div>' +
+              '<div class="error-summary-list">' +
+              errList
+                .map(function (e) {
+                  return (
+                    '<div class="error-summary-item">• ' + esc(e) + "</div>"
+                  );
+                })
+                .join("") +
+              "</div></div>";
+          }
+
+          var stepHTML = "";
+
+          /* ---------- STEP 1 ---------- */
+          if (state.step === 1) {
+            var fd = state.f;
+            stepHTML =
+              '<div class="form-grid-2">' +
+              /* company */
+              '<div class="form-field-full">' +
+              '<label class="form-label" for="f-company">Company name *</label>' +
+              '<input id="f-company" class="form-input' +
+              (errs.company ? " error" : "") +
+              '" type="text" value="' +
+              esc(fd.company) +
+              '" data-field="company" />' +
+              (errs.company
+                ? '<span class="field-error">' + esc(errs.company) + "</span>"
+                : "") +
+              "</div>" +
+              /* website */
+              '<div class="form-field-full">' +
+              '<label class="form-label" for="f-website">Website</label>' +
+              '<input id="f-website" class="form-input" type="text" value="' +
+              esc(fd.website) +
+              '" placeholder="https://" data-field="website" />' +
+              "</div>" +
+              /* sector */
+              "<div>" +
+              '<label class="form-label" for="f-sector">Sector *</label>' +
+              '<select id="f-sector" class="form-select' +
+              (errs.sector ? " error" : "") +
+              '" data-field="sector">' +
+              '<option value="">Select sector</option>' +
+              [
+                "E-commerce Platform",
+                "Payments",
+                "Logistics & Fulfillment",
+                "Marketing Technology",
+                "Agency / Services",
+                "Telecom / Technology",
+                "Financial Services",
+                "Other",
+              ]
+                .map(function (opt) {
+                  return (
+                    '<option value="' +
+                    esc(opt) +
+                    '"' +
+                    (fd.sector === opt ? " selected" : "") +
+                    ">" +
+                    esc(opt) +
+                    "</option>"
+                  );
+                })
+                .join("") +
+              "</select>" +
+              (errs.sector
+                ? '<span class="field-error">' + esc(errs.sector) + "</span>"
+                : "") +
+              "</div>" +
+              /* country */
+              "<div>" +
+              '<label class="form-label" for="f-country">Country *</label>' +
+              '<select id="f-country" class="form-select' +
+              (errs.country ? " error" : "") +
+              '" data-field="country">' +
+              '<option value="">Select country</option>' +
+              [
+                "Egypt",
+                "Saudi Arabia",
+                "UAE",
+                "Kuwait",
+                "Qatar",
+                "Jordan",
+                "Other",
+              ]
+                .map(function (opt) {
+                  return (
+                    '<option value="' +
+                    esc(opt) +
+                    '"' +
+                    (fd.country === opt ? " selected" : "") +
+                    ">" +
+                    esc(opt) +
+                    "</option>"
+                  );
+                })
+                .join("") +
+              "</select>" +
+              (errs.country
+                ? '<span class="field-error">' + esc(errs.country) + "</span>"
+                : "") +
+              "</div>" +
+              /* size */
+              "<div>" +
+              '<label class="form-label" for="f-size">Company size *</label>' +
+              '<select id="f-size" class="form-select' +
+              (errs.size ? " error" : "") +
+              '" data-field="size">' +
+              '<option value="">Select size</option>' +
+              ["1–10", "11–50", "51–200", "201–1000", "1000+"]
+                .map(function (opt) {
+                  return (
+                    '<option value="' +
+                    esc(opt) +
+                    '"' +
+                    (fd.size === opt ? " selected" : "") +
+                    ">" +
+                    esc(opt) +
+                    "</option>"
+                  );
+                })
+                .join("") +
+              "</select>" +
+              (errs.size
+                ? '<span class="field-error">' + esc(errs.size) + "</span>"
+                : "") +
+              "</div>" +
+              "</div>" +
+              '<div class="form-actions-right">' +
+              '<button type="button" class="btn-primary" data-action="next">Continue to Contact →</button>' +
+              "</div>";
+          }
+
+          /* ---------- STEP 2 ---------- */
+          if (state.step === 2) {
+            var fd2 = state.f;
+            stepHTML =
+              '<div class="form-grid-2">' +
+              /* name */
+              "<div>" +
+              '<label class="form-label" for="f-name">Full name *</label>' +
+              '<input id="f-name" class="form-input' +
+              (errs.name ? " error" : "") +
+              '" type="text" value="' +
+              esc(fd2.name) +
+              '" data-field="name" />' +
+              (errs.name
+                ? '<span class="field-error">' + esc(errs.name) + "</span>"
+                : "") +
+              "</div>" +
+              /* title */
+              "<div>" +
+              '<label class="form-label" for="f-title">Job title *</label>' +
+              '<input id="f-title" class="form-input' +
+              (errs.title ? " error" : "") +
+              '" type="text" value="' +
+              esc(fd2.title) +
+              '" data-field="title" />' +
+              (errs.title
+                ? '<span class="field-error">' + esc(errs.title) + "</span>"
+                : "") +
+              "</div>" +
+              /* email */
+              "<div>" +
+              '<label class="form-label" for="f-email">Work email *</label>' +
+              '<input id="f-email" class="form-input' +
+              (errs.email ? " error" : "") +
+              '" type="email" value="' +
+              esc(fd2.email) +
+              '" placeholder="name@company.com" data-field="email" />' +
+              (errs.email
+                ? '<span class="field-error">' + esc(errs.email) + "</span>"
+                : "") +
+              "</div>" +
+              /* phone */
+              "<div>" +
+              '<label class="form-label" for="f-phone">Phone *</label>' +
+              '<input id="f-phone" class="form-input' +
+              (errs.phone ? " error" : "") +
+              '" type="tel" value="' +
+              esc(fd2.phone) +
+              '" placeholder="+20" data-field="phone" />' +
+              (errs.phone
+                ? '<span class="field-error">' + esc(errs.phone) + "</span>"
+                : "") +
+              "</div>" +
+              /* preferred contact */
+              '<div class="form-field-full">' +
+              '<div class="form-label" style="margin-bottom:8px">Preferred contact method</div>' +
+              '<div class="chip-group" data-group="contact">' +
+              ["Email", "Phone", "WhatsApp"]
+                .map(function (c) {
+                  var active = state.contact === c;
+                  return (
+                    '<button type="button" class="chip-btn' +
+                    (active ? " active" : "") +
+                    '" data-contact="' +
+                    esc(c) +
+                    '">' +
+                    esc(c) +
+                    "</button>"
+                  );
+                })
+                .join("") +
+              "</div>" +
+              "</div>" +
+              "</div>" +
+              '<div class="form-actions">' +
+              '<button type="button" class="btn-secondary" data-action="back">← Back</button>' +
+              '<button type="button" class="btn-primary" data-action="next">Continue to Brief →</button>' +
+              "</div>";
+          }
+
+          /* ---------- STEP 3 ---------- */
+          if (state.step === 3) {
+            var fd3 = state.f;
+            stepHTML =
+              '<div style="display:flex;flex-direction:column;gap:22px">' +
+              /* objectives */
+              "<div>" +
+              '<div class="form-label" style="margin-bottom:8px">Objectives *</div>' +
+              '<div class="chip-group" data-group="objectives">' +
+              outcomes
+                .map(function (o) {
+                  var active = state.objectives.indexOf(o) !== -1;
+                  return (
+                    '<button type="button" class="chip-btn' +
+                    (active ? " green-active" : "") +
+                    '" data-objective="' +
+                    esc(o) +
+                    '">' +
+                    esc(o) +
+                    "</button>"
+                  );
+                })
+                .join("") +
+              "</div>" +
+              (errs.objectives
+                ? '<span class="field-error">' +
+                  esc(errs.objectives) +
+                  "</span>"
+                : "") +
+              "</div>" +
+              /* level */
+              "<div>" +
+              '<div class="form-label" style="margin-bottom:8px">Interested level *</div>' +
+              '<div class="chip-group" data-group="level">' +
+              levelNames
+                .map(function (l) {
+                  var active = state.level === l;
+                  return (
+                    '<button type="button" class="chip-btn' +
+                    (active ? " active" : "") +
+                    '" data-level="' +
+                    esc(l) +
+                    '">' +
+                    esc(l) +
+                    "</button>"
+                  );
+                })
+                .join("") +
+              "</div>" +
+              (errs.level
+                ? '<span class="field-error">' + esc(errs.level) + "</span>"
+                : "") +
+              "</div>" +
+              /* properties */
+              "<div>" +
+              '<div class="form-label" style="margin-bottom:8px">Interested properties</div>' +
+              '<div class="chip-group" data-group="props">' +
+              propNames
+                .map(function (p) {
+                  var active = state.props.indexOf(p) !== -1;
+                  return (
+                    '<button type="button" class="chip-btn' +
+                    (active ? " active" : "") +
+                    '" data-prop="' +
+                    esc(p) +
+                    '">' +
+                    esc(p) +
+                    "</button>"
+                  );
+                })
+                .join("") +
+              "</div>" +
+              "</div>" +
+              /* target & timing */
+              '<div class="form-grid-2">' +
+              "<div>" +
+              '<label class="form-label" for="f-aud">Target audience</label>' +
+              '<input id="f-aud" class="form-input" type="text" value="' +
+              esc(fd3.targetAud) +
+              '" placeholder="e.g. store owners, operations teams" data-field="targetAud" />' +
+              "</div>" +
+              "<div>" +
+              '<label class="form-label" for="f-timing">Timing</label>' +
+              '<input id="f-timing" class="form-input" type="text" value="' +
+              esc(fd3.timing) +
+              '" placeholder="e.g. decision by end of Q1" data-field="timing" />' +
+              "</div>" +
+              "</div>" +
+              /* notes */
+              "<div>" +
+              '<label class="form-label" for="f-notes">Notes</label>' +
+              '<textarea id="f-notes" class="form-textarea" rows="3" placeholder="Anything else we should know" data-field="notes">' +
+              esc(fd3.notes) +
+              "</textarea>" +
+              "</div>" +
+              /* budget & file */
+              '<div class="form-grid-2">' +
+              "<div>" +
+              '<label class="form-label" for="f-budget">Budget range <span class="optional">(optional, internal qualification only)</span></label>' +
+              '<select id="f-budget" class="form-select" data-field="budget">' +
+              '<option value="">Prefer not to say</option>' +
+              ["To be discussed", "Defined budget, will share on the call"]
+                .map(function (opt) {
+                  return (
+                    '<option value="' +
+                    esc(opt) +
+                    '"' +
+                    (fd3.budget === opt ? " selected" : "") +
+                    ">" +
+                    esc(opt) +
+                    "</option>"
+                  );
+                })
+                .join("") +
+              "</select>" +
+              "</div>" +
+              "<div>" +
+              '<span class="form-label">Company profile / brief <span class="optional">(optional)</span></span>' +
+              '<div class="file-upload">' +
+              '<button type="button" class="file-upload-btn">Choose file</button>' +
+              "PDF, PPTX or DOCX, max 10 MB" +
+              "</div>" +
+              "</div>" +
+              "</div>" +
+              /* consent */
+              '<label class="consent-row">' +
+              '<input type="checkbox"' +
+              (state.consent ? " checked" : "") +
+              ' data-action="toggle-consent" />' +
+              '<span>I agree that TrafficMENA may use this data to respond to my request. See the <a href="policy.html" target="_blank">Privacy Policy</a>. *</span>' +
+              "</label>" +
+              (errs.consent
+                ? '<span class="field-error">' + esc(errs.consent) + "</span>"
+                : "") +
+              /* actions */
+              '<div class="form-actions">' +
+              '<button type="button" class="btn-secondary" data-action="back">← Back</button>' +
+              '<button type="button" class="submit-btn" data-action="submit"' +
+              (state.consent ? "" : " disabled") +
+              ">Request a Partnership Conversation</button>" +
+              "</div>" +
+              "</div>";
+          }
+
+          root.innerHTML = progressHTML + errorHTML + stepHTML;
+
+          /* ---------- ATTACH EVENT LISTENERS ---------- */
+          // Text / select / textarea fields
+          qsa("[data-field]", root).forEach(function (el) {
+            var field = el.getAttribute("data-field");
+            var evt = el.tagName === "SELECT" ? "change" : "input";
+            el.addEventListener(evt, function (e) {
+              state.f[field] = e.target.value;
+              if (state.tried) {
+                // Re-render to clear individual field error when corrected
+                renderForm();
+              }
+            });
+          });
+
+          // Chip groups
+          qsa("[data-objective]", root).forEach(function (btn) {
+            btn.addEventListener("click", function () {
+              var val = btn.getAttribute("data-objective");
+              var idx = state.objectives.indexOf(val);
+              if (idx === -1) state.objectives.push(val);
+              else state.objectives.splice(idx, 1);
+              renderForm();
+            });
+          });
+          qsa("[data-level]", root).forEach(function (btn) {
+            btn.addEventListener("click", function () {
+              var val = btn.getAttribute("data-level");
+              state.level = state.level === val ? null : val;
+              renderForm();
+            });
+          });
+          qsa("[data-prop]", root).forEach(function (btn) {
+            btn.addEventListener("click", function () {
+              var val = btn.getAttribute("data-prop");
+              var idx = state.props.indexOf(val);
+              if (idx === -1) state.props.push(val);
+              else state.props.splice(idx, 1);
+              renderForm();
+            });
+          });
+          qsa("[data-contact]", root).forEach(function (btn) {
+            btn.addEventListener("click", function () {
+              state.contact = btn.getAttribute("data-contact");
+              renderForm();
+            });
+          });
+
+          // Consent toggle
+          var consentCb = qs("[data-action='toggle-consent']", root);
+          if (consentCb) {
+            consentCb.addEventListener("change", function (e) {
+              state.consent = e.target.checked;
+              renderForm();
+            });
+          }
+
+          // Action buttons
+          qsa("[data-action]", root).forEach(function (btn) {
+            var action = btn.getAttribute("data-action");
+            if (action === "toggle-consent") return; // already handled
+            btn.addEventListener("click", function () {
+              if (action === "next") {
+                var errs2 = getErrors();
+                if (Object.keys(errs2).length) {
+                  state.tried = true;
+                  renderForm();
+                } else {
+                  state.step += 1;
+                  state.tried = false;
+                  renderForm();
+                  scrollToForm();
+                }
+              } else if (action === "back") {
+                state.step = Math.max(1, state.step - 1);
+                state.tried = false;
+                renderForm();
+                scrollToForm();
+              } else if (action === "submit") {
+                var errs3 = getErrors();
+                if (Object.keys(errs3).length) {
+                  state.tried = true;
+                  renderForm();
+                } else {
+                  submitInquiry(btn);
+                }
+              }
+            });
+          });
+        }
+
+        function scrollToForm() {
+          var el = qs("#inquiry-form");
+          if (el) {
+            var y = el.getBoundingClientRect().top + window.pageYOffset - 80;
+            window.scrollTo({ top: y, behavior: "smooth" });
+          }
+        }
+
+        function submitInquiry(btn) {
+          if (!window.EcdApi || !EcdApi.submitSponsorInquiry) {
+            alert("API unavailable. Please refresh and try again.");
+            return;
+          }
+          if (state.submitting) return;
+          state.submitting = true;
+          if (btn) {
+            btn.disabled = true;
+            btn.textContent = "Sending…";
+          }
+          var payload = {
+            company: state.f.company,
+            website: state.f.website || null,
+            sector: state.f.sector,
+            country: state.f.country,
+            companySize: state.f.size,
+            contactName: state.f.name,
+            contactTitle: state.f.title,
+            contactEmail: state.f.email,
+            contactPhone: state.f.phone || null,
+            preferredContact: state.contact || "Email",
+            objectives: state.objectives.slice(),
+            interestedLevel: state.level,
+            interestedProperties: state.props.slice(),
+            targetAudience: state.f.targetAud || null,
+            timing: state.f.timing || null,
+            notes: state.f.notes || null,
+            budgetBand: state.f.budget || null,
+            consent: true,
+          };
+          EcdApi.submitSponsorInquiry(payload)
+            .then(function (data) {
+              state.submitted = true;
+              state.reqId = (data && data.requestCode) || "";
+              state.submitting = false;
+              renderForm();
+              scrollToForm();
+            })
+            .catch(function (err) {
+              state.submitting = false;
+              if (btn) {
+                btn.disabled = false;
+                btn.textContent = "Request a Partnership Conversation";
+              }
+              if (err && err.code === "DUPLICATE_INQUIRY") {
+                var code =
+                  (err.payload &&
+                    err.payload.error &&
+                    err.payload.error.requestCode) ||
+                  "";
+                state.submitted = true;
+                state.reqId = code || "EXISTING";
+                renderForm();
+                scrollToForm();
+                alert(
+                  "An open inquiry already exists for this email" +
+                    (code ? " (" + code + ")" : "") +
+                    ". Our team will follow up.",
+                );
+                return;
+              }
+              alert(
+                (err && err.message) ||
+                  "Could not submit. Please try again.",
+              );
+              renderForm();
+            });
+        }
+
+        /* ==================================================
+           FAQ RENDERING
+        ================================================== */
+        function renderFaq() {
+          var container = qs("#faqList");
+          if (!container) return;
+          var openIndex = -1;
+
+          function render() {
+            container.innerHTML = faqData
+              .map(function (item, i) {
+                var isOpen = openIndex === i;
+                return (
+                  '<div class="faq-item">' +
+                  '<button class="faq-question" data-faq-index="' +
+                  i +
+                  '" aria-expanded="' +
+                  isOpen +
+                  '">' +
+                  '<span class="faq-q-text">' +
+                  esc(item.q) +
+                  "</span>" +
+                  '<span class="faq-icon">' +
+                  (isOpen ? "−" : "+") +
+                  "</span>" +
+                  "</button>" +
+                  (isOpen
+                    ? '<p class="faq-answer">' + esc(item.a) + "</p>"
+                    : "") +
+                  "</div>"
+                );
+              })
+              .join("");
+
+            qsa("[data-faq-index]", container).forEach(function (btn) {
+              btn.addEventListener("click", function () {
+                var idx = parseInt(btn.getAttribute("data-faq-index"), 10);
+                openIndex = openIndex === idx ? -1 : idx;
+                render();
+              });
+            });
+          }
+          render();
+        }
+
+        /* ==================================================
+           INIT
+        ================================================== */
+        function init() {
+          renderForm();
+          renderFaq();
+        }
+
+        if (document.readyState === "loading") {
+          document.addEventListener("DOMContentLoaded", init);
+        } else {
+          init();
+        }
+      })();
+    </script>
+  </body>
+</html>
