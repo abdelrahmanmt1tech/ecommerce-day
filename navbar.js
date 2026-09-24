@@ -1,5 +1,5 @@
 /* ============================================================
-   navbar.js — Reusable site navigation web component
+   navbar.js: Reusable site navigation web component
    Usage: <site-navbar current="tickets"></site-navbar>
    ============================================================ */
 

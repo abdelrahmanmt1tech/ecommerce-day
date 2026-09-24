@@ -1798,7 +1798,7 @@
             var msg =
               (err && err.message) || "Checkout failed. Please try again.";
             if (err && err.code === "price_changed") {
-              msg = "Price changed. Totals refreshed — try Pay again.";
+              msg = "Price changed. Totals refreshed. Try Pay again.";
               if (window.EcdContent) {
                 try {
                   await EcdContent.boot(state.ticket);

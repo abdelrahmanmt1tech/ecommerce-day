@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>TrafficMENA — ECommerce Day 2026 · Checkout</title>
+    <title>TrafficMENA | ECommerce Day 2026 · Checkout</title>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -830,7 +830,7 @@
       <button class="mobile-summary-toggle" id="mobileSummaryToggle">
         <span id="mobileSummaryText"
           ><span class="price-ticket-name">All Access Pass</span> ×
-          <span class="price-qty">1</span> —
+          <span class="price-qty">1</span> ·
           <span class="price-total" data-suffix=" EGP">[Total] EGP</span></span
         >
         <span id="mobileSummaryIcon" style="color: #05ef62; font-size: 14px"
@@ -1243,7 +1243,7 @@
                 color: #9aa1a9;
               "
             >
-              DEMO — TRY: LAUNCH · EXPIRED · LIMIT · CTONLY · ANYTHING ELSE =
+              DEMO. TRY: LAUNCH · EXPIRED · LIMIT · CTONLY · ANYTHING ELSE =
               INVALID
             </div>
           </div>
@@ -1301,7 +1301,7 @@
             ></div>
             <div class="hosted-fields" style="display: none">
               <div class="form-label" style="margin-bottom: 14px">
-                Hosted payment fields — rendered by the provider (PCI-DSS)
+                Hosted payment fields, rendered by the provider (PCI-DSS)
               </div>
             </div>
             <label
@@ -1365,7 +1365,7 @@
                 margin-bottom: 20px;
               "
             >
-              This event is photographed and recorded — see
+              This event is photographed and recorded. See
               <a href="#">Recording &amp; Photography Policy</a>.<br />
               Full Journey does not guarantee a seat in every workshop;
               reservation is after payment and subject to capacity.
@@ -1796,7 +1796,7 @@
               font-size: 20px;
             "
           >
-            –
+            ✕
           </div>
           <div style="font-weight: 800; font-size: 18px; margin-bottom: 8px">
             Payment cancelled
@@ -1856,7 +1856,7 @@
             This booking already exists
           </div>
           <div style="font-size: 13px; color: #4a5563; margin-bottom: 20px">
-            We found a completed booking with the same details — you were not
+            We found a completed booking with the same details. You were not
             charged twice.
           </div>
           <button
@@ -1881,7 +1881,7 @@
             SEATS HELD FOR 00:00
           </div>
           <div style="font-weight: 800; font-size: 18px; margin-bottom: 8px">
-            Your hold expired — we re-checked availability.
+            Your hold expired, so we re-checked availability.
           </div>
           <div style="font-size: 13px; color: #4a5563; margin-bottom: 20px">
             Your details are saved. Continue to hold seats again at current
@@ -1995,7 +1995,7 @@
           </svg>
           <div style="flex: 1; min-width: 200px">
             <div style="font-weight: 700; font-size: 14px; color: #ffffff">
-              Connection restored — your checkout was saved.
+              Connection restored. Your checkout was saved.
             </div>
             <div style="font-size: 12px; color: #9aa1a9">
               Your details and seat hold are intact. Pick up where you left off.
@@ -2276,7 +2276,7 @@
             "</span>";
           if (locked) {
             html +=
-              '<span style="background: #e6fbee; border: 1px solid #c3f7d7; border-radius: 999px; padding: 2px 10px; font-size: 11px; font-weight: 600; color: #04c44e;">You — copied from buyer</span>';
+              '<span style="background: #e6fbee; border: 1px solid #c3f7d7; border-radius: 999px; padding: 2px 10px; font-size: 11px; font-weight: 600; color: #04c44e;">You (copied from buyer)</span>';
           }
           html += "</div>";
           html += '<div class="attendee-grid">';
@@ -2314,7 +2314,7 @@
             "</span>";
           if (dup)
             html +=
-              '<span style="font-size: 11px; color: #8a5a00; background: #fff4de; border: 1px solid #ffb020; border-radius: 6px; padding: 4px 8px;">This email is already used for another attendee — tickets are individual. You can continue.</span>';
+              '<span style="font-size: 11px; color: #8a5a00; background: #fff4de; border: 1px solid #ffb020; border-radius: 6px; padding: 4px 8px;">This email is already used for another attendee. Tickets are individual. You can continue.</span>';
           html += "</div>";
           html +=
             '<div class="form-field"><label class="form-label">Attendee mobile *</label><input type="tel" inputmode="tel" value="' +
@@ -2485,7 +2485,7 @@
       function renderPromo() {
         var msgs = {
           valid: {
-            m: "Code applied — discount reflected in your total.",
+            m: "Code applied. Discount reflected in your total.",
             c: "#04c44e",
           },
           invalid: {
@@ -2859,7 +2859,7 @@
           }
         });
 
-        // Sticky bottom bar: Continue on steps 1–2, Pay on step 3
+        // Sticky bottom bar: Continue on steps 1-2, Pay on step 3
         var mobilePayBtn = document.getElementById("mobilePayBtn");
         if (mobilePayBtn) {
           if (stage < 3) {
@@ -3071,7 +3071,7 @@
           if (result.status === "duplicate") {
             showOverlay({
               title: "This booking already exists",
-              body: "We found a completed booking with the same details — you were not charged twice.",
+              body: "We found a completed booking with the same details. You were not charged twice.",
               actions: [
                 {
                   label: "View My Booking",
@@ -3132,7 +3132,7 @@
           var code = err && err.code;
           if (code === "hold_expired") {
             showOverlay({
-              title: "Your hold expired — we re-checked availability.",
+              title: "Your hold expired, so we re-checked availability.",
               body: "Your details are saved. Continue to hold seats again at current availability.",
               actions: [
                 {

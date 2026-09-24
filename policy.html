@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>TrafficMENA — ECommerce Day 2026 · Policies</title>
+    <title>TrafficMENA | ECommerce Day 2026 · Policies</title>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -150,12 +150,6 @@
         align-items: center;
         gap: 12px;
         margin-bottom: 20px;
-      }
-      .policy-label .indicator {
-        width: 24px;
-        height: 2px;
-        background: #05ef62;
-        flex: none;
       }
       .policy-label span {
         font-family: "JetBrains Mono", monospace;
@@ -679,11 +673,11 @@
   <body>
     <!-- ==================== DRAFT BANNER ==================== -->
     <div class="draft-banner">
-      Draft — requires review by Egyptian legal counsel before publishing ·
+      Draft, requires review by Egyptian legal counsel before publishing ·
       design file only, removed on the live site
     </div>
 
-    <!-- ✅ Reusable Navbar — one line, no duplication -->
+    <!-- ✅ Reusable Navbar: one line, no duplication -->
     <site-navbar></site-navbar>
 
     <!-- ==================== POLICY SWITCHER ==================== -->
@@ -694,7 +688,6 @@
     <!-- ==================== POLICY HEADER ==================== -->
     <div class="policy-head" id="policyHead">
       <div class="policy-label">
-        <span class="indicator"></span>
         <span id="polSlug">/terms/</span>
       </div>
       <h1 class="policy-title" id="polTitle">Terms & Conditions</h1>
@@ -764,7 +757,7 @@
             <div class="history-item">
               <span class="hist-date">[date]</span>
               <span class="hist-text"
-                >First version — draft for legal review.</span
+                >First version, draft for legal review.</span
               >
             </div>
             <div class="history-item">
@@ -821,7 +814,7 @@
       // 00. DATA
       // ==========================================
       var DRAFT =
-        "Placeholder text for this section outlining the relevant rights and obligations per the approved plan; the final legal wording is completed before publishing. No unapproved dates or percentages appear here — tokens such as [Refund Window] are used until approved.";
+        "Placeholder text for this section outlining the relevant rights and obligations per the approved plan; the final legal wording is completed before publishing. No unapproved dates or percentages appear here. Tokens such as [Refund Window] are used until approved.";
 
       function cell(t, opts) {
         opts = opts || {};
@@ -911,11 +904,11 @@
           ],
           [
             cell("Workshop is full", { w: 700 }),
-            cell("Not a ticket cancellation — recording available", {
+            cell("Not a ticket cancellation, recording available", {
               co: "#101010",
               w: 700,
             }),
-            cell("—"),
+            cell("Not applicable"),
           ],
           [
             cell("Duplicate charge", { w: 700 }),
@@ -978,11 +971,11 @@
         rows: [
           [
             cell("Stage recording", { w: 700 }),
-            cell("Part of attendance terms — general notice"),
+            cell("Part of attendance terms, general notice"),
           ],
           [
             cell("Wide crowd shot", { w: 700 }),
-            cell("General notice — no individual consent"),
+            cell("General notice, no individual consent"),
           ],
           [
             cell("Incidental appearance", { w: 700 }),
@@ -996,11 +989,11 @@
           [cell("Testimonial", { w: 700 }), cell("Explicit written consent")],
           [
             cell("Sponsor activation", { w: 700 }),
-            cell("Opt-in only — no data shared without a choice"),
+            cell("Opt-in only. No data shared without a choice"),
           ],
           [
             cell("Minor", { w: 700 }),
-            cell("Guardian consent — the event targets professionals"),
+            cell("Guardian consent. The event targets professionals"),
           ],
         ],
       };
@@ -1033,7 +1026,7 @@
           extras: {
             5: {
               example:
-                "Buying a Full Journey Pass does not automatically reserve a seat in every workshop — reservation is a separate step after payment.",
+                "Buying a Full Journey Pass does not automatically reserve a seat in every workshop. Reservation is a separate step after payment.",
             },
           },
         },
@@ -1065,7 +1058,7 @@
             2: { table: privacyTable },
             7: {
               example:
-                "Scanning a QR at a sponsor booth with your consent shares your contact details with that sponsor only — it never happens automatically.",
+                "Scanning a QR at a sponsor booth with your consent shares your contact details with that sponsor only. It never happens automatically.",
             },
           },
         },
@@ -1075,7 +1068,7 @@
           plain:
             "When a ticket can be refunded, how to request it, and which cases are non-refundable.",
           summary:
-            "Refunds follow defined windows [Refund Window]. A full workshop is not a ticket cancellation — the Main Stage and recordings remain available. Requests need your order number and email.",
+            "Refunds follow defined windows [Refund Window]. A full workshop is not a ticket cancellation. The Main Stage and recordings remain available. Requests need your order number and email.",
           heads: [
             "Scope",
             "Buyer Cancellation",
@@ -1094,7 +1087,7 @@
             1: { table: refundTable },
             5: {
               example:
-                "If the CLICKED workshop you wanted is full, no refund right is created — pick another workshop or watch the recording; your ticket remains fully valid.",
+                "If the CLICKED workshop you wanted is full, no refund right is created. Pick another workshop or watch the recording; your ticket remains fully valid.",
             },
             7: {
               example:
@@ -1127,7 +1120,7 @@
             0: { table: entitleTable },
             6: {
               example:
-                "Draft workshop capacities: CLICKED 80 · CONFIRMED 200 · DELIVERED 100 — subject to review per venue.",
+                "Draft workshop capacities: CLICKED 80 · CONFIRMED 200 · DELIVERED 100, subject to review per venue.",
             },
           },
         },
@@ -1135,7 +1128,7 @@
           slug: "/recording-policy/",
           title: "Recording & Photography",
           plain:
-            "The event is photographed and recorded — this policy explains what we capture, how we use it, and your options.",
+            "The event is photographed and recorded. This policy explains what we capture, how we use it, and your options.",
           summary:
             "Sessions and workshops are recorded and uploaded to the platform. General crowd shots fall under attendance terms; close-ups and interviews require explicit consent.",
           heads: [
@@ -1289,7 +1282,7 @@
             return (
               '<div class="defs-item"><strong>' +
               esc(d.t) +
-              "</strong> — " +
+              "</strong>: " +
               esc(d.line) +
               "</div>"
             );
@@ -1309,7 +1302,7 @@
               '<h2><span class="sec-n">' + n + "</span>" + esc(h) + "</h2>";
             out += "<p>" + esc(DRAFT) + "</p>";
             out +=
-              '<span class="draft-pill">Draft — pending legal review</span>';
+              '<span class="draft-pill">Draft, pending legal review</span>';
             if (ex.example) {
               out +=
                 '<div class="example-box"><strong>Example:</strong> ' +

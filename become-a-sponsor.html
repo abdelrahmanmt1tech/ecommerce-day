@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>TrafficMENA — Become a Sponsor · ECommerce Day 2026</title>
+    <title>TrafficMENA | Become a Sponsor · ECommerce Day 2026</title>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -121,12 +121,6 @@
         align-items: center;
         gap: 12px;
         margin-bottom: 16px;
-      }
-      .section-label .indicator {
-        width: 24px;
-        height: 2px;
-        background: #05ef62;
-        flex: none;
       }
       .section-label span {
         font-family: "JetBrains Mono", monospace;
@@ -1066,7 +1060,6 @@
     <!-- ==================== HERO ==================== -->
     <section class="hero">
       <div class="section-label">
-        <span class="indicator"></span>
         <span>Partnership Opportunities, ECommerce Day 2026</span>
       </div>
       <h1 class="hero-title">
@@ -1118,7 +1111,6 @@
     <div class="room-band">
       <div class="room-inner">
         <div class="section-label">
-          <span class="indicator"></span>
           <span>Who is in the room</span>
         </div>
         <h2 class="section-title" style="margin-bottom: 12px">
@@ -1225,7 +1217,6 @@
     <!-- ==================== WHAT A PARTNERSHIP GETS YOU ==================== -->
     <div class="gets-inner" id="partnership-options">
       <div class="section-label">
-        <span class="indicator"></span>
         <span>What a partnership gets you</span>
       </div>
       <h2 class="section-title" style="margin-bottom: 12px">
@@ -1314,7 +1305,6 @@
     <div class="tiers-band">
       <div class="tiers-inner">
         <div class="section-label">
-          <span class="indicator"></span>
           <span>Partner tiers</span>
         </div>
         <h2 class="section-title" style="margin-bottom: 40px">
@@ -1408,7 +1398,6 @@
     <!-- ==================== HOW IT WORKS ==================== -->
     <div class="how-inner">
       <div class="section-label">
-        <span class="indicator"></span>
         <span>How it works</span>
       </div>
       <h2 class="section-title" style="margin-bottom: 48px">
@@ -1466,7 +1455,6 @@
     <div class="form-band" id="inquiry-form">
       <div class="form-inner">
         <div class="section-label">
-          <span class="indicator"></span>
           <span>Partnership Inquiry</span>
         </div>
         <h2 class="section-title" style="margin-bottom: 40px">
@@ -1482,7 +1470,6 @@
     <!-- ==================== FAQ ==================== -->
     <div class="faq-inner">
       <div class="section-label">
-        <span class="indicator"></span>
         <span>Partner FAQ</span>
       </div>
       <h2 class="section-title" style="margin-bottom: 40px">
@@ -1838,15 +1825,22 @@
               (errs.size ? " error" : "") +
               '" data-field="size">' +
               '<option value="">Select size</option>' +
-              ["1–10", "11–50", "51–200", "201–1000", "1000+"]
+              [
+                // value is what the API receives (unchanged); label is what users see
+                ["1\u201310", "1-10"],
+                ["11\u201350", "11-50"],
+                ["51\u2013200", "51-200"],
+                ["201\u20131000", "201-1000"],
+                ["1000+", "1000+"],
+              ]
                 .map(function (opt) {
                   return (
                     '<option value="' +
-                    esc(opt) +
+                    esc(opt[0]) +
                     '"' +
-                    (fd.size === opt ? " selected" : "") +
+                    (fd.size === opt[0] ? " selected" : "") +
                     ">" +
-                    esc(opt) +
+                    esc(opt[1]) +
                     "</option>"
                   );
                 })

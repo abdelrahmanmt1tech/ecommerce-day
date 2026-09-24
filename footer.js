@@ -1,5 +1,5 @@
 /* ============================================================
-   footer.js — Reusable site footer web component
+   footer.js: Reusable site footer web component
    Usage: <site-footer></site-footer>
    ============================================================ */
 

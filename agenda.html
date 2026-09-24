@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>TrafficMENA — ECommerce Day 2026 · Agenda</title>
+    <title>TrafficMENA | ECommerce Day 2026 · Agenda</title>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -110,12 +110,6 @@
         align-items: center;
         gap: 12px;
         margin-bottom: 16px;
-      }
-      .section-label .indicator {
-        width: 24px;
-        height: 2px;
-        background: #05ef62;
-        flex: none;
       }
       .section-label span {
         font-size: 12px;
@@ -300,7 +294,6 @@
     <!-- Hero -->
     <div class="container" style="padding: 72px 24px 48px">
       <div class="section-label">
-        <span class="indicator"></span>
         <span class="font-mono">ECommerce Day 2026 Agenda</span>
       </div>
       <h1 class="hero-title">
@@ -1294,7 +1287,6 @@
     <!-- ==================== SESSION DETAILS PANEL (Dynamic) ==================== -->
     <div class="container" style="padding: 72px 24px">
       <div class="section-label">
-        <span class="indicator"></span>
         <span class="font-mono">Session Details</span>
       </div>
       <div
@@ -1326,7 +1318,7 @@
               margin: 0 0 20px;
             "
           >
-            Click any session card in the timeline or room view — the panel on
+            Click any session card in the timeline or room view and the panel on
             the right updates automatically.
           </p>
           <div
@@ -1338,7 +1330,7 @@
               line-height: 2;
             "
           >
-            CONTENTS — DESCRIPTION · WHAT YOU'LL LEARN · PRACTICAL OUTPUT<br />SPEAKER
+            CONTENTS: DESCRIPTION · WHAT YOU'LL LEARN · PRACTICAL OUTPUT<br />SPEAKER
             · TIME &amp; ROOM · REQUIRED TOOLS · LEVEL · RESERVATION
           </div>
         </div>
@@ -1702,7 +1694,6 @@
     <div style="background: #e6fbee; border-bottom: 1px solid #c3f7d7">
       <div class="container section-padding">
         <div class="section-label">
-          <span class="indicator"></span>
           <span class="font-mono" style="color: #04c44e"
             >Recordings &amp; Resources</span
           >
@@ -1798,7 +1789,6 @@
     <!-- Plan Your Day -->
     <div class="container section-padding">
       <div class="section-label">
-        <span class="indicator"></span>
         <span class="font-mono">Plan Your Day</span>
       </div>
       <h2 class="section-title">Logistics, in one place</h2>
@@ -2041,7 +2031,7 @@
               workshop needs one
             </div>
             <div style="display: flex; gap: 8px">
-              <span style="color: #04c44e">✓</span>Arrive early — registration
+              <span style="color: #04c44e">✓</span>Arrive early. Registration
               takes time
             </div>
           </div>
@@ -2053,7 +2043,6 @@
     <div class="section-bg-alt">
       <div class="container section-padding">
         <div class="section-label">
-          <span class="indicator"></span>
           <span class="font-mono">Tickets</span>
         </div>
         <h2 class="section-title">Which pass fits your day?</h2>
@@ -2168,7 +2157,6 @@
     <!-- FAQ -->
     <div class="container section-padding">
       <div class="section-label">
-        <span class="indicator"></span>
         <span class="font-mono">Agenda FAQ</span>
       </div>
       <h2 class="section-title">Before you plan</h2>
@@ -2575,7 +2563,7 @@
           topics: s.topics || [],
           desc: s.description || "",
           learn: s.learn || [],
-          output: s.output || "—",
+          output: s.output || "Announced soon",
           tools: s.tools || "None",
           level: s.level || "All levels",
           fullJourneyOnly: !!s.fullJourneyOnly,
@@ -2615,7 +2603,7 @@
       }
 
       // ==========================================
-      // 02. SESSION DETAIL PANEL — from CMS
+      // 02. SESSION DETAIL PANEL (from CMS)
       // ==========================================
       function updateSessionPanel(sessionId) {
         var s = sessions.find(function (x) {
@@ -2646,7 +2634,7 @@
 
         document.getElementById("spTitle").textContent = s.title;
         document.getElementById("spDesc").textContent = s.desc || "";
-        document.getElementById("spOutput").textContent = s.output || "—";
+        document.getElementById("spOutput").textContent = s.output || "Announced soon";
 
         var learnEl = document.getElementById("spLearn");
         learnEl.innerHTML = "";
@@ -2720,7 +2708,7 @@
         // Main Stage markers from data.text (Opening / Breaks / Closing)
         var mainMarkers = [
           { time: "11:00", label: "Opening", beforeSlug: "m1" },
-          { time: "1:10", label: "Break — Choose Your Status", beforeSlug: "m4" },
+          { time: "1:10", label: "Break: Choose Your Status", beforeSlug: "m4" },
           { time: "3:20", label: "Break", beforeSlug: "m7" },
           { time: "5:20", label: "Break", beforeSlug: "m10" },
           { time: "6:50", label: "Closing", afterSlug: "m11" },

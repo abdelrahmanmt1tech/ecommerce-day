@@ -15,11 +15,12 @@ Designing website UX for "ECommerce Day 2026" — one-day offline event, Cairo, 
 - SITE CONTENT LANGUAGE: ENGLISH on every page (user decision, overrides earlier bilingual spec). Manrope (700 headings, 400/500 body, 600 links). Keep IBM Plex Sans Arabic loaded only if Arabic ever needed.
 - Eyebrows/labels/times/capacities/IDs: JetBrains Mono 11–12px uppercase, letter-spacing .08–.12em.
 - Scale: H1 56/1.02 desktop (40 mobile), H2 36/1.1, H3 24, body 16/1.7, lede 18.
+- No em dashes (—) or en dashes (–) anywhere on the site, in copy, titles, labels or comments. Use a comma, period, colon, parentheses or "·" instead; number ranges use a plain hyphen (1-10).
 
 ## Layout & components
 - Max width 1280px, 8pt grid. Cards: white, 1px #D5DAE0, 12–16px radius, shadow on hover only.
 - Buttons: Primary #05EF62 fill + #101010 text, 10px radius, 600. Secondary/ghost: #101010 1px outline on white. Dark band CTA: #101010 bg with green primary button inside.
-- Section header anatomy: mono kicker with 24px green rule → H2 → optional lede (max 60ch).
+- Section header anatomy: mono kicker (text only, no green rule/bar before it) → H2 → optional lede (max 60ch).
 - Sticky translucent nav (white 85% + blur, 1px bottom #E6EAEE). Mobile: hamburger + persistent bottom "Book Your Ticket" bar.
 - Tracks (label ALWAYS with color): The Control Tower ink #101010 (main stage) · CLICKED green #05EF62 · CONFIRMED blue #006681 · DELIVERED amber #FFB020.
 - Status pills (text + color): Confirmed / Coming Soon / Almost Full / Fully Booked / Waitlist / Recorded / Templates Included / Full Journey Only / All Tickets.

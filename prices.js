@@ -1,5 +1,5 @@
 /**
- * ECommerce Day 2026 — shared ticket prices
+ * ECommerce Day 2026: shared ticket prices
  * غيّر الأرقام هنا فقط؛ باقي الصفحات تحدّث نفسها عبر الـ classnames.
  *
  * Classnames:
@@ -12,15 +12,15 @@
  *   .price-qty         → quantity
  *
  * Optional attributes:
- *   data-suffix=" EGP" | " EGP each"  — appended after the number
- *   data-prefix="− "                  — prepended (discount rows)
- *   data-minus="1"                    — same as data-prefix="− "
+ *   data-suffix=" EGP" | " EGP each"  -> appended after the number
+ *   data-prefix="− "                  -> prepended (discount rows)
+ *   data-minus="1"                    -> same as data-prefix="− "
  */
 (function (global) {
   "use strict";
 
   // ========== عيّن الأسعار النهائية هنا (EGP) ==========
-  // ضع الرقم النهائي بدل null — مثال: controlTower: 2500
+  // ضع الرقم النهائي بدل null، مثال: controlTower: 2500
   var PRICES = {
     controlTower: 2500,
     fullJourney: 4500,

@@ -1,5 +1,5 @@
 /**
- * ECommerce Day 2026 — backend bridge for static HTML pages.
+ * ECommerce Day 2026: backend bridge for static HTML pages.
  * Talks to trafficmena `/api/ecd/*` with a temporary checkout token (not Better Auth).
  *
  * Configure API_BASE for your environment. Package prices/names come from
@@ -9,7 +9,7 @@
   "use strict";
 
   var CONFIG = {
-    API_BASE: "http://localhost:3001/api/ecd",
+    API_BASE: "https://www.trafficmena.com/api/ecd",
     STORAGE_TOKEN: "ecd2026_checkout_token",
     STORAGE_PUBLIC: "ecd2026_public_token",
     STORAGE_BOOKING: "ecd2026_booking",

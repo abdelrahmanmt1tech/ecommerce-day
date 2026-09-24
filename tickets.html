@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>TrafficMENA — Tickets</title>
+    <title>TrafficMENA | Tickets</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -106,13 +106,6 @@
         align-items: center;
         gap: 12px;
         margin-bottom: 16px;
-      }
-      .eyebrow .dash {
-        width: 24px;
-        height: 2px;
-        background: var(--green-bright);
-        display: block;
-        flex: none;
       }
       .eyebrow span {
         font-family: "JetBrains Mono", monospace;
@@ -1022,14 +1015,13 @@
     </style>
   </head>
   <body>
-    <!-- ✅ Reusable Navbar — one line, no duplication -->
+    <!-- ✅ Reusable Navbar: one line, no duplication -->
     <site-navbar current="tickets"></site-navbar>
 
     <main>
       <!-- HERO -->
       <section class="hero container">
         <div class="eyebrow">
-          <span class="dash"></span>
           <span>ECommerce Day 2026 Tickets</span>
         </div>
         <h1>Choose how <span class="accent">deep</span> you want to go.</h1>
@@ -1058,7 +1050,6 @@
       <section class="bg-soft">
         <div class="container" style="padding-top: 56px; padding-bottom: 56px">
           <div class="eyebrow">
-            <span class="dash"></span>
             <span>Quick Choice</span>
           </div>
           <div class="quick-choice-card">
@@ -1135,22 +1126,22 @@
                 <span class="check">✓</span>Basic ECommerce Action Pack
               </div>
               <div class="item">
-                <span class="check">✓</span>ECommerce Report — Summary
+                <span class="check">✓</span>ECommerce Report: Summary
               </div>
               <div class="item">
-                <span class="check">✓</span>Platform access — 3 months
+                <span class="check">✓</span>Platform access: 3 months
               </div>
             </div>
             <div class="ticket-list-label muted">Does not include</div>
             <div class="ticket-list excluded">
               <div class="item">
-                <span class="dash">—</span>Workshop track entry
+                <span class="dash">✕</span>Workshop track entry
               </div>
               <div class="item">
-                <span class="dash">—</span>Workshop seat reservation
+                <span class="dash">✕</span>Workshop seat reservation
               </div>
               <div class="item">
-                <span class="dash">—</span>Exercises &amp; Live Builds
+                <span class="dash">✕</span>Exercises &amp; Live Builds
               </div>
             </div>
             <button
@@ -1206,7 +1197,7 @@
                 <span class="check">✓</span>Full ECommerce Report
               </div>
               <div class="item">
-                <span class="check">✓</span>Platform access — 1 year
+                <span class="check">✓</span>Platform access: 1 year
               </div>
             </div>
             <div class="ticket-callout">
@@ -1228,7 +1219,6 @@
       <section class="bg-soft">
         <div class="container" style="padding-top: 72px; padding-bottom: 72px">
           <div class="eyebrow">
-            <span class="dash"></span>
             <span>What Everyone Gets</span>
           </div>
           <h2 class="section-heading">Both passes carry the whole day home</h2>
@@ -1267,7 +1257,7 @@
               <div class="tile-dash"></div>
               <div class="tile-title">Platform Access</div>
               <div class="tile-line">
-                Content hub access — 3 months or 1 year per ticket.
+                Content hub access for 3 months or 1 year, depending on your ticket.
               </div>
             </div>
           </div>
@@ -1280,7 +1270,6 @@
         style="padding-top: 96px; padding-bottom: 96px"
       >
         <div class="eyebrow">
-          <span class="dash"></span>
           <span>Why Full Journey Costs More</span>
         </div>
         <h2 class="section-heading" style="margin-bottom: 48px">
@@ -1299,7 +1288,7 @@
             <div class="num">02</div>
             <div class="why-title">Live Practice</div>
             <div class="why-line">
-              Exercises and Live Builds during the day — you apply the material,
+              Exercises and Live Builds during the day. You apply the material,
               not just hear it.
             </div>
           </div>
@@ -1326,7 +1315,6 @@
       <section class="bg-soft">
         <div class="container" style="padding-top: 80px; padding-bottom: 80px">
           <div class="eyebrow">
-            <span class="dash"></span>
             <span>Full Comparison</span>
           </div>
           <h2 class="section-heading" style="margin-bottom: 40px">
@@ -1398,7 +1386,6 @@
         style="padding-top: 96px; padding-bottom: 96px"
       >
         <div class="eyebrow">
-          <span class="dash"></span>
           <span>Workshop Reservation</span>
         </div>
         <h2 class="section-heading" style="margin-bottom: 12px">
@@ -1415,7 +1402,7 @@
             class="res-card"
             style="border: 1px solid #d5dae0; background: #ffffff"
           >
-            <div class="num">0 — Before purchase</div>
+            <div class="num">0 · Before purchase</div>
             <div class="res-title">Included, not reserved</div>
             <div class="res-line">
               Full Journey includes workshop access; reservation opens after
@@ -1427,7 +1414,7 @@
             class="res-card"
             style="border: 1px solid #d5dae0; background: #ffffff"
           >
-            <div class="num">1 — Seats available</div>
+            <div class="num">1 · Seats available</div>
             <div class="res-title">Seats Available</div>
             <div class="res-line">
               Pick your workshop per slot and lock the seat.
@@ -1438,7 +1425,7 @@
             class="res-card"
             style="border: 1px solid #ffb020; background: #ffffff"
           >
-            <div class="num">2 — Almost full</div>
+            <div class="num">2 · Almost full</div>
             <div class="res-title">Almost Full</div>
             <div class="res-line">Only a few seats left in this room.</div>
             <div class="res-cta" style="color: #04c44e">Reserve My Seat</div>
@@ -1447,10 +1434,10 @@
             class="res-card"
             style="border: 1px solid #d5dae0; background: #f4f6f8"
           >
-            <div class="num">3 — Fully booked</div>
+            <div class="num">3 · Fully booked</div>
             <div class="res-title">Fully Booked</div>
             <div class="res-line">
-              Room at capacity — the recording stays available to you.
+              Room at capacity. The recording stays available to you.
             </div>
             <div class="res-cta" style="color: #101010">
               Join Waiting List / Watch Later
@@ -1460,7 +1447,7 @@
             class="res-card"
             style="border: 1px solid #ffb020; background: #fff9ef"
           >
-            <div class="num">4 — Conflict</div>
+            <div class="num">4 · Conflict</div>
             <div class="res-title">Slot conflict</div>
             <div class="res-line">
               You already have a workshop in this slot.
@@ -1471,7 +1458,7 @@
             class="res-card"
             style="border: 1px solid #c3f7d7; background: #e6fbee"
           >
-            <div class="num">5 — Confirmed</div>
+            <div class="num">5 · Confirmed</div>
             <div class="res-title">Confirmed</div>
             <div class="res-line">
               Added to your schedule. See you in the room.
@@ -1485,14 +1472,13 @@
       <section class="bg-green">
         <div class="container" style="padding-top: 72px; padding-bottom: 72px">
           <div class="eyebrow">
-            <span class="dash"></span>
             <span style="color: var(--green)">After the Event Platform</span>
           </div>
           <h2 class="section-heading" style="margin-bottom: 12px">
             The day continues on the platform
           </h2>
           <p style="font-size: 14px; color: var(--muted); margin: 0 0 36px">
-            The platform is a content hub for watching and downloading — not a
+            The platform is a content hub for watching and downloading, not a
             community or networking platform.
           </p>
           <div class="platform-card">
@@ -1541,8 +1527,7 @@
         style="padding-top: 96px; padding-bottom: 96px"
       >
         <div class="eyebrow">
-          <span class="dash"></span>
-          <span>Component — Price &amp; Availability States</span>
+          <span>Component: Price &amp; Availability States</span>
         </div>
         <h2 class="section-heading" style="margin-bottom: 8px">
           Ticket card states
@@ -1553,7 +1538,7 @@
         </p>
         <div class="avail-grid">
           <div class="avail-card">
-            <div class="num">1 — Coming soon</div>
+            <div class="num">1 · Coming soon</div>
             <span
               class="avail-pill"
               style="
@@ -1581,7 +1566,7 @@
             >
           </div>
           <div class="avail-card">
-            <div class="num">2 — On sale</div>
+            <div class="num">2 · On sale</div>
             <span
               class="avail-pill"
               style="
@@ -1613,7 +1598,7 @@
             </button>
           </div>
           <div class="avail-card">
-            <div class="num">3 — Limited*</div>
+            <div class="num">3 · Limited*</div>
             <span
               class="avail-pill"
               style="
@@ -1645,7 +1630,7 @@
             </button>
           </div>
           <div class="avail-card">
-            <div class="num">4 — Sold out</div>
+            <div class="num">4 · Sold out</div>
             <span
               class="avail-pill"
               style="
@@ -1675,7 +1660,7 @@
             </button>
           </div>
           <div class="avail-card">
-            <div class="num">5 — Sales closed</div>
+            <div class="num">5 · Sales closed</div>
             <span
               class="avail-pill"
               style="
@@ -1687,7 +1672,7 @@
             >
             <div class="avail-title">Full Journey Pass</div>
             <div class="avail-price" style="color: #6b747e">
-              Event day — 22 Oct 2026
+              Event day, 22 Oct 2026
             </div>
             <a
               href="agenda.html"
@@ -1709,7 +1694,6 @@
       <section class="bg-soft">
         <div class="container" style="padding-top: 96px; padding-bottom: 96px">
           <div class="eyebrow">
-            <span class="dash"></span>
             <span>FAQ &amp; Policies</span>
           </div>
           <h2 class="section-heading" style="margin-bottom: 40px">
@@ -1737,7 +1721,7 @@
               <p class="faq-a">
                 Workshops are offline, capacity-limited and require
                 pre-reservation after payment. Buying the pass gives you
-                workshop access but does not automatically reserve a seat —
+                workshop access but does not automatically reserve a seat, so
                 reserve early.
               </p>
             </details>
@@ -1747,7 +1731,7 @@
                 <span class="faq-icon"></span>
               </summary>
               <p class="faq-a">
-                Yes. All sessions — Main Stage and workshops — are recorded and
+                Yes. All sessions (Main Stage and workshops) are recorded and
                 available on the platform with both tickets.
               </p>
             </details>
@@ -1799,7 +1783,7 @@
                 <span class="faq-icon"></span>
               </summary>
               <p class="faq-a">
-                Yes — an invoice can be requested during checkout or afterwards
+                Yes. An invoice can be requested during checkout or afterwards
                 via info@trafficmena.com.
               </p>
             </details>
@@ -1819,7 +1803,7 @@
                 <span class="faq-icon"></span>
               </summary>
               <p class="faq-a">
-                No — there is no certificate. What you leave with is the
+                No, there is no certificate. What you leave with is the
                 recordings, the Workshop Templates &amp; Files, the Summaries,
                 the Action Pack and the ECommerce Report.
               </p>
@@ -1839,7 +1823,7 @@
       <section class="bg-dark cta-section">
         <h2>Pick your pass. Build your ECommerce Day.</h2>
         <p>
-          Start with the Main Stage, or take the full journey — workshops,
+          Start with the Main Stage, or take the full journey with workshops,
           hands-on practice and a full year of access.
         </p>
         <div class="cta-actions">

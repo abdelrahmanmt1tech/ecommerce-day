@@ -1,5 +1,5 @@
 /**
- * ECommerce Day — hydrate partners / speakers / packages from GET /api/ecd/content.
+ * ECommerce Day: hydrate partners / speakers / packages from GET /api/ecd/content.
  * Requires prices.js then ecd-api.js before this file.
  */
 (function (global) {
