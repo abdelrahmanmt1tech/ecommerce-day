@@ -10,9 +10,9 @@
       href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap"
       rel="stylesheet"
     />
-    <script src="prices.js"></script>
-    <script src="ecd-api.js"></script>
-    <script src="ecd-content.js"></script>
+    <script src="prices.js?v=20260924a"></script>
+    <script src="ecd-api.js?v=20260924a"></script>
+    <script src="ecd-content.js?v=20260924a"></script>
     <style>
       * {
         box-sizing: border-box;
@@ -1169,10 +1169,8 @@
               <span>Send me TrafficMENA news &amp; events (optional).</span>
             </label>
             <div class="legal-note">
-              This event is photographed and recorded, see
-              <a href="#">Recording &amp; Photography Policy</a>.<br />
-              Full Journey does not hold a place in every workshop. You reserve
-              after payment and the rooms are limited.
+              All Access does not hold a place in every workshop. Workshop booking
+              opens 7-10 days before the event, and the rooms are limited.
             </div>
             <button class="pay-btn" id="payBtn" disabled>
               Pay <span class="price-total" data-suffix=" EGP">[Total] EGP</span>
@@ -1192,13 +1190,13 @@
             <div>
               <div class="summary-event">ECommerce Day 2026</div>
               <div class="summary-meta" id="summaryEventMeta">
-                22 October 2026 · Cairo<br />Venue details will be announced soon.
+                5 November 2026 · Cairo<br />Creativa Innovation Hub, Giza
               </div>
             </div>
             <div class="summary-ticket-row">
               <div>
                 <div class="summary-ticket-name" id="ticketName">
-                  Full Journey Pass
+                  All Access Pass
                 </div>
                 <div class="summary-ticket-tag" id="ticketTag">
                   Learn it. Work on it. Apply it.
@@ -1234,8 +1232,8 @@
           <div class="label">Your pass includes</div>
           <div class="text" id="valueReminder"></div>
           <div class="sub" id="fjNote">
-            Full Journey lets you reserve workshops. You pick them after
-            payment, and the rooms are limited.
+            All Access lets you book workshops. Booking opens 7-10 days before
+            the event, we will announce how, and the rooms are limited.
           </div>
         </div>
       </aside>
@@ -1296,7 +1294,7 @@
             if (pkg && pkg.displayName) return pkg.displayName;
             return EventPrices.getTicket(state.ticket).name;
           }
-          return state.ticket === "fj" ? "Full Journey Pass" : "Control Tower Pass";
+          return state.ticket === "fj" ? "All Access Pass" : "Standard Pass";
         }
         function getTicketTag() {
           if (window.EventPrices) {
@@ -1320,8 +1318,8 @@
             }
           }
           return state.ticket === "fj"
-            ? "Both stages, workshops, recordings, templates, and continued platform access."
-            : "Both stages, recordings, and Workshop Templates & Files.";
+            ? "Both stages, up to 5 workshops, Workshop Templates & Files, and 6 months of premium content library access."
+            : "Full-day access to the Main Stage and the Second Stage.";
         }
 
         function assembleMobile(mobile, cc) {
@@ -1389,7 +1387,7 @@
           const chips = document.getElementById("ticketChips");
           chips.innerHTML = "";
           ["ct", "fj"].forEach(function (id) {
-            var name = id === "fj" ? "Full Journey Pass" : "Control Tower Pass";
+            var name = id === "fj" ? "All Access Pass" : "Standard Pass";
             if (window.EventPrices) {
               var pkg = EventPrices.getPackage(id);
               if (pkg && pkg.displayName) name = pkg.displayName;

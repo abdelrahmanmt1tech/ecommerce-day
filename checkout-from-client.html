@@ -1166,10 +1166,8 @@
               <span>Send me TrafficMENA news &amp; events (optional).</span>
             </label>
             <div class="legal-note">
-              This event is photographed and recorded, see
-              <a href="#">Recording &amp; Photography Policy</a>.<br />
-              Full Journey does not hold a place in every workshop. You reserve
-              after payment and the rooms are limited.
+              All Access does not hold a place in every workshop. Workshop booking
+              opens 7-10 days before the event, and the rooms are limited.
             </div>
             <button class="pay-btn" id="payBtn" disabled>
               Pay [Total] EGP
@@ -1195,7 +1193,7 @@
             <div class="summary-ticket-row">
               <div>
                 <div class="summary-ticket-name" id="ticketName">
-                  Full Journey Pass
+                  All Access Pass
                 </div>
                 <div class="summary-ticket-tag" id="ticketTag">
                   Learn it. Work on it. Apply it.
@@ -1231,8 +1229,8 @@
           <div class="label">Your pass includes</div>
           <div class="text" id="valueReminder"></div>
           <div class="sub" id="fjNote">
-            Full Journey lets you reserve workshops. You pick them after
-            payment, and the rooms are limited.
+            All Access lets you book workshops. Booking opens 7-10 days before
+            the event, we will announce how, and the rooms are limited.
           </div>
         </div>
       </aside>
@@ -1278,7 +1276,7 @@
         };
 
         function getTicketName() {
-          return state.ticket === "fj" ? "Full Journey Pass" : "Standard Pass";
+          return state.ticket === "fj" ? "All Access Pass" : "Standard Pass";
         }
         function getTicketTag() {
           return state.ticket === "fj"
@@ -1287,8 +1285,8 @@
         }
         function getValueReminder() {
           return state.ticket === "fj"
-            ? "Both stages, all recordings including the workshops, Workshop Templates & Files, workshop entry with a reserved place, hands-on work, full outputs, and 6 months in the past paid content library."
-            : "Both stages, the recordings of both stages, and the Workshop Templates & Files.";
+            ? "Both stages, up to 5 workshops, Workshop Templates & Files, and 6 months of premium content library access."
+            : "Full-day access to the Main Stage and the Second Stage.";
         }
 
         function screen1Errors() {
@@ -1338,7 +1336,7 @@
         function renderTicketChips() {
           const chips = document.getElementById("ticketChips");
           chips.innerHTML = "";
-          ["Standard Pass", "Full Journey Pass"].forEach((name, i) => {
+          ["Standard Pass", "All Access Pass"].forEach((name, i) => {
             const isActive =
               (i === 1 && state.ticket === "fj") ||
               (i === 0 && state.ticket === "ct");

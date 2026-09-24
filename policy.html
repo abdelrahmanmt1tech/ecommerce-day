@@ -14,9 +14,9 @@
     />
 
     <!-- ✅ Reusable navbar -->
-    <script src="navbar.js" defer></script>
+    <script src="navbar.js?v=20260924a" defer></script>
     <!-- ✅ Reusable footer -->
-    <script src="footer.js" defer></script>
+    <script src="footer.js?v=20260924a" defer></script>
 
     <style>
       *,
@@ -668,6 +668,36 @@
           font-size: 14px;
         }
       }
+      /* WhatsApp contact button (inline, text-sized) */
+      .wa-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        vertical-align: middle;
+        height: 28px;
+        padding: 0 10px;
+        border-radius: 8px;
+        background: #e6fbee;
+        border: 1px solid #c3f7d7;
+        color: #101010;
+        font-family: Manrope, sans-serif;
+        font-size: 13px;
+        font-weight: 600;
+        line-height: 1;
+        text-decoration: none;
+        white-space: nowrap;
+        transition: border-color 0.15s ease;
+      }
+      .wa-btn svg {
+        color: #04c44e;
+      }
+      .wa-btn:hover {
+        border-color: #05ef62;
+      }
+      .wa-btn:focus-visible {
+        outline: 2px solid #101010;
+        outline-offset: 2px;
+      }
     </style>
   </head>
   <body>
@@ -789,6 +819,7 @@
           style="font-weight: 600; font-size: 14px"
           >info@trafficmena.com</a
         >
+        <div style="margin-top: 12px"><a class="wa-btn" href="https://wa.me/201505437979?text=I%20need%20help%20for%20Ecommerce%20Day%202026" target="_blank" rel="noopener" aria-label="Chat with us on WhatsApp (opens in a new tab)"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.64.07-.3-.15-1.26-.46-2.4-1.48-.89-.79-1.49-1.77-1.66-2.07-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.61-.92-2.2-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.88 1.21 3.07c.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.69.63.71.23 1.36.2 1.87.12.57-.08 1.76-.72 2.01-1.41.25-.7.25-1.29.17-1.41-.07-.13-.27-.2-.57-.35ZM12.05 21.5h-.01a9.4 9.4 0 0 1-4.79-1.31l-.34-.2-3.56.93.95-3.47-.22-.36a9.41 9.41 0 0 1-1.44-5.02c0-5.2 4.23-9.43 9.43-9.43 2.52 0 4.89.98 6.67 2.77a9.37 9.37 0 0 1 2.76 6.67c0 5.2-4.23 9.43-9.43 9.43Zm8.02-17.45A11.27 11.27 0 0 0 12.05.73C5.8.73.72 5.81.72 12.06c0 2 .52 3.95 1.52 5.66L.62 23.6l6.02-1.58a11.3 11.3 0 0 0 5.41 1.38h.01c6.25 0 11.33-5.08 11.33-11.33 0-3.03-1.18-5.87-3.32-8.02Z"/></svg><span>WhatsApp</span></a></div>
       </div>
       <div class="contact-form">
         <label for="pol-type">Request type</label>
@@ -796,7 +827,7 @@
           <option>Question about this policy</option>
           <option>Data request (access / deletion)</option>
           <option>Refund enquiry</option>
-          <option>Media / recording request</option>
+          <option>Media request</option>
           <option>Other</option>
         </select>
         <label for="pol-msg">Message</label>
@@ -872,7 +903,7 @@
           ],
           [
             cell("Photo / Video", { w: 700 }),
-            cell("Event footage and recordings"),
+            cell("Event photos and videos"),
             cell("Production team"),
           ],
         ],
@@ -883,14 +914,14 @@
         cols: "1.3fr 1.2fr 1fr",
         rows: [
           [
-            cell("Buyer cancels before [Refund Window]", { w: 700 }),
-            cell("Refund per policy"),
-            cell("[Refund Window]", { pending: true }),
+            cell("Buyer cancels by end of 30 October 2026", { w: 700 }),
+            cell("Full refund"),
+            cell("Until 30 October 2026"),
           ],
           [
-            cell("Buyer cancels after [Refund Window]", { w: 700 }),
-            cell("Non-refundable except by exception"),
-            cell("[Rate / condition]", { pending: true }),
+            cell("Buyer cancels after 30 October 2026", { w: 700 }),
+            cell("Non-refundable"),
+            cell("From 31 October 2026"),
           ],
           [
             cell("Organizer cancels the event", { w: 700 }),
@@ -904,7 +935,7 @@
           ],
           [
             cell("Workshop is full", { w: 700 }),
-            cell("Not a ticket cancellation, recording available", {
+            cell("Not a ticket cancellation, choose another workshop", {
               co: "#101010",
               w: 700,
             }),
@@ -919,11 +950,16 @@
       };
 
       var entitleTable = {
-        head: ["Entitlement", "Control Tower", "Full Journey"],
+        head: ["Entitlement", "Standard", "All Access"],
         cols: "1.4fr 1fr 1fr",
         rows: [
           [
             cell("Access to The Control Tower", { w: 700 }),
+            cell("Yes"),
+            cell("Yes"),
+          ],
+          [
+            cell("Access to the Second Stage", { w: 700 }),
             cell("Yes"),
             cell("Yes"),
           ],
@@ -933,24 +969,19 @@
             cell("Yes"),
           ],
           [
-            cell("Workshop seat reservation", { w: 700 }),
+            cell("Workshop selection (up to 5)", { w: 700 }),
             cell("No", { co: "#6b747e" }),
             cell("Yes"),
           ],
           [
-            cell("All session recordings", { w: 700 }),
-            cell("Yes"),
-            cell("Yes"),
-          ],
-          [
             cell("Workshop Templates & Files", { w: 700 }),
-            cell("Yes"),
+            cell("No", { co: "#6b747e" }),
             cell("Yes"),
           ],
           [
-            cell("Platform duration", { w: 700 }),
-            cell("3 months"),
-            cell("1 year"),
+            cell("Premium content library", { w: 700 }),
+            cell("No", { co: "#6b747e" }),
+            cell("6 months"),
           ],
           [
             cell("Certificate", { w: 700 }),
@@ -965,39 +996,6 @@
         ],
       };
 
-      var consentTable = {
-        head: ["Capture type", "Consent model"],
-        cols: "1.2fr 1.6fr",
-        rows: [
-          [
-            cell("Stage recording", { w: 700 }),
-            cell("Part of attendance terms, general notice"),
-          ],
-          [
-            cell("Wide crowd shot", { w: 700 }),
-            cell("General notice, no individual consent"),
-          ],
-          [
-            cell("Incidental appearance", { w: 700 }),
-            cell("General notice + removal on request"),
-          ],
-          [
-            cell("Close-up", { w: 700 }),
-            cell("Verbal consent / cue before marketing use"),
-          ],
-          [cell("Interview", { w: 700 }), cell("Explicit recorded consent")],
-          [cell("Testimonial", { w: 700 }), cell("Explicit written consent")],
-          [
-            cell("Sponsor activation", { w: 700 }),
-            cell("Opt-in only. No data shared without a choice"),
-          ],
-          [
-            cell("Minor", { w: 700 }),
-            cell("Guardian consent. The event targets professionals"),
-          ],
-        ],
-      };
-
       var policies = [
         {
           slug: "/terms/",
@@ -1005,7 +1003,7 @@
           plain:
             "The rules that apply when you use this website, buy a ticket, or attend ECommerce Day 2026.",
           summary:
-            "Two ticket types only, tickets are individual, workshops require pre-reservation subject to capacity, all content is recorded, and [Legal Entity Name] operates the event under Egyptian law.",
+            "Two ticket types only, tickets are individual and non-transferable, workshops are booked 7-10 days before the event subject to capacity, and [Legal Entity Name] operates the event under Egyptian law.",
           heads: [
             "Who We Are",
             "Acceptance",
@@ -1026,7 +1024,7 @@
           extras: {
             5: {
               example:
-                "Buying a Full Journey Pass does not automatically reserve a seat in every workshop. Reservation is a separate step after payment.",
+                "Buying an All Access Pass does not automatically reserve a seat in every workshop. Workshop booking opens 7-10 days before the event, and we will announce how to book.",
             },
           },
         },
@@ -1068,7 +1066,7 @@
           plain:
             "When a ticket can be refunded, how to request it, and which cases are non-refundable.",
           summary:
-            "Refunds follow defined windows [Refund Window]. A full workshop is not a ticket cancellation. The Main Stage and recordings remain available. Requests need your order number and email.",
+            "A full refund is available until the end of 30 October 2026, five days before the event. A full workshop is not a ticket cancellation. Requests need your order number and the email associated with your booking.",
           heads: [
             "Scope",
             "Buyer Cancellation",
@@ -1087,7 +1085,7 @@
             1: { table: refundTable },
             5: {
               example:
-                "If the CLICKED workshop you wanted is full, no refund right is created. Pick another workshop or watch the recording; your ticket remains fully valid.",
+                "If the CLICKED workshop you wanted is full, no refund right is created. Pick another workshop; your ticket remains fully valid.",
             },
             7: {
               example:
@@ -1099,9 +1097,9 @@
           slug: "/ticket-policy/",
           title: "Ticket & Entry",
           plain:
-            "Ticket validity, QR entry, transfer rules, and what each ticket type includes.",
+            "Ticket validity, QR entry, the no-transfer rule, and what each ticket type includes.",
           summary:
-            "Each ticket is issued to a named attendee with a unique QR. Full Journey enters workshops after pre-reservation (draft capacities 80/200/100). No certificate and no speaker directory.",
+            "Each ticket is issued to a named attendee with a unique QR and cannot be transferred. All Access holders enter the workshops they booked (booking opens 7-10 days before the event, draft capacities 80/200/100). No certificate and no speaker directory.",
           heads: [
             "Ticket Types",
             "Validity",
@@ -1124,35 +1122,6 @@
             },
           },
         },
-        {
-          slug: "/recording-policy/",
-          title: "Recording & Photography",
-          plain:
-            "The event is photographed and recorded. This policy explains what we capture, how we use it, and your options.",
-          summary:
-            "Sessions and workshops are recorded and uploaded to the platform. General crowd shots fall under attendance terms; close-ups and interviews require explicit consent.",
-          heads: [
-            "Notice",
-            "Purposes",
-            "General Crowd Shots",
-            "Featured Individuals",
-            "Speaker Recording",
-            "Attendee Recording",
-            "Restricted Content",
-            "Opt-out / Assistance",
-            "Storage & Retention",
-            "Sharing",
-            "Requests",
-            "Contact",
-          ],
-          extras: {
-            3: { table: consentTable },
-            7: {
-              example:
-                "If you prefer not to appear in close-up shots, tell the production team at registration and we will accommodate where possible.",
-            },
-          },
-        },
       ];
 
       var relatedAll = [
@@ -1163,7 +1132,6 @@
         { en: "Privacy Policy", line: "Your data and your rights" },
         { en: "Refund & Cancellation", line: "Refund windows and requests" },
         { en: "Ticket & Entry", line: "QR entry and ticket rules" },
-        { en: "Recording & Photography", line: "Filming and consent" },
       ];
 
       var defsData = [
@@ -1175,16 +1143,16 @@
           t: "Attendee",
           line: "The named person on the ticket who holds its QR.",
         },
-        { t: "Ticket", line: "A Control Tower Pass or a Full Journey Pass." },
+        { t: "Ticket", line: "A Standard Pass or an All Access Pass." },
         {
           t: "Workshop",
           line: "A hands-on session in the CLICKED / CONFIRMED / DELIVERED tracks.",
         },
         {
           t: "Platform",
-          line: "The post-event Content Hub for recordings and files.",
+          line: "The post-event Content Hub for All Access Pass holders (6 months).",
         },
-        { t: "Content", line: "Recordings, summaries, templates and reports." },
+        { t: "Content", line: "Summaries, templates and reports." },
       ];
 
       // ==========================================
@@ -1215,7 +1183,6 @@
           "Privacy",
           "Refund & Cancellation",
           "Ticket & Entry",
-          "Recording & Photography",
         ];
         var wrap = document.getElementById("policySwitch");
         wrap.innerHTML = names

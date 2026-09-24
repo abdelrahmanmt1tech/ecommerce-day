@@ -12,9 +12,9 @@
       href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=IBM+Plex+Sans+Arabic:wght@400;500;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
       rel="stylesheet"
     />
-    <script src="prices.js"></script>
-    <script src="ecd-api.js"></script>
-    <script src="ecd-content.js"></script>
+    <script src="prices.js?v=20260924a"></script>
+    <script src="ecd-api.js?v=20260924a"></script>
+    <script src="ecd-content.js?v=20260924a"></script>
 
     <style>
       #ecdOverlay {
@@ -884,7 +884,7 @@
           >
         </div>
         <div style="font-size: 11px; color: #9aa1a9">
-          22 October 2026 · Cairo · Venue details will be announced soon.
+          5 November 2026 · Cairo · Creativa Innovation Hub, Giza
         </div>
       </div>
     </div>
@@ -1365,10 +1365,8 @@
                 margin-bottom: 20px;
               "
             >
-              This event is photographed and recorded. See
-              <a href="#">Recording &amp; Photography Policy</a>.<br />
-              Full Journey does not guarantee a seat in every workshop;
-              reservation is after payment and subject to capacity.
+              All Access does not guarantee a seat in every workshop. Workshop
+              booking opens 7-10 days before the event, subject to capacity.
             </div>
             <button
               id="payBtn"
@@ -1419,8 +1417,7 @@
                 ECommerce Day 2026
               </div>
               <div style="font-size: 12px; color: #6b747e; line-height: 1.7">
-                22 October 2026 · Cairo<br />Venue details will be announced
-                soon.
+                5 November 2026 · Cairo<br />Creativa Innovation Hub, Giza
               </div>
             </div>
             <div
@@ -1568,7 +1565,7 @@
                   cursor: pointer;
                 "
               >
-                Conference Pass
+                Standard Pass
               </button>
             </div>
           </div>
@@ -1590,9 +1587,9 @@
             style="font-size: 13px; line-height: 1.8; color: #1f2630"
             id="desktopValueReminder"
           >
-            Main Stage + all recordings + Workshop Templates &amp; Files +
-            workshop entry &amp; seat reservation + hands-on work + full outputs
-            + 1-year platform access.
+            Both stages + up to 5 workshops + Workshop Templates &amp; Files +
+            hands-on work + full outputs + 6 months of premium content library
+            access.
           </div>
           <ul
             id="checkoutPackageFeatures"
@@ -2083,7 +2080,7 @@
         if (window.EventPrices) {
           return EventPrices.getTicket(state.ticket).name;
         }
-        return getIsFj() ? "All Access Pass" : "Conference Pass";
+        return getIsFj() ? "All Access Pass" : "Standard Pass";
       }
 
       function getTicketTag() {
@@ -2111,8 +2108,8 @@
           if (included.length) return included.join(" · ");
         }
         return getIsFj()
-          ? "Main Stage + all recordings + Workshop Templates & Files + workshop entry & seat reservation + hands-on work + full outputs + 1-year platform access."
-          : "Main Stage + all session recordings + Workshop Templates & Files + 3-month platform access.";
+          ? "Both stages + up to 5 workshops + Workshop Templates & Files + hands-on work + full outputs + 6 months of premium content library access."
+          : "Main Stage + Second Stage, full-day access.";
       }
 
       function renderPackageFeatures() {

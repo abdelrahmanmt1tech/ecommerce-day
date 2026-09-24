@@ -15,9 +15,9 @@
     STORAGE_BOOKING: "ecd2026_booking",
     EVENT: {
       title: "ECommerce Day 2026",
-      startIso: "2026-10-22T09:00:00+03:00",
-      endIso: "2026-10-22T18:00:00+03:00",
-      location: "Venue details will be announced soon.",
+      startIso: "2026-11-05T10:00:00+02:00",
+      endIso: "2026-11-05T18:00:00+02:00",
+      location: "Creativa Innovation Hub, Giza",
     },
   };
 

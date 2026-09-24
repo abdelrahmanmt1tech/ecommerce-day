@@ -9,14 +9,16 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=IBM+Plex+Sans+Arabic:wght@400;500;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=IBM+Plex+Sans+Arabic:wght@400;500;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
 
     <!-- ✅ Reusable navbar -->
-    <script src="navbar.js" defer></script>
+    <script src="navbar.js?v=20260924a" defer></script>
     <!-- ✅ Reusable footer -->
-    <script src="footer.js" defer></script>
+    <script src="footer.js?v=20260924a" defer></script>
+    <!-- Shared tickets section (same as index.html). Not deferred on purpose. -->
+    <script src="tickets-section.js?v=20260924a"></script>
 
     <style>
       *,
@@ -238,13 +240,6 @@
         .hero-meta span {
           width: 100%;
         }
-        .session-detail-grid {
-          grid-template-columns: 1fr !important;
-          gap: 24px !important;
-        }
-        .session-detail-panel {
-          width: 100% !important;
-        }
       }
 
       @media (max-width: 480px) {
@@ -285,6 +280,37 @@
           position: static !important;
         }
       }
+
+      /* WhatsApp contact button (inline, text-sized) */
+      .wa-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        vertical-align: middle;
+        height: 28px;
+        padding: 0 10px;
+        border-radius: 8px;
+        background: #e6fbee;
+        border: 1px solid #c3f7d7;
+        color: #101010;
+        font-family: Manrope, sans-serif;
+        font-size: 13px;
+        font-weight: 600;
+        line-height: 1;
+        text-decoration: none;
+        white-space: nowrap;
+        transition: border-color 0.15s ease;
+      }
+      .wa-btn svg {
+        color: #04c44e;
+      }
+      .wa-btn:hover {
+        border-color: #05ef62;
+      }
+      .wa-btn:focus-visible {
+        outline: 2px solid #101010;
+        outline-offset: 2px;
+      }
     </style>
   </head>
   <body>
@@ -297,8 +323,8 @@
         <span class="font-mono">ECommerce Day 2026 Agenda</span>
       </div>
       <h1 class="hero-title">
-        One full day covering the order journey, from the first
-        <span style="color: #04c44e">click</span> to delivery and retention.
+        From First <span style="color: #04c44e">Click</span> to Profitable
+        Growth
       </h1>
       <p
         style="
@@ -309,8 +335,8 @@
           max-width: 62ch;
         "
       >
-        The agenda runs across two stages and three workshop rooms. Choose what
-        you attend on the day, and catch up on the rest on the platform.
+        Meet market leaders, gain wider business insight, strengthen your
+        decisions, and build a high-value ecommerce network.
       </p>
       <div class="hero-meta">
         <span>5 November 2026</span>
@@ -318,8 +344,6 @@
         <span>Offline in Cairo</span>
         <span style="color: #d5dae0">·</span>
         <span>Two stages and three workshop rooms</span>
-        <span style="color: #d5dae0">·</span>
-        <span>All Sessions Recorded</span>
       </div>
       <div style="display: flex; gap: 14px; flex-wrap: wrap">
         <a href="tickets.html" class="btn-primary">Book Your Ticket</a>
@@ -353,17 +377,11 @@
           <path d="M12 8h.01 M12 11v5" stroke-linecap="round"></path>
         </svg>
         <div style="font-size: 14px; line-height: 1.7; color: #1f2630">
-          <div style="margin-bottom: 6px">
-            Some sessions run in parallel. Recordings of
-            <strong>all sessions</strong> plus
-            <strong>Workshop Templates &amp; Files</strong> are available to all
-            attendees on the platform after the event.
-          </div>
-          <div style="color: #4a5563">
-            Standard Pass covers both stages. Full Journey Pass adds the
-            workshops, which you reserve in advance because the rooms are
-            limited.
-          </div>
+          ECommerce Day offers 15+ workshops covering 3 core ecommerce
+          functions. All Access Pass holders can select and attend up to 5
+          workshops, subject to availability. Workshop booking opens 7-10 days
+          before the event, and we will announce how to book. Workshops
+          scheduled at the same time cannot be selected together.
         </div>
       </div>
     </div>
@@ -780,31 +798,9 @@
               font-size: 13px;
               color: #4a5563;
               line-height: 1.6;
-              margin-bottom: 14px;
             "
           >
             Founders, leaders, decision makers
-          </div>
-          <div style="display: flex; align-items: center; gap: 8px">
-            <span
-              class="font-mono"
-              style="font-size: 11px; letter-spacing: 0.08em; color: #101010"
-              >Stage</span
-            >
-            <span
-              class="font-mono"
-              style="
-                font-size: 9px;
-                letter-spacing: 0.08em;
-                text-transform: uppercase;
-                background: #f4f6f8;
-                border: 1px solid #e6eaee;
-                border-radius: 4px;
-                padding: 2px 6px;
-                color: #6b747e;
-              "
-              >Draft</span
-            >
           </div>
         </div>
         <div
@@ -853,31 +849,9 @@
               font-size: 13px;
               color: #4a5563;
               line-height: 1.6;
-              margin-bottom: 14px;
             "
           >
             Anyone who wants the detail behind a result
-          </div>
-          <div style="display: flex; align-items: center; gap: 8px">
-            <span
-              class="font-mono"
-              style="font-size: 11px; letter-spacing: 0.08em; color: #101010"
-              >Stage</span
-            >
-            <span
-              class="font-mono"
-              style="
-                font-size: 9px;
-                letter-spacing: 0.08em;
-                text-transform: uppercase;
-                background: #f4f6f8;
-                border: 1px solid #e6eaee;
-                border-radius: 4px;
-                padding: 2px 6px;
-                color: #6b747e;
-              "
-              >Draft</span
-            >
           </div>
         </div>
         <div
@@ -926,31 +900,9 @@
               font-size: 13px;
               color: #4a5563;
               line-height: 1.6;
-              margin-bottom: 14px;
             "
           >
             Marketing, performance, SEO, content
-          </div>
-          <div style="display: flex; align-items: center; gap: 8px">
-            <span
-              class="font-mono"
-              style="font-size: 11px; letter-spacing: 0.08em; color: #101010"
-              >Workshops</span
-            >
-            <span
-              class="font-mono"
-              style="
-                font-size: 9px;
-                letter-spacing: 0.08em;
-                text-transform: uppercase;
-                background: #f4f6f8;
-                border: 1px solid #e6eaee;
-                border-radius: 4px;
-                padding: 2px 6px;
-                color: #6b747e;
-              "
-              >Draft</span
-            >
           </div>
         </div>
         <div
@@ -999,31 +951,9 @@
               font-size: 13px;
               color: #4a5563;
               line-height: 1.6;
-              margin-bottom: 14px;
             "
           >
             Product, design, CRO, growth
-          </div>
-          <div style="display: flex; align-items: center; gap: 8px">
-            <span
-              class="font-mono"
-              style="font-size: 11px; letter-spacing: 0.08em; color: #101010"
-              >Workshops</span
-            >
-            <span
-              class="font-mono"
-              style="
-                font-size: 9px;
-                letter-spacing: 0.08em;
-                text-transform: uppercase;
-                background: #f4f6f8;
-                border: 1px solid #e6eaee;
-                border-radius: 4px;
-                padding: 2px 6px;
-                color: #6b747e;
-              "
-              >Draft</span
-            >
           </div>
         </div>
         <div
@@ -1072,31 +1002,9 @@
               font-size: 13px;
               color: #4a5563;
               line-height: 1.6;
-              margin-bottom: 14px;
             "
           >
             Operations, CX, fulfillment, retention
-          </div>
-          <div style="display: flex; align-items: center; gap: 8px">
-            <span
-              class="font-mono"
-              style="font-size: 11px; letter-spacing: 0.08em; color: #101010"
-              >Workshops</span
-            >
-            <span
-              class="font-mono"
-              style="
-                font-size: 9px;
-                letter-spacing: 0.08em;
-                text-transform: uppercase;
-                background: #f4f6f8;
-                border: 1px solid #e6eaee;
-                border-radius: 4px;
-                padding: 2px 6px;
-                color: #6b747e;
-              "
-              >Draft</span
-            >
           </div>
         </div>
       </div>
@@ -1284,509 +1192,8 @@
       </div>
     </div>
 
-    <!-- ==================== SESSION DETAILS PANEL (Dynamic) ==================== -->
-    <div class="container" style="padding: 72px 24px">
-      <div class="section-label">
-        <span class="font-mono">Session Details</span>
-      </div>
-      <div
-        class="session-detail-grid"
-        style="
-          display: grid;
-          grid-template-columns: 1fr 480px;
-          gap: 48px;
-          align-items: start;
-        "
-      >
-        <div>
-          <h2
-            style="
-              font-size: 36px;
-              line-height: 1.1;
-              font-weight: 700;
-              margin: 0 0 16px;
-            "
-          >
-            Every session opens a detail panel
-          </h2>
-          <p
-            style="
-              font-size: 16px;
-              line-height: 1.7;
-              color: #4a5563;
-              max-width: 52ch;
-              margin: 0 0 20px;
-            "
-          >
-            Click any session card in the timeline or room view and the panel on
-            the right updates automatically.
-          </p>
-          <div
-            class="font-mono"
-            style="
-              font-size: 11px;
-              letter-spacing: 0.08em;
-              color: #6b747e;
-              line-height: 2;
-            "
-          >
-            CONTENTS: DESCRIPTION · WHAT YOU'LL LEARN · PRACTICAL OUTPUT<br />SPEAKER
-            · TIME &amp; ROOM · REQUIRED TOOLS · LEVEL · RESERVATION
-          </div>
-        </div>
-        <div
-          class="session-detail-panel"
-          id="sessionPanel"
-          style="
-            border: 1px solid #d5dae0;
-            border-radius: 16px;
-            box-shadow: 0 12px 40px rgba(16, 16, 16, 0.1);
-            overflow: hidden;
-            width: 480px;
-          "
-        >
-          <!-- Header -->
-          <div
-            style="
-              display: flex;
-              justify-content: space-between;
-              align-items: center;
-              padding: 16px 20px;
-              border-bottom: 1px solid #e6eaee;
-            "
-          >
-            <span
-              id="spRoomPill"
-              style="
-                display: flex;
-                align-items: center;
-                gap: 6px;
-                border: 1px solid #e6eaee;
-                border-radius: 999px;
-                padding: 3px 10px;
-                font-family: &quot;JetBrains Mono&quot;, monospace;
-                font-size: 9px;
-                letter-spacing: 0.06em;
-                color: #101010;
-              "
-            >
-              <span
-                id="spRoomDot"
-                style="
-                  width: 6px;
-                  height: 6px;
-                  border-radius: 50%;
-                  background: #101010;
-                "
-              ></span>
-              <span id="spRoomName">Main Stage</span>
-            </span>
-            <button
-              aria-label="Close panel"
-              style="
-                background: none;
-                border: none;
-                font-size: 18px;
-                color: #6b747e;
-                cursor: pointer;
-              "
-            >
-              ×
-            </button>
-          </div>
-
-          <!-- Body -->
-          <div style="padding: 24px 20px">
-            <div
-              style="
-                display: flex;
-                align-items: center;
-                gap: 10px;
-                margin-bottom: 12px;
-              "
-            >
-              <span
-                class="font-mono"
-                id="spTime"
-                style="font-size: 11px; letter-spacing: 0.08em; color: #101010"
-                >11:20</span
-              >
-              <span
-                id="spFmt"
-                style="
-                  border: 1px solid #e6eaee;
-                  border-radius: 999px;
-                  padding: 3px 10px;
-                  font-family: &quot;JetBrains Mono&quot;, monospace;
-                  font-size: 9px;
-                  letter-spacing: 0.06em;
-                  text-transform: uppercase;
-                  color: #4a5563;
-                "
-                >Keynote</span
-              >
-              <span
-                id="spAccess"
-                style="
-                  border-radius: 999px;
-                  padding: 3px 10px;
-                  font-size: 11px;
-                  font-weight: 600;
-                  background: #f4f6f8;
-                  border: 1px solid #e6eaee;
-                  color: #4a5563;
-                "
-                >All Tickets</span
-              >
-            </div>
-
-            <h3
-              id="spTitle"
-              style="
-                font-size: 22px;
-                line-height: 1.3;
-                font-weight: 700;
-                margin: 0 0 12px;
-              "
-            >
-              Topic will be announced
-            </h3>
-
-            <!-- ✅ قسم الوصف مخفي -->
-            <div id="spDescSection" style="display: none">
-              <p
-                id="spDesc"
-                style="
-                  font-size: 14px;
-                  line-height: 1.7;
-                  color: #4a5563;
-                  margin: 0 0 20px;
-                "
-              ></p>
-            </div>
-
-            <!-- ✅ قسم What you'll learn مخفي -->
-            <div id="spLearnSection" style="display: none">
-              <div
-                class="font-mono"
-                style="
-                  font-size: 10px;
-                  letter-spacing: 0.1em;
-                  text-transform: uppercase;
-                  color: #6b747e;
-                  margin-bottom: 10px;
-                "
-              >
-                What you'll learn
-              </div>
-              <div
-                id="spLearn"
-                style="
-                  display: flex;
-                  flex-direction: column;
-                  gap: 8px;
-                  margin-bottom: 20px;
-                "
-              ></div>
-            </div>
-
-            <!-- ✅ قسم Practical output مخفي -->
-            <div id="spOutputSection" style="display: none">
-              <div
-                style="
-                  background: #e6fbee;
-                  border: 1px solid #c3f7d7;
-                  border-radius: 10px;
-                  padding: 12px 14px;
-                  margin-bottom: 20px;
-                "
-              >
-                <div
-                  class="font-mono"
-                  style="
-                    font-size: 9px;
-                    letter-spacing: 0.1em;
-                    text-transform: uppercase;
-                    color: #04c44e;
-                    margin-bottom: 4px;
-                  "
-                >
-                  Practical output
-                </div>
-                <div
-                  id="spOutput"
-                  style="font-size: 13px; font-weight: 600; color: #101010"
-                >
-                  Market snapshot in the ECommerce Report
-                </div>
-              </div>
-            </div>
-
-            <div
-              style="
-                display: flex;
-                align-items: center;
-                gap: 12px;
-                border: 1px solid #e6eaee;
-                border-radius: 10px;
-                padding: 12px 14px;
-                margin-bottom: 16px;
-              "
-            >
-              <span
-                style="
-                  width: 40px;
-                  height: 40px;
-                  border-radius: 50%;
-                  background: #f4f6f8;
-                  border: 1px solid #e6eaee;
-                  display: flex;
-                  align-items: center;
-                  justify-content: center;
-                  font-family: &quot;JetBrains Mono&quot;, monospace;
-                  font-size: 10px;
-                  color: #6b747e;
-                  flex: none;
-                "
-                >TBA</span
-              >
-              <div>
-                <div style="font-weight: 700; font-size: 14px; color: #101010">
-                  Speaker will be announced
-                </div>
-                <div style="font-size: 12px; color: #6b747e">
-                  Speaker details coming soon
-                </div>
-              </div>
-            </div>
-
-            <div
-              style="
-                display: grid;
-                grid-template-columns: 1fr 1fr;
-                gap: 10px;
-                margin-bottom: 20px;
-              "
-            >
-              <div
-                style="
-                  border: 1px solid #e6eaee;
-                  border-radius: 10px;
-                  padding: 10px 12px;
-                "
-              >
-                <div
-                  class="font-mono"
-                  style="
-                    font-size: 9px;
-                    letter-spacing: 0.08em;
-                    text-transform: uppercase;
-                    color: #6b747e;
-                    margin-bottom: 4px;
-                  "
-                >
-                  Time &amp; Room
-                </div>
-                <div
-                  id="spTimeRoom"
-                  style="font-size: 12px; font-weight: 600; color: #101010"
-                >
-                  11:20 · Main Stage
-                </div>
-              </div>
-              <div
-                style="
-                  border: 1px solid #e6eaee;
-                  border-radius: 10px;
-                  padding: 10px 12px;
-                "
-              >
-                <div
-                  class="font-mono"
-                  style="
-                    font-size: 9px;
-                    letter-spacing: 0.08em;
-                    text-transform: uppercase;
-                    color: #6b747e;
-                    margin-bottom: 4px;
-                  "
-                >
-                  Required tools
-                </div>
-                <div
-                  id="spTools"
-                  style="font-size: 12px; font-weight: 600; color: #101010"
-                >
-                  None
-                </div>
-              </div>
-              <div
-                style="
-                  border: 1px solid #e6eaee;
-                  border-radius: 10px;
-                  padding: 10px 12px;
-                "
-              >
-                <div
-                  class="font-mono"
-                  style="
-                    font-size: 9px;
-                    letter-spacing: 0.08em;
-                    text-transform: uppercase;
-                    color: #6b747e;
-                    margin-bottom: 4px;
-                  "
-                >
-                  Content level
-                </div>
-                <div
-                  id="spLevel"
-                  style="font-size: 12px; font-weight: 600; color: #101010"
-                >
-                  All levels
-                </div>
-              </div>
-              <div
-                style="
-                  border: 1px solid #e6eaee;
-                  border-radius: 10px;
-                  padding: 10px 12px;
-                "
-              >
-                <div
-                  class="font-mono"
-                  style="
-                    font-size: 9px;
-                    letter-spacing: 0.08em;
-                    text-transform: uppercase;
-                    color: #6b747e;
-                    margin-bottom: 4px;
-                  "
-                >
-                  After the event
-                </div>
-                <div style="font-size: 12px; font-weight: 600; color: #101010">
-                  Recorded · Templates Included
-                </div>
-              </div>
-            </div>
-
-            <button id="spCta" class="btn-primary" style="width: 100%">
-              Add to My Day
-            </button>
-            <div
-              id="spCtaNote"
-              style="
-                text-align: center;
-                font-size: 11px;
-                color: #6b747e;
-                margin-top: 10px;
-              "
-            >
-              Included with all tickets
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Recordings & Resources -->
-    <div style="background: #e6fbee; border-bottom: 1px solid #c3f7d7">
-      <div class="container section-padding">
-        <div class="section-label">
-          <span class="font-mono" style="color: #04c44e"
-            >Recordings &amp; Resources</span
-          >
-        </div>
-        <h2 class="section-title" style="max-width: 24ch">
-          You won't lose a single session to a schedule conflict.
-        </h2>
-        <p
-          style="
-            font-size: 15px;
-            color: #4a5563;
-            margin: 0 0 36px;
-            max-width: 60ch;
-          "
-        >
-          Every session is recorded. The platform is a content hub for
-          recordings and files only.
-        </p>
-        <div class="grid-2-cols" style="max-width: 820px">
-          <div
-            style="
-              background: #ffffff;
-              border: 1px solid #c3f7d7;
-              border-radius: 12px;
-              padding: 24px;
-            "
-          >
-            <div
-              class="font-mono"
-              style="
-                font-size: 10px;
-                letter-spacing: 0.12em;
-                text-transform: uppercase;
-                color: #6b747e;
-                margin-bottom: 10px;
-              "
-            >
-              Standard Pass
-            </div>
-            <div
-              style="
-                font-weight: 800;
-                font-size: 26px;
-                color: #101010;
-                margin-bottom: 6px;
-              "
-            >
-              Both stages
-            </div>
-            <div style="font-size: 13px; color: #4a5563">
-              recordings of the Main Stage and the Second Stage, plus Workshop
-              Templates &amp; Files
-            </div>
-          </div>
-          <div
-            style="
-              background: #ffffff;
-              border: 1px solid #c3f7d7;
-              border-radius: 12px;
-              padding: 24px;
-            "
-          >
-            <div
-              class="font-mono"
-              style="
-                font-size: 10px;
-                letter-spacing: 0.12em;
-                text-transform: uppercase;
-                color: #04c44e;
-                margin-bottom: 10px;
-              "
-            >
-              Full Journey Pass
-            </div>
-            <div
-              style="
-                font-weight: 800;
-                font-size: 26px;
-                color: #101010;
-                margin-bottom: 6px;
-              "
-            >
-              All five rooms
-            </div>
-            <div style="font-size: 13px; color: #4a5563">
-              every recording plus 6 months in the past paid content library
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Plan Your Day -->
+    <!-- Plan Your Day (mint band, brand light green) -->
+    <div style="background: #e6fbee; border-top: 1px solid #c3f7d7">
     <div class="container section-padding">
       <div class="section-label">
         <span class="font-mono">Plan Your Day</span>
@@ -1795,7 +1202,8 @@
       <div class="grid-4-cols">
         <div
           style="
-            border: 1px solid #d5dae0;
+            background: #ffffff;
+            border: 1px solid #c3f7d7;
             border-radius: 12px;
             padding: 22px 20px;
           "
@@ -1824,38 +1232,39 @@
             <div style="display: flex; justify-content: space-between">
               <span>Registration</span
               ><span class="font-mono" style="font-size: 10px; color: #6b747e"
-                >TO BE CONFIRMED</span
+                >TIME COMING SOON</span
               >
             </div>
             <div style="display: flex; justify-content: space-between">
               <span>Opening</span
               ><span class="font-mono" style="font-size: 10px; color: #6b747e"
-                >TO BE CONFIRMED</span
+                >TIME COMING SOON</span
               >
             </div>
             <div style="display: flex; justify-content: space-between">
               <span>Sessions</span
               ><span class="font-mono" style="font-size: 10px; color: #6b747e"
-                >TO BE CONFIRMED</span
+                >TIME COMING SOON</span
               >
             </div>
             <div style="display: flex; justify-content: space-between">
               <span>Closing</span
               ><span class="font-mono" style="font-size: 10px; color: #6b747e"
-                >TO BE CONFIRMED</span
+                >TIME COMING SOON</span
               >
             </div>
             <div style="display: flex; justify-content: space-between">
               <span>Networking</span
               ><span class="font-mono" style="font-size: 10px; color: #6b747e"
-                >TO BE CONFIRMED</span
+                >TIME COMING SOON</span
               >
             </div>
           </div>
         </div>
         <div
           style="
-            border: 1px solid #d5dae0;
+            background: #ffffff;
+            border: 1px solid #c3f7d7;
             border-radius: 12px;
             padding: 22px 20px;
           "
@@ -1874,36 +1283,57 @@
           </div>
           <div
             style="
-              background: #f4f6f8;
-              border: 1px dashed #d5dae0;
+              position: relative;
+              aspect-ratio: 16 / 10;
               border-radius: 10px;
-              height: 96px;
-              display: flex;
-              align-items: center;
-              justify-content: center;
+              overflow: hidden;
+              background: #f4f6f8;
               margin-bottom: 12px;
             "
           >
-            <span
-              class="font-mono"
-              style="
-                font-size: 10px;
-                letter-spacing: 0.08em;
-                text-transform: uppercase;
-                color: #6b747e;
+            <img
+              src="assets/hero-ground-logo-640.webp"
+              srcset="
+                assets/hero-ground-logo-640.webp   640w,
+                assets/hero-ground-logo.webp      1254w
               "
-              >Map of Creativa Innovation Hub, coming soon</span
-            >
+              sizes="(max-width: 768px) calc(100vw - 48px), (max-width: 1024px) 45vw, 300px"
+              width="640"
+              height="640"
+              alt="Aerial view of Creativa Innovation Hub courtyard with the TrafficMENA logo"
+              loading="lazy"
+              decoding="async"
+              style="
+                display: block;
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                object-position: 52% 47%;
+              "
+            />
           </div>
           <div style="font-size: 13px; color: #4a5563; line-height: 1.7">
-            Creativa Innovation Hub, Giza.<br /><span style="color: #6b747e"
+            <a
+              href="https://maps.app.goo.gl/LxbaM9baBAA8t9Pv9"
+              target="_blank"
+              rel="noopener"
+              aria-label="Creativa Innovation Hub, Giza (open in Google Maps, new tab)"
+              style="
+                color: #101010;
+                font-weight: 600;
+                text-decoration: underline;
+                text-underline-offset: 2px;
+              "
+              >Creativa Innovation Hub, Giza</a
+            ><br /><span style="color: #6b747e"
               >Entrance, parking and accessibility info will follow.</span
             >
           </div>
         </div>
         <div
           style="
-            border: 1px solid #d5dae0;
+            background: #ffffff;
+            border: 1px solid #c3f7d7;
             border-radius: 12px;
             padding: 22px 20px;
           "
@@ -1991,7 +1421,8 @@
         </div>
         <div
           style="
-            border: 1px solid #d5dae0;
+            background: #ffffff;
+            border: 1px solid #c3f7d7;
             border-radius: 12px;
             padding: 22px 20px;
           "
@@ -2023,8 +1454,8 @@
               your phone
             </div>
             <div style="display: flex; gap: 8px">
-              <span style="color: #04c44e">✓</span>Reserve your workshops in
-              advance
+              <span style="color: #04c44e">✓</span>Book your workshops when
+              booking opens, 7-10 days before the event
             </div>
             <div style="display: flex; gap: 8px">
               <span style="color: #04c44e">✓</span>Bring a laptop if your
@@ -2038,119 +1469,12 @@
         </div>
       </div>
     </div>
+    </div>
 
-    <!-- Ticket Comparison -->
-    <div class="section-bg-alt">
+    <!-- Tickets (shared: tickets-section.js, same as index.html) -->
+    <div class="section-bg-alt" id="tickets">
       <div class="container section-padding">
-        <div class="section-label">
-          <span class="font-mono">Tickets</span>
-        </div>
-        <h2 class="section-title">Which pass fits your day?</h2>
-        <p style="font-size: 14px; color: #6b747e; margin: 0 0 36px">
-          Attending workshops offline requires the Full Journey Pass.
-        </p>
-        <div
-          style="
-            background: #ffffff;
-            border: 1px solid #d5dae0;
-            border-radius: 16px;
-            overflow: hidden;
-            max-width: 960px;
-            margin-bottom: 28px;
-          "
-        >
-          <div
-            class="cmp-grid"
-            style="
-              background: #f4f6f8;
-              font-family: &quot;JetBrains Mono&quot;, monospace;
-              font-size: 11px;
-              letter-spacing: 0.1em;
-              text-transform: uppercase;
-              color: #6b747e;
-              font-weight: 400;
-            "
-          >
-            <span>Feature</span><span>Standard Pass</span
-            ><span>Full Journey Pass</span>
-          </div>
-          <div class="cmp-grid">
-            <span style="font-weight: 500; color: #1f2630"
-              >Access to the Main Stage</span
-            ><span style="color: #006681; font-weight: 600">Yes</span
-            ><span style="color: #006681; font-weight: 600">Yes</span>
-          </div>
-          <div class="cmp-grid">
-            <span style="font-weight: 500; color: #1f2630"
-              >Access to the Second Stage</span
-            ><span style="color: #006681; font-weight: 600">Yes</span
-            ><span style="color: #006681; font-weight: 600">Yes</span>
-          </div>
-          <div class="cmp-grid">
-            <span style="font-weight: 500; color: #1f2630"
-              >Access to the Workshops</span
-            ><span style="color: #6b747e; font-weight: 600">No</span
-            ><span style="color: #006681; font-weight: 600">Yes</span>
-          </div>
-          <div class="cmp-grid">
-            <span style="font-weight: 500; color: #1f2630"
-              >Workshop seat reservation</span
-            ><span style="color: #6b747e; font-weight: 600">No</span
-            ><span style="color: #006681; font-weight: 600">Yes</span>
-          </div>
-          <div class="cmp-grid">
-            <span style="font-weight: 500; color: #1f2630"
-              >Exercises &amp; Live Builds</span
-            ><span style="color: #6b747e; font-weight: 600">No</span
-            ><span style="color: #006681; font-weight: 600">Yes</span>
-          </div>
-          <div class="cmp-grid">
-            <span style="font-weight: 500; color: #1f2630"
-              >Stage recordings, Main and Second</span
-            ><span style="color: #006681; font-weight: 600">Yes</span
-            ><span style="color: #006681; font-weight: 600">Yes</span>
-          </div>
-          <div class="cmp-grid">
-            <span style="font-weight: 500; color: #1f2630"
-              >Workshop recordings</span
-            ><span style="color: #6b747e; font-weight: 600">No</span
-            ><span style="color: #006681; font-weight: 600">Yes</span>
-          </div>
-          <div class="cmp-grid">
-            <span style="font-weight: 500; color: #1f2630"
-              >Workshop Templates &amp; Files</span
-            ><span style="color: #006681; font-weight: 600">Yes</span
-            ><span style="color: #006681; font-weight: 600">Yes</span>
-          </div>
-          <div class="cmp-grid">
-            <span style="font-weight: 500; color: #1f2630"
-              >Past paid content library</span
-            ><span style="color: #6b747e; font-weight: 600">No</span
-            ><span style="color: #006681; font-weight: 600">6 months</span>
-          </div>
-          <div class="cmp-grid">
-            <span style="font-weight: 500; color: #1f2630"
-              >Session Summaries</span
-            ><span style="color: #006681; font-weight: 600">Basic</span
-            ><span style="color: #006681; font-weight: 600">Full</span>
-          </div>
-          <div class="cmp-grid">
-            <span style="font-weight: 500; color: #1f2630"
-              >ECommerce Action Pack</span
-            ><span style="color: #006681; font-weight: 600">Basic</span
-            ><span style="color: #006681; font-weight: 600">Full</span>
-          </div>
-          <div class="cmp-grid" style="border-bottom: none">
-            <span style="font-weight: 500; color: #1f2630"
-              >ECommerce Report</span
-            ><span style="color: #006681; font-weight: 600">Summary</span
-            ><span style="color: #006681; font-weight: 600">Full report</span>
-          </div>
-        </div>
-        <div style="display: flex; gap: 14px; flex-wrap: wrap">
-          <a href="tickets.html" class="btn-secondary">Book Standard Pass</a>
-          <a href="tickets.html" class="btn-primary">Book Full Journey Pass</a>
-        </div>
+        <ecd-tickets></ecd-tickets>
       </div>
     </div>
 
@@ -2159,15 +1483,16 @@
       <div class="section-label">
         <span class="font-mono">Agenda FAQ</span>
       </div>
-      <h2 class="section-title">Before you plan</h2>
+      <h2 class="section-title">Plan Your Day With Confidence</h2>
       <div style="max-width: 860px; border-top: 1px solid #e6eaee">
         <div style="border-bottom: 1px solid #e6eaee">
           <button
+            type="button"
             onclick="
-              this.nextElementSibling.style.display =
-                this.nextElementSibling.style.display === 'block'
-                  ? 'none'
-                  : 'block'
+              var open = this.nextElementSibling.style.display === 'block';
+              this.nextElementSibling.style.display = open ? 'none' : 'block';
+              this.setAttribute('aria-expanded', open ? 'false' : 'true');
+              this.lastElementChild.textContent = open ? '+' : '\u2212';
             "
             aria-expanded="false"
             style="
@@ -2190,33 +1515,32 @@
                 font-size: 16px;
                 color: #101010;
               "
-              >Which workshops can I attend with each ticket?</span
+              >Which sessions can I access with each pass?</span
             >
             <span style="color: #04c44e; font-size: 20px; flex: none">+</span>
           </button>
-          <p
+          <div
             style="
               display: none;
               font-size: 15px;
               line-height: 1.8;
               color: #4a5563;
-              margin: 0;
               padding: 0 4px 22px;
               max-width: 70ch;
             "
           >
-            The Standard Pass covers the Main Stage and the Second Stage for the
-            full day. The Full Journey Pass adds all three workshops:
-            Acquisition, CRO &amp; Retention and Operations &amp; Logistics.
-          </p>
+            <p style="margin: 0 0 12px">The Standard Pass includes access to the Main Stage and Second Stage.</p>
+            <p style="margin: 0">The All Access Pass includes both stages, plus the opportunity to select up to five workshops from more than 15 options across three core ecommerce functions.</p>
+          </div>
         </div>
         <div style="border-bottom: 1px solid #e6eaee">
           <button
+            type="button"
             onclick="
-              this.nextElementSibling.style.display =
-                this.nextElementSibling.style.display === 'block'
-                  ? 'none'
-                  : 'block'
+              var open = this.nextElementSibling.style.display === 'block';
+              this.nextElementSibling.style.display = open ? 'none' : 'block';
+              this.setAttribute('aria-expanded', open ? 'false' : 'true');
+              this.lastElementChild.textContent = open ? '+' : '\u2212';
             "
             aria-expanded="false"
             style="
@@ -2239,35 +1563,32 @@
                 font-size: 16px;
                 color: #101010;
               "
-              >How do workshop reservations work, and what if a workshop is
-              full?</span
+              >How do I select my workshops?</span
             >
             <span style="color: #04c44e; font-size: 20px; flex: none">+</span>
           </button>
-          <p
+          <div
             style="
               display: none;
               font-size: 15px;
               line-height: 1.8;
               color: #4a5563;
-              margin: 0;
               padding: 0 4px 22px;
               max-width: 70ch;
             "
           >
-            You reserve workshops after payment because the rooms are limited.
-            Buying the pass does not auto-reserve a seat. If a workshop is fully
-            booked you can join the waiting list, and its recording remains
-            available to you on the platform.
-          </p>
+            <p style="margin: 0 0 12px">Workshop booking opens 7-10 days before the event, and we will announce how to book. All Access holders can select up to five workshops, subject to availability.</p>
+            <p style="margin: 0">Your selected workshops must not overlap, allowing you to attend each one in full.</p>
+          </div>
         </div>
         <div style="border-bottom: 1px solid #e6eaee">
           <button
+            type="button"
             onclick="
-              this.nextElementSibling.style.display =
-                this.nextElementSibling.style.display === 'block'
-                  ? 'none'
-                  : 'block'
+              var open = this.nextElementSibling.style.display === 'block';
+              this.nextElementSibling.style.display = open ? 'none' : 'block';
+              this.setAttribute('aria-expanded', open ? 'false' : 'true');
+              this.lastElementChild.textContent = open ? '+' : '\u2212';
             "
             aria-expanded="false"
             style="
@@ -2290,33 +1611,32 @@
                 font-size: 16px;
                 color: #101010;
               "
-              >Can I upgrade from Standard Pass to Full Journey Pass?</span
+              >Can I change my workshop selection after booking?</span
             >
             <span style="color: #04c44e; font-size: 20px; flex: none">+</span>
           </button>
-          <p
+          <div
             style="
               display: none;
               font-size: 15px;
               line-height: 1.8;
               color: #4a5563;
-              margin: 0;
               padding: 0 4px 22px;
               max-width: 70ch;
             "
           >
-            Yes, you can upgrade before the event. Workshop places after
-            upgrading depend on what is still open, so reserve as early as you
-            can.
-          </p>
+            <p style="margin: 0 0 12px">Workshop selections are final once your booking is confirmed.</p>
+            <p style="margin: 0">Each selection reserves a limited seat that immediately becomes unavailable to other attendees, so changes cannot be accommodated after confirmation. We recommend reviewing the workshop timings carefully before completing your booking.</p>
+          </div>
         </div>
         <div style="border-bottom: 1px solid #e6eaee">
           <button
+            type="button"
             onclick="
-              this.nextElementSibling.style.display =
-                this.nextElementSibling.style.display === 'block'
-                  ? 'none'
-                  : 'block'
+              var open = this.nextElementSibling.style.display === 'block';
+              this.nextElementSibling.style.display = open ? 'none' : 'block';
+              this.setAttribute('aria-expanded', open ? 'false' : 'true');
+              this.lastElementChild.textContent = open ? '+' : '\u2212';
             "
             aria-expanded="false"
             style="
@@ -2339,34 +1659,32 @@
                 font-size: 16px;
                 color: #101010;
               "
-              >When are recordings available, and for how long?</span
+              >Can I upgrade from Standard to All Access?</span
             >
             <span style="color: #04c44e; font-size: 20px; flex: none">+</span>
           </button>
-          <p
+          <div
             style="
               display: none;
               font-size: 15px;
               line-height: 1.8;
               color: #4a5563;
-              margin: 0;
               padding: 0 4px 22px;
               max-width: 70ch;
             "
           >
-            Recordings are published on the platform after the event. The
-            Standard Pass covers the Main Stage and Second Stage recordings. The
-            Full Journey Pass covers those plus the workshop recordings, and
-            adds 6 months in the past paid content library.
-          </p>
+            <p style="margin: 0 0 12px">Yes. You can request an upgrade before the event, subject to All Access availability.</p>
+            <p style="margin: 0">Workshop selection will depend on the remaining capacity at the time your upgrade is confirmed.</p>
+          </div>
         </div>
         <div style="border-bottom: 1px solid #e6eaee">
           <button
+            type="button"
             onclick="
-              this.nextElementSibling.style.display =
-                this.nextElementSibling.style.display === 'block'
-                  ? 'none'
-                  : 'block'
+              var open = this.nextElementSibling.style.display === 'block';
+              this.nextElementSibling.style.display = open ? 'none' : 'block';
+              this.setAttribute('aria-expanded', open ? 'false' : 'true');
+              this.lastElementChild.textContent = open ? '+' : '\u2212';
             "
             aria-expanded="false"
             style="
@@ -2389,32 +1707,32 @@
                 font-size: 16px;
                 color: #101010;
               "
-              >Do all tickets get the Workshop Templates &amp; Files?</span
+              >When will the final agenda be announced?</span
             >
             <span style="color: #04c44e; font-size: 20px; flex: none">+</span>
           </button>
-          <p
+          <div
             style="
               display: none;
               font-size: 15px;
               line-height: 1.8;
               color: #4a5563;
-              margin: 0;
               padding: 0 4px 22px;
               max-width: 70ch;
             "
           >
-            Yes. Workshop Templates &amp; Files are included with both ticket
-            types on the platform.
-          </p>
+            <p style="margin: 0 0 12px">The agenda will continue to be updated as speakers and sessions are confirmed.</p>
+            <p style="margin: 0">The complete schedule will be shared before the event, and registered attendees will receive all key updates directly.</p>
+          </div>
         </div>
         <div style="border-bottom: 1px solid #e6eaee">
           <button
+            type="button"
             onclick="
-              this.nextElementSibling.style.display =
-                this.nextElementSibling.style.display === 'block'
-                  ? 'none'
-                  : 'block'
+              var open = this.nextElementSibling.style.display === 'block';
+              this.nextElementSibling.style.display = open ? 'none' : 'block';
+              this.setAttribute('aria-expanded', open ? 'false' : 'true');
+              this.lastElementChild.textContent = open ? '+' : '\u2212';
             "
             aria-expanded="false"
             style="
@@ -2437,25 +1755,138 @@
                 font-size: 16px;
                 color: #101010;
               "
-              >Can session times or speakers change?</span
+              >Are workshop templates and files included with both passes?</span
             >
             <span style="color: #04c44e; font-size: 20px; flex: none">+</span>
           </button>
-          <p
+          <div
             style="
               display: none;
               font-size: 15px;
               line-height: 1.8;
               color: #4a5563;
-              margin: 0;
               padding: 0 4px 22px;
               max-width: 70ch;
             "
           >
-            Times shown are working times. The final run of show is published
-            before the event, and registered attendees are notified of any
-            changes.
-          </p>
+            <p style="margin: 0 0 12px">Workshop templates and supporting files are exclusive to the All Access Pass.</p>
+            <p style="margin: 0">All Access holders will be able to access these resources through the content platform after the event.</p>
+          </div>
+        </div>
+        <div style="border-bottom: 1px solid #e6eaee">
+          <button
+            type="button"
+            onclick="
+              var open = this.nextElementSibling.style.display === 'block';
+              this.nextElementSibling.style.display = open ? 'none' : 'block';
+              this.setAttribute('aria-expanded', open ? 'false' : 'true');
+              this.lastElementChild.textContent = open ? '+' : '\u2212';
+            "
+            aria-expanded="false"
+            style="
+              width: 100%;
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              gap: 16px;
+              background: none;
+              border: none;
+              padding: 20px 4px;
+              cursor: pointer;
+              text-align: left;
+            "
+          >
+            <span
+              style="
+                font-family: Manrope, sans-serif;
+                font-weight: 700;
+                font-size: 16px;
+                color: #101010;
+              "
+              >What post-event content is included with each pass?</span
+            >
+            <span style="color: #04c44e; font-size: 20px; flex: none">+</span>
+          </button>
+          <div
+            style="
+              display: none;
+              font-size: 15px;
+              line-height: 1.8;
+              color: #4a5563;
+              padding: 0 4px 22px;
+              max-width: 70ch;
+            "
+          >
+            <p style="margin: 0 0 12px">The Standard Pass covers the live day on both stages and does not include post-event platform access.</p>
+            <p style="margin: 0">The All Access Pass extends the experience with workshop templates and files, complete session resources, and six months of access to TrafficMENA’s premium content library.</p>
+          </div>
+        </div>
+        <div style="border-bottom: 1px solid #e6eaee">
+          <button
+            type="button"
+            onclick="
+              var open = this.nextElementSibling.style.display === 'block';
+              this.nextElementSibling.style.display = open ? 'none' : 'block';
+              this.setAttribute('aria-expanded', open ? 'false' : 'true');
+              this.lastElementChild.textContent = open ? '+' : '\u2212';
+            "
+            aria-expanded="false"
+            style="
+              width: 100%;
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              gap: 16px;
+              background: none;
+              border: none;
+              padding: 20px 4px;
+              cursor: pointer;
+              text-align: left;
+            "
+          >
+            <span
+              style="
+                font-family: Manrope, sans-serif;
+                font-weight: 700;
+                font-size: 16px;
+                color: #101010;
+              "
+              >Can I request a refund or transfer my ticket?</span
+            >
+            <span style="color: #04c44e; font-size: 20px; flex: none">+</span>
+          </button>
+          <div
+            style="
+              display: none;
+              font-size: 15px;
+              line-height: 1.8;
+              color: #4a5563;
+              padding: 0 4px 22px;
+              max-width: 70ch;
+            "
+          >
+            <p style="margin: 0 0 12px">A full refund is available until the end of 30 October 2026, five days before the event.</p>
+            <p style="margin: 0 0 12px">To request a refund, email info@trafficmena.com before the deadline using the email associated with your booking.</p>
+            <p style="margin: 0 0 12px">Requests received after this date cannot be accepted. Tickets are non-transferable and cannot be reassigned to another attendee.</p>
+            <p style="margin: 0 0 12px">Approved refunds will be returned through the original payment method.</p>
+            <p style="margin: 0">
+              For assistance, contact
+              <a
+                href="mailto:info@trafficmena.com"
+                style="color: #101010; font-weight: 600; text-decoration: underline; text-underline-offset: 2px"
+                >info@trafficmena.com</a
+              >
+              or
+              <a
+                class="wa-btn"
+                href="https://wa.me/201505437979?text=I%20need%20help%20for%20Ecommerce%20Day%202026"
+                target="_blank"
+                rel="noopener"
+                aria-label="Chat with us on WhatsApp (opens in a new tab)"
+                ><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.64.07-.3-.15-1.26-.46-2.4-1.48-.89-.79-1.49-1.77-1.66-2.07-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.61-.92-2.2-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.88 1.21 3.07c.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.69.63.71.23 1.36.2 1.87.12.57-.08 1.76-.72 2.01-1.41.25-.7.25-1.29.17-1.41-.07-.13-.27-.2-.57-.35ZM12.05 21.5h-.01a9.4 9.4 0 0 1-4.79-1.31l-.34-.2-3.56.93.95-3.47-.22-.36a9.41 9.41 0 0 1-1.44-5.02c0-5.2 4.23-9.43 9.43-9.43 2.52 0 4.89.98 6.67 2.77a9.37 9.37 0 0 1 2.76 6.67c0 5.2-4.23 9.43-9.43 9.43Zm8.02-17.45A11.27 11.27 0 0 0 12.05.73C5.8.73.72 5.81.72 12.06c0 2 .52 3.95 1.52 5.66L.62 23.6l6.02-1.58a11.3 11.3 0 0 0 5.41 1.38h.01c6.25 0 11.33-5.08 11.33-11.33 0-3.03-1.18-5.87-3.32-8.02Z"/></svg><span>WhatsApp</span></a
+              >
+            </p>
+          </div>
         </div>
       </div>
     </div>
@@ -2511,7 +1942,9 @@
     <site-footer></site-footer>
 
     <!-- Scripts -->
-    <script src="ecd-api.js"></script>
+    <script src="prices.js?v=20260924a"></script>
+    <script src="ecd-api.js?v=20260924a"></script>
+    <script src="ecd-content.js?v=20260924a"></script>
     <script>
       // ==========================================
       // 00. DATA
@@ -2558,7 +1991,7 @@
           time: s.timeLabel,
           fmt: s.format || "Session",
           cat: s.category || "",
-          title: s.title || "Topic will be announced",
+          title: s.title || "Will be announced",
           speaker: s.speakerLabel || "Speaker will be announced",
           topics: s.topics || [],
           desc: s.description || "",
@@ -2575,7 +2008,6 @@
         fFmt: null,
         tvRoom: 0,
         view: "timeline",
-        selectedSession: "m1",
       };
 
       // ==========================================
@@ -2599,78 +2031,21 @@
         if (tr <= 1) {
           return '<span style="border-radius:999px;padding:3px 10px;font-size:11px;font-weight:600;background:#f4f6f8;border:1px solid #e6eaee;color:#4a5563;">All Tickets</span>';
         }
-        return '<span style="border-radius:999px;padding:3px 10px;font-size:11px;font-weight:600;background:#101010;border:1px solid #101010;color:#05ef62;">Full Journey Only</span>';
+        return '<span style="border-radius:999px;padding:3px 10px;font-size:11px;font-weight:600;background:#101010;border:1px solid #101010;color:#05ef62;">All Access Pass Only</span>';
       }
 
       // ==========================================
-      // 02. SESSION DETAIL PANEL (from CMS)
+      // 02. SESSION CARD (display only)
       // ==========================================
-      function updateSessionPanel(sessionId) {
-        var s = sessions.find(function (x) {
-          return x.id === sessionId;
-        });
-        if (!s) return;
-        var room = rooms[s.tr] || rooms[0];
-        state.selectedSession = sessionId;
-
-        document.getElementById("spRoomName").textContent = room.name;
-        document.getElementById("spRoomDot").style.background = room.color;
-
-        document.getElementById("spTime").textContent = s.time;
-        document.getElementById("spFmt").textContent = s.fmt;
-
-        var accessEl = document.getElementById("spAccess");
-        if (s.tr <= 1) {
-          accessEl.textContent = "All Tickets";
-          accessEl.style.background = "#f4f6f8";
-          accessEl.style.borderColor = "#e6eaee";
-          accessEl.style.color = "#4a5563";
-        } else {
-          accessEl.textContent = "Full Journey Only";
-          accessEl.style.background = "#101010";
-          accessEl.style.borderColor = "#101010";
-          accessEl.style.color = "#05ef62";
-        }
-
-        document.getElementById("spTitle").textContent = s.title;
-        document.getElementById("spDesc").textContent = s.desc || "";
-        document.getElementById("spOutput").textContent = s.output || "Announced soon";
-
-        var learnEl = document.getElementById("spLearn");
-        learnEl.innerHTML = "";
-        (s.learn || []).forEach(function (item) {
-          var li = document.createElement("li");
-          li.textContent = item;
-          learnEl.appendChild(li);
-        });
-
-        document.getElementById("spTimeRoom").textContent =
-          s.time + " · " + room.name;
-        document.getElementById("spTools").textContent = s.tools || "None";
-        document.getElementById("spLevel").textContent =
-          s.level || "All levels";
-
-        var cta = document.getElementById("spCta");
-        var note = document.getElementById("spCtaNote");
-        if (s.tr <= 1) {
-          cta.textContent = "Add to My Day";
-          note.textContent = "Included with all tickets";
-        } else {
-          cta.textContent = "Reserve My Place";
-          note.textContent =
-            "Full Journey Pass · reserve in advance · limited rooms";
-        }
-      }
-
       function sessionCardHtml(s, r, compact) {
         var pad = compact ? "14px" : "20px";
         var titleSize = compact ? "13px" : "17px";
         return (
-          '<button type="button" class="session-card" data-session="' +
+          '<div class="session-card" data-session="' +
           esc(s.id) +
           '" style="text-align:left;background:#ffffff;border:1px solid #d5dae0;border-radius:12px;padding:' +
           pad +
-          ';cursor:pointer;font-family:Manrope,sans-serif;display:block;width:100%;transition:box-shadow .2s;">' +
+          ';font-family:Manrope,sans-serif;display:block;width:100%;">' +
           '<div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;flex-wrap:wrap;">' +
           '<span class="font-mono" style="font-size:10px;letter-spacing:.08em;color:#101010;">' +
           esc(s.time) +
@@ -2688,7 +2063,7 @@
           "</div>" +
           '<div style="display:flex;gap:6px;flex-wrap:wrap;">' +
           accessPill(s.tr) +
-          "</div></button>"
+          "</div></div>"
         );
       }
 
@@ -2707,7 +2082,7 @@
         ];
         // Main Stage markers from data.text (Opening / Breaks / Closing)
         var mainMarkers = [
-          { time: "11:00", label: "Opening", beforeSlug: "m1" },
+          { time: "10:30", label: "Opening", beforeSlug: "m1" },
           { time: "1:10", label: "Break: Choose Your Status", beforeSlug: "m4" },
           { time: "3:20", label: "Break", beforeSlug: "m7" },
           { time: "5:20", label: "Break", beforeSlug: "m10" },
@@ -2778,7 +2153,6 @@
           html += "</div></div>";
         });
         container.innerHTML = html;
-        bindSessionCards();
       }
 
       function renderRoomView() {
@@ -2807,7 +2181,6 @@
           html += "</div>";
         });
         container.innerHTML = html;
-        bindSessionCards();
       }
 
       function refreshAgendaViews() {
@@ -2817,13 +2190,6 @@
         if (resultCount) {
           resultCount.textContent =
             sessions.filter(matchSession).length + " sessions";
-        }
-        if (sessions.length) {
-          var still =
-            sessions.find(function (s) {
-              return s.id === state.selectedSession;
-            }) || sessions[0];
-          updateSessionPanel(still.id);
         }
       }
 
@@ -3002,22 +2368,6 @@
         });
 
         updateCount();
-      }
-
-      // ==========================================
-      // 07. SESSION CARD CLICK → UPDATE PANEL
-      // ==========================================
-      function bindSessionCards() {
-        document.querySelectorAll(".session-card").forEach(function (card) {
-          card.addEventListener("click", function () {
-            var id = this.getAttribute("data-session");
-            if (id) updateSessionPanel(id);
-            var panel = document.querySelector(".session-detail-panel");
-            if (panel) {
-              panel.scrollIntoView({ behavior: "smooth", block: "center" });
-            }
-          });
-        });
       }
 
       // ==========================================

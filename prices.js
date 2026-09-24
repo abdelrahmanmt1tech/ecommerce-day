@@ -3,8 +3,8 @@
  * غيّر الأرقام هنا فقط؛ باقي الصفحات تحدّث نفسها عبر الـ classnames.
  *
  * Classnames:
- *   .price-ct          → Control Tower unit price (number + optional EGP via data-suffix)
- *   .price-fj          → Full Journey unit price
+ *   .price-ct          → Standard unit price (number + optional EGP via data-suffix)
+ *   .price-fj          → All Access unit price
  *   .price-unit        → unit price of the active ticket (checkout)
  *   .price-total       → line/order total
  *   .price-discount    → discount amount (shown with leading − when data-minus="1")
@@ -19,11 +19,12 @@
 (function (global) {
   "use strict";
 
-  // ========== عيّن الأسعار النهائية هنا (EGP) ==========
-  // ضع الرقم النهائي بدل null، مثال: controlTower: 2500
+  // Prices come ONLY from the database (GET /api/ecd/content, admin panel).
+  // Keep these null: if the API is unreachable the page shows "[Final Price] EGP"
+  // instead of an outdated number.
   var PRICES = {
-    controlTower: 2500,
-    fullJourney: 4500,
+    controlTower: null,
+    fullJourney: null,
     currency: "EGP",
     /** نسبة خصم كود LAUNCH (0.1 = 10%). اجعلها 0 لإيقاف الخصم */
     launchDiscountRate: 0.1,
@@ -32,7 +33,7 @@
   var TICKETS = {
     ct: {
       id: "ct",
-      name: "Conference Pass",
+      name: "Standard Pass",
       tagline: "See the whole system.",
       priceKey: "controlTower",
     },

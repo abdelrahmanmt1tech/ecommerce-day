@@ -9,15 +9,15 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=IBM+Plex+Sans+Arabic:wght@400;500;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=IBM+Plex+Sans+Arabic:wght@400;500;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
 
     <!-- ✅ Reusable navbar -->
-    <script src="navbar.js" defer></script>
+    <script src="navbar.js?v=20260924a" defer></script>
     <!-- ✅ Reusable footer -->
-    <script src="footer.js" defer></script>
-    <script src="ecd-api.js" defer></script>
+    <script src="footer.js?v=20260924a" defer></script>
+    <script src="ecd-api.js?v=20260924a" defer></script>
 
     <style>
       *,
@@ -106,6 +106,20 @@
         letter-spacing: 0.1em;
         text-transform: uppercase;
         color: #6b747e;
+      }
+      .section-label-strong span {
+        font-weight: 700;
+        color: #101010;
+      }
+      .section-sub {
+        font-size: 16px;
+        line-height: 1.7;
+        color: #4a5563;
+        max-width: 60ch;
+        margin: 0 0 36px;
+      }
+      #featured-partners {
+        scroll-margin-top: 72px;
       }
       .section-title {
         font-size: 36px;
@@ -243,135 +257,14 @@
         flex-wrap: wrap;
       }
       .featured-note {
-        font-family: "JetBrains Mono", monospace;
-        font-size: 10px;
-        letter-spacing: 0.08em;
-        color: #6b747e;
-        margin-top: 16px;
+        font-size: 16px;
+        font-weight: 600;
+        line-height: 1.6;
+        color: #101010;
+        margin-top: 24px;
       }
-
-      /* WHY THESE PARTNERS */
-      .why-partners {
-        max-width: 1280px;
-        margin: 0 auto;
-        padding: 88px 24px;
-      }
-      .why-grid {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 16px;
-      }
-      .why-card {
-        border: 1px solid #d5dae0;
-        border-radius: 12px;
-        padding: 24px 20px;
-      }
-      .why-card-label {
-        font-family: "JetBrains Mono", monospace;
-        font-size: 11px;
-        letter-spacing: 0.12em;
-        text-transform: uppercase;
-        color: #04c44e;
-        margin-bottom: 12px;
-      }
-      .why-card-quote {
-        font-size: 14px;
-        line-height: 1.7;
-        color: #1f2630;
-        font-weight: 500;
-      }
-
-      /* PARTNER ECOSYSTEM (5 tiers) */
-      .ecosystem-band {
-        background: #f4f6f8;
-        border-top: 1px solid #e6eaee;
-        border-bottom: 1px solid #e6eaee;
-      }
-      .ecosystem-inner {
-        max-width: 1280px;
-        margin: 0 auto;
-        padding: 88px 24px;
-      }
-      .ecosystem-sub {
-        font-size: 13px;
-        color: #6b747e;
-        margin: 0 0 40px;
-        font-family: "JetBrains Mono", monospace;
-        letter-spacing: 0.04em;
-      }
-      .tier {
-        margin-bottom: 36px;
-      }
-      .tier:last-child {
-        margin-bottom: 0;
-      }
-      .tier-label {
-        font-family: "JetBrains Mono", monospace;
-        font-size: 11px;
-        letter-spacing: 0.12em;
-        text-transform: uppercase;
-        margin-bottom: 6px;
-      }
-      .tier-focus {
-        font-size: 14px;
-        line-height: 1.7;
-        color: #4a5563;
-        margin-bottom: 16px;
-        max-width: 60ch;
-      }
-      .tier-grid {
-        display: grid;
-        gap: 14px;
-      }
-      .tier-grid.title {
-        grid-template-columns: repeat(2, 1fr);
-        max-width: 720px;
-      }
-      .tier-grid.strategic {
-        grid-template-columns: repeat(3, 1fr);
-        max-width: 900px;
-      }
-      .tier-grid.innovation {
-        grid-template-columns: repeat(4, 1fr);
-        max-width: 1060px;
-      }
-      .tier-grid.empowerment {
-        grid-template-columns: repeat(5, 1fr);
-      }
-      .tier-grid.community {
-        grid-template-columns: repeat(6, 1fr);
-      }
-      .logo-slot {
-        border: 1px solid #d5dae0;
-        border-radius: 12px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 18px;
-        background: #ffffff;
-      }
-      .logo-slot span {
-        font-family: "JetBrains Mono", monospace;
-        font-size: 9px;
-        letter-spacing: 0.08em;
-        text-transform: uppercase;
-        color: #6b747e;
-        text-align: center;
-      }
-      .logo-slot.title {
-        height: 140px;
-      }
-      .logo-slot.strategic {
-        height: 104px;
-      }
-      .logo-slot.innovation {
-        height: 96px;
-      }
-      .logo-slot.empowerment {
-        height: 84px;
-      }
-      .logo-slot.community {
-        height: 68px;
+      .featured-note[hidden] {
+        display: none;
       }
 
       /* EXPERIENCES */
@@ -381,9 +274,11 @@
         padding: 88px 24px;
       }
       .experiences-sub {
-        font-size: 14px;
-        color: #6b747e;
-        margin: 0 0 36px;
+        font-size: 16px;
+        line-height: 1.7;
+        color: #4a5563;
+        max-width: 60ch;
+        margin: 0 0 24px;
       }
       .experiences-grid {
         display: grid;
@@ -503,24 +398,7 @@
           grid-template-columns: 1fr;
           max-width: 100%;
         }
-        .tier-grid.title,
-        .tier-grid.strategic,
-        .tier-grid.innovation {
-          max-width: 100%;
-        }
-        .tier-grid.innovation {
-          grid-template-columns: repeat(3, 1fr);
-        }
-        .tier-grid.empowerment {
-          grid-template-columns: repeat(3, 1fr);
-        }
-        .tier-grid.community {
-          grid-template-columns: repeat(3, 1fr);
-        }
         .experiences-grid {
-          grid-template-columns: repeat(2, 1fr);
-        }
-        .why-grid {
           grid-template-columns: repeat(2, 1fr);
         }
         .stats-grid {
@@ -558,31 +436,6 @@
         }
         .featured-name {
           font-size: 18px;
-        }
-        .why-partners {
-          padding: 48px 20px;
-        }
-        .why-grid {
-          grid-template-columns: 1fr;
-        }
-        .ecosystem-inner {
-          padding: 48px 20px;
-        }
-        .tier-grid.title,
-        .tier-grid.strategic,
-        .tier-grid.innovation,
-        .tier-grid.empowerment,
-        .tier-grid.community {
-          grid-template-columns: 1fr 1fr;
-          gap: 10px;
-        }
-        .logo-slot.title,
-        .logo-slot.strategic,
-        .logo-slot.innovation,
-        .logo-slot.empowerment,
-        .logo-slot.community {
-          height: 76px;
-          padding: 12px;
         }
         .experiences-inner {
           padding: 48px 20px;
@@ -629,13 +482,6 @@
           padding: 12px 20px;
           font-size: 14px;
         }
-        .tier-grid.title,
-        .tier-grid.strategic,
-        .tier-grid.innovation,
-        .tier-grid.empowerment,
-        .tier-grid.community {
-          grid-template-columns: 1fr;
-        }
         .stats-grid {
           grid-template-columns: 1fr;
         }
@@ -652,106 +498,64 @@
         <span>ECommerce Day 2026 Partners</span>
       </div>
       <h1 class="hero-title">
-        Built with the partners moving
-        <span style="color: #04c44e">e-commerce</span> forward.
+        The Sponsors Strengthening the
+        <span style="color: #04c44e">Ecommerce</span> Ecosystem
       </h1>
       <p class="hero-sub">
-        Organizations from the heart of the e-commerce ecosystem, helping us
-        build a day closer to the real challenges, from growth and conversion to
-        operations, delivery and search.
+        Meet the partners building visibility, authority, and valuable
+        relationships across the ecommerce ecosystem.
       </p>
       <div class="hero-actions">
         <a href="become-a-sponsor.html" class="btn-primary">Become a Sponsor</a>
-        <a href="agenda.html" class="btn-secondary">View the Agenda</a>
+        <a href="#featured-partners" class="btn-secondary">View Our Partners</a>
       </div>
       <div class="hero-note">
-        Official sponsors and partners are added only after confirmation.
+        Strategic opportunities are available across stages, workshops,
+        content, and event experiences.
       </div>
     </div>
 
     <!-- ==================== FEATURED PARTNERS ==================== -->
-    <div class="featured-band">
+    <div class="featured-band" id="featured-partners">
       <div class="featured-inner">
-        <div class="section-label">
+        <div class="section-label section-label-strong">
           <span>Featured Partners</span>
         </div>
-        <h2 class="section-title">Partners inside the experience</h2>
+        <h2 class="section-title" style="margin-bottom: 12px">
+          Meet the Leading Partners of Ecommerce Day
+        </h2>
+        <p class="section-sub">
+          Strategic brands bringing expertise, innovation, and market influence
+          to the Ecommerce Day experience.
+        </p>
 
         <div class="featured-grid" id="featuredSponsors"></div>
 
-        <div class="featured-note">
-          Official sponsors appear only after confirmation. Featured band holds
-          1-4 cards.
+        <!-- Shown only once featured partners are loaded from the backend -->
+        <div class="featured-note" id="featuredNote" hidden>
+          A premium partnership built for maximum event-wide impact.
         </div>
-      </div>
-    </div>
-
-    <!-- ==================== WHY THESE PARTNERS ==================== -->
-    <div class="why-partners">
-      <div class="section-label">
-        <span>Why These Partners</span>
-      </div>
-      <h2 class="section-title" style="margin-bottom: 48px">
-        Chosen for the questions attendees actually ask
-      </h2>
-
-      <div class="why-grid">
-        <div class="why-card">
-          <div class="why-card-label">Growth</div>
-          <div class="why-card-quote">
-            "How do I acquire customers profitably in this market?"
-          </div>
-        </div>
-        <div class="why-card">
-          <div class="why-card-label">Conversion</div>
-          <div class="why-card-quote">
-            "Why do visitors leave without ordering, and what fixes it?"
-          </div>
-        </div>
-        <div class="why-card">
-          <div class="why-card-label">Operations</div>
-          <div class="why-card-quote">
-            "How do I deliver on time and protect my margin?"
-          </div>
-        </div>
-        <div class="why-card">
-          <div class="why-card-label">Ecosystem</div>
-          <div class="why-card-quote">
-            "Which platforms and providers should my stack be built on?"
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ==================== PARTNER ECOSYSTEM (5 TIERS) ==================== -->
-    <div class="ecosystem-band">
-      <div class="ecosystem-inner">
-        <div class="section-label">
-          <span>Partner Ecosystem</span>
-        </div>
-        <h2 class="section-title" style="margin-bottom: 8px">
-          Five partner tiers
-        </h2>
-        <p class="ecosystem-sub">
-          Empty tiers are hidden entirely and never shown as "Coming Soon".
-        </p>
-
-        <div id="partnerEcosystem"></div>
       </div>
     </div>
 
     <!-- ==================== SUPPORTED EXPERIENCES ==================== -->
     <div class="experiences-inner">
       <div class="section-label">
-        <span>Supported Experiences</span>
+        <span>Sponsors Integration</span>
       </div>
-      <h2 class="section-title" style="margin-bottom: 8px">
-        Where partners live inside the day
+      <h2 class="section-title" style="margin-bottom: 12px">
+        Choose Where Your Brand
+        <strong style="color: #04c44e; font-weight: 800">Takes the Lead</strong>
       </h2>
       <p class="experiences-sub">
-        The public naming formula for each supported asset. Lanyard is
-        visibility only, no card.
+        Position your brand within the experiences where attendees learn,
+        engage, and build professional relationships.
       </p>
+      <div style="margin: 0 0 36px">
+        <a href="become-a-sponsor.html" class="btn-primary"
+          >Exclusive Partnership Opportunity</a
+        >
+      </div>
 
       <div class="experiences-grid">
         <div class="experience-card">
@@ -776,7 +580,7 @@
             <span class="experience-kind-label">Workshops</span>
           </div>
           <div class="experience-name">Acquisition workshops</div>
-          <div class="experience-formula">Powered by [Partner]</div>
+          <div class="experience-formula">Presented by [Partner]</div>
         </div>
         <div class="experience-card">
           <div class="experience-card-kind">
@@ -784,7 +588,7 @@
             <span class="experience-kind-label">Workshops</span>
           </div>
           <div class="experience-name">CRO &amp; Retention workshops</div>
-          <div class="experience-formula">Powered by [Partner]</div>
+          <div class="experience-formula">Presented by [Partner]</div>
         </div>
         <div class="experience-card">
           <div class="experience-card-kind">
@@ -794,7 +598,7 @@
           <div class="experience-name">
             Operations &amp; Logistics workshops
           </div>
-          <div class="experience-formula">Powered by [Partner]</div>
+          <div class="experience-formula">Presented by [Partner]</div>
         </div>
         <div class="experience-card">
           <div class="experience-card-kind">
@@ -802,7 +606,7 @@
             <span class="experience-kind-label">Experience</span>
           </div>
           <div class="experience-name">Leaders Lounge</div>
-          <div class="experience-formula">In partnership with [Partner]</div>
+          <div class="experience-formula">Presented by [Partner]</div>
         </div>
         <div class="experience-card">
           <div class="experience-card-kind">
@@ -810,7 +614,7 @@
             <span class="experience-kind-label">Experience</span>
           </div>
           <div class="experience-name">Registration Experience</div>
-          <div class="experience-formula">Supported by [Partner]</div>
+          <div class="experience-formula">Presented by [Partner]</div>
         </div>
         <div class="experience-card">
           <div class="experience-card-kind">
@@ -818,7 +622,7 @@
             <span class="experience-kind-label">Experience</span>
           </div>
           <div class="experience-name">Content Studio</div>
-          <div class="experience-formula">Powered by [Partner]</div>
+          <div class="experience-formula">Presented by [Partner]</div>
         </div>
         <div class="experience-card">
           <div class="experience-card-kind">
@@ -826,7 +630,7 @@
             <span class="experience-kind-label">Research</span>
           </div>
           <div class="experience-name">ECommerce Research</div>
-          <div class="experience-formula">In partnership with [Partner]</div>
+          <div class="experience-formula">Presented by [Partner]</div>
         </div>
       </div>
     </div>
@@ -988,6 +792,9 @@
             })
             .slice(0, 4);
 
+          var note = document.getElementById("featuredNote");
+          if (note) note.hidden = !featured.length;
+
           if (!featured.length) {
             host.innerHTML =
               '<p style="color:#6b747e;font-size:14px;grid-column:1/-1">Featured partners will be announced soon.</p>';
@@ -1046,74 +853,9 @@
             .join("");
         }
 
-        function renderEcosystem(partners, tiers) {
-          var host = document.getElementById("partnerEcosystem");
-          if (!host) return;
-          var list = partners || [];
-          var html = "";
-          for (var i = 0; i < tiers.length; i++) {
-            var t = tiers[i];
-            var inTier = list
-              .filter(function (p) {
-                return (p.tier || "community") === t.id;
-              })
-              .sort(function (a, b) {
-                return (a.sortOrder || 0) - (b.sortOrder || 0);
-              });
-            if (!inTier.length) continue;
-            html +=
-              '<div class="tier">' +
-              '<div class="tier-label" style="color:' +
-              esc(t.color) +
-              '">' +
-              esc(t.name) +
-              "</div>" +
-              (t.focus
-                ? '<div class="tier-focus">' + esc(t.focus) + "</div>"
-                : "") +
-              '<div class="tier-grid ' +
-              esc(t.id) +
-              '">' +
-              inTier
-                .map(function (p) {
-                  var inner = p.logoUrl
-                    ? '<img src="' +
-                      esc(p.logoUrl) +
-                      '" alt="' +
-                      esc(p.name) +
-                      '" style="max-width:100%;max-height:48px;object-fit:contain" />'
-                    : "<span>" + esc(p.name) + "</span>";
-                  if (p.websiteUrl) {
-                    return (
-                      '<a class="logo-slot ' +
-                      esc(t.id) +
-                      '" href="' +
-                      esc(p.websiteUrl) +
-                      '" target="_blank" rel="noopener noreferrer" style="text-decoration:none;color:inherit">' +
-                      inner +
-                      "</a>"
-                    );
-                  }
-                  return (
-                    '<div class="logo-slot ' +
-                    esc(t.id) +
-                    '">' +
-                    inner +
-                    "</div>"
-                  );
-                })
-                .join("") +
-              "</div></div>";
-          }
-          host.innerHTML =
-            html ||
-            '<p style="color:#6b747e;font-size:14px">Partners will be announced soon.</p>';
-        }
-
         function boot() {
           if (!window.EcdApi || !EcdApi.fetchContent) {
             renderFeatured([], DEFAULT_TIERS);
-            renderEcosystem([], DEFAULT_TIERS);
             return;
           }
           EcdApi.fetchContent()
@@ -1124,12 +866,10 @@
                   : DEFAULT_TIERS;
               var partners = data.partners || [];
               renderFeatured(partners, tiers);
-              renderEcosystem(partners, tiers);
             })
             .catch(function (err) {
               console.warn("[sponsors] content fetch failed", err);
               renderFeatured([], DEFAULT_TIERS);
-              renderEcosystem([], DEFAULT_TIERS);
             });
         }
 

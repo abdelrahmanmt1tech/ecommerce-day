@@ -6,7 +6,7 @@
     <title>ECommerce Day 2026 | TrafficMENA</title>
     <meta
       name="description"
-      content="ECommerce Day powered by TrafficMENA. 5 November 2026, Creativa Innovation Hub, Cairo."
+      content="ECommerce Day powered by TrafficMENA. 5 November 2026, Creativa Innovation Hub, Giza."
     />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -17,14 +17,17 @@
     />
 
     <!-- ✅ Reusable navbar -->
-    <script src="navbar.js" defer></script>
+    <script src="navbar.js?v=20260924a" defer></script>
     <!-- ✅ Reusable footer -->
-    <script src="footer.js" defer></script>
+    <script src="footer.js?v=20260924a" defer></script>
+
+    <!-- Shared tickets section (also used on agenda.html). Not deferred on purpose. -->
+    <script src="tickets-section.js?v=20260924a"></script>
 
     <!-- Shared prices + ECD content (partners/speakers/packages) -->
-    <script src="prices.js" defer></script>
-    <script src="ecd-api.js" defer></script>
-    <script src="ecd-content.js" defer></script>
+    <script src="prices.js?v=20260924a" defer></script>
+    <script src="ecd-api.js?v=20260924a" defer></script>
+    <script src="ecd-content.js?v=20260924a" defer></script>
 
     <style>
       /* ============ RESET & TOKENS ============ */
@@ -719,82 +722,6 @@
         margin-top: 10px;
       }
 
-      /* ============ TICKETS ============ */
-      .ticket-grid {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 20px;
-      }
-      .ticket-card {
-        background: var(--white);
-        border: 1px solid var(--line);
-        border-radius: var(--radius);
-        padding: 34px 30px;
-        display: flex;
-        flex-direction: column;
-        position: relative;
-        box-shadow: 0 2px 10px rgba(16, 16, 16, 0.05);
-      }
-      .ticket-card.featured {
-        background: linear-gradient(180deg, #f7fffa, #fff);
-        border: 2px solid var(--green);
-      }
-      .ticket-badge {
-        position: absolute;
-        top: -14px;
-        right: 26px;
-        background: var(--green-bright);
-        color: #12291b;
-        font-weight: 800;
-        font-size: 11px;
-        letter-spacing: 0.06em;
-        text-transform: uppercase;
-        border-radius: 999px;
-        padding: 6px 14px;
-      }
-      .ticket-eyebrow {
-        font-family: "JetBrains Mono", monospace;
-        font-size: 11px;
-        letter-spacing: 0.1em;
-        text-transform: uppercase;
-        color: var(--muted);
-        margin-bottom: 10px;
-      }
-      .ticket-title {
-        font-size: 22px;
-        font-weight: 800;
-        margin-bottom: 10px;
-      }
-      .ticket-desc {
-        font-size: 14px;
-        color: var(--ink-soft);
-        line-height: 1.6;
-        margin-bottom: 22px;
-      }
-      .ticket-list {
-        display: flex;
-        flex-direction: column;
-        gap: 11px;
-        margin-bottom: 20px;
-      }
-      .ticket-list li {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        font-size: 14px;
-      }
-      .ticket-list.excluded {
-        color: var(--muted);
-      }
-      .ticket-price {
-        font-size: 32px;
-        font-weight: 800;
-        margin: 10px 0 20px;
-      }
-      .ticket-card .btn {
-        margin-top: auto;
-      }
-
       /* ============ MODAL ============ */
       .modal-backdrop {
         position: fixed;
@@ -848,25 +775,6 @@
         align-items: center;
         justify-content: center;
         flex: none;
-      }
-      .cmp-modal-table {
-        width: 100%;
-        border-collapse: collapse;
-      }
-      .cmp-modal-table th {
-        text-align: left;
-        font-size: 12px;
-        color: var(--muted);
-        padding-bottom: 8px;
-        font-weight: 600;
-      }
-      .cmp-modal-table td {
-        padding: 10px 0;
-        border-bottom: 1px solid var(--line);
-        font-size: 14px;
-      }
-      .cmp-modal-table tr:last-child td {
-        border-bottom: none;
       }
 
       /* ============ MEDIA ============ */
@@ -1044,6 +952,40 @@
       }
       .faq-answer li {
         margin-bottom: 6px;
+      }
+      .faq-answer a {
+        color: var(--ink);
+        font-weight: 600;
+        text-decoration: underline;
+        text-underline-offset: 2px;
+      }
+      .faq-answer .wa-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        vertical-align: middle;
+        height: 28px;
+        padding: 0 10px;
+        border-radius: 8px;
+        background: var(--green-bg);
+        border: 1px solid var(--green-bd);
+        color: var(--ink);
+        font-size: 13px;
+        font-weight: 600;
+        line-height: 1;
+        text-decoration: none;
+        white-space: nowrap;
+        transition: border-color 0.15s ease;
+      }
+      .faq-answer .wa-btn svg {
+        color: var(--green);
+      }
+      .faq-answer .wa-btn:hover {
+        border-color: var(--green-bright);
+      }
+      .faq-answer .wa-btn:focus-visible {
+        outline: 2px solid var(--ink);
+        outline-offset: 2px;
       }
 
       /* ============ FINAL CTA ============ */
@@ -1253,9 +1195,6 @@
           grid-template-columns: 1fr;
           gap: 40px;
         }
-        .ticket-grid {
-          grid-template-columns: 1fr;
-        }
         .stats-grid {
           grid-template-columns: repeat(3, 1fr);
         }
@@ -1349,7 +1288,7 @@
                 <path d="M12 21s7-6.5 7-11a7 7 0 1 0-14 0c0 4.5 7 11 7 11Z" />
                 <circle cx="12" cy="10" r="2.5" />
               </svg>
-              Creativa Innovation Hub, Cairo
+              Creativa Innovation Hub, Giza
             </span>
             <span class="badge badge-green">
               <svg
@@ -1412,8 +1351,12 @@
             <div class="hero-media">
               <div class="hero-media-frame">
                 <img
-                  src="assets/hero-ground-logo.png"
+                  src="assets/hero-ground-logo.webp"
+                  width="1254"
+                  height="1254"
                   alt="Aerial view of the venue plaza with the TrafficMENA mark"
+                  fetchpriority="high"
+                  decoding="async"
                 />
               </div>
               <div class="hero-media-float">
@@ -1554,7 +1497,7 @@
                 decisions, challenges, and experience behind real growth.
               </p>
               <a href="agenda.html" class="btn btn-primary"
-                >Explore the Program</a
+                >View the Agenda</a
               >
             </div>
 
@@ -1631,161 +1574,12 @@
         </div>
       </section>
 
-      <!-- ============ TICKETS ============ -->
+      <!-- ============ TICKETS (shared: tickets-section.js) ============ -->
       <section id="tickets" class="section">
         <div class="container">
-          <div class="eyebrow">Choose Your Access</div>
-          <h2 class="section-title" data-reveal>
-            Two Passes. One Connected Experience.
-          </h2>
-          <p class="section-sub" data-reveal>
-            Choose the access that fits how you want to learn and participate.
-          </p>
-
-          <div class="ticket-grid">
-            <!-- Conference Pass (ct) -->
-            <article class="ticket-card" data-ticket-card="ct" data-reveal>
-              <div class="ticket-eyebrow" data-pkg-eyebrow>Conference Pass</div>
-              <h3 class="ticket-title" data-pkg-title>
-                The Live Stage Experience
-              </h3>
-              <p class="ticket-desc" data-pkg-desc>
-                Market perspectives, case studies, industry conversations, and
-                networking.
-              </p>
-
-              <ul
-                class="ticket-list"
-                id="confIncluded"
-                aria-label="Included in the Conference Pass"
-              ></ul>
-              <ul
-                class="ticket-list excluded"
-                id="confExcluded"
-                aria-label="Not included in the Conference Pass"
-              ></ul>
-
-              <div class="ticket-price price-ct" data-suffix=" EGP">
-                [Final Price] EGP
-              </div>
-
-              <button
-                type="button"
-                class="btn btn-outline-dark btn-full"
-                data-checkout="ct"
-                data-pkg-cta
-              >
-                Get Conference Pass
-              </button>
-            </article>
-
-            <!-- All Access Pass (fj) -->
-            <article
-              class="ticket-card featured"
-              data-ticket-card="fj"
-              data-reveal
-            >
-              <span class="ticket-badge" data-pkg-badge>Complete Access</span>
-              <div class="ticket-eyebrow" data-pkg-eyebrow>All Access Pass</div>
-              <h3 class="ticket-title" data-pkg-title>
-                The Full ECommerce Day Experience
-              </h3>
-              <p class="ticket-desc" data-pkg-desc>
-                Workshops, deeper application, and continued learning after the
-                event.
-              </p>
-
-              <ul
-                class="ticket-list"
-                id="allAccess"
-                aria-label="Included in the All Access Pass"
-              ></ul>
-
-              <div class="ticket-price price-fj" data-suffix=" EGP">
-                [Final Price] EGP
-              </div>
-
-              <button
-                type="button"
-                class="btn btn-primary btn-full"
-                data-checkout="fj"
-                data-pkg-cta
-              >
-                Get All Access Pass
-              </button>
-            </article>
-          </div>
-
-          <div class="center mt-24">
-            <button
-              class="btn btn-outline-dark"
-              id="openCompare"
-              aria-haspopup="dialog"
-            >
-              Compare Passes
-              <svg
-                width="14"
-                height="14"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2.2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <path d="M6 9l6 6 6-6" />
-              </svg>
-            </button>
-          </div>
-          <p class="center small-muted mt-18">
-            Workshop access remains subject to capacity and booking rules.
-          </p>
+          <ecd-tickets></ecd-tickets>
         </div>
       </section>
-
-      <!-- ============ COMPARE MODAL ============ -->
-      <div
-        class="modal-backdrop"
-        id="compareModal"
-        hidden
-        role="dialog"
-        aria-modal="true"
-        aria-label="Compare Passes"
-      >
-        <div class="modal" data-modal-stop>
-          <div class="modal-head">
-            <h3>Compare Passes</h3>
-            <button
-              class="modal-close"
-              id="closeCompare"
-              aria-label="Close comparison"
-            >
-              <svg
-                width="16"
-                height="16"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2.2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <path d="M6 6l12 12M18 6L6 18" />
-              </svg>
-            </button>
-          </div>
-          <table class="cmp-modal-table">
-            <thead>
-              <tr>
-                <th>Feature</th>
-                <th>Conference</th>
-                <th>All Access</th>
-              </tr>
-            </thead>
-            <tbody id="cmpModalBody"></tbody>
-          </table>
-        </div>
-      </div>
 
       <!-- ============ MEDIA ============ -->
       <section id="media" class="section section-soft">
@@ -1929,7 +1723,7 @@
                 <path d="M12 21s7-6.5 7-11a7 7 0 1 0-14 0c0 4.5 7 11 7 11Z" />
                 <circle cx="12" cy="10" r="2.5" />
               </svg>
-              Creativa Innovation Hub, Cairo
+              Creativa Innovation Hub, Giza
             </span>
           </div>
 
@@ -2031,11 +1825,6 @@
             day: "Experts, platforms, and potential partners",
             course: "Primarily individual learning",
           },
-          {
-            f: "Continued Access",
-            day: "Six months with the All Access Pass",
-            course: "Depends on the course",
-          },
         ];
 
         var outcomeData = [
@@ -2077,16 +1866,6 @@
           },
         ];
 
-        var modalData = [
-          { f: "Both stages and networking", c: "Yes" },
-          { f: "Keynotes, panels, and case studies", c: "Yes" },
-          { f: "Sponsor activations", c: "Yes" },
-          { f: "Five workshops", c: "No" },
-          { f: "Content platform access", c: "No" },
-          { f: "Six months of continued access", c: "No" },
-          { f: "Recordings and materials", c: "No" },
-        ];
-
         var statData = [
           { n: 3000, suffix: "+", label: "Community Members" },
           { n: 80, suffix: "+", label: "Speakers and Practitioners" },
@@ -2096,29 +1875,10 @@
           { n: 10, suffix: "+", label: "Professional Disciplines" },
         ];
 
-        var confIncludedData = [
-          "Main Stage",
-          "Local Brands Stage",
-          "Keynotes and panels",
-          "Ecommerce case studies",
-          "Sponsor activations",
-          "General networking",
-        ];
-        var confExcludedData = [
-          "Workshops",
-          "Content platform, recordings, and materials",
-        ];
-        var allAccessData = [
-          { t: "Everything in the Conference Pass", w: 700 },
-          { t: "Five workshops", w: 400 },
-          { t: "Content platform access", w: 400 },
-          { t: "Six months of continued access", w: 400 },
-          { t: "Main Stage recordings", w: 400 },
-          { t: "Local Brands Stage recordings", w: 400 },
-          { t: "Workshop recordings", w: 400 },
-          { t: "Presentation slides", w: 400 },
-          { t: "Workshop materials", w: 400 },
-        ];
+        var WA_URL =
+          "https://wa.me/201505437979?text=I%20need%20help%20for%20Ecommerce%20Day%202026";
+        var WA_ICON =
+          '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.64.07-.3-.15-1.26-.46-2.4-1.48-.89-.79-1.49-1.77-1.66-2.07-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.61-.92-2.2-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.88 1.21 3.07c.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.69.63.71.23 1.36.2 1.87.12.57-.08 1.76-.72 2.01-1.41.25-.7.25-1.29.17-1.41-.07-.13-.27-.2-.57-.35ZM12.05 21.5h-.01a9.4 9.4 0 0 1-4.79-1.31l-.34-.2-3.56.93.95-3.47-.22-.36a9.41 9.41 0 0 1-1.44-5.02c0-5.2 4.23-9.43 9.43-9.43 2.52 0 4.89.98 6.67 2.77a9.37 9.37 0 0 1 2.76 6.67c0 5.2-4.23 9.43-9.43 9.43Zm8.02-17.45A11.27 11.27 0 0 0 12.05.73C5.8.73.72 5.81.72 12.06c0 2 .52 3.95 1.52 5.66L.62 23.6l6.02-1.58a11.3 11.3 0 0 0 5.41 1.38h.01c6.25 0 11.33-5.08 11.33-11.33 0-3.03-1.18-5.87-3.32-8.02Z"/></svg>';
 
         var faqData = [
           {
@@ -2191,7 +1951,7 @@
             q: "When and where is the event?",
             a: [
               {
-                p: "ECommerce Day will take place on 5 November 2026 at Creativa Innovation Hub, Cairo.",
+                p: "ECommerce Day will take place on 5 November 2026 at Creativa Innovation Hub, Giza.",
               },
               {
                 p: "The full address, map, entry instructions, and transportation details will be shared with confirmed attendees before the event.",
@@ -2202,7 +1962,7 @@
             q: "What time does the event start?",
             a: [
               {
-                p: "Registration opens at 10:00 AM, and the stage program begins at 11:00 AM.",
+                p: "Registration opens at 10:00 AM, and the stage program begins at 10:30 AM.",
               },
               {
                 p: "Attendees are encouraged to arrive early to complete check-in and explore the venue before the first sessions begin.",
@@ -2219,120 +1979,25 @@
             ],
           },
           {
-            q: "What is the difference between the passes?",
-            a: [
-              {
-                p: "The Conference Pass provides access to the Main Stage, Local Brands Stage, Expo Area, Sponsor Activations, and general networking areas.",
-              },
-              {
-                p: "The All Access Pass includes everything in the Conference Pass, in addition to booking up to five workshops and accessing event recordings and materials through the TrafficMENA content platform for six months.",
-              },
-            ],
-          },
-          {
-            q: "What does the Conference Pass include?",
-            a: [
-              { p: "The Conference Pass includes:" },
-              {
-                ul: [
-                  "Main Stage access.",
-                  "Local Brands Stage access.",
-                  "Keynotes and panel discussions.",
-                  "Business case studies.",
-                  "Expo Area access.",
-                  "Sponsor Activations.",
-                  "General networking areas.",
-                  "A digital ticket and event guide.",
-                ],
-              },
-              {
-                p: "The Conference Pass does not include workshop booking, event recordings, platform access, presentation slides, or workshop materials.",
-              },
-            ],
-          },
-          {
-            q: "What does the All Access Pass include?",
-            a: [
-              { p: "The All Access Pass includes:" },
-              {
-                ul: [
-                  "Everything included in the Conference Pass.",
-                  "Booking access for up to five workshops.",
-                  "Main Stage recordings.",
-                  "Local Brands Stage recordings.",
-                  "Workshop recordings.",
-                  "Presentation slides.",
-                  "Workshop materials.",
-                  "Access to the TrafficMENA content platform for six months.",
-                ],
-              },
-              {
-                p: "Workshop booking is subject to availability and schedule compatibility.",
-              },
-            ],
-          },
-          {
-            q: "Are workshops included in the Conference Pass?",
-            a: [
-              { p: "No." },
-              {
-                p: "Workshop booking is only available with the All Access Pass.",
-              },
-            ],
-          },
-          {
-            q: "Are recordings included in the Conference Pass?",
-            a: [
-              { p: "No." },
-              {
-                p: "Recordings are only available to All Access Pass holders through the TrafficMENA content platform.",
-              },
-            ],
-          },
-          {
-            q: "How many workshops are included?",
-            a: [
-              {
-                p: "All Access Pass holders can book up to five workshops during the event.",
-              },
-              { p: "Workshop seats are limited and subject to availability." },
-            ],
-          },
-          {
             q: "Do workshops require advance booking?",
             a: [
               { p: "Yes." },
               {
-                p: "After completing payment for an All Access Pass, attendees will receive access to the workshop booking process.",
+                p: "ECommerce Day features 15+ workshops across 3 core ecommerce functions.",
               },
               {
-                p: "Bookings are confirmed according to available capacity, and attendees cannot reserve workshops that take place at the same time.",
-              },
-            ],
-          },
-          {
-            q: "How long is content platform access?",
-            a: [
-              {
-                p: "All Access Pass holders receive access to the TrafficMENA content platform for six months.",
+                p: "Workshop booking for All Access Pass holders opens 7-10 days before the event. We will announce how to book.",
               },
               {
-                p: "The access period begins when the event content becomes available on the platform.",
+                p: "Bookings are confirmed according to available capacity, and attendees cannot reserve more than 5 workshops, or workshops that take place at the same time.",
               },
             ],
           },
           {
             q: "What is available on the platform?",
             a: [
-              { p: "The platform will include:" },
               {
-                ul: [
-                  "Main Stage recordings.",
-                  "Local Brands Stage recordings.",
-                  "Workshop recordings.",
-                  "Presentation slides.",
-                  "Workshop materials.",
-                ],
+                p: "All Access Pass holders get 6 months of access to TrafficMENA\u2019s premium content library, plus the Workshop Templates & Files.",
               },
               {
                 p: "Platform access is only included with the All Access Pass.",
@@ -2385,51 +2050,21 @@
             ],
           },
           {
-            q: "Will I be able to meet the speakers?",
+            q: "Can I request a refund or transfer my ticket?",
             a: [
               {
-                p: "Speakers will participate in sessions and may be present in shared event areas, but private meetings or direct access to individual speakers are not guaranteed.",
+                p: "A full refund is available until the end of 30 October 2026, five days before the event.",
               },
               {
-                p: "Tickets do not include speaker contact information, scheduled one-to-one meetings, or access to a speaker directory.",
-              },
-            ],
-          },
-          {
-            q: "Can companies book for multiple team members?",
-            a: [
-              { p: "Yes." },
-              {
-                p: "Companies can purchase tickets for multiple team members. Each attendee must have an individual ticket with the correct name, email address, and contact information.",
+                p: "To request a refund, email info@trafficmena.com before the deadline using the email associated with your booking.",
               },
               {
-                p: "Workshop reservations for All Access Pass holders are managed separately for each attendee.",
-              },
-              { p: "There is currently no separate Group Ticket." },
-            ],
-          },
-          {
-            q: "Can I transfer my ticket?",
-            a: [
-              {
-                p: "You can submit a ticket transfer request through the TrafficMENA support team.",
+                p: "Requests received after this date cannot be accepted. Tickets are non-transferable and cannot be reassigned to another attendee.",
               },
               {
-                p: "Transfer eligibility, required information, and the final transfer deadline are governed by the Ticket and Entry Policy. A transfer is only complete after the attendee details have been updated and confirmed by TrafficMENA.",
+                p: "Approved refunds will be returned through the original payment method.",
               },
-              { p: "For assistance, contact info@trafficmena.com." },
-            ],
-          },
-          {
-            q: "Can I request a refund?",
-            a: [
-              { p: "Yes, you can submit a refund request." },
-              {
-                p: "Refund eligibility depends on the request date and the Refund and Cancellation Policy accepted during checkout. Approved refunds are returned through the original payment method, subject to payment provider processing times.",
-              },
-              {
-                p: "The complete refund conditions will be displayed before payment.",
-              },
+              { contact: "For assistance, contact" },
             ],
           },
           {
@@ -2440,8 +2075,9 @@
                 p: "ECommerce Day offers partnership and sponsorship opportunities for ecommerce platforms, technology providers, service companies, agencies, logistics businesses, payment providers, and other companies serving the ecommerce ecosystem.",
               },
               {
-                p: "Visit the Become a Partner page or contact info@trafficmena.com to discuss the available opportunities.",
+                p: "Visit the Become a Partner page or contact us to discuss the available opportunities.",
               },
+              { contact: "Sponsorship enquiries:" },
             ],
           },
         ];
@@ -2614,62 +2250,6 @@
           });
         })();
 
-        // Ticket lists
-        (function () {
-          var inc = document.getElementById("confIncluded");
-          var exc = document.getElementById("confExcluded");
-          var all = document.getElementById("allAccess");
-          if (inc)
-            confIncludedData.forEach(function (t) {
-              inc.appendChild(
-                el("li", { html: checkSvg() + "<span>" + t + "</span>" }),
-              );
-            });
-          if (exc)
-            confExcludedData.forEach(function (t) {
-              exc.appendChild(
-                el("li", { html: xSvg() + "<span>" + t + "</span>" }),
-              );
-            });
-          if (all)
-            allAccessData.forEach(function (i) {
-              all.appendChild(
-                el("li", {
-                  html:
-                    checkSvg() +
-                    '<span style="font-weight:' +
-                    i.w +
-                    '">' +
-                    i.t +
-                    "</span>",
-                }),
-              );
-            });
-        })();
-
-        // Compare modal body
-        (function () {
-          var body = document.getElementById("cmpModalBody");
-          if (!body) return;
-          modalData.forEach(function (m) {
-            var tr = el("tr");
-            var isNo = m.c === "No";
-            tr.innerHTML =
-              "<td>" +
-              m.f +
-              "</td>" +
-              '<td style="font-weight:' +
-              (isNo ? 400 : 700) +
-              ";color:" +
-              (isNo ? "#7A827D" : "#1E2422") +
-              '">' +
-              m.c +
-              "</td>" +
-              '<td style="font-weight:700">Yes</td>';
-            body.appendChild(tr);
-          });
-        })();
-
         // FAQ
         (function () {
           var grid = document.getElementById("faqGrid");
@@ -2690,6 +2270,25 @@
                   ul.appendChild(el("li", { text: li }));
                 });
                 ans.appendChild(ul);
+              } else if (b.contact) {
+                var line = el("p", { class: "faq-contact" }, [b.contact + " "]);
+                line.appendChild(
+                  el("a", {
+                    href: "mailto:info@trafficmena.com",
+                    text: "info@trafficmena.com",
+                  }),
+                );
+                line.appendChild(document.createTextNode(" or "));
+                var wa = el("a", {
+                  class: "wa-btn",
+                  href: WA_URL,
+                  target: "_blank",
+                  rel: "noopener",
+                  "aria-label": "Chat with us on WhatsApp (opens in a new tab)",
+                });
+                wa.innerHTML = WA_ICON + "<span>WhatsApp</span>";
+                line.appendChild(wa);
+                ans.appendChild(line);
               } else {
                 ans.appendChild(el("p", { text: b.p }));
               }
@@ -2885,18 +2484,9 @@
        MODALS
        ============================================================ */
 
-        var compareModal = document.getElementById("compareModal");
         var lightbox = document.getElementById("lightbox");
-        var openCompareBtn = document.getElementById("openCompare");
-        var closeCompareBtn = document.getElementById("closeCompare");
         var closeLightboxBtn = document.getElementById("closeLightbox");
 
-        function openCompare() {
-          if (compareModal) compareModal.hidden = false;
-        }
-        function closeCompare() {
-          if (compareModal) compareModal.hidden = true;
-        }
         function openLightbox() {
           if (lightbox) lightbox.hidden = false;
         }
@@ -2904,14 +2494,10 @@
           if (lightbox) lightbox.hidden = true;
         }
 
-        if (openCompareBtn)
-          openCompareBtn.addEventListener("click", openCompare);
-        if (closeCompareBtn)
-          closeCompareBtn.addEventListener("click", closeCompare);
         if (closeLightboxBtn)
           closeLightboxBtn.addEventListener("click", closeLightbox);
 
-        [compareModal, lightbox].forEach(function (m) {
+        [lightbox].forEach(function (m) {
           if (!m) return;
           m.addEventListener("click", function (e) {
             if (e.target === m) m.hidden = true;
@@ -2925,7 +2511,6 @@
 
         document.addEventListener("keydown", function (e) {
           if (e.key === "Escape") {
-            if (compareModal) compareModal.hidden = true;
             if (lightbox) lightbox.hidden = true;
           }
         });

@@ -12,13 +12,15 @@
     />
 
     <!-- ✅ Reusable navbar -->
-    <script src="navbar.js" defer></script>
+    <script src="navbar.js?v=20260924a" defer></script>
     <!-- ✅ Reusable footer -->
-    <script src="footer.js" defer></script>
+    <script src="footer.js?v=20260924a" defer></script>
     <!-- ✅ Shared ticket prices + live CMS packages -->
-    <script src="prices.js" defer></script>
-    <script src="ecd-api.js" defer></script>
-    <script src="ecd-content.js" defer></script>
+    <!-- Shared tickets section (same as index.html and agenda.html). Not deferred on purpose. -->
+    <script src="tickets-section.js?v=20260924a"></script>
+    <script src="prices.js?v=20260924a" defer></script>
+    <script src="ecd-api.js?v=20260924a" defer></script>
+    <script src="ecd-content.js?v=20260924a" defer></script>
 
     <style>
       *,
@@ -205,179 +207,6 @@
         background: var(--ink);
       }
 
-      /* Quick choice */
-      .quick-choice-card {
-        background: var(--white);
-        border: 1px solid var(--line-strong);
-        border-radius: var(--radius-lg);
-        overflow: hidden;
-        max-width: 900px;
-      }
-      .quick-choice-head {
-        display: grid;
-        grid-template-columns: 1.5fr 1fr;
-        background: var(--bg-soft);
-        border-bottom: 1px solid var(--line);
-        padding: 12px 24px;
-        font-family: "JetBrains Mono", monospace;
-        font-size: 11px;
-        letter-spacing: 0.1em;
-        text-transform: uppercase;
-        color: var(--muted-light);
-      }
-      .quick-choice-row {
-        display: grid;
-        grid-template-columns: 1.5fr 1fr;
-        padding: 16px 24px;
-        border-bottom: 1px solid var(--line);
-        font-size: 14px;
-        align-items: center;
-      }
-      .quick-choice-row:last-child {
-        border-bottom: none;
-      }
-      .quick-choice-row .goal {
-        color: var(--ink-soft);
-        font-weight: 500;
-        padding-right: 24px;
-      }
-      .quick-choice-row .pick {
-        font-weight: 700;
-      }
-
-      /* Ticket cards */
-      .ticket-grid {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 24px;
-        max-width: 1020px;
-        margin: 0 auto;
-        align-items: start;
-      }
-      .ticket-card {
-        border: 1px solid var(--line-strong);
-        border-radius: var(--radius-lg);
-        padding: 36px 32px;
-        background: var(--white);
-      }
-      .ticket-card.featured {
-        border: 2px solid var(--ink);
-        position: relative;
-        box-shadow: 0 12px 40px rgba(16, 16, 16, 0.1);
-      }
-      .ticket-card.standard {
-        margin-top: 16px;
-      }
-      .ticket-badge {
-        position: absolute;
-        top: -13px;
-        left: 32px;
-        background: var(--ink);
-        color: var(--green-bright);
-        border-radius: 999px;
-        padding: 5px 14px;
-        font-family: "JetBrains Mono", monospace;
-        font-size: 10px;
-        letter-spacing: 0.1em;
-        text-transform: uppercase;
-        white-space: nowrap;
-      }
-      .ticket-name {
-        font-family: "JetBrains Mono", monospace;
-        font-size: 11px;
-        letter-spacing: 0.12em;
-        text-transform: uppercase;
-        margin-bottom: 10px;
-      }
-      .ticket-name.standard {
-        color: var(--muted-light);
-      }
-      .ticket-name.featured {
-        color: var(--green);
-      }
-      .ticket-title {
-        font-size: 22px;
-        font-weight: 800;
-        color: var(--ink);
-        margin-bottom: 4px;
-      }
-      .ticket-sub {
-        font-size: 14px;
-        font-weight: 600;
-        color: var(--muted);
-        margin-bottom: 16px;
-      }
-      .ticket-desc {
-        font-size: 13px;
-        line-height: 1.7;
-        color: var(--muted);
-        margin-bottom: 24px;
-      }
-      .ticket-desc strong {
-        color: var(--ink);
-      }
-      .ticket-price {
-        font-size: 34px;
-        font-weight: 800;
-        color: var(--ink);
-        margin-bottom: 4px;
-      }
-      .ticket-price .currency {
-        font-size: 16px;
-        font-weight: 600;
-        color: var(--muted-light);
-      }
-      .ticket-note {
-        font-size: 11px;
-        color: var(--muted-light);
-        margin-bottom: 24px;
-      }
-      .ticket-list-label {
-        font-family: "JetBrains Mono", monospace;
-        font-size: 9px;
-        letter-spacing: 0.1em;
-        text-transform: uppercase;
-        color: var(--green);
-        margin-bottom: 10px;
-      }
-      .ticket-list-label.muted {
-        color: var(--muted-light);
-      }
-      .ticket-list {
-        display: flex;
-        flex-direction: column;
-        gap: 9px;
-        font-size: 13px;
-        color: var(--ink-soft);
-        margin-bottom: 20px;
-      }
-      .ticket-list .item {
-        display: flex;
-        gap: 8px;
-      }
-      .ticket-list .item .check {
-        color: var(--green);
-        flex: none;
-      }
-      .ticket-list .item .dash {
-        color: var(--muted-light);
-        flex: none;
-      }
-      .ticket-list.excluded {
-        color: var(--muted-light);
-        margin-bottom: 28px;
-      }
-      .ticket-callout {
-        background: var(--green-bg);
-        border: 1px solid var(--green-bd);
-        border-radius: 10px;
-        padding: 12px 14px;
-        font-size: 12px;
-        line-height: 1.6;
-        color: var(--ink-soft);
-        margin-bottom: 28px;
-      }
-
       .section-heading {
         font-size: clamp(24px, 3.5vw, 36px);
         line-height: 1.1;
@@ -390,36 +219,6 @@
         color: var(--muted);
         margin: 0 0 40px;
         max-width: 58ch;
-      }
-
-      /* Tiles */
-      .tiles-grid {
-        display: grid;
-        grid-template-columns: repeat(5, 1fr);
-        gap: 16px;
-      }
-      .tile {
-        background: var(--white);
-        border: 1px solid var(--line-strong);
-        border-radius: var(--radius);
-        padding: 20px 18px;
-      }
-      .tile .tile-dash {
-        width: 24px;
-        height: 2px;
-        background: var(--green-bright);
-        margin-bottom: 14px;
-      }
-      .tile .tile-title {
-        font-weight: 700;
-        font-size: 15px;
-        color: var(--ink);
-        margin-bottom: 8px;
-      }
-      .tile .tile-line {
-        font-size: 12px;
-        line-height: 1.6;
-        color: var(--muted);
       }
 
       /* Why blocks */
@@ -495,65 +294,6 @@
         color: var(--muted-light);
       }
 
-      /* Reservation states */
-      .res-meta {
-        display: flex;
-        gap: 20px;
-        flex-wrap: wrap;
-        align-items: center;
-        font-family: "JetBrains Mono", monospace;
-        font-size: 11px;
-        letter-spacing: 0.08em;
-        text-transform: uppercase;
-        color: var(--ink);
-        margin-bottom: 40px;
-      }
-      .res-meta .dot {
-        color: var(--line-strong);
-      }
-      .res-meta .tag {
-        background: var(--bg-soft);
-        border: 1px solid var(--line);
-        border-radius: 4px;
-        padding: 3px 8px;
-        font-size: 9px;
-        color: var(--muted-light);
-      }
-      .res-grid {
-        display: grid;
-        grid-template-columns: repeat(6, 1fr);
-        gap: 12px;
-      }
-      .res-card {
-        border-radius: var(--radius);
-        padding: 18px 16px;
-        background: var(--white);
-      }
-      .res-card .num {
-        font-family: "JetBrains Mono", monospace;
-        font-size: 9px;
-        letter-spacing: 0.1em;
-        text-transform: uppercase;
-        color: var(--muted-light);
-        margin-bottom: 12px;
-      }
-      .res-card .res-title {
-        font-weight: 700;
-        font-size: 14px;
-        color: var(--ink);
-        margin-bottom: 8px;
-      }
-      .res-card .res-line {
-        font-size: 12px;
-        line-height: 1.6;
-        color: var(--muted);
-        margin-bottom: 12px;
-      }
-      .res-card .res-cta {
-        font-size: 12px;
-        font-weight: 600;
-      }
-
       /* Platform */
       .platform-card {
         background: var(--white);
@@ -592,56 +332,6 @@
       .platform-row .val {
         font-weight: 600;
         color: var(--ink);
-      }
-
-      /* Availability */
-      .avail-grid {
-        display: grid;
-        grid-template-columns: repeat(5, 1fr);
-        gap: 14px;
-      }
-      .avail-card {
-        border: 1px solid var(--line-strong);
-        border-radius: var(--radius);
-        padding: 20px 16px;
-        display: flex;
-        flex-direction: column;
-        background: var(--white);
-      }
-      .avail-card .num {
-        font-family: "JetBrains Mono", monospace;
-        font-size: 9px;
-        letter-spacing: 0.1em;
-        text-transform: uppercase;
-        color: var(--muted-light);
-        margin-bottom: 12px;
-      }
-      .avail-pill {
-        align-self: flex-start;
-        border-radius: 999px;
-        padding: 3px 10px;
-        font-size: 11px;
-        font-weight: 600;
-        margin-bottom: 12px;
-      }
-      .avail-card .avail-title {
-        font-weight: 700;
-        font-size: 14px;
-        color: var(--ink);
-        margin-bottom: 4px;
-      }
-      .avail-card .avail-price {
-        font-size: 16px;
-        font-weight: 800;
-        margin-bottom: 14px;
-      }
-      .avail-card .avail-btn {
-        width: 100%;
-        border-radius: 10px;
-        padding: 10px;
-        font-weight: 600;
-        font-size: 12px;
-        margin-top: auto;
       }
 
       /* FAQ */
@@ -697,17 +387,6 @@
         padding: 0 20px 20px;
         max-width: 70ch;
       }
-      .faq-links {
-        display: flex;
-        gap: 20px;
-        margin-top: 24px;
-        font-size: 13px;
-        font-weight: 600;
-        flex-wrap: wrap;
-      }
-      .faq-links a {
-        color: var(--ink-soft);
-      }
 
       /* CTA */
       .cta-section {
@@ -759,16 +438,7 @@
         :root {
           --pad-x: 20px;
         }
-        .tiles-grid {
-          grid-template-columns: repeat(3, 1fr);
-        }
         .why-grid {
-          grid-template-columns: repeat(2, 1fr);
-        }
-        .res-grid {
-          grid-template-columns: repeat(3, 1fr);
-        }
-        .avail-grid {
           grid-template-columns: repeat(2, 1fr);
         }
       }
@@ -802,58 +472,6 @@
           display: none;
         }
 
-        .quick-choice-card {
-          max-width: 100%;
-        }
-        .quick-choice-head {
-          grid-template-columns: 1fr;
-          gap: 4px;
-        }
-        .quick-choice-head span:last-child {
-          display: none;
-        }
-        .quick-choice-row {
-          grid-template-columns: 1fr;
-          gap: 6px;
-          padding: 14px 16px;
-        }
-        .quick-choice-row .goal {
-          padding-right: 0;
-        }
-
-        .ticket-grid {
-          grid-template-columns: 1fr;
-          gap: 24px;
-        }
-        .ticket-card {
-          padding: 28px 22px;
-        }
-        .ticket-card.featured {
-          order: -1;
-        }
-        .ticket-card.standard {
-          margin-top: 0;
-        }
-        .ticket-badge {
-          left: 22px;
-          top: -12px;
-          padding: 4px 12px;
-          font-size: 9px;
-        }
-        .ticket-title {
-          font-size: 18px;
-        }
-        .ticket-price {
-          font-size: 28px;
-        }
-
-        .tiles-grid {
-          grid-template-columns: 1fr;
-          gap: 10px;
-        }
-        .tile {
-          padding: 14px 16px;
-        }
 
         .why-grid {
           grid-template-columns: 1fr;
@@ -889,24 +507,6 @@
           color: var(--muted-light);
         }
 
-        .res-meta {
-          font-size: 10px;
-          gap: 12px;
-        }
-        .res-grid {
-          grid-template-columns: 1fr;
-          gap: 10px;
-        }
-        .res-card {
-          padding: 14px 16px;
-        }
-        .res-card .res-title {
-          font-size: 13px;
-        }
-        .res-card .res-line {
-          font-size: 12px;
-          margin-bottom: 8px;
-        }
 
         .platform-card {
           max-width: 100%;
@@ -934,37 +534,6 @@
           font-weight: 400;
         }
 
-        .avail-grid {
-          grid-template-columns: 1fr;
-          gap: 10px;
-        }
-        .avail-card {
-          flex-direction: row;
-          align-items: center;
-          gap: 12px;
-          padding: 14px 16px;
-        }
-        .avail-card .num {
-          display: none;
-        }
-        .avail-pill {
-          margin-bottom: 0;
-          flex: none;
-        }
-        .avail-card .avail-title {
-          display: none;
-        }
-        .avail-card .avail-price {
-          flex: 1;
-          margin-bottom: 0;
-          font-size: 13px;
-        }
-        .avail-card .avail-btn {
-          width: auto;
-          flex: none;
-          padding: 9px 14px;
-          font-size: 11px;
-        }
 
         .faq-wrap {
           border-radius: 12px;
@@ -981,10 +550,6 @@
         .faq-a {
           font-size: 12px;
           padding: 0 16px 16px;
-        }
-        .faq-links {
-          gap: 14px;
-          font-size: 12px;
         }
 
         .cta-section {
@@ -1005,12 +570,36 @@
         .section-heading {
           font-size: 22px;
         }
-        .ticket-card {
-          padding: 24px 18px;
-        }
-        .ticket-price {
-          font-size: 26px;
-        }
+      }
+      /* WhatsApp contact button (inline, text-sized) */
+      .wa-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        vertical-align: middle;
+        height: 28px;
+        padding: 0 10px;
+        border-radius: 8px;
+        background: #e6fbee;
+        border: 1px solid #c3f7d7;
+        color: #101010;
+        font-family: Manrope, sans-serif;
+        font-size: 13px;
+        font-weight: 600;
+        line-height: 1;
+        text-decoration: none;
+        white-space: nowrap;
+        transition: border-color 0.15s ease;
+      }
+      .wa-btn svg {
+        color: #04c44e;
+      }
+      .wa-btn:hover {
+        border-color: #05ef62;
+      }
+      .wa-btn:focus-visible {
+        outline: 2px solid #101010;
+        outline-offset: 2px;
       }
     </style>
   </head>
@@ -1026,8 +615,8 @@
         </div>
         <h1>Choose how <span class="accent">deep</span> you want to go.</h1>
         <p>
-          Attend the big picture on The Control Tower, or add the workshops, the
-          hands-on practice and the full outputs with the Full Journey Pass.
+          Select the pass that fits your goals: Standard Pass for both stages,
+          or All Access Pass for stages, workshops, and premium resources.
         </p>
         <div class="hero-actions">
           <a href="#ticket-cards" class="btn btn-primary btn-lg"
@@ -1038,239 +627,30 @@
           >
         </div>
         <div class="hero-meta">
-          <span>Offline Event in Cairo</span>
+          <span>2 Stages</span>
           <span class="dot">·</span>
-          <span>All Sessions Recorded</span>
+          <span>15+ Workshops</span>
           <span class="dot">·</span>
-          <span>Workshop Files Included</span>
+          <span>Expertise</span>
+          <span class="dot">·</span>
+          <span>Professional Networking</span>
         </div>
       </section>
 
-      <!-- QUICK CHOICE -->
-      <section class="bg-soft">
-        <div class="container" style="padding-top: 56px; padding-bottom: 56px">
-          <div class="eyebrow">
-            <span>Quick Choice</span>
-          </div>
-          <div class="quick-choice-card">
-            <div class="quick-choice-head">
-              <span>If your goal is…</span>
-              <span>Choose…</span>
-            </div>
-            <div class="quick-choice-row">
-              <span class="goal"
-                >Hear keynotes &amp; panels, understand the big picture</span
-              >
-              <span class="pick" style="color: #101010"
-                >Control Tower Pass</span
-              >
-            </div>
-            <div class="quick-choice-row">
-              <span class="goal"
-                >Join workshops, exercises and Live Builds</span
-              >
-              <span class="pick" style="color: #04c44e">Full Journey Pass</span>
-            </div>
-            <div class="quick-choice-row">
-              <span class="goal"
-                >Watch recordings of every session after the event</span
-              >
-              <span class="pick" style="color: #006681">Both tickets</span>
-            </div>
-            <div class="quick-choice-row">
-              <span class="goal">Keep content and outputs for longer</span>
-              <span class="pick" style="color: #04c44e">Full Journey Pass</span>
-            </div>
-          </div>
+      <!-- TICKET CARDS (shared: tickets-section.js, same as index.html and agenda.html) -->
+      <section id="ticket-cards" class="bg-soft">
+        <div class="container" style="padding-top: 80px; padding-bottom: 80px">
+          <ecd-tickets></ecd-tickets>
         </div>
       </section>
 
-      <!-- TICKET CARDS -->
+      <!-- WHY ALL ACCESS COSTS MORE -->
       <section
-        id="ticket-cards"
         class="container"
         style="padding-top: 80px; padding-bottom: 80px"
       >
-        <div class="ticket-grid">
-          <!-- Control Tower -->
-          <div class="ticket-card standard">
-            <div class="ticket-name standard">Control Tower Pass</div>
-            <div class="ticket-title">The Main Stage Experience</div>
-            <div class="ticket-sub">See the whole system.</div>
-            <div class="ticket-desc">
-              <strong>Best for:</strong> founders, managers and marketers who
-              want the trends, the stories and the main panels.
-            </div>
-            <div class="ticket-price price-ct">
-              [Final Price] <span class="currency">EGP</span>
-            </div>
-            <div class="ticket-note">
-              Any taxes or fees are shown at checkout.
-            </div>
-            <div class="ticket-list-label">Includes</div>
-            <div class="ticket-list">
-              <div class="item">
-                <span class="check">✓</span>Access to The Control Tower (Main
-                Stage)
-              </div>
-              <div class="item">
-                <span class="check">✓</span>All session recordings
-              </div>
-              <div class="item">
-                <span class="check">✓</span>Workshop Templates &amp; Files
-              </div>
-              <div class="item">
-                <span class="check">✓</span>Basic Session Summaries
-              </div>
-              <div class="item">
-                <span class="check">✓</span>Basic ECommerce Action Pack
-              </div>
-              <div class="item">
-                <span class="check">✓</span>ECommerce Report: Summary
-              </div>
-              <div class="item">
-                <span class="check">✓</span>Platform access: 3 months
-              </div>
-            </div>
-            <div class="ticket-list-label muted">Does not include</div>
-            <div class="ticket-list excluded">
-              <div class="item">
-                <span class="dash">✕</span>Workshop track entry
-              </div>
-              <div class="item">
-                <span class="dash">✕</span>Workshop seat reservation
-              </div>
-              <div class="item">
-                <span class="dash">✕</span>Exercises &amp; Live Builds
-              </div>
-            </div>
-            <button
-              class="btn btn-outline btn-full"
-              type="button"
-              data-checkout="ct"
-            >
-              Book Control Tower Pass
-            </button>
-          </div>
-
-          <!-- Full Journey -->
-          <div class="ticket-card featured">
-            <span class="ticket-badge">Most Complete Experience</span>
-            <div class="ticket-name featured">Full Journey Pass</div>
-            <div class="ticket-title">
-              The Complete ECommerce Day Experience
-            </div>
-            <div class="ticket-sub">Learn it. Work on it. Apply it.</div>
-            <div class="ticket-desc">
-              <strong>Best for:</strong> specialists, operators and business
-              owners who want hands-on work during the day.
-            </div>
-            <div class="ticket-price price-fj">
-              [Final Price] <span class="currency">EGP</span>
-            </div>
-            <div class="ticket-note">
-              Any taxes or fees are shown at checkout.
-            </div>
-            <div class="ticket-list-label">Includes</div>
-            <div class="ticket-list">
-              <div class="item">
-                <span class="check">✓</span
-                ><strong>Everything in Control Tower Pass</strong>
-              </div>
-              <div class="item">
-                <span class="check">✓</span>Workshop Tracks entry (CLICKED ·
-                CONFIRMED · DELIVERED)
-              </div>
-              <div class="item">
-                <span class="check">✓</span>Workshop seat reservation
-              </div>
-              <div class="item">
-                <span class="check">✓</span>Exercises &amp; Live Builds
-              </div>
-              <div class="item">
-                <span class="check">✓</span>Full Session Summaries
-              </div>
-              <div class="item">
-                <span class="check">✓</span>Full ECommerce Action Pack
-              </div>
-              <div class="item">
-                <span class="check">✓</span>Full ECommerce Report
-              </div>
-              <div class="item">
-                <span class="check">✓</span>Platform access: 1 year
-              </div>
-            </div>
-            <div class="ticket-callout">
-              Workshops are capacity-limited and require reservation; buying the
-              pass does not reserve every workshop.
-            </div>
-            <button
-              class="btn btn-primary btn-full"
-              type="button"
-              data-checkout="fj"
-            >
-              Book Full Journey Pass
-            </button>
-          </div>
-        </div>
-      </section>
-
-      <!-- WHAT EVERYONE GETS -->
-      <section class="bg-soft">
-        <div class="container" style="padding-top: 72px; padding-bottom: 72px">
-          <div class="eyebrow">
-            <span>What Everyone Gets</span>
-          </div>
-          <h2 class="section-heading">Both passes carry the whole day home</h2>
-          <p class="section-sub">
-            Even if sessions overlap, the recordings and files are available to
-            all attendees after the event.
-          </p>
-          <div class="tiles-grid">
-            <div class="tile">
-              <div class="tile-dash"></div>
-              <div class="tile-title">The Control Tower</div>
-              <div class="tile-line">
-                Full-day access to the Main Stage program.
-              </div>
-            </div>
-            <div class="tile">
-              <div class="tile-dash"></div>
-              <div class="tile-title">All Session Recordings</div>
-              <div class="tile-line">
-                Every session, Main Stage and workshops.
-              </div>
-            </div>
-            <div class="tile">
-              <div class="tile-dash"></div>
-              <div class="tile-title">Workshop Templates &amp; Files</div>
-              <div class="tile-line">All workshop materials, downloadable.</div>
-            </div>
-            <div class="tile">
-              <div class="tile-dash"></div>
-              <div class="tile-title">Event Updates</div>
-              <div class="tile-line">
-                Schedule and venue updates before the day.
-              </div>
-            </div>
-            <div class="tile">
-              <div class="tile-dash"></div>
-              <div class="tile-title">Platform Access</div>
-              <div class="tile-line">
-                Content hub access for 3 months or 1 year, depending on your ticket.
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- WHY FULL JOURNEY COSTS MORE -->
-      <section
-        class="container"
-        style="padding-top: 96px; padding-bottom: 96px"
-      >
         <div class="eyebrow">
-          <span>Why Full Journey Costs More</span>
+          <span>Why All Access Costs More</span>
         </div>
         <h2 class="section-heading" style="margin-bottom: 48px">
           You're paying for the work, not the seat
@@ -1280,7 +660,7 @@
             <div class="num">01</div>
             <div class="why-title">Workshop Access &amp; Reservation</div>
             <div class="why-line">
-              Entry to all three workshop tracks with a reserved seat in
+              Up to 5 workshops across the three workshop tracks, in
               capacity-limited rooms.
             </div>
           </div>
@@ -1297,15 +677,15 @@
             <div class="why-title">Complete Learning Pack</div>
             <div class="why-line">
               Full Session Summaries and the full ECommerce Action Pack instead
-              of the basic versions.
+              of the basic versions, plus Workshop Templates &amp; Files.
             </div>
           </div>
           <div class="why-card">
             <div class="num">04</div>
-            <div class="why-title">Report &amp; One-Year Access</div>
+            <div class="why-title">Report &amp; Content Library</div>
             <div class="why-line">
-              The full ECommerce Report and 12 months on the platform instead of
-              3.
+              The full ECommerce Report and 6 months of access to TrafficMENA's
+              premium content library.
             </div>
           </div>
         </div>
@@ -1323,376 +703,110 @@
           <div class="cmp-card">
             <div class="cmp-head">
               <span>Feature</span>
-              <span>Control Tower Pass</span>
-              <span>Full Journey Pass</span>
+              <span>Standard Pass</span>
+              <span>All Access Pass</span>
             </div>
             <div class="cmp-row">
               <span class="feature">Access to The Control Tower</span>
-              <span class="val" data-label="Control Tower">Yes</span>
-              <span class="val" data-label="Full Journey">Yes</span>
+              <span class="val" data-label="Standard">Yes</span>
+              <span class="val" data-label="All Access">Yes</span>
+            </div>
+            <div class="cmp-row">
+              <span class="feature">Access to the Second Stage</span>
+              <span class="val" data-label="Standard">Yes</span>
+              <span class="val" data-label="All Access">Yes</span>
             </div>
             <div class="cmp-row">
               <span class="feature">Access to Workshop Tracks</span>
-              <span class="val muted" data-label="Control Tower">No</span>
-              <span class="val" data-label="Full Journey">Yes</span>
+              <span class="val muted" data-label="Standard">No</span>
+              <span class="val" data-label="All Access">Yes</span>
             </div>
             <div class="cmp-row">
-              <span class="feature">Workshop seat reservation</span>
-              <span class="val muted" data-label="Control Tower">No</span>
-              <span class="val" data-label="Full Journey">Yes</span>
-            </div>
-            <div class="cmp-row">
-              <span class="feature">Exercises &amp; Live Builds</span>
-              <span class="val muted" data-label="Control Tower">No</span>
-              <span class="val" data-label="Full Journey">Yes</span>
-            </div>
-            <div class="cmp-row">
-              <span class="feature">All session recordings</span>
-              <span class="val" data-label="Control Tower">Yes</span>
-              <span class="val" data-label="Full Journey">Yes</span>
+              <span class="feature">Workshop selection (up to 5)</span>
+              <span class="val muted" data-label="Standard">No</span>
+              <span class="val" data-label="All Access">Yes</span>
             </div>
             <div class="cmp-row">
               <span class="feature">Workshop Templates &amp; Files</span>
-              <span class="val" data-label="Control Tower">Yes</span>
-              <span class="val" data-label="Full Journey">Yes</span>
+              <span class="val muted" data-label="Standard">No</span>
+              <span class="val" data-label="All Access">Yes</span>
             </div>
             <div class="cmp-row">
-              <span class="feature">Platform access duration</span>
-              <span class="val" data-label="Control Tower">3 months</span>
-              <span class="val" data-label="Full Journey">1 year</span>
+              <span class="feature">Premium content library access</span>
+              <span class="val muted" data-label="Standard">No</span>
+              <span class="val" data-label="All Access">6 months</span>
             </div>
             <div class="cmp-row">
               <span class="feature">Session Summaries</span>
-              <span class="val" data-label="Control Tower">Basic</span>
-              <span class="val" data-label="Full Journey">Full</span>
+              <span class="val" data-label="Standard">Basic</span>
+              <span class="val" data-label="All Access">Full</span>
             </div>
             <div class="cmp-row">
               <span class="feature">ECommerce Action Pack</span>
-              <span class="val" data-label="Control Tower">Basic</span>
-              <span class="val" data-label="Full Journey">Full</span>
+              <span class="val" data-label="Standard">Basic</span>
+              <span class="val" data-label="All Access">Full</span>
             </div>
             <div class="cmp-row">
               <span class="feature">ECommerce Report</span>
-              <span class="val" data-label="Control Tower">Summary</span>
-              <span class="val" data-label="Full Journey">Full report</span>
+              <span class="val" data-label="Standard">Summary</span>
+              <span class="val" data-label="All Access">Full report</span>
             </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- WORKSHOP RESERVATION -->
-      <section
-        class="container"
-        style="padding-top: 96px; padding-bottom: 96px"
-      >
-        <div class="eyebrow">
-          <span>Workshop Reservation</span>
-        </div>
-        <h2 class="section-heading" style="margin-bottom: 12px">
-          How workshop seats work
-        </h2>
-        <div class="res-meta">
-          <span>CLICKED 80</span><span class="dot">·</span>
-          <span>CONFIRMED 200</span><span class="dot">·</span>
-          <span>DELIVERED 100</span>
-          <span class="tag">Reviewed before booking opens</span>
-        </div>
-        <div class="res-grid">
-          <div
-            class="res-card"
-            style="border: 1px solid #d5dae0; background: #ffffff"
-          >
-            <div class="num">0 · Before purchase</div>
-            <div class="res-title">Included, not reserved</div>
-            <div class="res-line">
-              Full Journey includes workshop access; reservation opens after
-              booking.
-            </div>
-            <div class="res-cta" style="color: #04c44e"></div>
-          </div>
-          <div
-            class="res-card"
-            style="border: 1px solid #d5dae0; background: #ffffff"
-          >
-            <div class="num">1 · Seats available</div>
-            <div class="res-title">Seats Available</div>
-            <div class="res-line">
-              Pick your workshop per slot and lock the seat.
-            </div>
-            <div class="res-cta" style="color: #04c44e">Reserve My Seat</div>
-          </div>
-          <div
-            class="res-card"
-            style="border: 1px solid #ffb020; background: #ffffff"
-          >
-            <div class="num">2 · Almost full</div>
-            <div class="res-title">Almost Full</div>
-            <div class="res-line">Only a few seats left in this room.</div>
-            <div class="res-cta" style="color: #04c44e">Reserve My Seat</div>
-          </div>
-          <div
-            class="res-card"
-            style="border: 1px solid #d5dae0; background: #f4f6f8"
-          >
-            <div class="num">3 · Fully booked</div>
-            <div class="res-title">Fully Booked</div>
-            <div class="res-line">
-              Room at capacity. The recording stays available to you.
-            </div>
-            <div class="res-cta" style="color: #101010">
-              Join Waiting List / Watch Later
-            </div>
-          </div>
-          <div
-            class="res-card"
-            style="border: 1px solid #ffb020; background: #fff9ef"
-          >
-            <div class="num">4 · Conflict</div>
-            <div class="res-title">Slot conflict</div>
-            <div class="res-line">
-              You already have a workshop in this slot.
-            </div>
-            <div class="res-cta" style="color: #8a5a00">View my schedule</div>
-          </div>
-          <div
-            class="res-card"
-            style="border: 1px solid #c3f7d7; background: #e6fbee"
-          >
-            <div class="num">5 · Confirmed</div>
-            <div class="res-title">Confirmed</div>
-            <div class="res-line">
-              Added to your schedule. See you in the room.
-            </div>
-            <div class="res-cta" style="color: #04c44e">✓ Reserved</div>
           </div>
         </div>
       </section>
 
       <!-- PLATFORM -->
       <section class="bg-green">
-        <div class="container" style="padding-top: 72px; padding-bottom: 72px">
+        <div class="container" style="padding-top: 80px; padding-bottom: 80px">
           <div class="eyebrow">
-            <span style="color: var(--green)">After the Event Platform</span>
+            <span style="color: var(--green)">All Access Only</span>
           </div>
           <h2 class="section-heading" style="margin-bottom: 12px">
-            The day continues on the platform
+            Premium content library access
           </h2>
           <p style="font-size: 14px; color: var(--muted); margin: 0 0 36px">
-            The platform is a content hub for watching and downloading, not a
-            community or networking platform.
+            All Access Pass holders get 6 months of access to TrafficMENA's
+            premium content library. It is a content hub, not a community or
+            networking platform.
           </p>
           <div class="platform-card">
             <div class="platform-head">
               <span></span>
-              <span>Control Tower Pass</span>
-              <span>Full Journey Pass</span>
+              <span>Standard Pass</span>
+              <span>All Access Pass</span>
             </div>
             <div class="platform-row">
-              <span class="feature">Access duration</span>
-              <span class="val" data-label="CT">3 months</span>
-              <span class="val" data-label="FJ">1 year</span>
-            </div>
-            <div class="platform-row">
-              <span class="feature">All session recordings</span>
-              <span class="val" data-label="CT">Yes</span>
-              <span class="val" data-label="FJ">Yes</span>
+              <span class="feature">Premium content library</span>
+              <span class="val muted" data-label="Standard">No</span>
+              <span class="val" data-label="All Access">6 months</span>
             </div>
             <div class="platform-row">
               <span class="feature">Workshop Templates &amp; Files</span>
-              <span class="val" data-label="CT">Yes</span>
-              <span class="val" data-label="FJ">Yes</span>
+              <span class="val muted" data-label="Standard">No</span>
+              <span class="val" data-label="All Access">Yes</span>
             </div>
             <div class="platform-row">
               <span class="feature">Session Summaries</span>
-              <span class="val" data-label="CT">Basic</span>
-              <span class="val" data-label="FJ">Full</span>
+              <span class="val" data-label="Standard">Basic</span>
+              <span class="val" data-label="All Access">Full</span>
             </div>
             <div class="platform-row">
               <span class="feature">ECommerce Action Pack</span>
-              <span class="val" data-label="CT">Basic</span>
-              <span class="val" data-label="FJ">Full</span>
+              <span class="val" data-label="Standard">Basic</span>
+              <span class="val" data-label="All Access">Full</span>
             </div>
             <div class="platform-row">
               <span class="feature">ECommerce Report</span>
-              <span class="val" data-label="CT">Summary</span>
-              <span class="val" data-label="FJ">Full report</span>
+              <span class="val" data-label="Standard">Summary</span>
+              <span class="val" data-label="All Access">Full report</span>
             </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- AVAILABILITY STATES -->
-      <section
-        class="container"
-        style="padding-top: 96px; padding-bottom: 96px"
-      >
-        <div class="eyebrow">
-          <span>Component: Price &amp; Availability States</span>
-        </div>
-        <h2 class="section-heading" style="margin-bottom: 8px">
-          Ticket card states
-        </h2>
-        <p style="font-size: 14px; color: var(--muted-light); margin: 0 0 40px">
-          "Limited Availability" appears only when wired to real capacity data.
-          Prices in EGP; taxes and fees shown at checkout.
-        </p>
-        <div class="avail-grid">
-          <div class="avail-card">
-            <div class="num">1 · Coming soon</div>
-            <span
-              class="avail-pill"
-              style="
-                background: #f4f6f8;
-                border: 1px solid #e6eaee;
-                color: #6b747e;
-              "
-              >Coming Soon</span
-            >
-            <div class="avail-title">Full Journey Pass</div>
-            <div class="avail-price" style="color: #6b747e">
-              Price announced soon
-            </div>
-            <a
-              href="mailto:info@trafficmena.com?subject=Notify%20Me%20-%20Full%20Journey%20Pass"
-              class="avail-btn"
-              style="
-                background: #ffffff;
-                border: 1px solid #101010;
-                color: #101010;
-                text-decoration: none;
-                text-align: center;
-              "
-              >Notify Me</a
-            >
-          </div>
-          <div class="avail-card">
-            <div class="num">2 · On sale</div>
-            <span
-              class="avail-pill"
-              style="
-                background: #e6fbee;
-                border: 1px solid #c3f7d7;
-                color: #04c44e;
-              "
-              >On Sale</span
-            >
-            <div class="avail-title">Full Journey Pass</div>
-            <div
-              class="avail-price price-fj"
-              style="color: #101010"
-              data-suffix=" EGP"
-            >
-              [Final Price] EGP
-            </div>
-            <button
-              class="avail-btn"
-              type="button"
-              data-checkout="fj"
-              style="
-                background: #05ef62;
-                border: 1px solid #05ef62;
-                color: #101010;
-              "
-            >
-              Book Full Journey Pass
-            </button>
-          </div>
-          <div class="avail-card">
-            <div class="num">3 · Limited*</div>
-            <span
-              class="avail-pill"
-              style="
-                background: #fff4de;
-                border: 1px solid #ffb020;
-                color: #8a5a00;
-              "
-              >Almost Full</span
-            >
-            <div class="avail-title">Full Journey Pass</div>
-            <div
-              class="avail-price price-fj"
-              style="color: #101010"
-              data-suffix=" EGP"
-            >
-              [Final Price] EGP
-            </div>
-            <button
-              class="avail-btn"
-              type="button"
-              data-checkout="fj"
-              style="
-                background: #05ef62;
-                border: 1px solid #05ef62;
-                color: #101010;
-              "
-            >
-              Book Full Journey Pass
-            </button>
-          </div>
-          <div class="avail-card">
-            <div class="num">4 · Sold out</div>
-            <span
-              class="avail-pill"
-              style="
-                background: #f4f6f8;
-                border: 1px solid #d5dae0;
-                color: #4a5563;
-              "
-              >Fully Booked</span
-            >
-            <div class="avail-title">Full Journey Pass</div>
-            <div
-              class="avail-price price-fj"
-              style="color: #6b747e"
-              data-suffix=" EGP"
-            >
-              [Final Price] EGP
-            </div>
-            <button
-              class="avail-btn"
-              style="
-                background: #ffffff;
-                border: 1px solid #101010;
-                color: #101010;
-              "
-            >
-              Join Waiting List
-            </button>
-          </div>
-          <div class="avail-card">
-            <div class="num">5 · Sales closed</div>
-            <span
-              class="avail-pill"
-              style="
-                background: #f4f6f8;
-                border: 1px solid #d5dae0;
-                color: #4a5563;
-              "
-              >Sales Closed</span
-            >
-            <div class="avail-title">Full Journey Pass</div>
-            <div class="avail-price" style="color: #6b747e">
-              Event day, 22 Oct 2026
-            </div>
-            <a
-              href="agenda.html"
-              class="avail-btn"
-              style="
-                background: #ffffff;
-                border: 1px solid #d5dae0;
-                color: #4a5563;
-                text-decoration: none;
-                text-align: center;
-              "
-              >View the Agenda</a
-            >
           </div>
         </div>
       </section>
 
       <!-- FAQ -->
-      <section class="bg-soft">
-        <div class="container" style="padding-top: 96px; padding-bottom: 96px">
+      <section>
+        <div class="container" style="padding-top: 80px; padding-bottom: 80px">
           <div class="eyebrow">
             <span>FAQ &amp; Policies</span>
           </div>
@@ -1706,33 +820,24 @@
                 <span class="faq-icon"></span>
               </summary>
               <p class="faq-a">
-                The Control Tower Pass covers the Main Stage plus all recordings
-                and Workshop Templates &amp; Files. The Full Journey Pass adds
-                entry to the three workshop tracks, workshop seat reservation,
-                Exercises &amp; Live Builds, the full Summaries, Action Pack and
-                Report, and a full year of platform access.
+                The Standard Pass covers full-day access to the Main Stage and
+                the Second Stage, with the basic Summaries, Action Pack and
+                Report. The All Access Pass adds up to 5 workshops across the
+                three workshop tracks, Exercises &amp; Live Builds, Workshop
+                Templates &amp; Files, the full Summaries, Action Pack and Report,
+                and 6 months of access to TrafficMENA's premium content library.
               </p>
             </details>
             <details class="faq-item">
               <summary>
-                <span>How do workshops work with the Full Journey Pass?</span>
+                <span>How do workshops work with the All Access Pass?</span>
                 <span class="faq-icon"></span>
               </summary>
               <p class="faq-a">
-                Workshops are offline, capacity-limited and require
-                pre-reservation after payment. Buying the pass gives you
-                workshop access but does not automatically reserve a seat, so
-                reserve early.
-              </p>
-            </details>
-            <details class="faq-item">
-              <summary>
-                <span>Are session recordings included?</span>
-                <span class="faq-icon"></span>
-              </summary>
-              <p class="faq-a">
-                Yes. All sessions (Main Stage and workshops) are recorded and
-                available on the platform with both tickets.
+                Workshops are offline and capacity-limited. Workshop booking
+                opens 7-10 days before the event, and we will announce how to
+                book. You can select up to 5 workshops; workshops at the same
+                time cannot be selected together.
               </p>
             </details>
             <details class="faq-item">
@@ -1741,14 +846,14 @@
                 <span class="faq-icon"></span>
               </summary>
               <p class="faq-a">
-                Yes. Workshop Templates &amp; Files are included with both
-                tickets.
+                Workshop Templates &amp; Files are included with the All Access
+                Pass only.
               </p>
             </details>
             <details class="faq-item">
               <summary>
                 <span
-                  >Can I upgrade from Control Tower to Full Journey later?</span
+                  >Can I upgrade from Standard to All Access later?</span
                 >
                 <span class="faq-icon"></span>
               </summary>
@@ -1763,8 +868,9 @@
                 <span class="faq-icon"></span>
               </summary>
               <p class="faq-a">
-                Transfer rules are covered in the Ticket &amp; Entry policy. For
-                special cases contact info@trafficmena.com.
+                No. Tickets are non-transferable and cannot be reassigned to
+                another attendee. For help, contact info@trafficmena.com or
+                <a class="wa-btn" href="https://wa.me/201505437979?text=I%20need%20help%20for%20Ecommerce%20Day%202026" target="_blank" rel="noopener" aria-label="Chat with us on WhatsApp (opens in a new tab)"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.64.07-.3-.15-1.26-.46-2.4-1.48-.89-.79-1.49-1.77-1.66-2.07-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.61-.92-2.2-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.88 1.21 3.07c.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.69.63.71.23 1.36.2 1.87.12.57-.08 1.76-.72 2.01-1.41.25-.7.25-1.29.17-1.41-.07-.13-.27-.2-.57-.35ZM12.05 21.5h-.01a9.4 9.4 0 0 1-4.79-1.31l-.34-.2-3.56.93.95-3.47-.22-.36a9.41 9.41 0 0 1-1.44-5.02c0-5.2 4.23-9.43 9.43-9.43 2.52 0 4.89.98 6.67 2.77a9.37 9.37 0 0 1 2.76 6.67c0 5.2-4.23 9.43-9.43 9.43Zm8.02-17.45A11.27 11.27 0 0 0 12.05.73C5.8.73.72 5.81.72 12.06c0 2 .52 3.95 1.52 5.66L.62 23.6l6.02-1.58a11.3 11.3 0 0 0 5.41 1.38h.01c6.25 0 11.33-5.08 11.33-11.33 0-3.03-1.18-5.87-3.32-8.02Z"/></svg><span>WhatsApp</span></a>.
               </p>
             </details>
             <details class="faq-item">
@@ -1773,8 +879,10 @@
                 <span class="faq-icon"></span>
               </summary>
               <p class="faq-a">
-                Refunds and cancellations follow the Refund &amp; Cancellation
-                policy linked below. Review it before booking.
+                A full refund is available until the end of 30 October 2026, five
+                days before the event. To request one, email
+                info@trafficmena.com from the email associated with your
+                booking. Requests after this date cannot be accepted.
               </p>
             </details>
             <details class="faq-item">
@@ -1784,7 +892,7 @@
               </summary>
               <p class="faq-a">
                 Yes. An invoice can be requested during checkout or afterwards
-                via info@trafficmena.com.
+                via info@trafficmena.com or <a class="wa-btn" href="https://wa.me/201505437979?text=I%20need%20help%20for%20Ecommerce%20Day%202026" target="_blank" rel="noopener" aria-label="Chat with us on WhatsApp (opens in a new tab)"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.64.07-.3-.15-1.26-.46-2.4-1.48-.89-.79-1.49-1.77-1.66-2.07-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.61-.92-2.2-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.88 1.21 3.07c.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.69.63.71.23 1.36.2 1.87.12.57-.08 1.76-.72 2.01-1.41.25-.7.25-1.29.17-1.41-.07-.13-.27-.2-.57-.35ZM12.05 21.5h-.01a9.4 9.4 0 0 1-4.79-1.31l-.34-.2-3.56.93.95-3.47-.22-.36a9.41 9.41 0 0 1-1.44-5.02c0-5.2 4.23-9.43 9.43-9.43 2.52 0 4.89.98 6.67 2.77a9.37 9.37 0 0 1 2.76 6.67c0 5.2-4.23 9.43-9.43 9.43Zm8.02-17.45A11.27 11.27 0 0 0 12.05.73C5.8.73.72 5.81.72 12.06c0 2 .52 3.95 1.52 5.66L.62 23.6l6.02-1.58a11.3 11.3 0 0 0 5.41 1.38h.01c6.25 0 11.33-5.08 11.33-11.33 0-3.03-1.18-5.87-3.32-8.02Z"/></svg><span>WhatsApp</span></a>.
               </p>
             </details>
             <details class="faq-item">
@@ -1793,8 +901,14 @@
                 <span class="faq-icon"></span>
               </summary>
               <p class="faq-a">
-                Venue details will be announced soon. All ticket holders are
-                notified as soon as the venue is confirmed.
+                ECommerce Day takes place at
+                <a
+                  href="https://maps.app.goo.gl/LxbaM9baBAA8t9Pv9"
+                  target="_blank"
+                  rel="noopener"
+                  style="color: #101010; font-weight: 600; text-decoration: underline"
+                  >Creativa Innovation Hub, Giza</a
+                >, on 5 November 2026.
               </p>
             </details>
             <details class="faq-item">
@@ -1804,17 +918,10 @@
               </summary>
               <p class="faq-a">
                 No, there is no certificate. What you leave with is the
-                recordings, the Workshop Templates &amp; Files, the Summaries,
-                the Action Pack and the ECommerce Report.
+                Summaries, the Action Pack and the ECommerce Report, plus the
+                Workshop Templates &amp; Files with the All Access Pass.
               </p>
             </details>
-          </div>
-          <div class="faq-links">
-            <a href="policy.html#terms">Terms</a>
-            <a href="policy.html">Privacy</a>
-            <a href="policy.html#refund">Refund &amp; Cancellation</a>
-            <a href="policy.html#ticket">Ticket &amp; Entry</a>
-            <a href="policy.html#recording">Recording &amp; Photography</a>
           </div>
         </div>
       </section>
@@ -1824,14 +931,14 @@
         <h2>Pick your pass. Build your ECommerce Day.</h2>
         <p>
           Start with the Main Stage, or take the full journey with workshops,
-          hands-on practice and a full year of access.
+          hands-on practice and 6 months of premium content library access.
         </p>
         <div class="cta-actions">
           <button class="btn-on-dark-outline" type="button" data-checkout="ct">
-            Book Control Tower Pass
+            Book Standard Pass
           </button>
           <button class="btn-on-dark-primary" type="button" data-checkout="fj">
-            Book Full Journey Pass
+            Book All Access Pass
           </button>
         </div>
       </section>

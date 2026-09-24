@@ -118,8 +118,9 @@ class SiteFooter extends HTMLElement {
               <li><a href="index.html#experience">Experience</a></li>
               <li><a href="speakers.html">Speakers</a></li>
               <li><a href="tickets.html">Tickets</a></li>
-              <li><a href="faq.html">FAQ</a></li>
+              <!-- Hidden until the FAQ page content is updated: <li><a href="faq.html">FAQ</a></li> -->
               <li><a href="mailto:info@trafficmena.com">Contact</a></li>
+              <li><a href="https://wa.me/201505437979?text=I%20need%20help%20for%20Ecommerce%20Day%202026" target="_blank" rel="noopener" aria-label="Chat with us on WhatsApp (opens in a new tab)">WhatsApp</a></li>
               <li><a href="policy.html">Privacy Policy</a></li>
             </ul>
             <div class="footer-social">
@@ -156,7 +157,7 @@ class SiteFooter extends HTMLElement {
           </div>
           <div class="footer-bottom">
             <span>© ${year} TrafficMENA. All rights reserved.</span>
-            <span>info@trafficmena.com</span>
+            <span>info@trafficmena.com · <a href="https://wa.me/201505437979?text=I%20need%20help%20for%20Ecommerce%20Day%202026" target="_blank" rel="noopener" aria-label="Chat with us on WhatsApp (opens in a new tab)" style="color: inherit">WhatsApp</a></span>
           </div>
         </div>
       </footer>

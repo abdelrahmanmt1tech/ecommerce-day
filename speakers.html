@@ -9,15 +9,15 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=IBM+Plex+Sans+Arabic:wght@400;500;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=IBM+Plex+Sans+Arabic:wght@400;500;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
 
     <!-- ✅ Reusable navbar -->
-    <script src="navbar.js" defer></script>
+    <script src="navbar.js?v=20260924a" defer></script>
     <!-- ✅ Reusable footer -->
-    <script src="footer.js" defer></script>
-    <script src="ecd-api.js" defer></script>
+    <script src="footer.js?v=20260924a" defer></script>
+    <script src="ecd-api.js?v=20260924a" defer></script>
 
     <style>
       *,
@@ -159,6 +159,9 @@
         margin: 0 auto;
         padding: 72px 24px;
       }
+      #featured-speakers {
+        scroll-margin-top: 72px;
+      }
       .featured-label {
         display: flex;
         align-items: center;
@@ -168,9 +171,10 @@
       .featured-label span {
         font-family: "JetBrains Mono", monospace;
         font-size: 12px;
+        font-weight: 700;
         letter-spacing: 0.1em;
         text-transform: uppercase;
-        color: #6b747e;
+        color: #101010;
       }
       .featured-title {
         font-size: 36px;
@@ -906,35 +910,34 @@
     <!-- ==================== HERO ==================== -->
     <div class="hero">
       <div class="hero-label">
-        <span>ECommerce Day 2026 Speakers</span>
+        <span>ECommerce Day 2026 Speaker Lineup</span>
       </div>
       <h1 class="hero-title">
-        Meet the people
-        <span style="color: #04c44e">building, growing,</span> and operating
-        e-commerce.
+        Meet the Minds Shaping
+        <span style="color: #04c44e">Ecommerce</span> Across MENA
       </h1>
       <p class="hero-sub">
-        Practical expertise from people working inside the order journey, from
-        customer acquisition and conversion optimization to operations, delivery
-        and growth.
+        Gain practical insight, strengthen your decisions, and build a valuable
+        network with founders, business leaders, and specialists across the
+        ecommerce ecosystem.
       </p>
       <div
         style="display: flex; gap: 14px; margin-bottom: 32px; flex-wrap: wrap"
       >
-        <a class="btn-primary" href="agenda.html">View the Agenda</a>
-        <a class="btn-secondary" href="tickets.html">Book Your Ticket</a>
+        <a class="btn-primary" href="#featured-speakers">Meet the Experts</a>
+        <a class="btn-secondary" href="tickets.html">Secure Your Ticket</a>
       </div>
       <div class="hero-meta">
-        <span>[N] confirmed speakers</span>
+        <span>Ecommerce Founders</span>
         <span style="color: #d5dae0">·</span>
-        <span>[N] sectors</span>
+        <span>Business Leaders</span>
         <span style="color: #d5dae0">·</span>
-        <span>Founder / Operator / Expert mix</span>
+        <span>Industry Experts</span>
       </div>
     </div>
 
     <!-- ==================== FEATURED ==================== -->
-    <div class="featured-band">
+    <div class="featured-band" id="featured-speakers">
       <div class="featured-inner">
         <div class="featured-label">
           <span>Featured Speakers</span>
@@ -942,17 +945,6 @@
         <h2 class="featured-title">Learn from operators, not theorists</h2>
 
         <div id="featuredSpeakers"></div>
-        <div
-          class="font-mono"
-          style="
-            font-size: 10px;
-            letter-spacing: 0.08em;
-            color: #6b747e;
-            margin-top: 16px;
-          "
-        >
-          * Featured layout holds 4-6 cards as speakers are confirmed.
-        </div>
       </div>
     </div>
 
@@ -1054,15 +1046,16 @@
 
       <div class="lineup-progress">
         <div class="lineup-progress-label">Lineup in progress</div>
-        <div class="lineup-progress-title">
+        <div class="lineup-progress-title" id="lineupTitle">
           More speakers will be announced soon.
         </div>
-        <button
+        <a
           class="btn-secondary"
+          href="tickets.html"
           style="padding: 12px 22px; font-size: 14px"
         >
           Get updates
-        </button>
+        </a>
       </div>
     </div>
 
@@ -1070,8 +1063,8 @@
     <div class="cta-band">
       <div class="cta-inner">
         <h2>
-          Pick the expertise you need to hear, check the session time in the
-          Agenda, and book the ticket that fits your day.
+          Build your day around the expertise that can improve your decisions,
+          execution, and business results.
         </h2>
         <div class="cta-buttons">
           <a
@@ -1244,6 +1237,15 @@
       // ==========================================
       // 03. RENDER GRID
       // ==========================================
+      // Lineup box under the grid: wording depends on whether speakers are listed.
+      function renderLineupNote() {
+        var el = document.getElementById("lineupTitle");
+        if (!el) return;
+        el.textContent = speakers.length
+          ? "The lineup is impressive. More speakers will be announced soon."
+          : "More speakers will be announced soon.";
+      }
+
       function renderGrid() {
         var filtered = speakers.filter(function (s) {
           if (state.fRoom !== null && s.tr !== state.fRoom) return false;
@@ -1302,6 +1304,8 @@
             );
           })
           .join("");
+
+        renderLineupNote();
 
         // Update count
         var count = filtered.length;
@@ -1476,18 +1480,6 @@
               });
             }
             speakers = (data.speakers || []).map(mapApiSpeaker);
-            var confirmed = speakers.filter(function (s) {
-              return /confirm/i.test(s.tag || "");
-            }).length;
-            var meta = document.querySelector(".hero-meta");
-            if (meta) {
-              meta.innerHTML =
-                "<span>" +
-                speakers.length +
-                " speakers</span><span style=\"color:#d5dae0\">·</span><span>" +
-                confirmed +
-                " confirmed</span><span style=\"color:#d5dae0\">·</span><span>Founder / Operator / Expert mix</span>";
-            }
             renderMobileFilters();
             bindDesktopChips();
             renderGrid();

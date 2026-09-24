@@ -256,7 +256,7 @@
           el.textContent = content.packages.fj.displayName;
         });
         document.querySelectorAll(".avail-title").forEach(function (el) {
-          if (/full journey/i.test(el.textContent || "")) {
+          if (/full journey|all access/i.test(el.textContent || "")) {
             el.textContent = content.packages.fj.displayName;
           }
         });

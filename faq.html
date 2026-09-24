@@ -14,9 +14,9 @@
     />
 
     <!-- ✅ Reusable navbar -->
-    <script src="navbar.js" defer></script>
+    <script src="navbar.js?v=20260924a" defer></script>
     <!-- ✅ Reusable footer -->
-    <script src="footer.js" defer></script>
+    <script src="footer.js?v=20260924a" defer></script>
 
     <style>
       *,
@@ -93,6 +93,45 @@
       }
       .btn-secondary:hover {
         background: #f4f6f8;
+      }
+      .support-actions {
+        display: flex;
+        gap: 12px;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+      .faq-contact {
+        font-size: 14px;
+        color: #4a5563;
+        margin: 0 0 12px;
+      }
+      .wa-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        vertical-align: middle;
+        height: 28px;
+        padding: 0 10px;
+        border-radius: 8px;
+        background: #e6fbee;
+        border: 1px solid #c3f7d7;
+        color: #101010;
+        font-size: 13px;
+        font-weight: 600;
+        line-height: 1;
+        text-decoration: none;
+        white-space: nowrap;
+        transition: border-color 0.15s ease;
+      }
+      .wa-btn svg {
+        color: #04c44e;
+      }
+      .wa-btn:hover {
+        border-color: #05ef62;
+      }
+      .wa-btn:focus-visible {
+        outline: 2px solid #101010;
+        outline-offset: 2px;
       }
 
       /* ==========================================
@@ -618,12 +657,23 @@
           We couldn't find a matching answer. Try another word or contact the
           support team.
         </p>
-        <a
-          href="mailto:info@trafficmena.com?subject=FAQ%20Support%20Request"
-          class="btn-primary"
-          style="text-decoration: none"
-          >Contact Support</a
-        >
+        <div class="support-actions">
+          <a
+            href="mailto:info@trafficmena.com?subject=FAQ%20Support%20Request"
+            class="btn-primary"
+            style="text-decoration: none"
+            >Contact Support</a
+          >
+          <a
+            href="https://wa.me/201505437979?text=I%20need%20help%20for%20Ecommerce%20Day%202026"
+            class="btn-secondary"
+            target="_blank"
+            rel="noopener"
+            aria-label="Chat with us on WhatsApp (opens in a new tab)"
+            style="text-decoration: none; gap: 8px"
+            ><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.64.07-.3-.15-1.26-.46-2.4-1.48-.89-.79-1.49-1.77-1.66-2.07-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.61-.92-2.2-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.88 1.21 3.07c.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.69.63.71.23 1.36.2 1.87.12.57-.08 1.76-.72 2.01-1.41.25-.7.25-1.29.17-1.41-.07-.13-.27-.2-.57-.35ZM12.05 21.5h-.01a9.4 9.4 0 0 1-4.79-1.31l-.34-.2-3.56.93.95-3.47-.22-.36a9.41 9.41 0 0 1-1.44-5.02c0-5.2 4.23-9.43 9.43-9.43 2.52 0 4.89.98 6.67 2.77a9.37 9.37 0 0 1 2.76 6.67c0 5.2-4.23 9.43-9.43 9.43Zm8.02-17.45A11.27 11.27 0 0 0 12.05.73C5.8.73.72 5.81.72 12.06c0 2 .52 3.95 1.52 5.66L.62 23.6l6.02-1.58a11.3 11.3 0 0 0 5.41 1.38h.01c6.25 0 11.33-5.08 11.33-11.33 0-3.03-1.18-5.87-3.32-8.02Z"/></svg>WhatsApp</a
+          >
+        </div>
       </div>
     </div>
 
@@ -687,6 +737,23 @@
             "
             >Contact Support</a
           >
+          <a
+            href="https://wa.me/201505437979?text=I%20need%20help%20for%20Ecommerce%20Day%202026"
+            class="btn-secondary"
+            target="_blank"
+            rel="noopener"
+            aria-label="Chat with us on WhatsApp (opens in a new tab)"
+            style="
+              background: transparent;
+              color: #ffffff;
+              border-color: #ffffff;
+              padding: 15px 28px;
+              font-size: 15px;
+              text-decoration: none;
+              gap: 8px;
+            "
+            ><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.64.07-.3-.15-1.26-.46-2.4-1.48-.89-.79-1.49-1.77-1.66-2.07-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.61-.92-2.2-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.88 1.21 3.07c.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.69.63.71.23 1.36.2 1.87.12.57-.08 1.76-.72 2.01-1.41.25-.7.25-1.29.17-1.41-.07-.13-.27-.2-.57-.35ZM12.05 21.5h-.01a9.4 9.4 0 0 1-4.79-1.31l-.34-.2-3.56.93.95-3.47-.22-.36a9.41 9.41 0 0 1-1.44-5.02c0-5.2 4.23-9.43 9.43-9.43 2.52 0 4.89.98 6.67 2.77a9.37 9.37 0 0 1 2.76 6.67c0 5.2-4.23 9.43-9.43 9.43Zm8.02-17.45A11.27 11.27 0 0 0 12.05.73C5.8.73.72 5.81.72 12.06c0 2 .52 3.95 1.52 5.66L.62 23.6l6.02-1.58a11.3 11.3 0 0 0 5.41 1.38h.01c6.25 0 11.33-5.08 11.33-11.33 0-3.03-1.18-5.87-3.32-8.02Z"/></svg>WhatsApp</a
+          >
         </div>
         <div class="cta-note">
           Contact carries your question &amp; category automatically
@@ -705,19 +772,15 @@
       var popularData = [
         {
           q: "What is the difference between the two tickets?",
-          a: "Full Journey includes the Main Stage and the workshops; Control Tower includes the Main Stage only. Recordings and files come with both.",
+          a: "Standard covers both live stages. All Access adds up to 5 workshops, Workshop Templates & Files, and 6 months of premium content library access.",
         },
         {
           q: "Do I need to reserve workshops in advance?",
-          a: "Yes. Full Journey holders reserve after payment, subject to capacity.",
-        },
-        {
-          q: "Will all the content be recorded?",
-          a: "The plan is to record sessions and workshops and upload them to the platform for attendees.",
+          a: "Yes. Workshop booking opens 7-10 days before the event, and we will announce how to book. Seats are subject to capacity.",
         },
         {
           q: "How long is platform access?",
-          a: "3 months with Control Tower and 1 year with Full Journey.",
+          a: "6 months of premium content library access, with the All Access Pass only.",
         },
         {
           q: "Is there an attendance certificate?",
@@ -735,7 +798,7 @@
           items: [
             {
               q: "What is ECommerce Day?",
-              a: "A full offline day in Cairo by TrafficMENA covering the entire order journey: the Main Stage (The Control Tower) plus three workshop tracks: CLICKED, CONFIRMED and DELIVERED.",
+              a: "A full offline day in Cairo by TrafficMENA covering the entire order journey: the Main Stage (The Control Tower), the Second Stage, plus three workshop tracks: CLICKED, CONFIRMED and DELIVERED.",
             },
             {
               q: "Who is the day for?",
@@ -743,15 +806,15 @@
             },
             {
               q: "How is the day structured?",
-              a: "A main stage running all day (keynotes, panels, founder stories) plus hands-on workshops running in parallel in three specialized rooms.",
+              a: "Two live stages running all day (keynotes, panels, founder stories) plus hands-on workshops running in parallel in three specialized rooms.",
             },
             {
               q: "Is it offline or online?",
-              a: "Fully offline in Cairo. Every session is recorded and uploaded to the platform after the event for all attendees.",
+              a: "Fully offline, at Creativa Innovation Hub, Giza.",
             },
             {
               q: "When and where?",
-              a: "22 October 2026, Cairo. Venue details will be announced soon.",
+              a: "5 November 2026 at Creativa Innovation Hub, Giza.",
             },
           ],
         },
@@ -760,19 +823,19 @@
           items: [
             {
               q: "What ticket types exist?",
-              a: "Two only: the Control Tower Pass and the Full Journey Pass. No third type and no VIP ticket.",
+              a: "Two only: the Standard Pass and the All Access Pass. No third type and no VIP ticket.",
             },
             {
-              q: "What does the Control Tower Pass include?",
-              a: "Full-day Main Stage access + all recordings + Workshop Templates & Files + 3-month platform access + Basic Summaries and Action Pack and the ECommerce Report summary.",
+              q: "What does the Standard Pass include?",
+              a: "Full-day access to the Main Stage and the Second Stage + Basic Summaries and Action Pack and the ECommerce Report summary.",
             },
             {
-              q: "What does the Full Journey Pass include?",
-              a: "Everything in the Control Tower Pass + entry to the 3 workshop tracks + workshop seat reservation + Exercises & Live Builds + the Full Summaries, Action Pack and Report + a full year of platform access.",
+              q: "What does the All Access Pass include?",
+              a: "Everything in the Standard Pass + up to 5 workshops across the 3 workshop tracks + Exercises & Live Builds + Workshop Templates & Files + the Full Summaries, Action Pack and Report + 6 months of access to TrafficMENA\u2019s premium content library.",
             },
             {
-              q: "Are recordings and files included with both tickets?",
-              a: "Yes. All recordings and the Workshop Templates & Files are available to both ticket types on the platform.",
+              q: "Are the Workshop Templates & Files included with both tickets?",
+              a: "No. Workshop Templates & Files are included with the All Access Pass only.",
             },
             {
               q: "Is there a certificate?",
@@ -784,12 +847,13 @@
               a: "No group ticket and no group discount. Tickets are individual, each with its own attendee details and QR.",
             },
             {
-              q: "Can I upgrade from Control Tower to Full Journey?",
-              a: "Yes, before the event. Workshop seats after upgrading depend on availability at that time, so reserve early.",
+              q: "Can I upgrade from Standard to All Access?",
+              a: "Yes, before the event, subject to All Access availability. Workshop selection depends on the remaining capacity at the time your upgrade is confirmed.",
             },
             {
               q: "Can I transfer my ticket?",
-              a: "Transfers follow the Ticket & Entry policy. For special cases contact info@trafficmena.com.",
+              a: "No. Tickets are non-transferable and cannot be reassigned to another attendee. For help, contact info@trafficmena.com.",
+              wa: true,
             },
           ],
         },
@@ -798,14 +862,14 @@
           items: [
             {
               q: "Who can enter the workshops?",
-              a: "Full Journey Pass holders only. Workshops are offline attendance.",
+              a: "All Access Pass holders only. Workshops are offline attendance.",
             },
             {
               q: "When do I pick my workshops?",
-              a: "After completing payment you receive the reservation link. Reserve early, seats are limited.",
+              a: "Workshop booking opens 7-10 days before the event, and we will announce how to book. You can select up to 5 workshops, subject to availability.",
             },
             {
-              q: "Does Full Journey guarantee a seat in every workshop?",
+              q: "Does All Access guarantee a seat in every workshop?",
               a: "No. The pass grants reservation eligibility; the seat depends on capacity at the time of booking.",
             },
             {
@@ -819,11 +883,11 @@
             },
             {
               q: "What if a workshop is full?",
-              a: "Choose another available workshop or join the waiting list. The workshop recording will be available to you either way.",
+              a: "Choose another available workshop in the same slot or join the waiting list.",
             },
             {
               q: "Can I change my selection?",
-              a: "Yes, you can adjust your reservation before the event as long as seats are available.",
+              a: "No. Workshop selections are final once your booking is confirmed, because each selection reserves a limited seat.",
             },
             {
               q: "Do I need a laptop?",
@@ -892,12 +956,8 @@
             },
             {
               q: "Is there food and drink?",
-              a: "Catering details will be confirmed along with the venue details.",
+              a: "Catering details will be announced soon.",
               pending: true,
-            },
-            {
-              q: "Is the day filmed?",
-              a: "Yes, the day is fully photographed and recorded. See the Recording & Photography Policy.",
             },
           ],
         },
@@ -905,21 +965,12 @@
           label: "Platform & Content",
           items: [
             {
-              q: "Will all the content be recorded?",
-              a: "The plan is to record the Main Stage sessions and the workshops and upload them to the platform for all attendees.",
-            },
-            {
-              q: "When are the recordings uploaded?",
-              a: "After the event. The upload schedule will be confirmed later.",
-              pending: true,
-            },
-            {
               q: "How long is platform access?",
-              a: "3 months for Control Tower Pass holders and a full year for Full Journey Pass holders.",
+              a: "All Access Pass holders get 6 months of access to TrafficMENA\u2019s premium content library. The Standard Pass does not include platform access.",
             },
             {
               q: "Are workshop files available if I did not attend the workshop?",
-              a: "Yes. The Workshop Templates & Files are available to all attendees regardless of workshop attendance.",
+              a: "Workshop Templates & Files are available to All Access Pass holders, regardless of which workshops they attended.",
             },
             {
               q: "Can I download and share the content?",
@@ -932,6 +983,7 @@
             {
               q: "My platform account is not working?",
               a: "Try resending the activation (magic) link; if the problem persists contact info@trafficmena.com.",
+              wa: true,
             },
           ],
         },
@@ -940,11 +992,12 @@
           items: [
             {
               q: "What is the cancellation and refund policy?",
-              a: "Refunds follow the published Refund & Cancellation policy, so review it before booking.",
+              a: "A full refund is available until the end of 30 October 2026, five days before the event. Requests received after this date cannot be accepted.",
             },
             {
               q: "How do I request a refund?",
-              a: 'From your booking page choose "Request refund". The request opens a support case and does not mean automatic approval.',
+              a: "Email info@trafficmena.com before the deadline, using the email associated with your booking. Approved refunds are returned through the original payment method.",
+              wa: true,
             },
             {
               q: "How long does a refund take?",
@@ -980,6 +1033,7 @@
             {
               q: "How do I apply to speak?",
               a: "Send your experience and proposed topic to info@trafficmena.com. Participation depends on editorial topic fit.",
+              wa: true,
             },
             {
               q: "How do I become a sponsor or partner?",
@@ -1061,6 +1115,7 @@
               a: item.a,
               pending: !!item.pending,
               upd: !!item.upd,
+              wa: !!item.wa,
               open: open,
             });
           });
@@ -1156,6 +1211,11 @@
         bindFaqEvents();
       }
 
+      var WA_ANSWER_HTML =
+        '<p class="faq-contact">Or reach us on ' +
+        '<a class="wa-btn" href="https://wa.me/201505437979?text=I%20need%20help%20for%20Ecommerce%20Day%202026" target="_blank" rel="noopener" aria-label="Chat with us on WhatsApp (opens in a new tab)">' +
+        '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.64.07-.3-.15-1.26-.46-2.4-1.48-.89-.79-1.49-1.77-1.66-2.07-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.61-.92-2.2-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.88 1.21 3.07c.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.69.63.71.23 1.36.2 1.87.12.57-.08 1.76-.72 2.01-1.41.25-.7.25-1.29.17-1.41-.07-.13-.27-.2-.57-.35ZM12.05 21.5h-.01a9.4 9.4 0 0 1-4.79-1.31l-.34-.2-3.56.93.95-3.47-.22-.36a9.41 9.41 0 0 1-1.44-5.02c0-5.2 4.23-9.43 9.43-9.43 2.52 0 4.89.98 6.67 2.77a9.37 9.37 0 0 1 2.76 6.67c0 5.2-4.23 9.43-9.43 9.43Zm8.02-17.45A11.27 11.27 0 0 0 12.05.73C5.8.73.72 5.81.72 12.06c0 2 .52 3.95 1.52 5.66L.62 23.6l6.02-1.58a11.3 11.3 0 0 0 5.41 1.38h.01c6.25 0 11.33-5.08 11.33-11.33 0-3.03-1.18-5.87-3.32-8.02Z"/></svg><span>WhatsApp</span></a></p>';
+
       function renderFaqItem(it) {
         var fb = state.feedback[it.qid];
         var feedbackHtml;
@@ -1207,6 +1267,7 @@
               '<p class="faq-answer">' +
               escapeHtml(it.a) +
               "</p>" +
+              (it.wa ? WA_ANSWER_HTML : "") +
               '<div class="faq-feedback-row">' +
               feedbackHtml +
               '<button class="copy-link' +

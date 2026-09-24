@@ -14,9 +14,9 @@
     />
 
     <!-- ✅ Reusable navbar -->
-    <script src="navbar.js" defer></script>
+    <script src="navbar.js?v=20260924a" defer></script>
     <!-- ✅ Reusable footer -->
-    <script src="footer.js" defer></script>
+    <script src="footer.js?v=20260924a" defer></script>
 
     <style>
       *,
@@ -484,6 +484,36 @@
         white-space: nowrap;
         border: 0;
       }
+      /* WhatsApp contact button (inline, text-sized) */
+      .wa-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        vertical-align: middle;
+        height: 28px;
+        padding: 0 10px;
+        border-radius: 8px;
+        background: #e6fbee;
+        border: 1px solid #c3f7d7;
+        color: #101010;
+        font-family: Manrope, sans-serif;
+        font-size: 13px;
+        font-weight: 600;
+        line-height: 1;
+        text-decoration: none;
+        white-space: nowrap;
+        transition: border-color 0.15s ease;
+      }
+      .wa-btn svg {
+        color: #04c44e;
+      }
+      .wa-btn:hover {
+        border-color: #05ef62;
+      }
+      .wa-btn:focus-visible {
+        outline: 2px solid #101010;
+        outline-offset: 2px;
+      }
     </style>
   </head>
   <body>
@@ -816,7 +846,7 @@
                   margin-bottom: 14px;
                 "
               >
-                Recordings &amp; files after the event.
+                Premium content library after the event.
               </div>
               <button
                 type="button"
@@ -889,7 +919,7 @@
                     letter-spacing: 0.06em;
                     text-transform: uppercase;
                   "
-                  >Full Journey</span
+                  >All Access</span
                 >
               </div>
               <div
@@ -1045,7 +1075,7 @@
                     text-transform: uppercase;
                   "
                 >
-                  Full Journey Pass
+                  All Access Pass
                 </div>
               </div>
               <span
@@ -1119,8 +1149,7 @@
                   </button>
                 </div>
                 <div style="font-size: 13px; color: #4a5563; line-height: 1.7">
-                  ECommerce Day 2026 · 22 October 2026<br />Venue details will
-                  be announced soon.
+                  ECommerce Day 2026 · 5 November 2026<br />Creativa Innovation Hub, Giza
                 </div>
                 <div style="display: flex; flex-direction: column; gap: 8px">
                   <button
@@ -1164,7 +1193,7 @@
                     text-transform: uppercase;
                   "
                 >
-                  Full Journey Pass
+                  All Access Pass
                 </div>
               </div>
               <span
@@ -1238,8 +1267,7 @@
                   </button>
                 </div>
                 <div style="font-size: 13px; color: #4a5563; line-height: 1.7">
-                  ECommerce Day 2026 · 22 October 2026<br />Venue details will
-                  be announced soon.
+                  ECommerce Day 2026 · 5 November 2026<br />Creativa Innovation Hub, Giza
                 </div>
                 <div style="display: flex; flex-direction: column; gap: 8px">
                   <button
@@ -1338,22 +1366,43 @@
         </div>
       </div>
 
-      <!-- Workshop Reservation (Full Journey Only) -->
+      <!-- Workshop Reservation (All Access Pass Only) -->
       <div id="workshopSection" class="section-bg-dark">
         <div class="container section-padding">
           <div class="section-label">
             <span class="font-mono" style="color: #05ef62"
-              >Reserve Your Workshops · Full Journey</span
+              >Reserve Your Workshops · All Access</span
             >
           </div>
           <h2 class="section-title" style="color: #ffffff">
             One workshop per slot. Seats are capacity-limited.
           </h2>
           <p style="font-size: 14px; color: #9aa1a9; margin: 0 0 32px">
-            No selection? Your ticket remains valid for the Main Stage and all
-            content.
+            No selection? Your ticket remains valid for both stages.
           </p>
 
+          <!-- Shown while workshop booking is closed (WORKSHOP_BOOKING_OPEN = false) -->
+          <div
+            id="resClosedNotice"
+            style="
+              display: none;
+              background: #1a1a1a;
+              border: 1px solid #2a2a2a;
+              border-left: 3px solid #05ef62;
+              border-radius: 12px;
+              padding: 20px 24px;
+              color: #ffffff;
+              font-size: 15px;
+              line-height: 1.7;
+              max-width: 70ch;
+            "
+          >
+            <strong>Workshop booking opens 7-10 days before the event.</strong>
+            We will announce how to book your workshops. You can select
+            up to 5 workshops, subject to availability.
+          </div>
+
+          <div id="resBookingUI">
           <div id="resNotConfirmed">
             <div
               id="resSlotsContainer"
@@ -1462,6 +1511,7 @@
               </div>
             </div>
           </div>
+          </div>
         </div>
       </div>
 
@@ -1513,7 +1563,7 @@
               </div>
               <div style="display: flex; justify-content: space-between">
                 <span style="color: #4a5563"
-                  ><span class="price-ticket-name">Full Journey Pass</span> ×
+                  ><span class="price-ticket-name">All Access Pass</span> ×
                   <span class="price-qty">2</span></span
                 ><span style="font-weight: 600"
                   ><span class="price-unit" data-suffix=" EGP each"
@@ -1719,32 +1769,34 @@
                     Date &amp; time
                   </div>
                   <div style="color: #4a5563">
-                    22 October 2026 · Doors &amp; program start to be
+                    5 November 2026 · Doors &amp; program start to be
                     confirmed
                   </div>
                 </div>
                 <div>
                   <div style="font-weight: 700; margin-bottom: 2px">Venue</div>
-                  <div style="color: #4a5563">
-                    Venue details will be announced soon.
-                  </div>
-                  <button
-                    disabled
+                  <div style="color: #4a5563">Creativa Innovation Hub, Giza</div>
+                  <a
+                    href="https://maps.app.goo.gl/LxbaM9baBAA8t9Pv9"
+                    target="_blank"
+                    rel="noopener"
+                    aria-label="Get directions to Creativa Innovation Hub, Giza (Google Maps, new tab)"
                     style="
+                      display: inline-block;
                       margin-top: 6px;
-                      background: #f4f6f8;
-                      border: 1px solid #e6eaee;
-                      color: #9aa1a9;
+                      background: #ffffff;
+                      border: 1px solid #101010;
+                      color: #101010;
                       border-radius: 8px;
                       padding: 8px 14px;
                       font-family: Manrope, sans-serif;
                       font-weight: 600;
                       font-size: 12px;
-                      cursor: not-allowed;
+                      text-decoration: none;
                     "
                   >
                     Get Directions
-                  </button>
+                  </a>
                 </div>
                 <div>
                   <div style="font-weight: 700; margin-bottom: 2px">Entry</div>
@@ -1769,7 +1821,7 @@
                   "
                 >
                   We'll email you every update. Support: info@trafficmena.com ·
-                  01118111793
+                  01118111793 · <a class="wa-btn" href="https://wa.me/201505437979?text=I%20need%20help%20for%20Ecommerce%20Day%202026" target="_blank" rel="noopener" aria-label="Chat with us on WhatsApp (opens in a new tab)"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.64.07-.3-.15-1.26-.46-2.4-1.48-.89-.79-1.49-1.77-1.66-2.07-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.61-.92-2.2-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.88 1.21 3.07c.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.69.63.71.23 1.36.2 1.87.12.57-.08 1.76-.72 2.01-1.41.25-.7.25-1.29.17-1.41-.07-.13-.27-.2-.57-.35ZM12.05 21.5h-.01a9.4 9.4 0 0 1-4.79-1.31l-.34-.2-3.56.93.95-3.47-.22-.36a9.41 9.41 0 0 1-1.44-5.02c0-5.2 4.23-9.43 9.43-9.43 2.52 0 4.89.98 6.67 2.77a9.37 9.37 0 0 1 2.76 6.67c0 5.2-4.23 9.43-9.43 9.43Zm8.02-17.45A11.27 11.27 0 0 0 12.05.73C5.8.73.72 5.81.72 12.06c0 2 .52 3.95 1.52 5.66L.62 23.6l6.02-1.58a11.3 11.3 0 0 0 5.41 1.38h.01c6.25 0 11.33-5.08 11.33-11.33 0-3.03-1.18-5.87-3.32-8.02Z"/></svg><span>WhatsApp</span></a>
                 </div>
               </div>
             </div>
@@ -1799,32 +1851,20 @@
               <div class="platform-table">
                 <div class="platform-head">
                   <div class="platform-head-inner">
-                    <span></span><span>Control Tower</span
-                    ><span>Full Journey</span>
+                    <span></span><span>Standard</span
+                    ><span>All Access</span>
                   </div>
                 </div>
                 <div class="platform-row">
                   <span style="font-weight: 500; color: #1f2630"
-                    >Access duration</span
-                  ><span style="font-weight: 600; color: #101010">3 months</span
-                  ><span style="font-weight: 600; color: #101010">1 year</span>
-                </div>
-                <div class="platform-row">
-                  <span style="font-weight: 500; color: #1f2630"
-                    >Session recordings</span
-                  ><span style="font-weight: 600; color: #101010">Yes</span
-                  ><span style="font-weight: 600; color: #101010">Yes</span>
-                </div>
-                <div class="platform-row">
-                  <span style="font-weight: 500; color: #1f2630"
-                    >Workshop recordings</span
-                  ><span style="font-weight: 600; color: #101010">Yes</span
-                  ><span style="font-weight: 600; color: #101010">Yes</span>
+                    >Premium content library</span
+                  ><span style="font-weight: 600; color: #6b747e">Not included</span
+                  ><span style="font-weight: 600; color: #101010">6 months</span>
                 </div>
                 <div class="platform-row">
                   <span style="font-weight: 500; color: #1f2630"
                     >Templates &amp; Files</span
-                  ><span style="font-weight: 600; color: #101010">Yes</span
+                  ><span style="font-weight: 600; color: #6b747e">Not included</span
                   ><span style="font-weight: 600; color: #101010">Yes</span>
                 </div>
                 <div class="platform-row">
@@ -1847,11 +1887,11 @@
                 </div>
                 <div class="platform-row">
                   <span style="font-weight: 500; color: #1f2630"
-                    >Workshop reservation</span
+                    >Workshop booking</span
                   ><span style="font-weight: 600; color: #6b747e"
                     >Not available</span
                   ><span style="font-weight: 600; color: #101010"
-                    >Available by capacity</span
+                    >Opens 7-10 days before the event</span
                   >
                 </div>
               </div>
@@ -2254,7 +2294,8 @@
                 </div>
               </div>
               <div style="color: #4a5563">
-                Support: info@trafficmena.com · 01118111793
+                Support: info@trafficmena.com · 01118111793 ·
+                <a class="wa-btn" href="https://wa.me/201505437979?text=I%20need%20help%20for%20Ecommerce%20Day%202026" target="_blank" rel="noopener" aria-label="Chat with us on WhatsApp (opens in a new tab)"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.64.07-.3-.15-1.26-.46-2.4-1.48-.89-.79-1.49-1.77-1.66-2.07-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.61-.92-2.2-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.88 1.21 3.07c.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.69.63.71.23 1.36.2 1.87.12.57-.08 1.76-.72 2.01-1.41.25-.7.25-1.29.17-1.41-.07-.13-.27-.2-.57-.35ZM12.05 21.5h-.01a9.4 9.4 0 0 1-4.79-1.31l-.34-.2-3.56.93.95-3.47-.22-.36a9.41 9.41 0 0 1-1.44-5.02c0-5.2 4.23-9.43 9.43-9.43 2.52 0 4.89.98 6.67 2.77a9.37 9.37 0 0 1 2.76 6.67c0 5.2-4.23 9.43-9.43 9.43Zm8.02-17.45A11.27 11.27 0 0 0 12.05.73C5.8.73.72 5.81.72 12.06c0 2 .52 3.95 1.52 5.66L.62 23.6l6.02-1.58a11.3 11.3 0 0 0 5.41 1.38h.01c6.25 0 11.33-5.08 11.33-11.33 0-3.03-1.18-5.87-3.32-8.02Z"/></svg><span>WhatsApp</span></a>
               </div>
               <button
                 type="button"
@@ -2548,6 +2589,25 @@
               >Contact support</a
             >
             <a
+              href="https://wa.me/201505437979?text=I%20need%20help%20for%20Ecommerce%20Day%202026"
+              class="btn-secondary"
+              target="_blank"
+              rel="noopener"
+              aria-label="Chat with us on WhatsApp (opens in a new tab)"
+              style="
+                flex: 1;
+                padding: 11px;
+                font-size: 12px;
+                text-align: center;
+                text-decoration: none;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                gap: 6px;
+              "
+              ><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.64.07-.3-.15-1.26-.46-2.4-1.48-.89-.79-1.49-1.77-1.66-2.07-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.61-.92-2.2-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.88 1.21 3.07c.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.69.63.71.23 1.36.2 1.87.12.57-.08 1.76-.72 2.01-1.41.25-.7.25-1.29.17-1.41-.07-.13-.27-.2-.57-.35ZM12.05 21.5h-.01a9.4 9.4 0 0 1-4.79-1.31l-.34-.2-3.56.93.95-3.47-.22-.36a9.41 9.41 0 0 1-1.44-5.02c0-5.2 4.23-9.43 9.43-9.43 2.52 0 4.89.98 6.67 2.77a9.37 9.37 0 0 1 2.76 6.67c0 5.2-4.23 9.43-9.43 9.43Zm8.02-17.45A11.27 11.27 0 0 0 12.05.73C5.8.73.72 5.81.72 12.06c0 2 .52 3.95 1.52 5.66L.62 23.6l6.02-1.58a11.3 11.3 0 0 0 5.41 1.38h.01c6.25 0 11.33-5.08 11.33-11.33 0-3.03-1.18-5.87-3.32-8.02Z"/></svg>WhatsApp</a
+            >
+            <a
               href="tickets.html"
               class="btn-secondary"
               style="
@@ -2568,11 +2628,15 @@
     <site-footer></site-footer>
 
     <!-- Scripts -->
-    <script src="prices.js"></script>
-    <script src="ecd-api.js"></script>
+    <script src="prices.js?v=20260924a"></script>
+    <script src="ecd-api.js?v=20260924a"></script>
     <!-- Real scannable QR (encodes ticket serial) -->
     <script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script>
     <script>
+      // Workshop booking switch. Booking opens 7-10 days before the event:
+      // set to true then to show the reservation UI again (backend unchanged).
+      var WORKSHOP_BOOKING_OPEN = false;
+
       // ==========================================
       // 01. HYDRATE FROM ECD API
       // ==========================================
@@ -2683,7 +2747,7 @@
             '<button type="button" class="copy-ticket-btn" data-copy="' +
             serial +
             '" style="background:none;border:none;color:#04c44e;font-family:Manrope,sans-serif;font-weight:600;font-size:12px;cursor:pointer">Copy</button></div>' +
-            '<div style="font-size:13px;color:#4a5563;line-height:1.7">ECommerce Day 2026 · 22 October 2026<br />Venue details will be announced soon.</div>' +
+            '<div style="font-size:13px;color:#4a5563;line-height:1.7">ECommerce Day 2026 · 5 November 2026<br />Creativa Innovation Hub, Giza</div>' +
             (bookingUrl
               ? '<div style="font-family:JetBrains Mono,monospace;font-size:10px;color:#6b747e;word-break:break-all;line-height:1.4">' +
                 bookingUrl +
@@ -3576,7 +3640,30 @@
         }
       } catch (e) {}
 
-      loadWorkshopsFromApi();
+      (function applyWorkshopBookingState() {
+        var ui = document.getElementById("resBookingUI");
+        var notice = document.getElementById("resClosedNotice");
+        if (WORKSHOP_BOOKING_OPEN) {
+          if (notice) notice.style.display = "none";
+          loadWorkshopsFromApi();
+          return;
+        }
+        if (ui) ui.style.display = "none";
+        if (notice) notice.style.display = "block";
+        var card = document.getElementById("workshopActionCard");
+        if (card) {
+          var btn = document.getElementById("actionReserveWorkshops");
+          if (btn) {
+            btn.textContent = "See Details";
+          }
+          card.querySelectorAll("div").forEach(function (d) {
+            var t = (d.textContent || "").trim();
+            if (t === "Reserve Workshops") d.textContent = "Workshop Booking";
+            if (t === "Capacity-limited, so reserve early.")
+              d.textContent = "Opens 7-10 days before the event.";
+          });
+        }
+      })();
     </script>
   </body>
 </html>

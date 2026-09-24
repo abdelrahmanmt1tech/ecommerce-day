@@ -20,7 +20,8 @@ class SiteNavbar extends HTMLElement {
       { href: "sponsors.html", label: "Sponsors" },
       { href: "index.html#outcomes", label: "Outcomes" },
       { href: "tickets.html", label: "Tickets" },
-      { href: "faq.html", label: "FAQ" },
+      // Hidden until the FAQ page content is updated. Uncomment to restore:
+      // { href: "faq.html", label: "FAQ" },
     ];
 
     const renderLink = (l) => {
