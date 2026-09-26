@@ -14,9 +14,9 @@
     />
 
     <!-- ✅ Reusable navbar -->
-    <script src="navbar.js?v=20260924a" defer></script>
+    <script src="navbar.js?v=20260925b" defer></script>
     <!-- ✅ Reusable footer -->
-    <script src="footer.js?v=20260924a" defer></script>
+    <script src="footer.js?v=20260925b" defer></script>
 
     <style>
       *,
@@ -97,21 +97,6 @@
       }
 
       /* ==========================================
-         02. DRAFT BANNER
-         ========================================== */
-      .draft-banner {
-        background: #fff4de;
-        border-bottom: 1px solid #ffb020;
-        padding: 10px 24px;
-        text-align: center;
-        font-family: "JetBrains Mono", monospace;
-        font-size: 10px;
-        letter-spacing: 0.08em;
-        text-transform: uppercase;
-        color: #8a5a00;
-      }
-
-      /* ==========================================
          03. POLICY SWITCHER
          ========================================== */
       .policy-switch {
@@ -183,19 +168,6 @@
         letter-spacing: 0.08em;
         text-transform: uppercase;
         color: #6b747e;
-      }
-      .print-btn {
-        display: flex;
-        align-items: center;
-        gap: 6px;
-        background: #ffffff;
-        border: 1px solid #101010;
-        color: #101010;
-        border-radius: 8px;
-        padding: 8px 14px;
-        font-weight: 600;
-        font-size: 12px;
-        cursor: pointer;
       }
 
       /* ==========================================
@@ -343,18 +315,6 @@
         color: #4a5563;
         margin: 0 0 10px;
       }
-      .draft-pill {
-        display: inline-block;
-        border-radius: 4px;
-        padding: 2px 8px;
-        font-family: "JetBrains Mono", monospace;
-        font-size: 8px;
-        letter-spacing: 0.08em;
-        text-transform: uppercase;
-        background: #f4f6f8;
-        border: 1px solid #e6eaee;
-        color: #6b747e;
-      }
       .example-box {
         border: 1px solid #e6eaee;
         border-left: 3px solid #05ef62;
@@ -404,18 +364,6 @@
       }
       .policy-table-cell {
         padding-right: 10px;
-      }
-      .table-pending {
-        display: inline-block;
-        border-radius: 3px;
-        padding: 1px 6px;
-        font-family: "JetBrains Mono", monospace;
-        font-size: 7px;
-        letter-spacing: 0.06em;
-        text-transform: uppercase;
-        background: #f4f6f8;
-        border: 1px solid #e6eaee;
-        color: #6b747e;
       }
 
       /* Change history */
@@ -525,9 +473,6 @@
         max-width: 920px;
         margin: 0 auto;
         padding: 56px 24px 72px;
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 24px;
       }
       .contact-text h2 {
         font-size: 22px;
@@ -539,31 +484,6 @@
         line-height: 1.7;
         color: #4a5563;
         margin: 0 0 12px;
-      }
-      .contact-form {
-        border: 1px solid #d5dae0;
-        border-radius: 14px;
-        padding: 22px;
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-      }
-      .contact-form label {
-        font-family: "JetBrains Mono", monospace;
-        font-size: 10px;
-        letter-spacing: 0.1em;
-        text-transform: uppercase;
-        color: #6b747e;
-      }
-      .contact-form select,
-      .contact-form textarea {
-        border: 1px solid #d5dae0;
-        border-radius: 10px;
-        padding: 12px;
-        font-size: 14px;
-        background: #ffffff;
-        outline-color: #05ef62;
-        resize: vertical;
       }
 
       /* ==========================================
@@ -588,10 +508,6 @@
       }
 
       @media (max-width: 768px) {
-        .draft-banner {
-          font-size: 8px;
-          padding: 8px 16px;
-        }
         .policy-head {
           padding: 32px 20px 20px;
         }
@@ -701,12 +617,6 @@
     </style>
   </head>
   <body>
-    <!-- ==================== DRAFT BANNER ==================== -->
-    <div class="draft-banner">
-      Draft, requires review by Egyptian legal counsel before publishing ·
-      design file only, removed on the live site
-    </div>
-
     <!-- ✅ Reusable Navbar: one line, no duplication -->
     <site-navbar></site-navbar>
 
@@ -723,23 +633,7 @@
       <h1 class="policy-title" id="polTitle">Terms & Conditions</h1>
       <p class="policy-plain" id="polPlain"></p>
       <div class="policy-meta">
-        <span>Effective date: [date] · Version [x] · Last updated: [date]</span>
-        <button class="print-btn">
-          <svg
-            width="13"
-            height="13"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="#101010"
-            stroke-width="2"
-            stroke-linecap="round"
-          >
-            <path
-              d="M6 9V3h12v6M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2M6 14h12v7H6z"
-            ></path>
-          </svg>
-          Print / Save
-        </button>
+        <span>Last updated: 24 September 2026</span>
       </div>
     </div>
 
@@ -785,16 +679,8 @@
           </button>
           <div class="history-body" id="historyBody" style="display: none">
             <div class="history-item">
-              <span class="hist-date">[date]</span>
-              <span class="hist-text"
-                >First version, draft for legal review.</span
-              >
-            </div>
-            <div class="history-item">
-              <span class="hist-date">[date]</span>
-              <span class="hist-text"
-                >[A change summary is added with every version]</span
-              >
+              <span class="hist-date">24 September 2026</span>
+              <span class="hist-text">First published version.</span>
             </div>
           </div>
         </div>
@@ -821,19 +707,6 @@
         >
         <div style="margin-top: 12px"><a class="wa-btn" href="https://wa.me/201505437979?text=I%20need%20help%20for%20Ecommerce%20Day%202026" target="_blank" rel="noopener" aria-label="Chat with us on WhatsApp (opens in a new tab)"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.64.07-.3-.15-1.26-.46-2.4-1.48-.89-.79-1.49-1.77-1.66-2.07-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.61-.92-2.2-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.88 1.21 3.07c.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.69.63.71.23 1.36.2 1.87.12.57-.08 1.76-.72 2.01-1.41.25-.7.25-1.29.17-1.41-.07-.13-.27-.2-.57-.35ZM12.05 21.5h-.01a9.4 9.4 0 0 1-4.79-1.31l-.34-.2-3.56.93.95-3.47-.22-.36a9.41 9.41 0 0 1-1.44-5.02c0-5.2 4.23-9.43 9.43-9.43 2.52 0 4.89.98 6.67 2.77a9.37 9.37 0 0 1 2.76 6.67c0 5.2-4.23 9.43-9.43 9.43Zm8.02-17.45A11.27 11.27 0 0 0 12.05.73C5.8.73.72 5.81.72 12.06c0 2 .52 3.95 1.52 5.66L.62 23.6l6.02-1.58a11.3 11.3 0 0 0 5.41 1.38h.01c6.25 0 11.33-5.08 11.33-11.33 0-3.03-1.18-5.87-3.32-8.02Z"/></svg><span>WhatsApp</span></a></div>
       </div>
-      <div class="contact-form">
-        <label for="pol-type">Request type</label>
-        <select id="pol-type">
-          <option>Question about this policy</option>
-          <option>Data request (access / deletion)</option>
-          <option>Refund enquiry</option>
-          <option>Media request</option>
-          <option>Other</option>
-        </select>
-        <label for="pol-msg">Message</label>
-        <textarea id="pol-msg" rows="3"></textarea>
-        <button class="btn-primary" style="width: 100%">Send to Support</button>
-      </div>
     </div>
 
     <!-- FOOTER -->
@@ -844,8 +717,8 @@
       // ==========================================
       // 00. DATA
       // ==========================================
-      var DRAFT =
-        "Placeholder text for this section outlining the relevant rights and obligations per the approved plan; the final legal wording is completed before publishing. No unapproved dates or percentages appear here. Tokens such as [Refund Window] are used until approved.";
+      var CONTACT =
+        "Send questions to info@trafficmena.com, call 01118111793, or message us on WhatsApp.";
 
       function cell(t, opts) {
         opts = opts || {};
@@ -853,7 +726,6 @@
           t: t,
           co: opts.co || "#1f2630",
           w: opts.w || 500,
-          pending: !!opts.pending,
         };
       }
 
@@ -861,51 +733,15 @@
         head: ["Data category", "Examples", "Source"],
         cols: "1fr 1.4fr 1fr",
         rows: [
-          [
-            cell("Identity", { w: 700 }),
-            cell("Name, email, mobile number"),
-            cell("Booking form"),
-          ],
-          [
-            cell("Professional", { w: 700 }),
-            cell("Company, job title, interests"),
-            cell("Booking form"),
-          ],
-          [
-            cell("Transaction", { w: 700 }),
-            cell("Order number, payment method (masked)"),
-            cell("Payment provider"),
-          ],
-          [
-            cell("Ticket", { w: 700 }),
-            cell("Ticket ID, check-in status"),
-            cell("Ticketing system"),
-          ],
-          [
-            cell("Workshop", { w: 700 }),
-            cell("Reservations, waiting lists"),
-            cell("Reservation system"),
-          ],
-          [
-            cell("Platform", { w: 700 }),
-            cell("Activation, viewing history"),
-            cell("The platform"),
-          ],
-          [
-            cell("Device & Usage", { w: 700 }),
-            cell("Browser type, pages visited"),
-            cell("Cookies & analytics"),
-          ],
-          [
-            cell("Support", { w: 700 }),
-            cell("Correspondence and help requests"),
-            cell("Support channels"),
-          ],
-          [
-            cell("Photo / Video", { w: 700 }),
-            cell("Event photos and videos"),
-            cell("Production team"),
-          ],
+          [cell("Identity", { w: 700 }), cell("Name, email, mobile number"), cell("Booking form")],
+          [cell("Professional", { w: 700 }), cell("Company, job title, interests"), cell("Booking form")],
+          [cell("Transaction", { w: 700 }), cell("Order number, payment method (masked)"), cell("Payment provider")],
+          [cell("Ticket", { w: 700 }), cell("Ticket ID, check-in status"), cell("Ticketing system")],
+          [cell("Workshop", { w: 700 }), cell("Workshop bookings, waiting lists"), cell("Booking system")],
+          [cell("Platform", { w: 700 }), cell("Activation, viewing history"), cell("Content Hub")],
+          [cell("Device & Usage", { w: 700 }), cell("Browser type, pages visited"), cell("Cookies & analytics")],
+          [cell("Support", { w: 700 }), cell("Correspondence and help requests"), cell("Support channels")],
+          [cell("Photo / Video", { w: 700 }), cell("Event photos and videos"), cell("Production team")],
         ],
       };
 
@@ -913,88 +749,34 @@
         head: ["Scenario", "Outcome", "Timeframe"],
         cols: "1.3fr 1.2fr 1fr",
         rows: [
-          [
-            cell("Buyer cancels by end of 30 October 2026", { w: 700 }),
-            cell("Full refund"),
-            cell("Until 30 October 2026"),
-          ],
-          [
-            cell("Buyer cancels after 30 October 2026", { w: 700 }),
-            cell("Non-refundable"),
-            cell("From 31 October 2026"),
-          ],
-          [
-            cell("Organizer cancels the event", { w: 700 }),
-            cell("Full refund"),
-            cell("[Processing time]", { pending: true }),
-          ],
-          [
-            cell("Event postponed", { w: 700 }),
-            cell("Ticket carries over + refund option"),
-            cell("[Choice window]", { pending: true }),
-          ],
-          [
-            cell("Workshop is full", { w: 700 }),
-            cell("Not a ticket cancellation, choose another workshop", {
-              co: "#101010",
-              w: 700,
-            }),
-            cell("Not applicable"),
-          ],
-          [
-            cell("Duplicate charge", { w: 700 }),
-            cell("Duplicate amount refunded"),
-            cell("[Processing time]", { pending: true }),
-          ],
+          [cell("Buyer cancels by the refund deadline", { w: 700 }), cell("Full refund of the ticket price"), cell("Until the end of 30 October 2026")],
+          [cell("Buyer cancels after the refund deadline", { w: 700 }), cell("No refund, tickets are non-transferable"), cell("From 31 October 2026")],
+          [cell("Organizer cancels the event", { w: 700 }), cell("Full refund, no request needed"), cell("Automatic")],
+          [cell("Event postponed", { w: 700 }), cell("Ticket valid on new date, or refund"), cell("On request")],
+          [cell("Workshop is full", { w: 700 }), cell("Ticket stays valid, no refund", { co: "#101010", w: 700 }), cell("Not applicable")],
+          [cell("Duplicate charge", { w: 700 }), cell("Duplicate amount refunded"), cell("On request")],
         ],
       };
 
       var entitleTable = {
-        head: ["Entitlement", "Standard", "All Access"],
+        head: ["Feature", "Standard Pass", "All Access Pass"],
         cols: "1.4fr 1fr 1fr",
         rows: [
-          [
-            cell("Access to The Control Tower", { w: 700 }),
-            cell("Yes"),
-            cell("Yes"),
-          ],
-          [
-            cell("Access to the Second Stage", { w: 700 }),
-            cell("Yes"),
-            cell("Yes"),
-          ],
-          [
-            cell("Workshop entry", { w: 700 }),
-            cell("No", { co: "#6b747e" }),
-            cell("Yes"),
-          ],
-          [
-            cell("Workshop selection (up to 5)", { w: 700 }),
-            cell("No", { co: "#6b747e" }),
-            cell("Yes"),
-          ],
-          [
-            cell("Workshop Templates & Files", { w: 700 }),
-            cell("No", { co: "#6b747e" }),
-            cell("Yes"),
-          ],
-          [
-            cell("Premium content library", { w: 700 }),
-            cell("No", { co: "#6b747e" }),
-            cell("6 months"),
-          ],
-          [
-            cell("Certificate", { w: 700 }),
-            cell("Not offered", { co: "#6b747e" }),
-            cell("Not offered", { co: "#6b747e" }),
-          ],
-          [
-            cell("Speaker Contact / Directory", { w: 700 }),
-            cell("Not available", { co: "#6b747e" }),
-            cell("Not available", { co: "#6b747e" }),
-          ],
+          [cell("Access to the Main Stage", { w: 700 }), cell("Yes"), cell("Yes")],
+          [cell("Access to the Second Stage", { w: 700 }), cell("Yes"), cell("Yes")],
+          [cell("Access to the Workshops", { w: 700 }), cell("No", { co: "#6b747e" }), cell("Up to 5")],
+          [cell("Workshop Templates & Files", { w: 700 }), cell("No", { co: "#6b747e" }), cell("Yes")],
+          [cell("Premium content library", { w: 700 }), cell("No", { co: "#6b747e" }), cell("6 months")],
+          [cell("Session Summaries", { w: 700 }), cell("Basic"), cell("Full")],
+          [cell("ECommerce Action Pack", { w: 700 }), cell("Basic"), cell("Full")],
+          [cell("ECommerce Report", { w: 700 }), cell("Summary"), cell("Full report")],
+          [cell("Certificate", { w: 700 }), cell("Not offered", { co: "#6b747e" }), cell("Not offered", { co: "#6b747e" })],
         ],
       };
+
+      function S(h, b) {
+        return { h: h, b: b };
+      }
 
       var policies = [
         {
@@ -1003,28 +785,28 @@
           plain:
             "The rules that apply when you use this website, buy a ticket, or attend ECommerce Day 2026.",
           summary:
-            "Two ticket types only, tickets are individual and non-transferable, workshops are booked 7-10 days before the event subject to capacity, and [Legal Entity Name] operates the event under Egyptian law.",
-          heads: [
-            "Who We Are",
-            "Acceptance",
-            "Eligibility",
-            "Website Use",
-            "Orders & Payment",
-            "Tickets",
-            "Workshops",
-            "Platform & Content",
-            "Event Changes",
-            "Conduct & Safety",
-            "Third Parties",
-            "Liability",
-            "Intellectual Property",
-            "Governing Law",
-            "Changes & Contact",
+            "There are two tickets, the Standard Pass and the All Access Pass. Each ticket is for one named attendee and cannot be transferred. Workshops are for All Access Pass holders, and workshop booking opens 7-10 days before the event. Orion Growth for Technology runs the event under Egyptian law.",
+          secs: [
+            S("Who We Are", "ECommerce Day 2026 is organised by TrafficMENA and operated by Orion Growth for Technology, a company registered in Egypt. The event takes place on Thursday 5 November 2026 at Creativa Innovation Hub, Giza."),
+            S("Acceptance", "By using this website, buying a ticket or attending the event, you accept these terms. If you buy a ticket for someone else, you confirm that the attendee accepts them too. These terms apply together with our Privacy, Refund & Cancellation and Ticket & Entry policies."),
+            S("Eligibility", "The event is for professionals who work in or with e-commerce. Buyers must be at least 18 years old. Attendees under 18 must attend with a parent or guardian who has given written consent."),
+            S("Website Use", "You may use this website to learn about the event and buy tickets. You may not disrupt the site, try to access other accounts, or collect data from it by automated means. We may suspend access for anyone who misuses the site."),
+            S("Orders & Payment", "Prices are shown in Egyptian pounds (EGP) and the price at checkout is the final price. An order is confirmed only when payment succeeds and you receive a confirmation email with your order number. Payments are processed by Fawry. We do not store full card details."),
+            S("Tickets", "We sell two tickets, the Standard Pass and the All Access Pass. Each ticket admits one named attendee, carries a unique QR code and cannot be transferred to another person. The Ticket & Entry policy lists what each ticket includes. You may not resell a ticket or use it for promotion without our written permission."),
+            S("Workshops", "Workshops are included in the All Access Pass only. They run offline at the venue and seats are limited. Workshop booking opens 7-10 days before the event, and we will announce how to book. You can select up to 5 workshops, and workshops at the same time cannot be selected together. A full workshop does not make your ticket invalid or refundable."),
+            S("Platform & Content", "All Access Pass holders get 6 months of access to TrafficMENA's premium content library, plus the Workshop Templates & Files, through the Content Hub. The Standard Pass does not include platform access. Access is personal, and you may not share your login or redistribute the content."),
+            S("Event Changes", "We may change the agenda, speakers, session order or room allocation when needed. We announce material changes by email and on this website. If the event is cancelled or postponed, the Refund & Cancellation policy applies."),
+            S("Conduct & Safety", "We expect respectful behaviour toward attendees, speakers, sponsors, staff and the venue. Harassment, discrimination, disrupting sessions or unsafe behaviour can lead to removal from the venue without a refund. Please follow the instructions of event staff and venue security."),
+            S("Third Parties", "Sponsors and partners take part in the event. Their products, offers and services are their own responsibility. Links to other websites are provided for convenience, and we are not responsible for their content."),
+            S("Liability", "We take reasonable care to run a safe and well-organised event. As far as Egyptian law allows, we are not liable for indirect losses, travel or accommodation costs, or personal belongings lost at the venue. Our total liability to you is limited to the price you paid for your ticket."),
+            S("Intellectual Property", "The ECommerce Day and TrafficMENA names, logos, templates and reports belong to Orion Growth for Technology or to the speakers and partners who created them. You may use workshop templates and files inside your own business. You may not resell, republish or publicly share them."),
+            S("Governing Law", "These terms are governed by the laws of the Arab Republic of Egypt. We will first try to resolve any dispute with you directly. If that fails, the competent Egyptian courts decide."),
+            S("Changes & Contact", "We may update these terms. The date at the top of this page shows the latest update, and we email ticket holders about material changes. " + CONTACT),
           ],
           extras: {
-            5: {
+            6: {
               example:
-                "Buying an All Access Pass does not automatically reserve a seat in every workshop. Workshop booking opens 7-10 days before the event, and we will announce how to book.",
+                "Buying an All Access Pass does not reserve a workshop seat for you. Workshop booking is a separate step that opens 7-10 days before the event.",
             },
           },
         },
@@ -1034,29 +816,29 @@
           plain:
             "What data we collect, why, who we share it with, and your rights over it.",
           summary:
-            "We collect booking and attendance data to run the event and the platform. We never sell your data, and sharing with sponsors happens only with your explicit opt-in.",
-          heads: [
-            "Controller Identity",
-            "Scope",
-            "Data We Collect",
-            "Sources",
-            "Purposes",
-            "Legal Bases",
-            "Sharing",
-            "Sponsor Leads (Opt-in Only)",
-            "Cookies & Analytics",
-            "Transfers",
-            "Retention",
-            "Security",
-            "Your Rights",
-            "Children",
-            "Changes & Contact",
+            "We collect booking and attendance data to run the event and the Content Hub. We do not sell your data. Sponsors receive your details only when you choose to share them.",
+          secs: [
+            S("Controller Identity", "Orion Growth for Technology, trading as TrafficMENA, is responsible for the personal data described in this policy. You can contact us about privacy at info@trafficmena.com."),
+            S("Scope", "This policy covers the ECommerce Day 2026 pages on trafficmena.com, ticket checkout, the event day at Creativa Innovation Hub, Giza, and the Content Hub. Sponsor websites and services are covered by their own policies."),
+            S("Data We Collect", "We collect only the data we need to sell tickets, run the event and provide the Content Hub. The table lists each category."),
+            S("Sources", "Most data comes from you when you book, book a workshop or contact support. Payment status comes from our payment provider. Usage data comes from cookies and analytics on our website and the Content Hub."),
+            S("Purposes", "We use your data to process your order, issue your ticket and QR code, manage workshop bookings, check you in, give All Access Pass holders access to the Content Hub, send event updates and answer support requests. With your consent, we also email you about future TrafficMENA events."),
+            S("Legal Bases", "We process data to perform our contract with you, to meet legal and tax obligations, for our legitimate interest in running a safe event, and with your consent for marketing and sponsor sharing. We follow the Egyptian Personal Data Protection Law No. 151 of 2020."),
+            S("Sharing", "We share data only with service providers that help us run the event, such as payment, ticketing, email, hosting and venue access control. They process it on our instructions. We do not sell personal data."),
+            S("Sponsor Leads (Opt-in Only)", "A sponsor receives your details only if you choose to share them with that sponsor, for example by letting them scan your QR code at their booth or ticking an unchecked box on a form. Each choice applies to one sponsor. You can ask the sponsor or us to stop using your details at any time."),
+            S("Cookies & Analytics", "Essential cookies keep checkout and login working. Analytics cookies help us understand how the site is used, and we set them only after you accept them in the cookie banner. You can change your choice from the banner or your browser settings."),
+            S("Transfers", "Some service providers store data on servers outside Egypt. In that case we use providers that apply the safeguards required by Egyptian law."),
+            S("Retention", "We keep booking and payment records for the period required by Egyptian tax and accounting law. Content Hub accounts stay active for the access your ticket includes. Marketing data is kept until you unsubscribe."),
+            S("Security", "Only staff who need personal data can access it. Data is encrypted in transit. Card details are handled by the payment provider and never reach our systems."),
+            S("Your Rights", "You can ask to access, correct or delete your data, withdraw consent, or object to marketing. Send your request from the email you used to book. You can also file a complaint with the Egyptian Personal Data Protection Center."),
+            S("Children", "The event is for professionals. We do not knowingly collect data from anyone under 18 without a parent or guardian's consent."),
+            S("Changes & Contact", "We may update this policy. The date at the top of this page shows the latest update. " + CONTACT),
           ],
           extras: {
             2: { table: privacyTable },
             7: {
               example:
-                "Scanning a QR at a sponsor booth with your consent shares your contact details with that sponsor only. It never happens automatically.",
+                "If you let a sponsor scan your QR code at their booth, your contact details go to that sponsor only. Other sponsors do not receive them.",
             },
           },
         },
@@ -1066,30 +848,30 @@
           plain:
             "When a ticket can be refunded, how to request it, and which cases are non-refundable.",
           summary:
-            "A full refund is available until the end of 30 October 2026, five days before the event. A full workshop is not a ticket cancellation. Requests need your order number and the email associated with your booking.",
-          heads: [
-            "Scope",
-            "Buyer Cancellation",
-            "Organizer Cancellation",
-            "Postponement",
-            "Material Change",
-            "Workshop Availability",
-            "Duplicate / Failed Payments",
-            "How to Request",
-            "Refund Method & Timing",
-            "Non-refundable Cases",
-            "Chargebacks",
-            "Contact & Complaints",
+            "A full refund is available until the end of 30 October 2026, five days before the event. After that date, tickets are non-refundable, and tickets cannot be transferred. A full workshop is not a reason for a refund; your ticket stays valid. To request a refund, email us from the address you booked with.",
+          secs: [
+            S("Scope", "This policy applies to Standard Pass and All Access Pass purchases for ECommerce Day 2026 made on trafficmena.com."),
+            S("Buyer Cancellation", "You can cancel and request a full refund until the end of 30 October 2026, five days before the event. Requests received after this date cannot be accepted, except in the cases below. Tickets are non-transferable and cannot be reassigned to another attendee."),
+            S("Organizer Cancellation", "If we cancel the event, we refund the full ticket price to your original payment method. You do not need to send a request."),
+            S("Postponement", "If the event moves to a new date, your ticket is valid for the new date. If you cannot attend on the new date, you can request a refund."),
+            S("Material Change", "If we remove a main part of what your ticket includes, you can request a refund. Changes to individual speakers, session order or room allocation do not count as material changes."),
+            S("Workshop Availability", "Workshop seats are limited and booked when workshop booking opens, 7-10 days before the event. A full workshop does not create a right to a refund."),
+            S("Duplicate / Failed Payments", "If you were charged twice, or charged for an order that did not complete, send us proof of the charge and we refund the extra amount."),
+            S("How to Request", "Email info@trafficmena.com before the deadline, from the address you used to book."),
+            S("Refund Method & Timing", "Approved refunds go back to the original payment method. Your bank or payment provider may take a few extra days to show the amount."),
+            S("Non-refundable Cases", "We do not refund tickets after the refund deadline, when the attendee does not show up on the day, when an attendee is removed for breaching our Terms & Conditions, or because of a preference about a specific session or speaker."),
+            S("Chargebacks", "Please contact us before opening a chargeback with your bank. A ticket under an open chargeback is suspended until the case is resolved."),
+            S("Contact & Complaints", "If you are not satisfied with how we handled your request, reply to our email and a manager will review it. " + CONTACT),
           ],
           extras: {
             1: { table: refundTable },
             5: {
               example:
-                "If the CLICKED workshop you wanted is full, no refund right is created. Pick another workshop; your ticket remains fully valid.",
+                "If the Acquisition workshop you wanted is full, you can book a seat in another workshop. Your ticket stays valid.",
             },
             7: {
               example:
-                "A request requires: Order Number + Email + Reason + Ticket IDs.",
+                "Include your order number, the email you booked with, the ticket IDs and the reason for the request.",
             },
           },
         },
@@ -1097,60 +879,51 @@
           slug: "/ticket-policy/",
           title: "Ticket & Entry",
           plain:
-            "Ticket validity, QR entry, the no-transfer rule, and what each ticket type includes.",
+            "Ticket validity, QR entry, the no-transfer rule, and what each ticket includes.",
           summary:
-            "Each ticket is issued to a named attendee with a unique QR and cannot be transferred. All Access holders enter the workshops they booked (booking opens 7-10 days before the event, draft capacities 80/200/100). No certificate and no speaker directory.",
-          heads: [
-            "Ticket Types",
-            "Validity",
-            "Named Attendee",
-            "Transfer",
-            "QR & Check-in",
-            "Main Stage",
-            "Workshops",
-            "Arrival",
-            "Venue Rules",
-            "Accessibility",
-            "Lost Phone / Email",
-            "Invalid / Refunded Ticket",
+            "Each ticket is for one named attendee, has a unique QR code and cannot be transferred. Both tickets give access to the Main Stage and the Second Stage. All Access Pass holders enter the workshops they booked.",
+          secs: [
+            S("Ticket Types", "We sell two tickets. The Standard Pass covers both stages, all day. The All Access Pass adds up to 5 workshops, the Workshop Templates & Files and 6 months of premium content library access. The table lists what each includes."),
+            S("Validity", "Your ticket is valid for one attendee on Thursday 5 November 2026 at Creativa Innovation Hub, Giza. You can leave and re-enter during the day with the same QR code."),
+            S("Named Attendee", "Each ticket carries the attendee's name. Please bring a photo ID that matches it, as staff may check it at entry."),
+            S("Transfer", "Tickets are non-transferable and cannot be reassigned to another attendee. Resale is not allowed."),
+            S("QR & Check-in", "We email your QR code after payment. It also appears on your booking confirmation page. Show it on your phone or on paper at the entrance. Each code is linked to one attendee, and copies of a code that has already been scanned are rejected."),
+            S("Stages", "Both tickets give access to the Main Stage and the Second Stage for the whole day. Seats in the stage halls are taken as people arrive."),
+            S("Workshops", "Workshops are for All Access Pass holders only. Your pass does not book a seat for you. Workshop booking opens 7-10 days before the event, and we will announce how to book. Staff check bookings at the workshop door, so please arrive before the workshop starts."),
+            S("Arrival", "Registration opens at 10:00 AM. Allow time for check-in and security. Session times are listed on the Agenda page."),
+            S("Venue Rules", "Follow the rules of Creativa Innovation Hub and the instructions of event staff. Smoking is not allowed indoors. Bags may be checked at the entrance."),
+            S("Accessibility", "If you need assistance with access, seating or anything else on the day, email info@trafficmena.com before the event so we can prepare."),
+            S("Lost Phone / Email", "If you cannot find your QR code, request it again from info@trafficmena.com, or visit the help desk at the venue with your photo ID."),
+            S("Invalid / Refunded Ticket", "Tickets that were refunded, duplicated or bought fraudulently do not admit entry."),
           ],
           extras: {
             0: { table: entitleTable },
             6: {
               example:
-                "Draft workshop capacities: CLICKED 80 · CONFIRMED 200 · DELIVERED 100, subject to review per venue.",
+                "Workshop capacities: Acquisition workshops 80 · CRO & Retention workshops 200 · Operations & Logistics workshops 100 seats, subject to the venue layout.",
             },
           },
         },
       ];
 
       var relatedAll = [
-        {
-          en: "Terms & Conditions",
-          line: "Site use, orders and attendance rules",
-        },
+        { en: "Terms & Conditions", line: "Site use, orders and attendance rules" },
         { en: "Privacy Policy", line: "Your data and your rights" },
-        { en: "Refund & Cancellation", line: "Refund windows and requests" },
+        { en: "Refund & Cancellation", line: "Refund deadline and requests" },
         { en: "Ticket & Entry", line: "QR entry and ticket rules" },
       ];
 
       var defsData = [
-        {
-          t: "Buyer",
-          line: "The person who completed the purchase and payment.",
-        },
-        {
-          t: "Attendee",
-          line: "The named person on the ticket who holds its QR.",
-        },
+        { t: "Buyer", line: "The person who completed the purchase and payment." },
+        { t: "Attendee", line: "The named person on the ticket who holds its QR." },
         { t: "Ticket", line: "A Standard Pass or an All Access Pass." },
         {
           t: "Workshop",
-          line: "A hands-on session in the CLICKED / CONFIRMED / DELIVERED tracks.",
+          line: "A hands-on session in the Acquisition workshops, CRO & Retention workshops or Operations & Logistics workshops.",
         },
         {
           t: "Platform",
-          line: "The post-event Content Hub for All Access Pass holders (6 months).",
+          line: "The Content Hub for All Access Pass holders (6 months of premium content library access).",
         },
         { t: "Content", line: "Summaries, templates and reports." },
       ];
@@ -1226,8 +999,9 @@
       function renderToc() {
         var p = policies[state.pol];
         var list = document.getElementById("tocList");
-        list.innerHTML = p.heads
-          .map(function (h, i) {
+        list.innerHTML = p.secs
+          .map(function (sec, i) {
+            var h = sec.h;
             var n = String(i + 1).padStart(2, "0");
             return (
               '<a href="#sec-' +
@@ -1260,16 +1034,15 @@
       function renderSections() {
         var p = policies[state.pol];
         var wrap = document.getElementById("sectionsWrap");
-        wrap.innerHTML = p.heads
-          .map(function (h, i) {
+        wrap.innerHTML = p.secs
+          .map(function (sec, i) {
+            var h = sec.h;
             var n = String(i + 1).padStart(2, "0");
             var ex = (p.extras && p.extras[i]) || {};
             var out = '<div class="policy-section" id="sec-' + i + '">';
             out +=
               '<h2><span class="sec-n">' + n + "</span>" + esc(h) + "</h2>";
-            out += "<p>" + esc(DRAFT) + "</p>";
-            out +=
-              '<span class="draft-pill">Draft, pending legal review</span>';
+            out += "<p>" + esc(sec.b) + "</p>";
             if (ex.example) {
               out +=
                 '<div class="example-box"><strong>Example:</strong> ' +
@@ -1301,9 +1074,6 @@
             t.cols +
             ';">';
           row.forEach(function (c, ci) {
-            var pendingHtml = c.pending
-              ? ' <span class="table-pending">Pending approval</span>'
-              : "";
             out +=
               '<span class="policy-table-cell" style="color: ' +
               c.co +
@@ -1313,7 +1083,6 @@
               esc(t.head[ci] || "") +
               '">' +
               esc(c.t) +
-              pendingHtml +
               "</span>";
           });
           out += "</div>";

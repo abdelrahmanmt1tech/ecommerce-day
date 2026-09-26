@@ -57,11 +57,10 @@
         inner = el("img", {
           src: p.logoUrl,
           alt: p.name || "Partner",
+          class: "partner-logo",
           loading: "lazy",
+          decoding: "async",
         });
-        inner.style.maxHeight = "40px";
-        inner.style.maxWidth = "120px";
-        inner.style.objectFit = "contain";
       } else {
         inner = el("span", { text: p.name || "Partner" });
       }
@@ -159,7 +158,10 @@
         var img = el("img", {
           src: s.photoUrl,
           alt: s.name || "Speaker",
+          width: 800,
+          height: 1000,
           loading: "lazy",
+          decoding: "async",
         });
         img.style.width = "100%";
         img.style.height = "100%";

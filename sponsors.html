@@ -14,10 +14,10 @@
     />
 
     <!-- ✅ Reusable navbar -->
-    <script src="navbar.js?v=20260924a" defer></script>
+    <script src="navbar.js?v=20260925b" defer></script>
     <!-- ✅ Reusable footer -->
-    <script src="footer.js?v=20260924a" defer></script>
-    <script src="ecd-api.js?v=20260924a" defer></script>
+    <script src="footer.js?v=20260925b" defer></script>
+    <script src="ecd-api.js?v=20260924c" defer></script>
 
     <style>
       *,
@@ -175,15 +175,49 @@
       }
       .featured-grid {
         display: grid;
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: repeat(3, 1fr);
         gap: 20px;
-        max-width: 1060px;
       }
       .featured-card {
         background: #ffffff;
         border: 1px solid #d5dae0;
         border-radius: 16px;
-        padding: 32px 28px;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        min-width: 0;
+      }
+      .featured-card .partner-logo-slot {
+        width: 100%;
+        height: 128px;
+        border: 1px solid #e6eaee;
+        padding: 16px;
+      }
+      .featured-card .partner-logo-slot img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        border-radius: 8px;
+      }
+      .featured-card .level-pill {
+        align-self: flex-start;
+      }
+      .featured-card .featured-line,
+      .featured-card .supported-asset {
+        margin-bottom: 0;
+      }
+      .visually-hidden {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
       }
       .featured-card-top {
         display: flex;
@@ -395,8 +429,7 @@
           font-size: 42px;
         }
         .featured-grid {
-          grid-template-columns: 1fr;
-          max-width: 100%;
+          grid-template-columns: repeat(2, 1fr);
         }
         .experiences-grid {
           grid-template-columns: repeat(2, 1fr);
@@ -431,8 +464,23 @@
           font-size: 24px;
           margin-bottom: 24px;
         }
+        .featured-grid {
+          gap: 12px;
+        }
         .featured-card {
-          padding: 22px 20px;
+          padding: 12px;
+          gap: 12px;
+          border-radius: 14px;
+        }
+        .featured-card .partner-logo-slot {
+          height: 88px;
+          padding: 10px;
+        }
+        .featured-card .level-pill {
+          font-size: 9px;
+          letter-spacing: 0.06em;
+          padding: 4px 10px;
+          white-space: normal;
         }
         .featured-name {
           font-size: 18px;
@@ -531,10 +579,6 @@
 
         <div class="featured-grid" id="featuredSponsors"></div>
 
-        <!-- Shown only once featured partners are loaded from the backend -->
-        <div class="featured-note" id="featuredNote" hidden>
-          A premium partnership built for maximum event-wide impact.
-        </div>
       </div>
     </div>
 
@@ -789,11 +833,7 @@
             })
             .sort(function (a, b) {
               return (a.featuredSortOrder || 0) - (b.featuredSortOrder || 0);
-            })
-            .slice(0, 4);
-
-          var note = document.getElementById("featuredNote");
-          if (note) note.hidden = !featured.length;
+            });
 
           if (!featured.length) {
             host.innerHTML =
@@ -810,7 +850,7 @@
                   esc(p.logoUrl) +
                   '" alt="' +
                   esc(p.name) +
-                  '" style="width:100%;height:100%;object-fit:contain" />'
+                  '" loading="lazy" decoding="async" />'
                 : "<span>Partner logo</span>";
               var website = p.websiteUrl
                 ? '<a class="btn-secondary" href="' +
@@ -822,20 +862,20 @@
                   esc(p.experienceUrl) +
                   '" style="background:none;border:none;color:#04c44e;font-weight:600;font-size:13px;cursor:pointer;padding:11px 0;text-decoration:none">Explore the Supported Experience →</a>'
                 : "";
+              // The logo already carries the name; keep it for screen readers only
               return (
                 '<div class="featured-card">' +
-                '<div class="featured-card-top">' +
                 '<div class="partner-logo-slot">' +
                 logo +
                 "</div>" +
+                '<h3 class="visually-hidden">' +
+                esc(p.name) +
+                "</h3>" +
                 '<span class="level-pill" style="' +
                 pillStyle +
                 '">' +
                 esc(t.name) +
-                "</span></div>" +
-                '<div class="featured-name">' +
-                esc(p.name) +
-                "</div>" +
+                "</span>" +
                 (p.blurb
                   ? '<div class="featured-line">' + esc(p.blurb) + "</div>"
                   : "") +
@@ -844,10 +884,13 @@
                     esc(p.supportedAsset) +
                     "</div></div>"
                   : "") +
-                '<div class="featured-card-actions">' +
-                website +
-                experience +
-                "</div></div>"
+                (website || experience
+                  ? '<div class="featured-card-actions">' +
+                    website +
+                    experience +
+                    "</div>"
+                  : "") +
+                "</div>"
               );
             })
             .join("");

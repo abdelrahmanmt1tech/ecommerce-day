@@ -14,11 +14,11 @@
     />
 
     <!-- ✅ Reusable navbar -->
-    <script src="navbar.js?v=20260924a" defer></script>
+    <script src="navbar.js?v=20260925b" defer></script>
     <!-- ✅ Reusable footer -->
-    <script src="footer.js?v=20260924a" defer></script>
+    <script src="footer.js?v=20260925b" defer></script>
     <!-- Shared tickets section (same as index.html). Not deferred on purpose. -->
-    <script src="tickets-section.js?v=20260924a"></script>
+    <script src="tickets-section.js?v=20260924c"></script>
 
     <style>
       *,
@@ -1012,6 +1012,34 @@
 
     <!-- ==================== TIMELINE VIEW ==================== -->
     <div id="timelineView" class="container" style="padding: 0 24px 16px">
+      <p
+        style="
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          margin: 0 0 16px;
+          font-size: 13px;
+          line-height: 1.6;
+          color: #4a5563;
+        "
+      >
+        <svg
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="#04c44e"
+          stroke-width="2"
+          stroke-linecap="round"
+          aria-hidden="true"
+          style="flex: none"
+        >
+          <circle cx="12" cy="12" r="9"></circle>
+          <path d="M12 7v5l3 2"></path>
+        </svg>
+        Session topics and times are still being finalized, so a few may shift
+        slightly over the coming days.
+      </p>
       <div
         id="timelineColumns"
         class="timeline-columns"
@@ -1942,9 +1970,9 @@
     <site-footer></site-footer>
 
     <!-- Scripts -->
-    <script src="prices.js?v=20260924a"></script>
-    <script src="ecd-api.js?v=20260924a"></script>
-    <script src="ecd-content.js?v=20260924a"></script>
+    <script src="prices.js?v=20260924c"></script>
+    <script src="ecd-api.js?v=20260924c"></script>
+    <script src="ecd-content.js?v=20260925b"></script>
     <script>
       // ==========================================
       // 00. DATA
@@ -2021,6 +2049,17 @@
           .replace(/"/g, "&quot;");
       }
 
+      // Session times are stored as "H:MM" on a 12-hour clock. The event runs
+      // 10:30 AM to 7 PM, so 10 and 11 are morning, 12 is noon, 1-9 are PM.
+      function timeKey(t) {
+        var m = String(t || "").match(/^(\d{1,2}):(\d{2})$/);
+        if (!m) return 9999;
+        var h = Number(m[1]);
+        var min = Number(m[2]);
+        if (h >= 1 && h <= 9) h += 12;
+        return h * 60 + min;
+      }
+
       function matchSession(s) {
         if (state.fRoom !== 0 && s.tr !== state.fRoom - 1) return false;
         if (state.fFmt && s.fmt !== state.fFmt) return false;
@@ -2081,21 +2120,24 @@
           "OPERATIONS & LOGISTICS",
         ];
         // Main Stage markers from data.text (Opening / Breaks / Closing)
-        var mainMarkers = [
-          { time: "10:30", label: "Opening", beforeSlug: "m1" },
-          { time: "1:10", label: "Break: Choose Your Status", beforeSlug: "m4" },
-          { time: "3:20", label: "Break", beforeSlug: "m7" },
-          { time: "5:20", label: "Break", beforeSlug: "m10" },
-          { time: "6:50", label: "Closing", afterSlug: "m11" },
+        // Venue-wide breaks, shown in every column by time.
+        // Prayer times: Giza, Thursday 5 November 2026, Egypt winter time (UTC+2):
+        // Dhuhr 11:40 AM · Asr 2:43 PM · Maghrib 5:05 PM.
+        var BREAKS = [
+          { start: "11:40", end: "12:00", label: "Dhuhr prayer break" },
+          { start: "1:00", end: "1:40", label: "Lunch break" },
+          { start: "2:45", end: "3:05", label: "Asr prayer break" },
+          { start: "5:15", end: "5:35", label: "Maghrib prayer break" },
         ];
+        var CLOSING = { start: "6:40", end: "6:50", label: "Closing" };
 
         function markerHtml(m) {
           return (
             '<div style="background:#f4f6f8;border:1px dashed #d5dae0;border-radius:10px;padding:10px 14px;display:flex;gap:10px;align-items:center;">' +
-            '<span class="font-mono" style="font-size:10px;letter-spacing:0.08em;color:#6b747e;">' +
-            esc(m.time) +
+            '<span class="font-mono" style="font-size:10px;letter-spacing:0.08em;color:#6b747e;white-space:nowrap;">' +
+            esc(m.start + " - " + m.end) +
             "</span>" +
-            '<span style="font-size:12px;font-weight:600;color:#6b747e;">' +
+            '<span style="font-size:12px;font-weight:600;color:#4a5563;">' +
             esc(m.label) +
             "</span></div>"
           );
@@ -2109,15 +2151,7 @@
             })
             .slice()
             .sort(function (a, b) {
-              function key(t) {
-                var m = String(t || "").match(/^(\d{1,2}):(\d{2})$/);
-                if (!m) return 9999;
-                var h = Number(m[1]);
-                var min = Number(m[2]);
-                if (h >= 1 && h <= 10) h += 12;
-                return h * 60 + min;
-              }
-              return key(a.time) - key(b.time);
+              return timeKey(a.time) - timeKey(b.time);
             });
 
           html += "<div>";
@@ -2132,23 +2166,25 @@
           html +=
             '<div style="display:flex;flex-direction:column;gap:10px;">';
 
-          if (!list.length && ri !== 0) {
+          if (!list.length) {
             html +=
               '<p style="font-size:12px;color:#6b747e;margin:0;">Coming soon</p>';
           } else {
+            // Breaks that fall inside this column's day (after its first session)
+            var first = timeKey(list[0].time);
+            var last = timeKey(list[list.length - 1].time);
+            var pending = BREAKS.filter(function (b) {
+              var k = timeKey(b.start);
+              return k > first && k < last;
+            });
             list.forEach(function (s) {
-              if (ri === 0) {
-                mainMarkers.forEach(function (m) {
-                  if (m.beforeSlug === s.id) html += markerHtml(m);
-                });
+              var k = timeKey(s.time);
+              while (pending.length && timeKey(pending[0].start) <= k) {
+                html += markerHtml(pending.shift());
               }
               html += sessionCardHtml(s, r, true);
-              if (ri === 0) {
-                mainMarkers.forEach(function (m) {
-                  if (m.afterSlug === s.id) html += markerHtml(m);
-                });
-              }
             });
+            if (ri === 0) html += markerHtml(CLOSING);
           }
           html += "</div></div>";
         });

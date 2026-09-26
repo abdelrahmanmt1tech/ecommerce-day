@@ -9,27 +9,52 @@
       content="ECommerce Day powered by TrafficMENA. 5 November 2026, Creativa Innovation Hub, Giza."
     />
 
+    <!-- Hero image is the LCP element: start downloading it before CSS/JS -->
+    <link
+      rel="preload"
+      as="image"
+      type="image/webp"
+      imagesrcset="assets/hero-home-480.webp 480w, assets/hero-home-600.webp 600w, assets/hero-home-720.webp 720w, assets/hero-home-960.webp 960w, assets/hero-home-1254.webp 1254w"
+      imagesizes="(max-width: 900px) calc(100vw - 48px), (max-width: 1320px) 43vw, 520px"
+      fetchpriority="high"
+    />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!-- Fonts load without blocking first paint (display=swap keeps text visible) -->
     <link
+      rel="preload"
+      as="style"
       href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
-      rel="stylesheet"
+      onload="this.onload=null;this.rel='stylesheet'"
     />
+    <noscript>
+      <link
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
+        rel="stylesheet"
+      />
+    </noscript>
 
     <!-- ✅ Reusable navbar -->
-    <script src="navbar.js?v=20260924a" defer></script>
+    <script src="navbar.js?v=20260925b" defer></script>
     <!-- ✅ Reusable footer -->
-    <script src="footer.js?v=20260924a" defer></script>
-
-    <!-- Shared tickets section (also used on agenda.html). Not deferred on purpose. -->
-    <script src="tickets-section.js?v=20260924a"></script>
+    <script src="footer.js?v=20260925b" defer></script>
 
     <!-- Shared prices + ECD content (partners/speakers/packages) -->
-    <script src="prices.js?v=20260924a" defer></script>
-    <script src="ecd-api.js?v=20260924a" defer></script>
-    <script src="ecd-content.js?v=20260924a" defer></script>
+    <script src="prices.js?v=20260924c" defer></script>
+    <script src="ecd-api.js?v=20260924c" defer></script>
+    <script src="ecd-content.js?v=20260925b" defer></script>
 
     <style>
+      /* Reserve the navbar's height before navbar.js renders it (prevents layout shift) */
+      site-navbar {
+        display: block;
+        min-height: 75px;
+      }
+      @media (max-width: 992px) {
+        site-navbar {
+          min-height: 81px;
+        }
+      }
       /* ============ RESET & TOKENS ============ */
       *,
       *::before,
@@ -482,15 +507,16 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        filter: grayscale(1);
-        opacity: 0.75;
-        transition:
-          filter 0.2s,
-          opacity 0.2s;
+        padding: 12px 10px;
+        overflow: hidden;
       }
-      .partner-tile:hover {
-        filter: grayscale(0);
-        opacity: 1;
+      /* Logos keep their original colours; each fits the same tile box */
+      .partner-tile .partner-logo {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        border-radius: 8px;
       }
       .partner-tile span {
         font-family: "JetBrains Mono", monospace;
@@ -504,13 +530,23 @@
       .carousel-wrap {
         position: relative;
       }
+      /* Two rows that slide together: fills top, then bottom, then next column */
       .carousel {
-        display: flex;
+        display: grid;
+        grid-template-rows: repeat(2, auto);
+        grid-auto-flow: column;
+        grid-auto-columns: 260px;
         gap: 20px;
         overflow-x: auto;
         scroll-snap-type: x mandatory;
         padding-bottom: 8px;
         scrollbar-width: none;
+      }
+      /* Phones: back to a single swipeable row */
+      @media (max-width: 640px) {
+        .carousel {
+          grid-template-rows: auto;
+        }
       }
       .carousel::-webkit-scrollbar {
         display: none;
@@ -804,21 +840,50 @@
         gap: 16px;
         grid-auto-flow: dense;
       }
-      .media-tile {
+      /* Past Reviews: uneven (masonry) wall of review screenshots */
+      .review-wall {
+        grid-column: 1 / -1;
+        column-count: 3;
+        column-gap: 16px;
+      }
+      .review-shot {
+        display: block;
+        width: 100%;
+        margin: 0 0 16px;
+        padding: 0;
+        border: 1px solid var(--line-strong);
         border-radius: var(--radius);
         overflow: hidden;
-        border: 1px solid var(--line);
-        background: var(--white);
-        cursor: pointer;
-        position: relative;
-        min-height: 150px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        background: #101010;
+        cursor: zoom-in;
+        break-inside: avoid;
+        transition: box-shadow 0.2s ease, transform 0.2s ease;
       }
-      .media-tile.span-2 {
-        grid-column: span 2;
-        min-height: 320px;
+      .review-shot img {
+        display: block;
+        width: 100%;
+        height: auto;
+      }
+      .review-shot:hover {
+        box-shadow: 0 14px 40px rgba(16, 16, 16, 0.12);
+        transform: translateY(-2px);
+      }
+      @media (max-width: 900px) {
+        .review-wall {
+          column-count: 2;
+        }
+      }
+      @media (max-width: 520px) {
+        .review-wall {
+          column-count: 1;
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .review-shot,
+        .review-shot:hover {
+          transition: none;
+          transform: none;
+        }
       }
       .review-card {
         background: var(--white);
@@ -904,6 +969,17 @@
         display: flex;
         align-items: center;
         justify-content: center;
+      }
+      .lightbox-frame.has-image {
+        aspect-ratio: auto;
+        background: #101010;
+        overflow: hidden;
+      }
+      .lightbox-frame.has-image img {
+        max-width: 100%;
+        max-height: 70vh;
+        width: auto;
+        height: auto;
       }
 
       /* ============ FAQ ============ */
@@ -1142,7 +1218,7 @@
         font-weight: 700;
         line-height: 1.3;
       }
-      .mobile-cta-text .price-ct {
+      .mobile-cta-text .price-fj {
         display: block;
         color: var(--muted);
         font-weight: 600;
@@ -1200,10 +1276,6 @@
         }
         .media-panel {
           grid-template-columns: repeat(2, 1fr);
-        }
-        .media-tile.span-2 {
-          grid-column: span 1;
-          min-height: 150px;
         }
         .faq-grid {
           grid-template-columns: 1fr;
@@ -1351,12 +1423,19 @@
             <div class="hero-media">
               <div class="hero-media-frame">
                 <img
-                  src="assets/hero-ground-logo.webp"
+                  src="assets/hero-home-960.webp"
+                  srcset="
+                    assets/hero-home-480.webp   480w,
+                    assets/hero-home-600.webp   600w,
+                    assets/hero-home-720.webp   720w,
+                    assets/hero-home-960.webp   960w,
+                    assets/hero-home-1254.webp 1254w
+                  "
+                  sizes="(max-width: 900px) calc(100vw - 48px), (max-width: 1320px) 43vw, 520px"
                   width="1254"
-                  height="1254"
+                  height="940"
                   alt="Aerial view of the venue plaza with the TrafficMENA mark"
                   fetchpriority="high"
-                  decoding="async"
                 />
               </div>
               <div class="hero-media-float">
@@ -1577,6 +1656,10 @@
       <!-- ============ TICKETS (shared: tickets-section.js) ============ -->
       <section id="tickets" class="section">
         <div class="container">
+          <!-- Shared tickets section (also used on agenda.html). Loaded here, not in <head>,
+               so it no longer blocks the first paint; still NOT deferred on purpose: it must
+               define <ecd-tickets> before the inline reveal script, prices.js and ecd-content.js run. -->
+          <script src="tickets-section.js?v=20260924c"></script>
           <ecd-tickets></ecd-tickets>
         </div>
       </section>
@@ -1758,7 +1841,7 @@
     <div class="mobile-cta" id="mobileCta" hidden>
       <div class="mobile-cta-text">
         ECommerce Day, 5 Nov 2026
-        <span class="price-ct" data-suffix=" EGP">[Final Price] EGP</span>
+        <span class="price-fj" data-suffix=" EGP">[Final Price] EGP</span>
       </div>
       <a href="tickets.html" class="btn btn-primary">Get Ticket</a>
     </div>
@@ -2319,23 +2402,48 @@
           var panel = document.getElementById("mediaPanel");
           if (!tabsEl || !panel) return;
           var tabs = [
-            { key: "highlights", name: "Event Highlights" },
+            { key: "highlights", name: "Past Reviews" },
             { key: "reviews", name: "Community Reviews" },
             { key: "videos", name: "Video Stories" },
           ];
           var active = "highlights";
+          // Past Reviews: attendee feedback screenshots (assets/reviews)
+          var reviewShots = [
+            { src: "assets/reviews/review-01.webp", w: 624, h: 622 },
+            { src: "assets/reviews/review-02.webp", w: 612, h: 378 },
+            { src: "assets/reviews/review-03.webp", w: 666, h: 826 },
+            { src: "assets/reviews/review-04.webp", w: 670, h: 354 },
+            { src: "assets/reviews/review-05.webp", w: 388, h: 634 },
+            { src: "assets/reviews/review-06.webp", w: 380, h: 668 },
+            { src: "assets/reviews/review-07.webp", w: 900, h: 582 },
+            { src: "assets/reviews/review-08.webp", w: 900, h: 649 },
+            { src: "assets/reviews/review-09.webp", w: 900, h: 338 },
+          ];
           function renderPanel() {
             panel.innerHTML = "";
             if (active === "highlights") {
-              for (var i = 0; i < 5; i++) {
-                var tile = el("div", {
-                  class: "media-tile" + (i === 0 ? " span-2" : ""),
+              var wall = el("div", { class: "review-wall" });
+              reviewShots.forEach(function (r, i) {
+                var btn = el("button", { type: "button", class: "review-shot" });
+                btn.setAttribute(
+                  "aria-label",
+                  "Open attendee review " + (i + 1) + " of " + reviewShots.length,
+                );
+                var img = el("img", {
+                  src: r.src,
+                  alt: "Attendee review from a past TrafficMENA event",
+                  width: r.w,
+                  height: r.h,
+                  loading: "lazy",
+                  decoding: "async",
                 });
-                tile.innerHTML =
-                  '<svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#D5DAE0" stroke-width="1.4"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="1.6"/><path d="M21 16l-5-5-4 4-3-3-6 6"/></svg>';
-                tile.addEventListener("click", openLightbox);
-                panel.appendChild(tile);
-              }
+                btn.appendChild(img);
+                btn.addEventListener("click", function () {
+                  openLightbox(r.src, img.alt);
+                });
+                wall.appendChild(btn);
+              });
+              panel.appendChild(wall);
             } else if (active === "reviews") {
               for (var j = 0; j < 4; j++) {
                 var card = el("div", { class: "review-card" });
@@ -2487,7 +2595,24 @@
         var lightbox = document.getElementById("lightbox");
         var closeLightboxBtn = document.getElementById("closeLightbox");
 
-        function openLightbox() {
+        var lightboxFrame = lightbox
+          ? lightbox.querySelector(".lightbox-frame")
+          : null;
+        var lightboxPlaceholder = lightboxFrame ? lightboxFrame.innerHTML : "";
+        function openLightbox(src, alt) {
+          if (lightboxFrame) {
+            if (typeof src === "string") {
+              lightboxFrame.classList.add("has-image");
+              lightboxFrame.innerHTML = "";
+              var big = document.createElement("img");
+              big.src = src;
+              big.alt = alt || "";
+              lightboxFrame.appendChild(big);
+            } else {
+              lightboxFrame.classList.remove("has-image");
+              lightboxFrame.innerHTML = lightboxPlaceholder;
+            }
+          }
           if (lightbox) lightbox.hidden = false;
         }
         function closeLightbox() {

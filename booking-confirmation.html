@@ -14,9 +14,9 @@
     />
 
     <!-- ✅ Reusable navbar -->
-    <script src="navbar.js?v=20260924a" defer></script>
+    <script src="navbar.js?v=20260925b" defer></script>
     <!-- ✅ Reusable footer -->
-    <script src="footer.js?v=20260924a" defer></script>
+    <script src="footer.js?v=20260925b" defer></script>
 
     <style>
       *,
@@ -99,6 +99,108 @@
       /* Sections & Utilities */
       .section-padding {
         padding: 88px 0;
+      }
+      /* footer.js injects a global ".container { padding: 0 24px }" after this
+         sheet, which zeroed the vertical section padding. Scope it back here. */
+      #ecdSuccessFlow .section-padding {
+        padding-top: 64px;
+        padding-bottom: 64px;
+      }
+      #ecdSuccessFlow .confirm-next-actions {
+        padding-top: 56px;
+        padding-bottom: 56px;
+      }
+      #ecdSuccessFlow .confirm-next-actions .grid-5-cols {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        counter-reset: step;
+      }
+      .confirm-next-actions .action-card {
+        counter-increment: step;
+      }
+      .step-num::before {
+        content: counter(step);
+      }
+      .bc-card {
+        background: #ffffff;
+        border: 1px solid #d5dae0;
+        border-radius: 16px;
+        padding: 28px;
+        min-width: 0;
+      }
+      .summary-rows > div {
+        gap: 16px;
+      }
+      .summary-rows > div > span:last-child {
+        text-align: right;
+        overflow-wrap: anywhere;
+        min-width: 0;
+      }
+      .platform-layout {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 24px 32px;
+        align-items: flex-start;
+      }
+      .platform-layout > .platform-table {
+        flex: 1 1 480px;
+        min-width: 0;
+        margin-bottom: 0;
+      }
+      .platform-layout > #platformActivation {
+        flex: 1 1 320px;
+        min-width: 0;
+      }
+      #manageBookingCard > div > div {
+        gap: 12px;
+      }
+      .help-lede {
+        font-size: 14px;
+        line-height: 1.7;
+        color: #4a5563;
+        margin: 0 0 18px;
+      }
+      .help-list {
+        margin: 0 0 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+      .help-list > div {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+        border: 1px solid #e6eaee;
+        border-radius: 10px;
+        padding: 12px 16px;
+      }
+      .help-list dt {
+        font-size: 13px;
+        color: #4a5563;
+      }
+      .help-list dd {
+        margin: 0;
+        font-size: 14px;
+        font-weight: 600;
+        overflow-wrap: anywhere;
+        text-align: right;
+      }
+      .help-list dd a:not(.wa-btn) {
+        color: #101010;
+      }
+      .help-list dd a:not(.wa-btn):hover {
+        color: #006681;
+      }
+      .help-signout {
+        background: none;
+        border: none;
+        padding: 0;
+        color: #6b747e;
+        font-family: Manrope, sans-serif;
+        font-weight: 600;
+        font-size: 12px;
+        text-decoration: underline;
+        cursor: pointer;
       }
       .section-bg-alt {
         background: #f4f6f8;
@@ -355,6 +457,25 @@
         .section-padding {
           padding: 56px 0;
         }
+        #ecdSuccessFlow .section-padding {
+          padding-top: 48px;
+          padding-bottom: 48px;
+        }
+        #ecdSuccessFlow .confirm-next-actions {
+          padding-top: 48px;
+          padding-bottom: 48px;
+        }
+        .bc-card {
+          padding: 20px;
+        }
+        .order-pill {
+          max-width: 100%;
+          flex-wrap: wrap;
+          justify-content: center;
+        }
+        #confirmOrderId {
+          overflow-wrap: anywhere;
+        }
         #workshopSection > .container {
           padding: 72px 18px;
         }
@@ -402,11 +523,13 @@
         /* Platform table mobile */
         .platform-row,
         .platform-head-inner {
-          grid-template-columns: 1fr;
-          gap: 4px;
+          grid-template-columns: 1.3fr 1fr 1fr;
+          gap: 8px;
         }
-        .platform-row span:first-child {
-          font-weight: 700;
+        .platform-row,
+        .platform-head {
+          padding-left: 12px;
+          padding-right: 12px;
         }
       }
 
@@ -656,6 +779,7 @@
                 "
               >
                 <span
+                  class="step-num"
                   style="
                     width: 22px;
                     height: 22px;
@@ -671,7 +795,7 @@
                     font-size: 11px;
                     flex: none;
                   "
-                  >1</span
+                  ></span
                 >
               </div>
               <div
@@ -733,6 +857,7 @@
                 "
               >
                 <span
+                  class="step-num"
                   style="
                     width: 22px;
                     height: 22px;
@@ -748,7 +873,7 @@
                     font-size: 11px;
                     flex: none;
                   "
-                  >2</span
+                  ></span
                 >
               </div>
               <div
@@ -792,6 +917,7 @@
             </div>
             <div
               class="action-card"
+              id="platformActionCard"
               style="
                 background: #ffffff;
                 border: 1px solid #d5dae0;
@@ -810,6 +936,7 @@
                 "
               >
                 <span
+                  class="step-num"
                   style="
                     width: 22px;
                     height: 22px;
@@ -825,7 +952,7 @@
                     font-size: 11px;
                     flex: none;
                   "
-                  >3</span
+                  ></span
                 >
               </div>
               <div
@@ -888,6 +1015,7 @@
                 "
               >
                 <span
+                  class="step-num"
                   style="
                     width: 22px;
                     height: 22px;
@@ -903,7 +1031,7 @@
                     font-size: 11px;
                     flex: none;
                   "
-                  >4</span
+                  ></span
                 >
                 <span
                   style="
@@ -981,6 +1109,7 @@
                 "
               >
                 <span
+                  class="step-num"
                   style="
                     width: 22px;
                     height: 22px;
@@ -996,7 +1125,7 @@
                     font-size: 11px;
                     flex: none;
                   "
-                  >5</span
+                  ></span
                 >
               </div>
               <div
@@ -1515,235 +1644,113 @@
         </div>
       </div>
 
-      <!-- Order Summary + Receipts -->
-      <div class="container section-padding">
-        <div class="split-2">
-          <!-- Order Summary -->
-          <div
-            style="
-              border: 1px solid #d5dae0;
-              border-radius: 16px;
-              padding: 28px;
-            "
-          >
-            <div
-              class="font-mono"
-              style="
-                font-size: 11px;
-                letter-spacing: 0.12em;
-                text-transform: uppercase;
-                color: #6b747e;
-                margin-bottom: 18px;
-              "
-            >
-              Order Summary
-            </div>
-            <div
-              style="
-                display: flex;
-                flex-direction: column;
-                gap: 10px;
-                font-size: 14px;
-              "
-            >
-              <div style="display: flex; justify-content: space-between">
-                <span style="color: #4a5563">Order number</span
-                ><span
-                  class="font-mono"
-                  id="summaryOrderId"
-                  style="font-size: 12px"
-                  >ECD26-0042</span
-                >
-              </div>
-              <div style="display: flex; justify-content: space-between">
-                <span style="color: #4a5563">Purchased</span
-                ><span id="summaryPurchased" style="font-weight: 600"
-                  >8 September 2026 · 2:41 PM</span
-                >
-              </div>
-              <div style="display: flex; justify-content: space-between">
-                <span style="color: #4a5563"
-                  ><span class="price-ticket-name">All Access Pass</span> ×
-                  <span class="price-qty">2</span></span
-                ><span style="font-weight: 600"
-                  ><span class="price-unit" data-suffix=" EGP each"
-                    >[Final Price] EGP each</span
-                  ></span
-                >
+      <!-- Order Summary + Event Details -->
+      <div class="section-bg-alt">
+        <div class="container section-padding">
+          <div class="split-2">
+            <!-- Order Summary -->
+            <div class="bc-card" id="orderSummaryCard">
+              <div
+                class="font-mono"
+                style="
+                  font-size: 11px;
+                  letter-spacing: 0.12em;
+                  text-transform: uppercase;
+                  color: #6b747e;
+                  margin-bottom: 18px;
+                "
+              >
+                Order Summary
               </div>
               <div
-                id="summaryDiscountRow"
-                style="display: flex; justify-content: space-between"
+                class="summary-rows"
+                style="
+                  display: flex;
+                  flex-direction: column;
+                  gap: 10px;
+                  font-size: 14px;
+                "
               >
-                <span style="color: #04c44e">Discount</span
-                ><span style="font-weight: 600; color: #04c44e"
+                <div style="display: flex; justify-content: space-between">
+                  <span style="color: #4a5563">Order number</span
                   ><span
-                    class="price-discount"
-                    data-minus="1"
-                    data-suffix=" EGP"
-                    >− [Discount] EGP</span
-                  ></span
-                >
-              </div>
-              <div style="display: flex; justify-content: space-between">
-                <span style="color: #4a5563">Fees &amp; tax</span
-                ><span style="color: #6b747e; font-weight: 600"
-                  >Included in price</span
-                >
-              </div>
-              <div
-                style="
-                  display: flex;
-                  justify-content: space-between;
-                  border-top: 1px solid #e6eaee;
-                  padding-top: 12px;
-                "
-              >
-                <span style="font-weight: 700; font-size: 15px">Paid Total</span
-                ><span style="font-weight: 800; font-size: 17px"
-                  ><span class="price-total" data-suffix=" EGP"
-                    >[Total] EGP</span
-                  ></span
-                >
-              </div>
-              <div style="display: flex; justify-content: space-between">
-                <span style="color: #4a5563">Payment method</span
-                ><span id="summaryMethod" style="font-weight: 600"
-                  >Card ···· 4242</span
-                >
-              </div>
-              <div style="display: flex; justify-content: space-between">
-                <span style="color: #4a5563">Payment reference</span
-                ><span
-                  class="font-mono"
-                  id="summaryPayRef"
-                  style="font-size: 12px"
-                  >PAY-ECD26-0042</span
-                >
-              </div>
-            </div>
-          </div>
-
-          <!-- Receipt & Invoice -->
-          <div
-            style="
-              border: 1px solid #d5dae0;
-              border-radius: 16px;
-              padding: 28px;
-            "
-          >
-            <div
-              class="font-mono"
-              style="
-                font-size: 11px;
-                letter-spacing: 0.12em;
-                text-transform: uppercase;
-                color: #6b747e;
-                margin-bottom: 18px;
-              "
-            >
-              Receipt &amp; Invoice
-            </div>
-            <div
-              style="
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                border: 1px solid #e6eaee;
-                border-radius: 10px;
-                padding: 14px 16px;
-                margin-bottom: 12px;
-              "
-            >
-              <div>
-                <div style="font-weight: 700; font-size: 14px">Receipt</div>
-                <div style="font-size: 12px; color: #04c44e; font-weight: 600">
-                  Ready
+                    class="font-mono"
+                    id="summaryOrderId"
+                    style="font-size: 12px"
+                    >ECD26-0042</span
+                  >
                 </div>
-              </div>
-              <button
-                type="button"
-                class="btn-primary"
-                id="receiptDownloadBtn"
-                style="padding: 10px 16px; font-size: 12px"
-              >
-                Download
-              </button>
-            </div>
-            <div
-              id="invoiceBlock"
-              style="
-                border: 1px solid #e6eaee;
-                border-radius: 10px;
-                padding: 14px 16px;
-                margin-bottom: 12px;
-              "
-            >
-              <div
-                style="
-                  display: flex;
-                  justify-content: space-between;
-                  align-items: center;
-                  margin-bottom: 10px;
-                "
-              >
-                <div style="font-weight: 700; font-size: 14px">Invoice</div>
-                <div style="display: flex; gap: 6px; flex-wrap: wrap">
-                  <span
-                    id="invoiceStatusPill"
-                    style="
-                      border-radius: 999px;
-                      padding: 2px 9px;
-                      font-size: 10px;
-                      font-weight: 600;
-                      background: #f4f6f8;
-                      border: 1px solid #e6eaee;
-                      color: #6b747e;
-                    "
-                    >Not requested</span
+                <div style="display: flex; justify-content: space-between">
+                  <span style="color: #4a5563">Purchased</span
+                  ><span id="summaryPurchased" style="font-weight: 600"
+                    >8 September 2026 · 2:41 PM</span
+                  >
+                </div>
+                <div style="display: flex; justify-content: space-between">
+                  <span style="color: #4a5563"
+                    ><span class="price-ticket-name">All Access Pass</span> ×
+                    <span class="price-qty">2</span></span
+                  ><span style="font-weight: 600"
+                    ><span class="price-unit" data-suffix=" EGP each"
+                      >[Final Price] EGP each</span
+                    ></span
+                  >
+                </div>
+                <div
+                  id="summaryDiscountRow"
+                  style="display: flex; justify-content: space-between"
+                >
+                  <span style="color: #04c44e">Discount</span
+                  ><span style="font-weight: 600; color: #04c44e"
+                    ><span
+                      class="price-discount"
+                      data-minus="1"
+                      data-suffix=" EGP"
+                      >− [Discount] EGP</span
+                    ></span
+                  >
+                </div>
+                <div style="display: flex; justify-content: space-between">
+                  <span style="color: #4a5563">Fees &amp; tax</span
+                  ><span style="color: #6b747e; font-weight: 600"
+                    >Included in price</span
+                  >
+                </div>
+                <div
+                  style="
+                    display: flex;
+                    justify-content: space-between;
+                    border-top: 1px solid #e6eaee;
+                    padding-top: 12px;
+                  "
+                >
+                  <span style="font-weight: 700; font-size: 15px">Paid Total</span
+                  ><span style="font-weight: 800; font-size: 17px"
+                    ><span class="price-total" data-suffix=" EGP"
+                      >[Total] EGP</span
+                    ></span
+                  >
+                </div>
+                <div style="display: flex; justify-content: space-between">
+                  <span style="color: #4a5563">Payment method</span
+                  ><span id="summaryMethod" style="font-weight: 600"
+                    >Card ···· 4242</span
+                  >
+                </div>
+                <div style="display: flex; justify-content: space-between">
+                  <span style="color: #4a5563">Payment reference</span
+                  ><span
+                    class="font-mono"
+                    id="summaryPayRef"
+                    style="font-size: 12px"
+                    >PAY-ECD26-0042</span
                   >
                 </div>
               </div>
-              <div
-                id="invoiceDetails"
-                style="font-size: 12px; color: #4a5563; line-height: 1.8"
-              >
-                No invoice details on this booking.
-              </div>
             </div>
-            <button
-              type="button"
-              id="invoiceCorrectionBtn"
-              style="
-                background: none;
-                border: none;
-                color: #04c44e;
-                font-family: Manrope, sans-serif;
-                font-weight: 600;
-                font-size: 13px;
-                cursor: pointer;
-                padding: 0;
-              "
-            >
-              Request correction →
-            </button>
-          </div>
-        </div>
-      </div>
 
-      <!-- Event Details + Platform Access -->
-      <div class="section-bg-alt">
-        <div class="container section-padding">
-          <div class="split-2b">
             <!-- Event Details -->
-            <div
-              style="
-                background: #ffffff;
-                border: 1px solid #d5dae0;
-                border-radius: 16px;
-                padding: 28px;
-              "
-            >
+            <div class="bc-card" id="eventGuideCard">
               <div
                 class="font-mono"
                 style="
@@ -1820,21 +1827,150 @@
                     padding-top: 12px;
                   "
                 >
-                  We'll email you every update. Support: info@trafficmena.com ·
-                  01118111793 · <a class="wa-btn" href="https://wa.me/201505437979?text=I%20need%20help%20for%20Ecommerce%20Day%202026" target="_blank" rel="noopener" aria-label="Chat with us on WhatsApp (opens in a new tab)"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.64.07-.3-.15-1.26-.46-2.4-1.48-.89-.79-1.49-1.77-1.66-2.07-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.61-.92-2.2-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.88 1.21 3.07c.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.69.63.71.23 1.36.2 1.87.12.57-.08 1.76-.72 2.01-1.41.25-.7.25-1.29.17-1.41-.07-.13-.27-.2-.57-.35ZM12.05 21.5h-.01a9.4 9.4 0 0 1-4.79-1.31l-.34-.2-3.56.93.95-3.47-.22-.36a9.41 9.41 0 0 1-1.44-5.02c0-5.2 4.23-9.43 9.43-9.43 2.52 0 4.89.98 6.67 2.77a9.37 9.37 0 0 1 2.76 6.67c0 5.2-4.23 9.43-9.43 9.43Zm8.02-17.45A11.27 11.27 0 0 0 12.05.73C5.8.73.72 5.81.72 12.06c0 2 .52 3.95 1.52 5.66L.62 23.6l6.02-1.58a11.3 11.3 0 0 0 5.41 1.38h.01c6.25 0 11.33-5.08 11.33-11.33 0-3.03-1.18-5.87-3.32-8.02Z"/></svg><span>WhatsApp</span></a>
+                  We'll email you every update.
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+      </div>
 
-            <!-- Platform Access -->
+      <!-- Platform Access -->
+      <div class="container section-padding">
+        <!-- Platform Access -->
+        <div class="bc-card" id="platformAccessCard">
+          <div
+            class="font-mono"
+            style="
+              font-size: 11px;
+              letter-spacing: 0.12em;
+              text-transform: uppercase;
+              color: #6b747e;
+              margin-bottom: 18px;
+            "
+          >
+            Platform Access
+          </div>
+
+          <div class="platform-layout">
+          <div class="platform-table">
+            <div class="platform-head">
+              <div class="platform-head-inner">
+                <span></span><span>Standard</span
+                ><span>All Access</span>
+              </div>
+            </div>
+            <div class="platform-row">
+              <span style="font-weight: 500; color: #1f2630"
+                >Premium content library</span
+              ><span style="font-weight: 600; color: #6b747e">Not included</span
+              ><span style="font-weight: 600; color: #101010">6 months</span>
+            </div>
+            <div class="platform-row">
+              <span style="font-weight: 500; color: #1f2630"
+                >Templates &amp; Files</span
+              ><span style="font-weight: 600; color: #6b747e">Not included</span
+              ><span style="font-weight: 600; color: #101010">Yes</span>
+            </div>
+            <div class="platform-row">
+              <span style="font-weight: 500; color: #1f2630"
+                >Workshop booking</span
+              ><span style="font-weight: 600; color: #6b747e"
+                >Not available</span
+              ><span style="font-weight: 600; color: #101010"
+                >Opens 7-10 days before the event</span
+              >
+            </div>
+          </div>
+
+          <div id="platformActivation">
+          <div
+            class="font-mono"
+            style="
+              font-size: 10px;
+              letter-spacing: 0.1em;
+              text-transform: uppercase;
+              color: #6b747e;
+              margin-bottom: 10px;
+            "
+          >
+            Activation states
+          </div>
+          <div class="grid-2-cols" style="gap: 10px">
             <div
               style="
-                background: #ffffff;
-                border: 1px solid #d5dae0;
-                border-radius: 16px;
-                padding: 28px;
+                border: 1px solid #e6eaee;
+                border-radius: 10px;
+                padding: 12px 14px;
               "
             >
+              <div
+                style="
+                  font-size: 12px;
+                  font-weight: 700;
+                  margin-bottom: 6px;
+                "
+              >
+                New email
+              </div>
+              <button
+                type="button"
+                class="btn-primary"
+                id="btnActivateAccount"
+                style="padding: 8px 12px; font-size: 11px"
+              >
+                Activate My Account
+              </button>
+              <div style="font-size: 11px; color: #6b747e; margin-top: 6px">
+                Opens TrafficMENA. Use the email from your booking.
+              </div>
+            </div>
+            <div
+              style="
+                border: 1px solid #e6eaee;
+                border-radius: 10px;
+                padding: 12px 14px;
+              "
+            >
+              <div
+                style="
+                  font-size: 12px;
+                  font-weight: 700;
+                  margin-bottom: 6px;
+                "
+              >
+                Existing account
+              </div>
+              <div
+                style="
+                  font-size: 11px;
+                  color: #04c44e;
+                  font-weight: 600;
+                  margin-bottom: 6px;
+                "
+              >
+                ✓ Content access added after the event
+              </div>
+              <button
+                type="button"
+                class="btn-secondary"
+                id="btnLoginPlatform"
+                style="padding: 8px 12px; font-size: 11px"
+              >
+                Log in to Platform
+              </button>
+            </div>
+          </div>
+          </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Manage Booking + Help -->
+      <div class="section-bg-alt">
+        <div class="container section-padding">
+          <div class="split-2c">
+            <div class="bc-card" id="manageBookingCard">
               <div
                 class="font-mono"
                 style="
@@ -1845,473 +1981,151 @@
                   margin-bottom: 18px;
                 "
               >
-                Platform Access
+                Manage Your Booking
               </div>
-
-              <div class="platform-table">
-                <div class="platform-head">
-                  <div class="platform-head-inner">
-                    <span></span><span>Standard</span
-                    ><span>All Access</span>
+              <div style="display: flex; flex-direction: column; gap: 10px">
+                <div
+                  style="
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    border: 1px solid #e6eaee;
+                    border-radius: 10px;
+                    padding: 13px 16px;
+                  "
+                >
+                  <div>
+                    <div style="font-weight: 700; font-size: 13px">
+                      Edit contact details
+                    </div>
+                    <div style="font-size: 11px; color: #6b747e">
+                      Phone or company
+                    </div>
                   </div>
-                </div>
-                <div class="platform-row">
-                  <span style="font-weight: 500; color: #1f2630"
-                    >Premium content library</span
-                  ><span style="font-weight: 600; color: #6b747e">Not included</span
-                  ><span style="font-weight: 600; color: #101010">6 months</span>
-                </div>
-                <div class="platform-row">
-                  <span style="font-weight: 500; color: #1f2630"
-                    >Templates &amp; Files</span
-                  ><span style="font-weight: 600; color: #6b747e">Not included</span
-                  ><span style="font-weight: 600; color: #101010">Yes</span>
-                </div>
-                <div class="platform-row">
-                  <span style="font-weight: 500; color: #1f2630"
-                    >Speaker Directory</span
-                  ><span style="font-weight: 600; color: #6b747e"
-                    >Not available</span
-                  ><span style="font-weight: 600; color: #6b747e"
-                    >Not available</span
+                  <button
+                    type="button"
+                    class="btn-secondary"
+                    id="btnEditContact"
+                    style="padding: 8px 14px; font-size: 11px"
                   >
+                    Edit
+                  </button>
                 </div>
-                <div class="platform-row">
-                  <span style="font-weight: 500; color: #1f2630"
-                    >Direct speaker contact</span
-                  ><span style="font-weight: 600; color: #6b747e"
-                    >Not available</span
-                  ><span style="font-weight: 600; color: #6b747e"
-                    >Not available</span
+                <div
+                  style="
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    border: 1px solid #e6eaee;
+                    border-radius: 10px;
+                    padding: 13px 16px;
+                  "
+                >
+                  <div>
+                    <div style="font-weight: 700; font-size: 13px">
+                      Change email
+                    </div>
+                    <div style="font-size: 11px; color: #6b747e">
+                      Requires verification of the new address
+                    </div>
+                  </div>
+                  <button
+                    type="button"
+                    class="btn-secondary"
+                    id="btnChangeEmail"
+                    style="padding: 8px 14px; font-size: 11px"
                   >
+                    Change
+                  </button>
                 </div>
-                <div class="platform-row">
-                  <span style="font-weight: 500; color: #1f2630"
-                    >Workshop booking</span
-                  ><span style="font-weight: 600; color: #6b747e"
-                    >Not available</span
-                  ><span style="font-weight: 600; color: #101010"
-                    >Opens 7-10 days before the event</span
+                <div
+                  style="
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    border: 1px solid #e6eaee;
+                    border-radius: 10px;
+                    padding: 13px 16px;
+                  "
+                >
+                  <div>
+                    <div style="font-weight: 700; font-size: 13px">
+                      Request refund
+                    </div>
+                    <div style="font-size: 11px; color: #6b747e">
+                      Full refund until 30 October 2026. Request by email.
+                    </div>
+                  </div>
+                  <button
+                    type="button"
+                    class="btn-secondary"
+                    id="btnRequestRefund"
+                    style="
+                      padding: 8px 14px;
+                      font-size: 11px;
+                      color: #4a5563;
+                      border-color: #d5dae0;
+                    "
                   >
+                    Request
+                  </button>
                 </div>
               </div>
+              <div
+                style="
+                  display: flex;
+                  gap: 16px;
+                  margin-top: 16px;
+                  font-size: 12px;
+                  font-weight: 600;
+                  flex-wrap: wrap;
+                "
+              >
+                <a href="policy.html#ticket" style="color: #1f2630"
+                  >Ticket &amp; Entry Policy</a
+                >
+                <a href="policy.html#refund" style="color: #1f2630"
+                  >Refund &amp; Cancellation</a
+                >
+                <a href="policy.html#privacy" style="color: #1f2630">Privacy</a>
+              </div>
+            </div>
 
+            <div class="bc-card" id="needHelpCard">
               <div
                 class="font-mono"
                 style="
-                  font-size: 10px;
-                  letter-spacing: 0.1em;
+                  font-size: 11px;
+                  letter-spacing: 0.12em;
                   text-transform: uppercase;
                   color: #6b747e;
-                  margin-bottom: 10px;
+                  margin-bottom: 18px;
                 "
               >
-                Activation states
+                Need Help?
               </div>
-              <div class="grid-2-cols" style="gap: 10px">
-                <div
-                  style="
-                    border: 1px solid #e6eaee;
-                    border-radius: 10px;
-                    padding: 12px 14px;
-                  "
-                >
-                  <div
-                    style="
-                      font-size: 12px;
-                      font-weight: 700;
-                      margin-bottom: 6px;
-                    "
-                  >
-                    New email
-                  </div>
-                  <button
-                    type="button"
-                    class="btn-primary"
-                    id="btnActivateAccount"
-                    style="padding: 8px 12px; font-size: 11px"
-                  >
-                    Activate My Account
-                  </button>
-                  <div style="font-size: 11px; color: #6b747e; margin-top: 6px">
-                    Opens TrafficMENA. Use the email from your booking.
-                  </div>
-                </div>
-                <div
-                  style="
-                    border: 1px solid #e6eaee;
-                    border-radius: 10px;
-                    padding: 12px 14px;
-                  "
-                >
-                  <div
-                    style="
-                      font-size: 12px;
-                      font-weight: 700;
-                      margin-bottom: 6px;
-                    "
-                  >
-                    Existing account
-                  </div>
-                  <div
-                    style="
-                      font-size: 11px;
-                      color: #04c44e;
-                      font-weight: 600;
-                      margin-bottom: 6px;
-                    "
-                  >
-                    ✓ Content access added after the event
-                  </div>
-                  <button
-                    type="button"
-                    class="btn-secondary"
-                    id="btnLoginPlatform"
-                    style="padding: 8px 12px; font-size: 11px"
-                  >
-                    Log in to Platform
-                  </button>
-                </div>
-                <div
-                  style="
-                    border: 1px solid #e6eaee;
-                    border-radius: 10px;
-                    padding: 12px 14px;
-                  "
-                >
-                  <div
-                    style="
-                      font-size: 12px;
-                      font-weight: 700;
-                      margin-bottom: 6px;
-                    "
-                  >
-                    Email not received
-                  </div>
-                  <button
-                    type="button"
-                    class="btn-secondary"
-                    id="btnPlatformResend"
-                    style="padding: 8px 12px; font-size: 11px"
-                  >
-                    Resend
-                  </button>
-                  <div style="font-size: 11px; color: #6b747e; margin-top: 6px">
-                    Rate-limited to 1 resend per minute.
-                  </div>
-                </div>
-                <div
-                  style="
-                    border: 1px solid #e6eaee;
-                    border-radius: 10px;
-                    padding: 12px 14px;
-                  "
-                >
-                  <div
-                    style="
-                      font-size: 12px;
-                      font-weight: 700;
-                      margin-bottom: 6px;
-                    "
-                  >
-                    Content not yet published
-                  </div>
-                  <span
-                    style="
-                      border-radius: 999px;
-                      padding: 2px 9px;
-                      font-size: 10px;
-                      font-weight: 600;
-                      background: #f4f6f8;
-                      border: 1px solid #e6eaee;
-                      color: #6b747e;
-                    "
-                    >Coming Soon, expected [date]</span
-                  >
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Edit / Transfer / Refund + Help -->
-      <div class="container section-padding">
-        <div class="split-2c">
-          <div
-            style="
-              border: 1px solid #d5dae0;
-              border-radius: 16px;
-              padding: 28px;
-            "
-          >
-            <div
-              class="font-mono"
-              style="
-                font-size: 11px;
-                letter-spacing: 0.12em;
-                text-transform: uppercase;
-                color: #6b747e;
-                margin-bottom: 18px;
-              "
-            >
-              Edit, Transfer &amp; Refund
-            </div>
-            <div style="display: flex; flex-direction: column; gap: 10px">
-              <div
-                style="
-                  display: flex;
-                  justify-content: space-between;
-                  align-items: center;
-                  border: 1px solid #e6eaee;
-                  border-radius: 10px;
-                  padding: 13px 16px;
-                "
-              >
+              <p class="help-lede">
+                Questions about your booking, or need an invoice? Contact us by
+                email or WhatsApp.
+              </p>
+              <dl class="help-list">
                 <div>
-                  <div style="font-weight: 700; font-size: 13px">
-                    Edit contact details
-                  </div>
-                  <div style="font-size: 11px; color: #6b747e">
-                    Phone or company, instant
-                  </div>
+                  <dt>Email</dt>
+                  <dd><a href="mailto:info@trafficmena.com">info@trafficmena.com</a></dd>
                 </div>
-                <button
-                  type="button"
-                  class="btn-secondary"
-                  id="btnEditContact"
-                  style="padding: 8px 14px; font-size: 11px"
-                >
-                  Edit
-                </button>
-              </div>
-              <div
-                style="
-                  display: flex;
-                  justify-content: space-between;
-                  align-items: center;
-                  border: 1px solid #e6eaee;
-                  border-radius: 10px;
-                  padding: 13px 16px;
-                "
-              >
                 <div>
-                  <div style="font-weight: 700; font-size: 13px">
-                    Change attendee
-                  </div>
-                  <div style="font-size: 11px; color: #6b747e">
-                    Only if policy allows. Issues a new QR
-                  </div>
+                  <dt>Phone</dt>
+                  <dd><a href="tel:+201118111793">01118111793</a></dd>
                 </div>
-                <button
-                  type="button"
-                  class="btn-secondary"
-                  id="btnChangeAttendee"
-                  style="padding: 8px 14px; font-size: 11px"
-                >
-                  Change
-                </button>
-              </div>
-              <div
-                style="
-                  display: flex;
-                  justify-content: space-between;
-                  align-items: center;
-                  border: 1px solid #e6eaee;
-                  border-radius: 10px;
-                  padding: 13px 16px;
-                "
-              >
                 <div>
-                  <div style="font-weight: 700; font-size: 13px">
-                    Change email
-                  </div>
-                  <div style="font-size: 11px; color: #6b747e">
-                    Requires verification of the new address
-                  </div>
+                  <dt>WhatsApp</dt>
+                  <dd><a class="wa-btn" href="https://wa.me/201505437979?text=I%20need%20help%20for%20Ecommerce%20Day%202026" target="_blank" rel="noopener" aria-label="Chat with us on WhatsApp (opens in a new tab)"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.64.07-.3-.15-1.26-.46-2.4-1.48-.89-.79-1.49-1.77-1.66-2.07-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.61-.92-2.2-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.88 1.21 3.07c.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.69.63.71.23 1.36.2 1.87.12.57-.08 1.76-.72 2.01-1.41.25-.7.25-1.29.17-1.41-.07-.13-.27-.2-.57-.35ZM12.05 21.5h-.01a9.4 9.4 0 0 1-4.79-1.31l-.34-.2-3.56.93.95-3.47-.22-.36a9.41 9.41 0 0 1-1.44-5.02c0-5.2 4.23-9.43 9.43-9.43 2.52 0 4.89.98 6.67 2.77a9.37 9.37 0 0 1 2.76 6.67c0 5.2-4.23 9.43-9.43 9.43Zm8.02-17.45A11.27 11.27 0 0 0 12.05.73C5.8.73.72 5.81.72 12.06c0 2 .52 3.95 1.52 5.66L.62 23.6l6.02-1.58a11.3 11.3 0 0 0 5.41 1.38h.01c6.25 0 11.33-5.08 11.33-11.33 0-3.03-1.18-5.87-3.32-8.02Z"/></svg><span>WhatsApp</span></a></dd>
                 </div>
-                <button
-                  type="button"
-                  class="btn-secondary"
-                  id="btnChangeEmail"
-                  style="padding: 8px 14px; font-size: 11px"
-                >
-                  Change
-                </button>
-              </div>
-              <div
-                style="
-                  display: flex;
-                  justify-content: space-between;
-                  align-items: center;
-                  border: 1px solid #e6eaee;
-                  border-radius: 10px;
-                  padding: 13px 16px;
-                "
-              >
-                <div>
-                  <div style="font-weight: 700; font-size: 13px">
-                    Request refund
-                  </div>
-                  <div style="font-size: 11px; color: #6b747e">
-                    Opens a support case, approval not guaranteed
-                  </div>
-                </div>
-                <button
-                  type="button"
-                  class="btn-secondary"
-                  id="btnRequestRefund"
-                  style="
-                    padding: 8px 14px;
-                    font-size: 11px;
-                    color: #4a5563;
-                    border-color: #d5dae0;
-                  "
-                >
-                  Request
-                </button>
-              </div>
-            </div>
-            <div
-              style="
-                display: flex;
-                gap: 16px;
-                margin-top: 16px;
-                font-size: 12px;
-                font-weight: 600;
-                flex-wrap: wrap;
-              "
-            >
-              <a href="policy.html#ticket" style="color: #1f2630"
-                >Ticket &amp; Entry Policy</a
-              >
-              <a href="policy.html#refund" style="color: #1f2630"
-                >Refund &amp; Cancellation</a
-              >
-              <a href="policy.html#privacy" style="color: #1f2630">Privacy</a>
-            </div>
-          </div>
-
-          <div
-            style="
-              border: 1px solid #d5dae0;
-              border-radius: 16px;
-              padding: 28px;
-            "
-          >
-            <div
-              class="font-mono"
-              style="
-                font-size: 11px;
-                letter-spacing: 0.12em;
-                text-transform: uppercase;
-                color: #6b747e;
-                margin-bottom: 18px;
-              "
-            >
-              Help &amp; Recovery
-            </div>
-            <div
-              style="
-                display: flex;
-                flex-direction: column;
-                gap: 12px;
-                font-size: 13px;
-              "
-            >
-              <button
-                type="button"
-                id="helpResendEmail"
-                style="
-                  text-align: left;
-                  background: none;
-                  border: none;
-                  color: #04c44e;
-                  font-family: Manrope, sans-serif;
-                  font-weight: 600;
-                  font-size: 13px;
-                  cursor: pointer;
-                  padding: 0;
-                "
-              >
-                Resend confirmation email →
-              </button>
-              <div
-                style="
-                  border: 1px solid #e6eaee;
-                  border-radius: 10px;
-                  padding: 14px 16px;
-                "
-              >
-                <div
-                  style="font-weight: 700; font-size: 13px; margin-bottom: 8px"
-                >
-                  Booking lookup
-                </div>
-                <div style="display: flex; flex-direction: column; gap: 8px">
-                  <input
-                    id="helpLookupEmail"
-                    type="email"
-                    placeholder="Email"
-                    aria-label="Email for booking lookup"
-                    autocomplete="email"
-                    style="
-                      border: 1px solid #d5dae0;
-                      border-radius: 8px;
-                      padding: 10px 12px;
-                      font-size: 13px;
-                    "
-                  />
-                  <input
-                    id="helpLookupOrder"
-                    type="text"
-                    placeholder="Order number"
-                    aria-label="Order number"
-                    style="
-                      border: 1px solid #d5dae0;
-                      border-radius: 8px;
-                      padding: 10px 12px;
-                      font-size: 13px;
-                    "
-                  />
-                  <button
-                    type="button"
-                    id="helpFindBooking"
-                    style="
-                      background: #101010;
-                      border: none;
-                      color: #ffffff;
-                      border-radius: 8px;
-                      padding: 10px;
-                      font-family: Manrope, sans-serif;
-                      font-weight: 600;
-                      font-size: 12px;
-                      cursor: pointer;
-                    "
-                  >
-                    Find My Booking
-                  </button>
-                </div>
-              </div>
-              <div style="color: #4a5563">
-                Support: info@trafficmena.com · 01118111793 ·
-                <a class="wa-btn" href="https://wa.me/201505437979?text=I%20need%20help%20for%20Ecommerce%20Day%202026" target="_blank" rel="noopener" aria-label="Chat with us on WhatsApp (opens in a new tab)"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.64.07-.3-.15-1.26-.46-2.4-1.48-.89-.79-1.49-1.77-1.66-2.07-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.61-.92-2.2-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.88 1.21 3.07c.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.69.63.71.23 1.36.2 1.87.12.57-.08 1.76-.72 2.01-1.41.25-.7.25-1.29.17-1.41-.07-.13-.27-.2-.57-.35ZM12.05 21.5h-.01a9.4 9.4 0 0 1-4.79-1.31l-.34-.2-3.56.93.95-3.47-.22-.36a9.41 9.41 0 0 1-1.44-5.02c0-5.2 4.23-9.43 9.43-9.43 2.52 0 4.89.98 6.67 2.77a9.37 9.37 0 0 1 2.76 6.67c0 5.2-4.23 9.43-9.43 9.43Zm8.02-17.45A11.27 11.27 0 0 0 12.05.73C5.8.73.72 5.81.72 12.06c0 2 .52 3.95 1.52 5.66L.62 23.6l6.02-1.58a11.3 11.3 0 0 0 5.41 1.38h.01c6.25 0 11.33-5.08 11.33-11.33 0-3.03-1.18-5.87-3.32-8.02Z"/></svg><span>WhatsApp</span></a>
-              </div>
+              </dl>
               <button
                 type="button"
                 id="btnSignOutShared"
-                style="
-                  text-align: left;
-                  background: none;
-                  border: none;
-                  color: #6b747e;
-                  font-family: Manrope, sans-serif;
-                  font-weight: 600;
-                  font-size: 12px;
-                  cursor: pointer;
-                  padding: 0;
-                  text-decoration: underline;
-                "
+                class="help-signout"
               >
                 Hide details / Sign out (shared device?)
               </button>
@@ -2628,8 +2442,8 @@
     <site-footer></site-footer>
 
     <!-- Scripts -->
-    <script src="prices.js?v=20260924a"></script>
-    <script src="ecd-api.js?v=20260924a"></script>
+    <script src="prices.js?v=20260924c"></script>
+    <script src="ecd-api.js?v=20260924c"></script>
     <!-- Real scannable QR (encodes ticket serial) -->
     <script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script>
     <script>
@@ -2949,29 +2763,12 @@
           sumMethod.textContent = method || "Online payment";
         }
 
-        var invoicePill = document.getElementById("invoiceStatusPill");
-        var invoiceDetails = document.getElementById("invoiceDetails");
-        if (data.form && data.form.needInvoice) {
-          if (invoicePill) {
-            invoicePill.textContent = "On file";
-            invoicePill.style.background = "#e6fbee";
-            invoicePill.style.borderColor = "#c3f7d7";
-            invoicePill.style.color = "#04c44e";
-          }
-          if (invoiceDetails) {
-            invoiceDetails.innerHTML =
-              "Company: " +
-              (data.form.invoiceCompany || data.form.company || "Not provided") +
-              " · Tax ID: " +
-              (data.form.taxId || "Not provided") +
-              "<br/>Billing address: " +
-              (data.form.billingAddress || "Not provided");
-          }
-        } else if (invoiceDetails) {
-          invoiceDetails.textContent = "No invoice details on this booking.";
-        }
-
         var isFj = data.ticketType === "fj";
+        // Platform access is All Access Pass only
+        var platformActionCard = document.getElementById("platformActionCard");
+        var platformActivation = document.getElementById("platformActivation");
+        if (platformActionCard) platformActionCard.style.display = isFj ? "" : "none";
+        if (platformActivation) platformActivation.style.display = isFj ? "" : "none";
         var workshopSection = document.getElementById("workshopSection");
         var workshopCard = document.getElementById("workshopActionCard");
         if (workshopSection) workshopSection.style.display = isFj ? "" : "none";
@@ -3002,6 +2799,9 @@
             total: data.totalCents / 100,
           });
         }
+        var discountRow = document.getElementById("summaryDiscountRow");
+        if (discountRow)
+          discountRow.style.display = data.discountCents > 0 ? "flex" : "none";
         if (data.paymentStatus === "paid") {
           renderTicketCards(data.tickets, data.ticketName);
         } else {
@@ -3088,9 +2888,6 @@
         on("actionDownloadPdf", function () {
           window.print();
         });
-        on("receiptDownloadBtn", function () {
-          window.print();
-        });
         on("actionActivatePlatform", function () {
           window.open("https://www.trafficmena.com", "_blank", "noopener");
         });
@@ -3108,7 +2905,7 @@
           }
         });
         on("actionOpenGuide", function () {
-          var el = document.querySelector(".section-bg-alt .split-2b");
+          var el = byId("eventGuideCard");
           if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
           else window.location.href = "agenda.html";
         });
@@ -3132,25 +2929,11 @@
           flashButton(btn, "Request opened ✓", btn.textContent);
         }
         on("heroResendEmail", resendHandler);
-        on("helpResendEmail", resendHandler);
-        on("btnPlatformResend", resendHandler);
 
-        on("invoiceCorrectionBtn", function () {
-          supportMailto(
-            "ECommerce Day 2026: invoice correction",
-            "Please correct my invoice details for this booking.",
-          );
-        });
         on("btnEditContact", function () {
           supportMailto(
             "ECommerce Day 2026: edit contact details",
             "Please update my phone/company on this booking.",
-          );
-        });
-        on("btnChangeAttendee", function () {
-          supportMailto(
-            "ECommerce Day 2026: change attendee",
-            "Please change an attendee name/email on this booking (new QR required).",
           );
         });
         on("btnChangeEmail", function () {
@@ -3164,10 +2947,6 @@
             "ECommerce Day 2026: refund request",
             "I would like to request a refund for this booking. I understand approval is not guaranteed.",
           );
-        });
-
-        on("helpFindBooking", function () {
-          lookupBooking(byId("helpLookupOrder"), byId("helpLookupEmail"), null);
         });
 
         on("btnSignOutShared", function () {
@@ -3310,7 +3089,8 @@
         if (!m) return 9999;
         var h = Number(m[1]);
         var min = Number(m[2]);
-        if (h >= 1 && h <= 10) h += 12;
+        // 10 and 11 are morning, 12 is noon, 1-9 are afternoon/evening
+        if (h >= 1 && h <= 9) h += 12;
         return h * 60 + min;
       }
 

@@ -32,6 +32,7 @@ Designing website UX for "ECommerce Day 2026" — one-day offline event, Cairo, 
 - Promises: Control Tower = See the whole order and lead the system · CLICKED = Build the Acquisition Machine · CONFIRMED = Turn Visits into Orders · DELIVERED = Keep the Promise and the Margin.
 - Capacities (label as draft/subject to venue): Control Tower 500 · CLICKED 80 · CONFIRMED 200 · DELIVERED 100.
 - Contact: info@trafficmena.com · 01118111793 · trafficmena.com · WhatsApp https://wa.me/201505437979?text=I%20need%20help%20for%20Ecommerce%20Day%202026 (show a WhatsApp button wherever contact details appear).
+- Social (same as trafficmena.com footer, in this order): X https://x.com/trafficmena · Facebook https://facebook.com/trafficmena · LinkedIn https://linkedin.com/company/trafficmena · Instagram https://instagram.com/trafficmena · TikTok https://tiktok.com/@trafficmena · Threads https://threads.net/@trafficmena. Footer tiles: 36px, 10px radius, ink icon, hover ink bg + green icon.
 - Refunds: full refund until the end of 30 October 2026 (five days before the event), requested by email from the booking email. No refunds after that date. Tickets are non-transferable. Approved refunds go back through the original payment method.
 
 ## HARD RULES (never violate)

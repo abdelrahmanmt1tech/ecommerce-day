@@ -137,6 +137,23 @@ class SiteNavbar extends HTMLElement {
           opacity: 0.9;
         }
 
+        /* Secondary CTA: white with black outline, fills black on hover */
+        .btn-ghost {
+          background-color: #fff;
+          color: #101010;
+          border: 1px solid #101010;
+        }
+
+        .btn-ghost:hover {
+          background-color: #101010;
+          color: #fff;
+        }
+
+        .btn:focus-visible {
+          outline: 2px solid #101010;
+          outline-offset: 2px;
+        }
+
         .menu-toggle {
           display: none;
           background: none;
@@ -197,6 +214,17 @@ class SiteNavbar extends HTMLElement {
           text-align: center;
         }
 
+        .nav-mobile .btn-ghost {
+          border: 1px solid #101010;
+          background-color: #fff;
+          color: #101010;
+        }
+
+        .nav-mobile .btn-ghost:hover {
+          background-color: #101010;
+          color: #fff;
+        }
+
         @media (max-width: 992px) {
           .nav-desktop {
             display: none;
@@ -220,7 +248,9 @@ class SiteNavbar extends HTMLElement {
             aria-label="ECommerce Day home"
           >
             <img
-              src="assets/ecommerce-day-logo.png"
+              src="assets/ecommerce-day-logo.webp"
+              width="83"
+              height="38"
               alt="E-commerce Day by TrafficMENA"
             />
           </a>
@@ -232,6 +262,7 @@ class SiteNavbar extends HTMLElement {
           </nav>
 
           <div class="header-actions">
+            <a href="become-a-sponsor.html" class="btn btn-ghost nav-cta">Become a Sponsor</a>
             <a href="tickets.html" class="btn btn-primary nav-cta">Get Your Ticket</a>
             <button
               class="menu-toggle"
@@ -257,6 +288,9 @@ class SiteNavbar extends HTMLElement {
         <div class="nav-mobile" id="navMobile">
           <ul>
             ${mobileLinks}
+            <li>
+              <a href="become-a-sponsor.html" class="btn btn-ghost">Become a Sponsor</a>
+            </li>
             <li>
               <a href="tickets.html" class="btn btn-primary">Get Your Ticket</a>
             </li>
