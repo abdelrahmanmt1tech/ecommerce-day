@@ -905,8 +905,44 @@
       }
       body.ecd-pending-active #hostedFieldsHint,
       body.ecd-pending-active #payBtn,
-      body.ecd-pending-active .legal-note {
+      body.ecd-pending-active .legal-note,
+      body.ecd-pending-active #methodSectionLabel,
+      body.ecd-pending-active #methodRow,
+      body.ecd-pending-active #ecdWalletField,
+      body.ecd-pending-active #promoClosed,
+      body.ecd-pending-active #promoOpen,
+      body.ecd-pending-active #backSub2,
+      body.ecd-pending-active .checkbox-label {
         display: none !important;
+      }
+
+      .step-header-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        flex-wrap: wrap;
+        width: 100%;
+      }
+      .step-header-row .section-header {
+        margin-bottom: 0;
+        flex: 1;
+        min-width: 200px;
+      }
+      .btn-clear-draft {
+        border: 1px solid var(--gray-300);
+        background: #fff;
+        color: var(--gray-700);
+        border-radius: 10px;
+        padding: 8px 12px;
+        font-size: 12px;
+        font-weight: 600;
+        cursor: pointer;
+        white-space: nowrap;
+      }
+      .btn-clear-draft:hover {
+        border-color: var(--black);
+        color: var(--black);
       }
 
       .checkbox-label {
@@ -1178,10 +1214,15 @@
 
         <!-- Step 1: Your details -->
         <section id="step1Section">
-          <div class="section-header">
-            <span class="step-circle">1</span>
-            <h2>Your details</h2>
-            <span class="step-label" id="subLabel">Step 1 of 3</span>
+          <div class="step-header-row" style="margin-bottom: 22px">
+            <div class="section-header" style="margin-bottom: 0">
+              <span class="step-circle">1</span>
+              <h2>Your details</h2>
+              <span class="step-label" id="subLabel">Step 1 of 3</span>
+            </div>
+            <button type="button" class="btn-clear-draft" id="clearDraftBtn1">
+              Clear saved details
+            </button>
           </div>
 
           <div id="sub1">
@@ -1287,10 +1328,15 @@
 
         <!-- Step 2: Company & store -->
         <section id="step2Section" class="hidden">
-          <div class="section-header">
-            <span class="step-circle">2</span>
-            <h2>Company &amp; store</h2>
-            <span class="step-label">Step 2 of 3</span>
+          <div class="step-header-row" style="margin-bottom: 22px">
+            <div class="section-header" style="margin-bottom: 0">
+              <span class="step-circle">2</span>
+              <h2>Company &amp; store</h2>
+              <span class="step-label">Step 2 of 3</span>
+            </div>
+            <button type="button" class="btn-clear-draft" id="clearDraftBtn2">
+              Clear saved details
+            </button>
           </div>
 
           <div id="sub2">
@@ -1623,6 +1669,8 @@
 
     <script>
       (function () {
+        const DRAFT_STORAGE_KEY = "ecd2026_checkout_draft_v1";
+
         const state = {
           ticket: "fj",
           cc: "+20",
@@ -1665,11 +1713,121 @@
           lastPayResult: null,
         };
 
+        function persistCheckoutDraft() {
+          try {
+            localStorage.setItem(
+              DRAFT_STORAGE_KEY,
+              JSON.stringify({
+                ticket: state.ticket,
+                cc: state.cc,
+                buyer: state.buyer,
+                news: !!state.news,
+                walletLocal: state.walletLocal || "",
+                savedAt: Date.now(),
+              }),
+            );
+          } catch (e) {}
+        }
+
+        function loadCheckoutDraft() {
+          try {
+            var raw = localStorage.getItem(DRAFT_STORAGE_KEY);
+            if (!raw) return false;
+            var draft = JSON.parse(raw);
+            if (!draft || typeof draft !== "object") return false;
+            if (draft.ticket === "ct" || draft.ticket === "fj") {
+              state.ticket = draft.ticket;
+            }
+            if (draft.cc) state.cc = String(draft.cc);
+            if (draft.buyer && typeof draft.buyer === "object") {
+              Object.keys(state.buyer).forEach(function (key) {
+                if (draft.buyer[key] != null) {
+                  state.buyer[key] = String(draft.buyer[key]);
+                }
+              });
+            }
+            state.news = !!draft.news;
+            if (draft.walletLocal) {
+              state.walletLocal = String(draft.walletLocal);
+            }
+            return true;
+          } catch (e) {
+            return false;
+          }
+        }
+
+        function hydrateFormFromState() {
+          Object.keys(state.buyer).forEach(function (key) {
+            var el = document.getElementById(key);
+            if (el) el.value = state.buyer[key] || "";
+          });
+          var ccEl = document.getElementById("cc");
+          if (ccEl) ccEl.value = state.cc || "+20";
+          var newsEl = document.getElementById("newsCheck");
+          if (newsEl) newsEl.checked = !!state.news;
+          var walletEl = document.getElementById("ecd-wallet-phone");
+          if (walletEl && state.walletLocal) {
+            walletEl.value = state.walletLocal;
+          }
+        }
+
+        function clearCheckoutDraft() {
+          try {
+            localStorage.removeItem(DRAFT_STORAGE_KEY);
+          } catch (e) {}
+          state.buyer = {
+            name: "",
+            email: "",
+            mobile: "",
+            country: "",
+            company: "",
+            title: "",
+            store: "",
+            linkedin: "",
+            facebook: "",
+            access: "",
+          };
+          state.cc = "+20";
+          state.news = false;
+          state.walletLocal = "";
+          state.walletPhone = "";
+          state.walletTouched = false;
+          state.consent = false;
+          state.sessionReady = false;
+          state.sessionFingerprint = "";
+          state.tried = false;
+          state.tried1 = false;
+          state.tried2 = false;
+          var consentEl = document.getElementById("consentCheck");
+          if (consentEl) consentEl.checked = false;
+          hydrateFormFromState();
+          syncWalletUi();
+          renderAll();
+        }
+
         try {
           var params = new URLSearchParams(window.location.search);
           var t = (params.get("ticket") || "").toLowerCase();
           if (t === "ct" || t === "fj") state.ticket = t;
         } catch (e) {}
+
+        // Restore saved step 1/2 details (and ticket if no URL override).
+        var hadUrlTicket = false;
+        try {
+          hadUrlTicket = !!(
+            new URLSearchParams(window.location.search).get("ticket") || ""
+          );
+        } catch (e2) {}
+        var draftLoaded = loadCheckoutDraft();
+        if (draftLoaded && hadUrlTicket) {
+          // URL ticket wins over draft ticket; keep buyer fields.
+          try {
+            var urlT = (
+              new URLSearchParams(window.location.search).get("ticket") || ""
+            ).toLowerCase();
+            if (urlT === "ct" || urlT === "fj") state.ticket = urlT;
+          } catch (e3) {}
+        }
 
         function getTicketName() {
           if (window.EventPrices) {
@@ -1875,6 +2033,7 @@
             btn.onclick = function () {
               state.ticket = id;
               state.sessionReady = false;
+              persistCheckoutDraft();
               renderAll();
               if (state.sub === 3) preparePaymentStep();
             };
@@ -2158,10 +2317,12 @@
           document.querySelectorAll(selector).forEach((el) => {
             el.addEventListener("input", (e) => {
               state.buyer[key] = e.target.value;
+              persistCheckoutDraft();
               if (state.tried || state.tried1 || state.tried2) renderErrors();
             });
             el.addEventListener("change", (e) => {
               state.buyer[key] = e.target.value;
+              persistCheckoutDraft();
               if (state.tried || state.tried1 || state.tried2) renderErrors();
             });
           });
@@ -2180,14 +2341,17 @@
 
         var ccEl = document.getElementById("cc");
         if (ccEl) {
-          state.cc = ccEl.value || "+20";
           ccEl.addEventListener("change", function (e) {
             state.cc = e.target.value;
+            persistCheckoutDraft();
           });
           ccEl.addEventListener("input", function (e) {
             state.cc = e.target.value;
+            persistCheckoutDraft();
           });
         }
+
+        hydrateFormFromState();
 
         document
           .getElementById("consentCheck")
@@ -2198,7 +2362,23 @@
           });
         document.getElementById("newsCheck").addEventListener("change", (e) => {
           state.news = e.target.checked;
+          persistCheckoutDraft();
         });
+
+        function onClearDraftClick() {
+          if (
+            !window.confirm(
+              "Clear all saved checkout details from this device?",
+            )
+          ) {
+            return;
+          }
+          clearCheckoutDraft();
+        }
+        var clear1 = document.getElementById("clearDraftBtn1");
+        var clear2 = document.getElementById("clearDraftBtn2");
+        if (clear1) clear1.addEventListener("click", onClearDraftClick);
+        if (clear2) clear2.addEventListener("click", onClearDraftClick);
 
         function goToStep2() {
           const errs = screen1Errors();
@@ -2209,6 +2389,7 @@
           }
           state.tried1 = false;
           state.sub = 2;
+          persistCheckoutDraft();
           renderAll();
           window.scrollTo({ top: 0, behavior: "smooth" });
         }
@@ -2222,6 +2403,7 @@
           }
           state.tried2 = false;
           state.sub = 3;
+          persistCheckoutDraft();
           renderAll();
           window.scrollTo({ top: 0, behavior: "smooth" });
           preparePaymentStep();
@@ -2355,6 +2537,7 @@
             state.walletLocal = normalizeWalletLocal(e.target.value);
             e.target.value = state.walletLocal;
             syncWalletUi();
+            persistCheckoutDraft();
             renderPayButtons();
           });
           walletInput.addEventListener("blur", function () {
