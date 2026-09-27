@@ -912,6 +912,7 @@
       body.ecd-pending-active #ecdWalletField,
       body.ecd-pending-active #promoClosed,
       body.ecd-pending-active #promoOpen,
+      body.ecd-pending-active #summaryPromo,
       body.ecd-pending-active #backSub2,
       body.ecd-pending-active .checkbox-label {
         display: none !important;
@@ -1019,6 +1020,17 @@
       @media (max-width: 1024px) {
         .order-summary {
           position: static;
+        }
+        /* Single column: summary card first (promo sits above payment),
+           "Your pass includes" stays after the form. */
+        .order-summary {
+          display: contents;
+        }
+        .summary-card {
+          order: -1;
+        }
+        .value-reminder {
+          order: 1;
         }
       }
 
@@ -1129,6 +1141,19 @@
       .summary-total .value {
         font-weight: 800;
         font-size: 20px;
+      }
+      .summary-promo {
+        border-top: 1px solid var(--gray-200);
+        padding-top: 14px;
+      }
+      .summary-promo #openPromoBtn {
+        font-size: 13px;
+      }
+      .summary-promo .promo-card {
+        border: none;
+        border-radius: 0;
+        padding: 0;
+        background: transparent;
       }
       .summary-change {
         font-size: 13px;
@@ -1471,48 +1496,6 @@
             </button>
           </div>
 
-          <!-- Promo -->
-          <div id="promoClosed">
-            <button type="button" class="btn-link" id="openPromoBtn">
-              Have a promo code?
-            </button>
-          </div>
-          <div id="promoOpen" class="hidden">
-            <div class="promo-card">
-              <div class="promo-label">Promo code</div>
-              <div class="promo-row">
-                <input type="text" id="promoInput" placeholder="Enter code" />
-                <button type="button" id="applyPromoBtn">Apply</button>
-              </div>
-              <div class="promo-msg" id="promoMsg"></div>
-              <button
-                type="button"
-                class="btn-link"
-                id="removePromoBtn"
-                style="
-                  font-size: 12px;
-                  color: var(--gray-500);
-                  text-decoration: underline;
-                  margin-top: 6px;
-                  display: none;
-                "
-              >
-                Remove code
-              </button>
-              <div
-                style="
-                  margin-top: 10px;
-                  font-family: &quot;JetBrains Mono&quot;, monospace;
-                  font-size: 9px;
-                  letter-spacing: 0.06em;
-                  color: var(--gray-400);
-                "
-              >
-                Enter a code from TrafficMENA (admin → ECD Promo Codes)
-              </div>
-            </div>
-          </div>
-
           <div class="form-card" style="display: block; margin-top: 16px">
             <div
               class="step-label"
@@ -1642,6 +1625,49 @@
             <div class="summary-total">
               <span class="label">Total</span>
               <span class="value price-total" id="totalLabel" data-suffix=" EGP">[Total] EGP</span>
+            </div>
+            <!-- Promo (Step 3 only, toggled in renderSubScreens) -->
+            <div id="summaryPromo" class="summary-promo hidden">
+              <div id="promoClosed">
+                <button type="button" class="btn-link" id="openPromoBtn">
+                  Have a promo code?
+                </button>
+              </div>
+              <div id="promoOpen" class="hidden">
+                <div class="promo-card">
+                  <div class="promo-label">Promo code</div>
+                  <div class="promo-row">
+                    <input type="text" id="promoInput" placeholder="Enter code" />
+                    <button type="button" id="applyPromoBtn">Apply</button>
+                  </div>
+                  <div class="promo-msg" id="promoMsg"></div>
+                  <button
+                    type="button"
+                    class="btn-link"
+                    id="removePromoBtn"
+                    style="
+                      font-size: 12px;
+                      color: var(--gray-500);
+                      text-decoration: underline;
+                      margin-top: 6px;
+                      display: none;
+                    "
+                  >
+                    Remove code
+                  </button>
+                  <div
+                    style="
+                      margin-top: 10px;
+                      font-family: &quot;JetBrains Mono&quot;, monospace;
+                      font-size: 9px;
+                      letter-spacing: 0.06em;
+                      color: var(--gray-400);
+                    "
+                  >
+                    Enter the promo code from TrafficMENA here
+                  </div>
+                </div>
+              </div>
             </div>
             <a href="#" class="summary-change">Change ticket</a>
             <div class="chip-row" id="ticketChips"></div>
@@ -2283,6 +2309,8 @@
           if (s1) s1.classList.toggle("hidden", state.sub !== 1);
           if (s2) s2.classList.toggle("hidden", state.sub !== 2);
           if (s3) s3.classList.toggle("hidden", state.sub !== 3);
+          const summaryPromo = document.getElementById("summaryPromo");
+          if (summaryPromo) summaryPromo.classList.toggle("hidden", state.sub !== 3);
 
           const subLabel = document.getElementById("subLabel");
           if (subLabel) subLabel.textContent = "Step 1 of 3";
