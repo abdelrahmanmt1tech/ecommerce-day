@@ -764,6 +764,63 @@
         background: #222;
       }
 
+      .pay-codes {
+        display: none;
+        border: 1px solid #ffb020;
+        background: #fff4de;
+        border-radius: 12px;
+        padding: 14px 16px;
+        margin: 0 0 16px;
+        font-size: 13px;
+        line-height: 1.6;
+        color: #1f2630;
+      }
+      .pay-codes strong {
+        display: block;
+        margin-bottom: 8px;
+        font-size: 13px;
+      }
+      .pay-codes .code-line {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 14px;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+        margin: 4px 0;
+      }
+      .pending-panel {
+        display: none;
+        border: 1px solid var(--gray-300);
+        background: var(--gray-100);
+        border-radius: 12px;
+        padding: 16px;
+        margin: 0 0 16px;
+      }
+      .pending-panel h3 {
+        margin: 0 0 6px;
+        font-size: 16px;
+        font-weight: 700;
+      }
+      .pending-panel p {
+        margin: 0 0 12px;
+        font-size: 13px;
+        line-height: 1.6;
+        color: var(--gray-700);
+      }
+      .pending-panel .check-status-btn {
+        background: var(--black);
+        color: #fff;
+        border: none;
+        border-radius: 10px;
+        padding: 12px 18px;
+        font-weight: 600;
+        font-size: 14px;
+        cursor: pointer;
+      }
+      .pending-panel .check-status-btn:disabled {
+        opacity: 0.7;
+        cursor: not-allowed;
+      }
+
       .checkbox-label {
         display: flex;
         gap: 12px;
@@ -1324,9 +1381,10 @@
           <div class="form-card" style="display: block; margin-top: 16px">
             <div
               class="step-label"
+              id="methodSectionLabel"
               style="display: block; margin-bottom: 12px; font-size: 9px"
             >
-              Methods shown depend on approved provider
+              Select payment method
             </div>
             <div class="method-row" id="methodRow"></div>
             <div id="ecdWalletField" class="wallet-field-wrap" style="display: none">
@@ -1346,12 +1404,22 @@
                 Enter the number your mobile wallet is registered on.
               </p>
             </div>
+            <div class="pay-codes" id="ecdPayCodes" aria-live="polite"></div>
+            <div class="pending-panel" id="ecdPendingPanel">
+              <h3 id="ecdPendingTitle">Complete your payment</h3>
+              <p id="ecdPendingBody">
+                Use the reference above in your payment app, then check status.
+              </p>
+              <button type="button" class="check-status-btn" id="ecdCheckStatusBtn">
+                Check Status
+              </button>
+            </div>
             <div class="hosted-fields" id="hostedFieldsHint">
               <div class="hosted-label">
-                After you click Pay you will be redirected to the secure payment page (PCI-DSS).
+                Card payments open a secure provider page. Fawry / Aman / wallet show a reference on this page.
               </div>
               <div class="hosted-note">
-                Card / wallet data is entered with the payment provider. We never store card numbers.
+                We never store card numbers. Complete payment with the provider, then use Check Status if you stay on this page.
               </div>
             </div>
 
@@ -1489,6 +1557,11 @@
           walletTouched: false,
           paying: false,
           promoApplying: false,
+          sessionReady: false,
+          sessionFingerprint: "",
+          pendingOrderCode: "",
+          pendingBookingId: "",
+          verifyTimer: null,
         };
 
         try {
@@ -1700,7 +1773,9 @@
             btn.setAttribute("data-ticket", id);
             btn.onclick = function () {
               state.ticket = id;
+              state.sessionReady = false;
               renderAll();
+              if (state.sub === 3) preparePaymentStep();
             };
             chips.appendChild(btn);
           });
@@ -1712,7 +1787,7 @@
           var methods = state.paymentMethods;
           if (!methods.length) {
             row.innerHTML =
-              '<div style="font-size:13px;color:var(--gray-500)">Select payment method after continuing to this step.</div>';
+              '<div style="font-size:13px;color:var(--gray-500)">Loading payment methods…</div>';
             syncWalletUi();
             return;
           }
@@ -2047,8 +2122,33 @@
           state.tried2 = false;
           state.sub = 3;
           renderAll();
-          if (typeof loadPaymentMethods === "function") loadPaymentMethods();
           window.scrollTo({ top: 0, behavior: "smooth" });
+          preparePaymentStep();
+        }
+
+        async function preparePaymentStep() {
+          var row = document.getElementById("methodRow");
+          if (row && !state.paymentMethods.length) {
+            row.innerHTML =
+              '<div style="font-size:13px;color:var(--gray-500)">Loading payment methods…</div>';
+          }
+          try {
+            await ensureCheckoutSession();
+            await loadPaymentMethods();
+            if (!state.paymentMethods.length) {
+              showEcdModal(
+                "No payment methods available right now. Refresh and try again.",
+                "Payment unavailable",
+              );
+            }
+          } catch (err) {
+            console.warn("[checkout] prepare payment step", err);
+            showEcdModal(
+              (err && err.message) ||
+                "Could not start checkout. Check your details and try again.",
+              "Checkout error",
+            );
+          }
         }
 
         function goToStep1() {
@@ -2121,15 +2221,19 @@
               } else if (window.EventPrices) {
                 EventPrices.clearActivePromo();
               }
+              // Promo changes totals → recreate checkout session before pay.
+              state.sessionReady = false;
             } catch (err) {
               console.warn("[checkout] promo validate", err);
               state.promoState = "invalid";
               state.appliedCode = "";
               if (window.EventPrices) EventPrices.clearActivePromo();
+              state.sessionReady = false;
             } finally {
               setPromoBusy(false);
             }
             renderAll();
+            if (state.sub === 3) preparePaymentStep();
           });
         document
           .getElementById("removePromoBtn")
@@ -2139,7 +2243,9 @@
             state.appliedCode = "";
             document.getElementById("promoInput").value = "";
             if (window.EventPrices) EventPrices.clearActivePromo();
+            state.sessionReady = false;
             renderAll();
+            if (state.sub === 3) preparePaymentStep();
           });
 
         var walletInput = document.getElementById("ecd-wallet-phone");
@@ -2176,12 +2282,34 @@
                 ? methods.methods
                 : [];
             renderMethodButtons();
+            renderPayButtons();
           } catch (err) {
             console.warn("[checkout] payment methods", err);
+            var row = document.getElementById("methodRow");
+            if (row) {
+              row.innerHTML =
+                '<div style="font-size:13px;color:#B3362E">Could not load payment methods. Refresh and try again.</div>';
+            }
           }
         }
 
-        async function ensureCheckoutSession() {
+        function sessionFingerprint() {
+          return [
+            state.ticket,
+            state.buyer.name,
+            state.buyer.email,
+            state.buyer.mobile,
+            state.cc,
+            state.buyer.country,
+            state.buyer.company,
+            state.buyer.title,
+            state.buyer.store,
+            state.promoState === "valid" ? state.appliedCode : "",
+            state.news ? "1" : "0",
+          ].join("|");
+        }
+
+        async function ensureCheckoutSession(force) {
           if (!window.EcdApi) throw new Error("EcdApi not loaded");
           if (window.EcdContent && EcdContent.ready) {
             try {
@@ -2189,6 +2317,15 @@
             } catch (e) {}
           }
           updatePrices();
+          var fp = sessionFingerprint();
+          if (
+            !force &&
+            state.sessionReady &&
+            EcdApi.getToken() &&
+            state.sessionFingerprint === fp
+          ) {
+            return EcdApi.getStoredBooking();
+          }
           var promo = state.promoState === "valid" ? state.appliedCode : "";
           var clientTotalCents = EcdApi.centsFromPricesJs(state.ticket, 1, promo);
           if (clientTotalCents == null) {
@@ -2214,10 +2351,171 @@
               newsOptIn: !!state.news,
             },
           };
-          return EcdApi.createSession(payload);
+          var created = await EcdApi.createSession(payload);
+          state.sessionReady = true;
+          state.sessionFingerprint = fp;
+          return created;
         }
 
-        async function handlePay() {
+        function clearVerifyTimer() {
+          if (state.verifyTimer) {
+            clearInterval(state.verifyTimer);
+            state.verifyTimer = null;
+          }
+        }
+
+        function showPayCodes(result) {
+          var codesBox = document.getElementById("ecdPayCodes");
+          if (!codesBox) return false;
+          var lines = [];
+          if (result.fawryCode) {
+            lines.push(
+              '<div class="code-line">Fawry: ' +
+                String(result.fawryCode).replace(/</g, "&lt;") +
+                "</div>",
+            );
+          }
+          if (result.amanCode) {
+            lines.push(
+              '<div class="code-line">Aman: ' +
+                String(result.amanCode).replace(/</g, "&lt;") +
+                "</div>",
+            );
+          }
+          if (result.masaryCode) {
+            lines.push(
+              '<div class="code-line">Masary: ' +
+                String(result.masaryCode).replace(/</g, "&lt;") +
+                "</div>",
+            );
+          }
+          if (result.meezaReference) {
+            lines.push(
+              '<div class="code-line">Wallet ref: ' +
+                String(result.meezaReference).replace(/</g, "&lt;") +
+                "</div>",
+            );
+          }
+          if (result.meezaQrCode) {
+            lines.push(
+              '<div class="code-line" style="word-break:break-all">QR payload ready in your wallet app</div>',
+            );
+          }
+          if (!lines.length) {
+            codesBox.style.display = "none";
+            codesBox.innerHTML = "";
+            return false;
+          }
+          codesBox.style.display = "block";
+          codesBox.innerHTML =
+            "<strong>Complete payment with this reference</strong>" +
+            lines.join("");
+          return true;
+        }
+
+        function showPendingPanel(opts) {
+          opts = opts || {};
+          var panel = document.getElementById("ecdPendingPanel");
+          var title = document.getElementById("ecdPendingTitle");
+          var body = document.getElementById("ecdPendingBody");
+          if (title) title.textContent = opts.title || "We're verifying your payment";
+          if (body) {
+            body.textContent =
+              opts.body ||
+              "Use the reference on this page, then click Check Status.";
+          }
+          if (panel) panel.style.display = "block";
+          var hosted = document.getElementById("hostedFieldsHint");
+          if (hosted) hosted.style.display = "none";
+        }
+
+        function goToConfirmation(orderCode, access) {
+          if (!orderCode) return;
+          var url =
+            "booking-confirmation.html?order=" + encodeURIComponent(orderCode);
+          if (access) {
+            url += "&access=" + encodeURIComponent(access);
+            try {
+              sessionStorage.setItem("ecd2026_access", access);
+            } catch (e) {}
+          }
+          window.location.href = url;
+        }
+
+        function pollVerify(orderCode, bookingId) {
+          clearVerifyTimer();
+          state.pendingOrderCode = orderCode || "";
+          state.pendingBookingId = bookingId || "";
+          var tries = 0;
+          var btn = document.getElementById("ecdCheckStatusBtn");
+
+          async function tick(manual) {
+            tries += 1;
+            if (btn) {
+              btn.disabled = true;
+              btn.textContent = "Checking…";
+            }
+            try {
+              var result = await EcdApi.verify(bookingId);
+              if (result && result.status === "paid") {
+                clearVerifyTimer();
+                goToConfirmation(
+                  result.orderCode || orderCode,
+                  result.access,
+                );
+                return true;
+              }
+              if (
+                result &&
+                (result.status === "expired" || result.status === "failed")
+              ) {
+                clearVerifyTimer();
+                showEcdModal(
+                  "Payment did not go through. You were not charged. Try Pay again or choose another method.",
+                  "Payment failed",
+                );
+                if (btn) {
+                  btn.disabled = false;
+                  btn.textContent = "Check Status";
+                }
+                return true;
+              }
+              if (manual) {
+                showEcdModal(
+                  "Payment is still pending. Complete it with the provider, then check again.",
+                  "Still pending",
+                );
+              }
+              if (!manual && tries >= 40) {
+                clearVerifyTimer();
+              }
+            } catch (e) {
+              if (!manual && tries >= 40) clearVerifyTimer();
+              if (manual) {
+                showEcdModal(
+                  "Could not check payment status. Try again in a moment.",
+                  "Check failed",
+                );
+              }
+            } finally {
+              if (btn && state.verifyTimer) {
+                btn.disabled = false;
+                btn.textContent = "Check Status";
+              } else if (btn && !state.verifyTimer) {
+                btn.disabled = false;
+                btn.textContent = "Check Status";
+              }
+            }
+            return false;
+          }
+
+          state.verifyTimer = setInterval(function () {
+            tick(false);
+          }, 3000);
+          tick(false);
+        }
+
+        async function handlePay(forceNewCode) {
           if (state.paying || state.promoApplying) return;
           const errs = allErrors();
           const s1Errs = screen1Errors();
@@ -2241,11 +2539,20 @@
             }
             state.walletPhone = walletE164;
           }
+          if (!state.paymentMethodId) {
+            showEcdModal(
+              "Select a payment method first.",
+              "Payment method required",
+            );
+            return;
+          }
           state.paying = true;
           renderPayButtons();
           try {
             await ensureCheckoutSession();
-            await loadPaymentMethods();
+            if (!state.paymentMethods.length) {
+              await loadPaymentMethods();
+            }
             if (!state.paymentMethodId) {
               showEcdModal(
                 "No payment methods available. Try again shortly.",
@@ -2258,46 +2565,77 @@
               walletPhone: selectedMethodIsWallet()
                 ? state.walletPhone || undefined
                 : undefined,
+              forceNewCode: !!forceNewCode,
             });
+
+            if (result && result.status === "duplicate") {
+              showEcdModal(
+                "A completed booking already exists for these details. You were not charged twice.",
+                "Booking exists",
+              );
+              var dupOrder =
+                result.orderCode || (EcdApi.getStoredBooking() || {}).orderCode;
+              if (dupOrder) {
+                setTimeout(function () {
+                  goToConfirmation(dupOrder, result.access);
+                }, 900);
+              }
+              return;
+            }
+
             if (result && result.redirectUrl) {
               window.location.href = result.redirectUrl;
               return;
             }
-            // Test mode returns `simulated: true` (not `simulate`) and status pending.
-            if (
-              result &&
-              (result.simulated ||
-                result.status === "pending" ||
-                result.status === "paid")
-            ) {
-              var bookingId =
-                result.bookingId || (EcdApi.getStoredBooking() || {}).bookingId;
-              var verified = await EcdApi.verify(bookingId);
-              var order =
-                (verified && verified.orderCode) ||
-                result.orderCode ||
-                (EcdApi.getStoredBooking() || {}).orderCode;
-              if (order) {
-                var access =
-                  verified && verified.access
-                    ? "&access=" + encodeURIComponent(verified.access)
-                    : "";
-                window.location.href =
-                  "booking-confirmation.html?order=" +
-                  encodeURIComponent(order) +
-                  access;
-                return;
-              }
+
+            var hasCodes = showPayCodes(result || {});
+            var bookingId =
+              (result && result.bookingId) ||
+              (EcdApi.getStoredBooking() || {}).bookingId;
+            var orderCode =
+              (result && result.orderCode) ||
+              (EcdApi.getStoredBooking() || {}).orderCode;
+
+            if (result && result.status === "paid") {
+              goToConfirmation(orderCode, result.access);
+              return;
             }
-            showEcdModal(
-              "Payment started. Follow on-screen instructions.",
-              "Payment started",
-            );
+
+            // Offline / wallet / simulate: stay on page, show codes + Check Status (hub pending UX).
+            if (
+              hasCodes ||
+              (result &&
+                (result.simulated ||
+                  result.status === "pending" ||
+                  result.status === "processing"))
+            ) {
+              showPendingPanel({
+                title: result.simulated
+                  ? "Test mode payment"
+                  : hasCodes
+                    ? "Complete payment with your reference"
+                    : "We're verifying your payment",
+                body: result.simulated
+                  ? "Click Check Status to mark this booking paid (simulate mode)."
+                  : hasCodes
+                    ? "Pay with the reference above in Fawry, Aman, Masary, or your wallet app, then check status."
+                    : "This can take a moment with some methods. Keep this page open.",
+              });
+              pollVerify(orderCode, bookingId);
+              return;
+            }
+
+            showPendingPanel({
+              title: "Payment started",
+              body: "Keep this page open and click Check Status after you finish with the provider.",
+            });
+            pollVerify(orderCode, bookingId);
           } catch (err) {
             var msg =
               (err && err.message) || "Checkout failed. Please try again.";
             if (err && err.code === "price_changed") {
               msg = "Price changed. Totals refreshed. Try Pay again.";
+              state.sessionReady = false;
               if (window.EcdContent) {
                 try {
                   await EcdContent.boot(state.ticket);
@@ -2307,10 +2645,47 @@
             showEcdModal(msg, "Checkout error");
           } finally {
             state.paying = false;
-            renderAll();
+            renderPayButtons();
           }
         }
-        document.getElementById("payBtn").addEventListener("click", handlePay);
+
+        document.getElementById("payBtn").addEventListener("click", function () {
+          handlePay(false);
+        });
+        var checkStatusBtn = document.getElementById("ecdCheckStatusBtn");
+        if (checkStatusBtn) {
+          checkStatusBtn.addEventListener("click", function () {
+            if (!state.pendingBookingId) return;
+            var btn = checkStatusBtn;
+            btn.disabled = true;
+            btn.textContent = "Checking…";
+            EcdApi.verify(state.pendingBookingId)
+              .then(function (result) {
+                if (result && result.status === "paid") {
+                  clearVerifyTimer();
+                  goToConfirmation(
+                    result.orderCode || state.pendingOrderCode,
+                    result.access,
+                  );
+                  return;
+                }
+                showEcdModal(
+                  "Payment is still pending. Complete it with the provider, then check again.",
+                  "Still pending",
+                );
+              })
+              .catch(function () {
+                showEcdModal(
+                  "Could not check payment status. Try again in a moment.",
+                  "Check failed",
+                );
+              })
+              .finally(function () {
+                btn.disabled = false;
+                btn.textContent = "Check Status";
+              });
+          });
+        }
 
         setInterval(() => {
           state.secs = Math.max(0, state.secs - 1);
