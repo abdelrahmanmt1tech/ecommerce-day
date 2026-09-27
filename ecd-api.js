@@ -175,12 +175,15 @@
     try {
       if (!access) access = sessionStorage.getItem("ecd2026_access") || "";
     } catch (e) {}
+    // When URL/session has a booking access token, prefer it as the auth path.
+    // Skip stale checkout Bearer so a leftover session cannot block the GET.
+    var useBearer = access ? "" : token || "";
     var path = "/booking/" + encodeURIComponent(orderCode);
     var qs = [];
     if (q) qs.push("publicToken=" + encodeURIComponent(q));
     if (access) qs.push("access=" + encodeURIComponent(access));
     if (qs.length) path += "?" + qs.join("&");
-    return api(path, { token: token || "" }).then(function (data) {
+    return api(path, { token: useBearer }).then(function (data) {
       try {
         if (access) sessionStorage.setItem("ecd2026_access", access);
       } catch (e) {}

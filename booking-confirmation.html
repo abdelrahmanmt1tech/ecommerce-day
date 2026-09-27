@@ -2443,8 +2443,8 @@
     <site-footer></site-footer>
 
     <!-- Scripts -->
-    <script src="prices.js?v=20260924c"></script>
-    <script src="ecd-api.js?v=20260924c"></script>
+    <script src="prices.js?v=20260927b"></script>
+    <script src="ecd-api.js?v=20260927b"></script>
     <!-- Real scannable QR (encodes ticket serial) -->
     <script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script>
     <script>
@@ -2650,10 +2650,46 @@
         });
       }
 
+      function applyHydratedBooking(data, urlStatus, order, access) {
+        window.__ecdBooking = data;
+        try {
+          applyBookingToSuccessUi(data);
+        } catch (uiErr) {
+          console.warn("[ecd] applyBookingToSuccessUi failed", uiErr);
+        }
+
+        var payStatus = (data.paymentStatus || "").toLowerCase();
+        if (payStatus === "paid") {
+          if (urlStatus === "pending" || urlStatus === "failed") {
+            showEdgeState("already");
+          } else {
+            showSuccessFlow();
+          }
+          return;
+        }
+        if (payStatus === "cancelled") {
+          showEdgeState("refunded");
+          return;
+        }
+        if (
+          payStatus === "failed" ||
+          payStatus === "expired" ||
+          urlStatus === "failed"
+        ) {
+          showEdgeState("failed");
+          return;
+        }
+        showEdgeState("pending");
+        startAutoPaymentPoll(order, access || undefined);
+      }
+
       async function hydrateFromApi() {
         var params = new URLSearchParams(window.location.search);
         var urlStatus = (params.get("status") || "").toLowerCase();
         var access = params.get("access") || "";
+        try {
+          if (!access) access = sessionStorage.getItem("ecd2026_access") || "";
+        } catch (e0) {}
         if (access) {
           try {
             sessionStorage.setItem("ecd2026_access", access);
@@ -2669,14 +2705,30 @@
           if (window.EventPrices) {
             var booking = EventPrices.loadBooking();
             if (booking) {
-              document.getElementById("confirmFirstName").textContent =
-                booking.firstName || "Guest";
-              document.getElementById("confirmOrderId").textContent =
-                "TICKET " + (booking.orderId || "");
+              var fnEl = document.getElementById("confirmFirstName");
+              var ordEl = document.getElementById("confirmOrderId");
+              if (fnEl) fnEl.textContent = booking.firstName || "Guest";
+              if (ordEl)
+                ordEl.textContent = "TICKET " + (booking.orderId || "");
             }
           }
           showEdgeState("invalid");
           return;
+        }
+
+        // After Fawaterk redirect: fulfill payment via access token BEFORE fetch.
+        // Gateway return often opens a fresh tab with no sessionStorage publicToken.
+        if (
+          access &&
+          (urlStatus === "success" ||
+            urlStatus === "pending" ||
+            params.get("intent_key"))
+        ) {
+          try {
+            await attemptPaymentVerify(order, access);
+          } catch (preVerifyErr) {
+            console.warn("[ecd] pre-hydrate verify failed", preVerifyErr);
+          }
         }
 
         try {
@@ -2685,34 +2737,24 @@
             null,
             access || undefined,
           );
-          window.__ecdBooking = data;
-          applyBookingToSuccessUi(data);
-
-          var payStatus = (data.paymentStatus || "").toLowerCase();
-          if (payStatus === "paid") {
-            if (urlStatus === "pending" || urlStatus === "failed") {
-              showEdgeState("already");
-            } else {
-              showSuccessFlow();
-            }
-            return;
-          }
-          if (payStatus === "cancelled") {
-            showEdgeState("refunded");
-            return;
-          }
-          if (
-            payStatus === "failed" ||
-            payStatus === "expired" ||
-            urlStatus === "failed"
-          ) {
-            showEdgeState("failed");
-            return;
-          }
-          showEdgeState("pending");
-          startAutoPaymentPoll(order, access || undefined);
+          applyHydratedBooking(data, urlStatus, order, access);
         } catch (err) {
           console.warn("[ecd] booking hydrate failed", err);
+          // One retry: verify by access, then fetch again (covers stale cache / race).
+          if (access) {
+            try {
+              await attemptPaymentVerify(order, access);
+              var retry = await EcdApi.fetchBooking(
+                order,
+                null,
+                access || undefined,
+              );
+              applyHydratedBooking(retry, urlStatus, order, access);
+              return;
+            } catch (retryErr) {
+              console.warn("[ecd] booking hydrate retry failed", retryErr);
+            }
+          }
           window.__ecdBooking = null;
           showEdgeState("invalid");
         }
@@ -2731,16 +2773,20 @@
 
       async function attemptPaymentVerify(order, access) {
         if (!window.EcdApi) return null;
+        // Prefer access-token verify after gateway redirect (works without checkout Bearer).
+        if (order && access && EcdApi.verifyByAccess) {
+          try {
+            return await EcdApi.verifyByAccess(order, access);
+          } catch (e) {
+            console.warn("[ecd] access verify failed, trying bearer", e);
+          }
+        }
         var stored = EcdApi.getStoredBooking && EcdApi.getStoredBooking();
         var bookingId =
           (window.__ecdBooking && window.__ecdBooking.bookingId) ||
           (stored && stored.bookingId);
-        try {
-          if (bookingId && EcdApi.getToken && EcdApi.getToken()) {
-            return await EcdApi.verify(bookingId);
-          }
-        } catch (e) {
-          console.warn("[ecd] bearer verify failed, trying access", e);
+        if (bookingId && EcdApi.getToken && EcdApi.getToken()) {
+          return await EcdApi.verify(bookingId);
         }
         if (order && EcdApi.verifyByAccess) {
           return await EcdApi.verifyByAccess(order, access);
@@ -2794,24 +2840,27 @@
       }
 
       function applyBookingToSuccessUi(data) {
-        document.getElementById("confirmFirstName").textContent =
-          data.buyerFirstName || "Guest";
-        document.getElementById("confirmQtyText").textContent =
-          data.qty === 1 ? "1 ticket" : data.qty + " tickets";
+        var setText = function (id, value) {
+          var el = document.getElementById(id);
+          if (el) el.textContent = value;
+        };
+        setText("confirmFirstName", data.buyerFirstName || "Guest");
+        setText(
+          "confirmQtyText",
+          data.qty === 1 ? "1 ticket" : data.qty + " tickets",
+        );
         var primaryId =
           (data.tickets && data.tickets[0] && data.tickets[0].serial) ||
           data.orderCode;
-        document.getElementById("confirmOrderId").textContent =
-          "TICKET " + primaryId;
+        setText("confirmOrderId", "TICKET " + primaryId);
         var copyBtn = document.getElementById("confirmCopyOrder");
         if (copyBtn) copyBtn.setAttribute("data-copy", primaryId);
-        document.getElementById("confirmMaskedEmail").textContent =
-          data.maskedEmail || "";
-        var sumOrder = document.getElementById("summaryOrderId");
-        if (sumOrder) sumOrder.textContent = primaryId;
-        var sumPay = document.getElementById("summaryPayRef");
-        if (sumPay)
-          sumPay.textContent = data.paymentRef || "PAY-" + data.orderCode;
+        setText("confirmMaskedEmail", data.maskedEmail || "");
+        setText("summaryOrderId", primaryId);
+        setText(
+          "summaryPayRef",
+          data.paymentRef || "PAY-" + data.orderCode,
+        );
 
         var sumPurchased = document.getElementById("summaryPurchased");
         if (sumPurchased) {
