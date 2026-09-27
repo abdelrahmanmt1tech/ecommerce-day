@@ -10,7 +10,8 @@
 
   var CONFIG = {
     // API_BASE: "http://localhost:8080/api/ecd",
-    API_BASE: "https://www.trafficmena.com/api/ecd",
+    // API_BASE: "https://www.trafficmena.com/api/ecd",
+    API_BASE: "https://staging.trafficmena.com/api/ecd",
     STORAGE_TOKEN: "ecd2026_checkout_token",
     STORAGE_PUBLIC: "ecd2026_public_token",
     STORAGE_BOOKING: "ecd2026_booking",

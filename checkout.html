@@ -548,27 +548,131 @@
       /* ============ PAYMENT ============ */
       .method-row {
         display: flex;
+        flex-direction: column;
         gap: 10px;
-        margin-bottom: 22px;
-        flex-wrap: wrap;
+        margin-bottom: 16px;
       }
-      .method-btn {
-        flex: 1;
-        min-width: 90px;
+      .method-card {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        width: 100%;
         background: #ffffff;
         border: 1px solid var(--gray-300);
         border-radius: 12px;
-        padding: 16px 12px;
-        font-weight: 700;
-        font-size: 14px;
-        color: var(--black);
+        padding: 14px 16px;
         cursor: pointer;
         transition: all 0.15s;
+        text-align: left;
+        font: inherit;
+        color: var(--black);
       }
-      .method-btn.active {
-        background: var(--black);
+      .method-card:hover {
         border-color: var(--black);
-        color: #ffffff;
+        background: #fafafa;
+      }
+      .method-card.active {
+        border-color: var(--black);
+        background: #f4f6f8;
+        box-shadow: 0 0 0 1px var(--black);
+      }
+      .method-card .method-radio {
+        width: 18px;
+        height: 18px;
+        border: 2px solid var(--gray-400);
+        border-radius: 50%;
+        flex-shrink: 0;
+        position: relative;
+      }
+      .method-card.active .method-radio {
+        border-color: var(--black);
+      }
+      .method-card.active .method-radio::after {
+        content: "";
+        position: absolute;
+        inset: 3px;
+        border-radius: 50%;
+        background: var(--black);
+      }
+      .method-card .method-logo {
+        width: 64px;
+        height: 40px;
+        border-radius: 8px;
+        background: #fff;
+        border: 1px solid var(--gray-200);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        overflow: hidden;
+      }
+      .method-card .method-logo img {
+        max-height: 28px;
+        max-width: 56px;
+        object-fit: contain;
+      }
+      .method-card .method-logo-fallback {
+        font-size: 10px;
+        font-weight: 600;
+        color: var(--gray-600);
+        text-align: center;
+        padding: 0 4px;
+        line-height: 1.2;
+      }
+      .method-card .method-name {
+        font-weight: 600;
+        font-size: 14px;
+      }
+
+      .wallet-field-wrap {
+        margin: 4px 0 16px;
+      }
+      .wallet-field-wrap .label {
+        display: block;
+        font-size: 13px;
+        font-weight: 600;
+        margin-bottom: 6px;
+        color: var(--black);
+      }
+      .wallet-input-row {
+        display: flex;
+        align-items: center;
+        overflow: hidden;
+        border: 1px solid var(--gray-300);
+        border-radius: 10px;
+        background: #fff;
+      }
+      .wallet-input-row:focus-within {
+        border-color: var(--green);
+        box-shadow: 0 0 0 3px rgba(5, 239, 98, 0.15);
+      }
+      .wallet-input-row.error {
+        border-color: #b3362e;
+      }
+      .wallet-prefix {
+        padding: 12px 12px 12px 14px;
+        font-size: 14px;
+        color: var(--gray-500);
+        user-select: none;
+        border-right: 1px solid var(--gray-200);
+        background: var(--gray-100);
+      }
+      .wallet-input-row input {
+        flex: 1;
+        border: none;
+        outline: none;
+        padding: 12px 14px;
+        font-size: 14px;
+        background: transparent;
+        min-width: 0;
+      }
+      .wallet-hint {
+        margin-top: 6px;
+        font-size: 12px;
+        color: var(--gray-500);
+      }
+      .wallet-hint.error {
+        color: #b3362e;
       }
 
       .hosted-fields {
@@ -606,6 +710,58 @@
         font-size: 11px;
         color: var(--gray-500);
         margin-top: 12px;
+      }
+
+      .ecd-modal-backdrop {
+        position: fixed;
+        inset: 0;
+        z-index: 400;
+        background: rgba(16, 16, 16, 0.45);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+      }
+      .ecd-modal-backdrop.hidden {
+        display: none !important;
+      }
+      .ecd-modal {
+        width: 100%;
+        max-width: 420px;
+        background: #fff;
+        border-radius: 16px;
+        border: 1px solid var(--gray-200);
+        box-shadow: 0 16px 48px rgba(16, 16, 16, 0.18);
+        padding: 24px;
+      }
+      .ecd-modal h3 {
+        font-size: 20px;
+        font-weight: 700;
+        margin: 0 0 8px;
+        color: var(--black);
+      }
+      .ecd-modal p {
+        font-size: 14px;
+        line-height: 1.6;
+        color: var(--gray-700);
+        margin: 0 0 20px;
+      }
+      .ecd-modal .ecd-modal-actions {
+        display: flex;
+        justify-content: flex-end;
+      }
+      .ecd-modal .ecd-modal-ok {
+        background: var(--black);
+        color: #fff;
+        border: none;
+        border-radius: 10px;
+        padding: 12px 22px;
+        font-weight: 600;
+        font-size: 14px;
+        cursor: pointer;
+      }
+      .ecd-modal .ecd-modal-ok:hover {
+        background: #222;
       }
 
       .checkbox-label {
@@ -1173,11 +1329,22 @@
               Methods shown depend on approved provider
             </div>
             <div class="method-row" id="methodRow"></div>
-            <div id="ecdWalletField" style="display: none; margin: 12px 0">
-              <label class="field" style="display: block">
-                <span class="label">Wallet mobile *</span>
-                <input id="ecd-wallet-phone" type="tel" placeholder="01xxxxxxxxx" />
-              </label>
+            <div id="ecdWalletField" class="wallet-field-wrap" style="display: none">
+              <label class="label" for="ecd-wallet-phone">Wallet mobile number</label>
+              <div class="wallet-input-row" id="ecdWalletInputRow">
+                <span class="wallet-prefix">+20</span>
+                <input
+                  id="ecd-wallet-phone"
+                  type="tel"
+                  inputmode="numeric"
+                  autocomplete="tel-national"
+                  placeholder="1012345678"
+                  aria-describedby="ecdWalletHint"
+                />
+              </div>
+              <p class="wallet-hint" id="ecdWalletHint">
+                Enter the number your mobile wallet is registered on.
+              </p>
             </div>
             <div class="hosted-fields" id="hostedFieldsHint">
               <div class="hosted-label">
@@ -1276,6 +1443,16 @@
       </aside>
     </main>
 
+    <div class="ecd-modal-backdrop hidden" id="ecdModal" role="dialog" aria-modal="true" aria-labelledby="ecdModalTitle">
+      <div class="ecd-modal">
+        <h3 id="ecdModalTitle">Notice</h3>
+        <p id="ecdModalMessage"></p>
+        <div class="ecd-modal-actions">
+          <button type="button" class="ecd-modal-ok" id="ecdModalOk">OK</button>
+        </div>
+      </div>
+    </div>
+
     <script>
       (function () {
         const state = {
@@ -1308,6 +1485,8 @@
           paymentMethodId: null,
           paymentMethods: [],
           walletPhone: "",
+          walletLocal: "",
+          walletTouched: false,
           paying: false,
           promoApplying: false,
         };
@@ -1357,6 +1536,99 @@
           var code = String(cc || "+20").replace(/\D/g, "");
           if (m.indexOf("0") === 0) m = m.slice(1);
           return "+" + code + m;
+        }
+
+        function isWalletMethodName(nameEn) {
+          return String(nameEn || "")
+            .toLowerCase()
+            .replace(/[^a-z0-9]/g, "")
+            .includes("mobilewallet");
+        }
+
+        function normalizeWalletLocal(raw) {
+          var digits = String(raw || "").replace(/\D/g, "");
+          if (digits.indexOf("0") === 0) digits = digits.slice(1);
+          return digits.slice(0, 10);
+        }
+
+        function isValidEgyptWalletLocal(local) {
+          return /^1[0125]\d{8}$/.test(String(local || ""));
+        }
+
+        function assembleWalletE164(local) {
+          var normalized = normalizeWalletLocal(local);
+          return isValidEgyptWalletLocal(normalized) ? "+20" + normalized : null;
+        }
+
+        function selectedMethodIsWallet() {
+          var methods = state.paymentMethods || [];
+          var m = methods.find(function (x) {
+            return x.paymentId === state.paymentMethodId;
+          });
+          return m ? isWalletMethodName(m.name_en || m.name_ar) : false;
+        }
+
+        function syncWalletUi() {
+          var wrap = document.getElementById("ecdWalletField");
+          var row = document.getElementById("ecdWalletInputRow");
+          var hint = document.getElementById("ecdWalletHint");
+          var input = document.getElementById("ecd-wallet-phone");
+          var show = selectedMethodIsWallet();
+          if (wrap) wrap.style.display = show ? "block" : "none";
+          if (!show) {
+            state.walletPhone = "";
+            if (row) row.classList.remove("error");
+            if (hint) {
+              hint.classList.remove("error");
+              hint.textContent =
+                "Enter the number your mobile wallet is registered on.";
+            }
+            return;
+          }
+          if (input && input.value !== state.walletLocal) {
+            input.value = state.walletLocal;
+          }
+          var e164 = assembleWalletE164(state.walletLocal);
+          state.walletPhone = e164 || "";
+          var invalid =
+            state.walletTouched &&
+            state.walletLocal.length > 0 &&
+            !e164;
+          if (row) row.classList.toggle("error", invalid);
+          if (hint) {
+            hint.classList.toggle("error", invalid);
+            hint.textContent = invalid
+              ? "Enter a valid Egyptian mobile number (10 digits, e.g. 1012345678)."
+              : "Enter the number your mobile wallet is registered on.";
+          }
+        }
+
+        function showEcdModal(message, title) {
+          var backdrop = document.getElementById("ecdModal");
+          var titleEl = document.getElementById("ecdModalTitle");
+          var msgEl = document.getElementById("ecdModalMessage");
+          if (titleEl) titleEl.textContent = title || "Notice";
+          if (msgEl) msgEl.textContent = message || "";
+          if (backdrop) backdrop.classList.remove("hidden");
+        }
+
+        function hideEcdModal() {
+          var backdrop = document.getElementById("ecdModal");
+          if (backdrop) backdrop.classList.add("hidden");
+        }
+
+        function payButtonIdleHtml() {
+          var label = "[Final Price] EGP";
+          if (window.EventPrices) {
+            var promo = state.promoState === "valid" ? state.appliedCode : "";
+            var totals = EventPrices.calcTotals(state.ticket, 1, promo);
+            label = EventPrices.formatMoney(totals.total, { suffix: " EGP" });
+          }
+          return (
+            'Pay <span class="price-total" data-suffix=" EGP">' +
+            label +
+            "</span>"
+          );
         }
 
         function updatePrices() {
@@ -1440,38 +1712,48 @@
           var methods = state.paymentMethods;
           if (!methods.length) {
             row.innerHTML =
-              '<div style="font-size:13px;color:var(--gray-500)">Payment methods load after you continue…</div>';
+              '<div style="font-size:13px;color:var(--gray-500)">Select payment method after continuing to this step.</div>';
+            syncWalletUi();
             return;
           }
           methods.forEach(function (m, idx) {
             var id = m.paymentId;
             var label = m.name_en || m.name_ar || "Method " + id;
+            var selected =
+              state.paymentMethodId === id ||
+              (!state.paymentMethodId && idx === 0);
             const btn = document.createElement("button");
             btn.type = "button";
-            btn.className =
-              "method-btn" +
-              (state.paymentMethodId === id ||
-              (!state.paymentMethodId && idx === 0)
-                ? " active"
-                : "");
-            btn.textContent = label;
+            btn.className = "method-card" + (selected ? " active" : "");
+            btn.setAttribute("aria-pressed", selected ? "true" : "false");
+            var logoHtml = m.logo
+              ? '<img src="' +
+                String(m.logo).replace(/"/g, "&quot;") +
+                '" alt="" />'
+              : '<span class="method-logo-fallback">' +
+                label.replace(/</g, "&lt;") +
+                "</span>";
+            btn.innerHTML =
+              '<span class="method-radio" aria-hidden="true"></span>' +
+              '<span class="method-logo">' +
+              logoHtml +
+              "</span>" +
+              '<span class="method-name">' +
+              label.replace(/</g, "&lt;") +
+              "</span>";
             btn.onclick = function () {
               state.paymentMethodId = id;
               state.method = label;
-              var wallet = /wallet/i.test(label);
-              document.getElementById("ecdWalletField").style.display = wallet
-                ? "block"
-                : "none";
               renderMethodButtons();
+              renderPayButtons();
             };
             row.appendChild(btn);
             if (!state.paymentMethodId && idx === 0) {
               state.paymentMethodId = id;
               state.method = label;
-              document.getElementById("ecdWalletField").style.display =
-                /wallet/i.test(label) ? "block" : "none";
             }
           });
+          syncWalletUi();
         }
 
         function renderSummary() {
@@ -1637,9 +1919,11 @@
         }
 
         function renderPayButtons() {
-          const canPay = state.consent && state.sub === 3 && !state.paying;
-          const payIdle =
-            'Pay <span class="price-total" data-suffix=" EGP">[Total] EGP</span>';
+          const walletOk =
+            !selectedMethodIsWallet() || Boolean(assembleWalletE164(state.walletLocal));
+          const canPay =
+            state.consent && state.sub === 3 && !state.paying && walletOk;
+          const payIdle = payButtonIdleHtml();
           const payBtn = document.getElementById("payBtn");
           const payForm = payBtn && payBtn.closest(".form-card");
 
@@ -1861,7 +2145,24 @@
         var walletInput = document.getElementById("ecd-wallet-phone");
         if (walletInput) {
           walletInput.addEventListener("input", function (e) {
-            state.walletPhone = e.target.value;
+            state.walletLocal = normalizeWalletLocal(e.target.value);
+            e.target.value = state.walletLocal;
+            syncWalletUi();
+            renderPayButtons();
+          });
+          walletInput.addEventListener("blur", function () {
+            state.walletTouched = true;
+            syncWalletUi();
+            renderPayButtons();
+          });
+        }
+
+        var ecdModalOk = document.getElementById("ecdModalOk");
+        if (ecdModalOk) ecdModalOk.addEventListener("click", hideEcdModal);
+        var ecdModal = document.getElementById("ecdModal");
+        if (ecdModal) {
+          ecdModal.addEventListener("click", function (e) {
+            if (e.target === ecdModal) hideEcdModal();
           });
         }
 
@@ -1926,18 +2227,37 @@
           else if (Object.keys(s2Errs).length > 0) state.sub = 2;
           renderAll();
           if (Object.keys(errs).length > 0) return;
+          if (selectedMethodIsWallet()) {
+            state.walletTouched = true;
+            syncWalletUi();
+            var walletE164 = assembleWalletE164(state.walletLocal);
+            if (!walletE164) {
+              showEcdModal(
+                "Enter a valid Egyptian mobile wallet number (10 digits after +20).",
+                "Wallet number required",
+              );
+              renderPayButtons();
+              return;
+            }
+            state.walletPhone = walletE164;
+          }
           state.paying = true;
           renderPayButtons();
           try {
             await ensureCheckoutSession();
             await loadPaymentMethods();
             if (!state.paymentMethodId) {
-              alert("No payment methods available. Try again shortly.");
+              showEcdModal(
+                "No payment methods available. Try again shortly.",
+                "Payment unavailable",
+              );
               return;
             }
             var result = await EcdApi.pay({
               paymentMethodId: state.paymentMethodId,
-              walletPhone: state.walletPhone || undefined,
+              walletPhone: selectedMethodIsWallet()
+                ? state.walletPhone || undefined
+                : undefined,
             });
             if (result && result.redirectUrl) {
               window.location.href = result.redirectUrl;
@@ -1969,7 +2289,10 @@
                 return;
               }
             }
-            alert("Payment started. Follow on-screen instructions.");
+            showEcdModal(
+              "Payment started. Follow on-screen instructions.",
+              "Payment started",
+            );
           } catch (err) {
             var msg =
               (err && err.message) || "Checkout failed. Please try again.";
@@ -1981,7 +2304,7 @@
                 } catch (e) {}
               }
             }
-            alert(msg);
+            showEcdModal(msg, "Checkout error");
           } finally {
             state.paying = false;
             renderAll();
