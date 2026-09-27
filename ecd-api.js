@@ -9,7 +9,8 @@
   "use strict";
 
   var CONFIG = {
-    API_BASE: "https://www.trafficmena.com/api/ecd",
+    API_BASE: "http://localhost:8080/api/ecd",
+    // API_BASE: "https://www.trafficmena.com/api/ecd",
     STORAGE_TOKEN: "ecd2026_checkout_token",
     STORAGE_PUBLIC: "ecd2026_public_token",
     STORAGE_BOOKING: "ecd2026_booking",
@@ -113,6 +114,14 @@
     );
   }
 
+  function validatePromo(payload) {
+    return api("/promo/validate", {
+      method: "POST",
+      body: payload,
+      token: "",
+    });
+  }
+
   function fetchPaymentMethods() {
     return api("/payment-methods");
   }
@@ -125,6 +134,31 @@
     return api("/verify", {
       method: "POST",
       body: bookingId ? { bookingId: bookingId } : {},
+    });
+  }
+
+  /** Verify via order + access token (after Fawaterk redirect; no Bearer needed). */
+  function verifyByAccess(orderCode, accessToken) {
+    var access =
+      accessToken ||
+      (typeof window !== "undefined"
+        ? new URLSearchParams(window.location.search).get("access")
+        : "") ||
+      "";
+    try {
+      if (!access) access = sessionStorage.getItem("ecd2026_access") || "";
+    } catch (e) {}
+    return api("/booking/" + encodeURIComponent(orderCode) + "/verify-payment", {
+      method: "POST",
+      body: { access: access },
+      token: "",
+    }).then(function (data) {
+      try {
+        if (data && data.access) {
+          sessionStorage.setItem("ecd2026_access", data.access);
+        }
+      } catch (e) {}
+      return data;
     });
   }
 
@@ -264,9 +298,11 @@
   global.EcdApi = {
     CONFIG: CONFIG,
     createSession: createSession,
+    validatePromo: validatePromo,
     fetchPaymentMethods: fetchPaymentMethods,
     pay: pay,
     verify: verify,
+    verifyByAccess: verifyByAccess,
     fetchBooking: fetchBooking,
     fetchMyBooking: fetchMyBooking,
     getToken: getToken,

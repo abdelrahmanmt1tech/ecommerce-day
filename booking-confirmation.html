@@ -2175,7 +2175,8 @@
           </div>
           <div style="font-size: 13px; color: #4a5563; margin-bottom: 20px">
             Your tickets and QR codes appear here the moment the payment is
-            confirmed. We'll also email you.
+            confirmed. We're checking automatically — you can also use the
+            button below.
           </div>
           <button
             type="button"
@@ -2709,11 +2710,87 @@
             return;
           }
           showEdgeState("pending");
+          startAutoPaymentPoll(order, access || undefined);
         } catch (err) {
           console.warn("[ecd] booking hydrate failed", err);
           window.__ecdBooking = null;
           showEdgeState("invalid");
         }
+      }
+
+      var __ecdAutoPollTimer = null;
+      var __ecdAutoPollRunning = false;
+
+      function stopAutoPaymentPoll() {
+        if (__ecdAutoPollTimer) {
+          clearInterval(__ecdAutoPollTimer);
+          __ecdAutoPollTimer = null;
+        }
+        __ecdAutoPollRunning = false;
+      }
+
+      async function attemptPaymentVerify(order, access) {
+        if (!window.EcdApi) return null;
+        var stored = EcdApi.getStoredBooking && EcdApi.getStoredBooking();
+        var bookingId =
+          (window.__ecdBooking && window.__ecdBooking.bookingId) ||
+          (stored && stored.bookingId);
+        try {
+          if (bookingId && EcdApi.getToken && EcdApi.getToken()) {
+            return await EcdApi.verify(bookingId);
+          }
+        } catch (e) {
+          console.warn("[ecd] bearer verify failed, trying access", e);
+        }
+        if (order && EcdApi.verifyByAccess) {
+          return await EcdApi.verifyByAccess(order, access);
+        }
+        return null;
+      }
+
+      function startAutoPaymentPoll(order, access) {
+        if (__ecdAutoPollRunning) return;
+        __ecdAutoPollRunning = true;
+        var attempts = 0;
+        var maxAttempts = 40; // ~2 minutes at 3s
+        var edgeCheck = byId("ecdEdgeCheckStatus");
+
+        async function tick() {
+          attempts += 1;
+          if (edgeCheck && !edgeCheck.disabled) {
+            edgeCheck.textContent =
+              "Checking… (" + attempts + "/" + maxAttempts + ")";
+          }
+          try {
+            var verified = await attemptPaymentVerify(order, access);
+            if (verified && verified.status === "paid") {
+              stopAutoPaymentPoll();
+              await hydrateFromApi();
+              return;
+            }
+            if (
+              verified &&
+              (verified.status === "expired" || verified.status === "failed")
+            ) {
+              stopAutoPaymentPoll();
+              await hydrateFromApi();
+              return;
+            }
+          } catch (e) {
+            console.warn("[ecd] auto verify tick failed", e);
+          }
+          if (attempts >= maxAttempts) {
+            stopAutoPaymentPoll();
+            if (edgeCheck) {
+              edgeCheck.disabled = false;
+              edgeCheck.textContent = "Check Status";
+            }
+          }
+        }
+
+        // Immediate check (especially after status=success redirect), then poll.
+        tick();
+        __ecdAutoPollTimer = setInterval(tick, 3000);
       }
 
       function applyBookingToSuccessUi(data) {
@@ -2963,11 +3040,11 @@
             edgeCheck.disabled = true;
             edgeCheck.textContent = "Checking…";
             try {
-              var stored = window.EcdApi && EcdApi.getStoredBooking();
-              var bookingId = stored && stored.bookingId;
-              if (bookingId && window.EcdApi) {
-                await EcdApi.verify(bookingId);
-              }
+              var order = currentOrderCode();
+              var access =
+                new URLSearchParams(window.location.search).get("access") ||
+                "";
+              await attemptPaymentVerify(order, access || undefined);
               await hydrateFromApi();
             } catch (e) {
               console.warn("[ecd] check status failed", e);

@@ -509,11 +509,40 @@
         font-size: 13px;
         cursor: pointer;
         white-space: nowrap;
+        min-width: 96px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+      }
+      .promo-row button:disabled {
+        opacity: 0.7;
+        cursor: not-allowed;
       }
       .promo-msg {
         margin-top: 10px;
         font-size: 13px;
         font-weight: 600;
+      }
+
+      .btn-spinner {
+        width: 14px;
+        height: 14px;
+        border: 2px solid currentColor;
+        border-right-color: transparent;
+        border-radius: 50%;
+        display: inline-block;
+        animation: ecd-spin 0.7s linear infinite;
+        flex-shrink: 0;
+      }
+      @keyframes ecd-spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+      .is-busy {
+        pointer-events: none;
+        user-select: none;
       }
 
       /* ============ PAYMENT ============ */
@@ -621,11 +650,20 @@
         transition:
           background 0.15s,
           opacity 0.15s;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
       }
       .pay-btn:disabled {
         background: var(--gray-200);
         color: var(--gray-400);
         cursor: not-allowed;
+      }
+      .pay-btn.is-loading:disabled {
+        background: var(--green);
+        color: var(--black);
+        opacity: 0.85;
       }
       .pay-btn:not(:disabled):hover {
         background: #04d456;
@@ -791,62 +829,6 @@
         padding-top: 8px;
       }
 
-      /* ============ MOBILE STICKY BAR ============ */
-      .mobile-sticky-bar {
-        display: none;
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        z-index: 200;
-        background: rgba(255, 255, 255, 0.97);
-        backdrop-filter: blur(12px);
-        border-top: 1px solid var(--gray-200);
-        padding: 12px 16px;
-        gap: 12px;
-        align-items: center;
-        box-shadow: 0 -2px 12px rgba(16, 16, 16, 0.06);
-      }
-      @media (max-width: 1024px) {
-        .mobile-sticky-bar {
-          display: flex;
-        }
-        body {
-          padding-bottom: 80px;
-        }
-      }
-      .mobile-sticky-bar .total-info {
-        flex: 1;
-        min-width: 0;
-      }
-      .mobile-sticky-bar .total-label {
-        font-family: "JetBrains Mono", monospace;
-        font-size: 9px;
-        letter-spacing: 0.08em;
-        text-transform: uppercase;
-        color: var(--gray-500);
-      }
-      .mobile-sticky-bar .total-value {
-        font-weight: 800;
-        font-size: 16px;
-      }
-      .mobile-sticky-bar button {
-        background: var(--green);
-        border: none;
-        color: var(--black);
-        border-radius: 10px;
-        padding: 14px 22px;
-        font-weight: 700;
-        font-size: 14px;
-        cursor: pointer;
-        flex-shrink: 0;
-      }
-      .mobile-sticky-bar button:disabled {
-        background: var(--gray-200);
-        color: var(--gray-400);
-        cursor: not-allowed;
-      }
-
       /* ============ UTILS ============ */
       .hidden {
         display: none !important;
@@ -894,14 +876,13 @@
         </div>
 
         <!-- Step 1: Your details -->
-        <section>
+        <section id="step1Section">
           <div class="section-header">
             <span class="step-circle">1</span>
             <h2>Your details</h2>
-            <span class="step-label" id="subLabel">Step 1 of 2</span>
+            <span class="step-label" id="subLabel">Step 1 of 3</span>
           </div>
 
-          <!-- Sub-screen 1 -->
           <div id="sub1">
             <div class="form-card">
               <div class="field">
@@ -989,18 +970,29 @@
                   align-items: center;
                   gap: 16px;
                   flex-wrap: wrap;
+                  margin-top: 8px;
                 "
               >
-                <button class="btn-primary" id="goSub2">Continue</button>
+                <button type="button" class="btn-primary" id="goSub2">
+                  Next: Company &amp; store →
+                </button>
                 <span class="text-muted" style="font-size: 12px"
-                  >Two short screens, this is the first.</span
+                  >Step 1 of 3</span
                 >
               </div>
             </div>
           </div>
+        </section>
 
-          <!-- Sub-screen 2 -->
-          <div id="sub2" class="hidden">
+        <!-- Step 2: Company & store -->
+        <section id="step2Section" class="hidden">
+          <div class="section-header">
+            <span class="step-circle">2</span>
+            <h2>Company &amp; store</h2>
+            <span class="step-label">Step 2 of 3</span>
+          </div>
+
+          <div id="sub2">
             <div class="form-card">
               <div
                 class="full-width"
@@ -1016,7 +1008,9 @@
                 <div class="text-muted" style="font-size: 14px" id="subSummary">
                   Your name · job title · country
                 </div>
-                <button class="btn-link" id="backSub1">Edit</button>
+                <button type="button" class="btn-link" id="backSub1">
+                  ← Back to details
+                </button>
               </div>
               <div class="field">
                 <label for="company">Company *</label>
@@ -1077,14 +1071,61 @@
                   style="display: block"
                 ></span>
               </div>
+              <div
+                class="full-width"
+                style="
+                  display: flex;
+                  align-items: center;
+                  gap: 16px;
+                  flex-wrap: wrap;
+                  margin-top: 20px;
+                  padding-top: 16px;
+                  border-top: 1px solid var(--gray-200);
+                "
+              >
+                <button type="button" class="btn-primary" id="goSub3">
+                  Next: Payment →
+                </button>
+                <button type="button" class="btn-link" id="backSub1Alt">
+                  ← Back
+                </button>
+                <span class="text-muted" style="font-size: 12px"
+                  >Step 2 of 3</span
+                >
+              </div>
             </div>
           </div>
         </section>
 
-        <!-- Promo -->
-        <section>
+        <!-- Step 3: Promo + Payment -->
+        <section id="step3Section" class="hidden">
+          <div class="section-header">
+            <span class="step-circle">3</span>
+            <h2>Payment</h2>
+            <span class="step-label" id="step3Label">Step 3 of 3</span>
+          </div>
+
+          <div
+            style="
+              display: flex;
+              align-items: center;
+              justify-content: space-between;
+              gap: 12px;
+              margin-bottom: 12px;
+              flex-wrap: wrap;
+            "
+          >
+            <div class="text-muted" style="font-size: 14px" id="step3Summary">
+              Your name · company · store
+            </div>
+            <button type="button" class="btn-link" id="backSub2">
+              ← Back to company
+            </button>
+          </div>
+
+          <!-- Promo -->
           <div id="promoClosed">
-            <button class="btn-link" id="openPromoBtn">
+            <button type="button" class="btn-link" id="openPromoBtn">
               Have a promo code?
             </button>
           </div>
@@ -1093,10 +1134,11 @@
               <div class="promo-label">Promo code</div>
               <div class="promo-row">
                 <input type="text" id="promoInput" placeholder="Enter code" />
-                <button id="applyPromoBtn">Apply</button>
+                <button type="button" id="applyPromoBtn">Apply</button>
               </div>
               <div class="promo-msg" id="promoMsg"></div>
               <button
+                type="button"
                 class="btn-link"
                 id="removePromoBtn"
                 style="
@@ -1118,23 +1160,18 @@
                   color: var(--gray-400);
                 "
               >
-                DEMO, TRY: LAUNCH · EXPIRED · LIMIT · CTONLY · ANYTHING ELSE =
-                INVALID
+                Enter a code from TrafficMENA (admin → ECD Promo Codes)
               </div>
             </div>
           </div>
-        </section>
 
-        <!-- Payment -->
-        <section>
-          <div class="section-header">
-            <span class="step-circle">2</span>
-            <h2>Payment</h2>
-            <span class="step-label" style="font-size: 9px"
-              >Methods shown depend on approved provider</span
+          <div class="form-card" style="display: block; margin-top: 16px">
+            <div
+              class="step-label"
+              style="display: block; margin-bottom: 12px; font-size: 9px"
             >
-          </div>
-          <div class="form-card" style="display: block">
+              Methods shown depend on approved provider
+            </div>
             <div class="method-row" id="methodRow"></div>
             <div id="ecdWalletField" style="display: none; margin: 12px 0">
               <label class="field" style="display: block">
@@ -1172,7 +1209,7 @@
               All Access does not hold a place in every workshop. Workshop booking
               opens 7-10 days before the event, and the rooms are limited.
             </div>
-            <button class="pay-btn" id="payBtn" disabled>
+            <button type="button" class="pay-btn" id="payBtn" disabled>
               Pay <span class="price-total" data-suffix=" EGP">[Total] EGP</span>
             </button>
           </div>
@@ -1239,15 +1276,6 @@
       </aside>
     </main>
 
-    <!-- ============ MOBILE STICKY PAY BAR ============ -->
-    <div class="mobile-sticky-bar">
-      <div class="total-info">
-        <div class="total-label">Total</div>
-        <div class="total-value price-total" id="mobileTotalSticky" data-suffix=" EGP">[Total] EGP</div>
-      </div>
-      <button id="mobilePayBtn" disabled>Pay <span class="price-total" data-suffix=" EGP">[Total] EGP</span></button>
-    </div>
-
     <script>
       (function () {
         const state = {
@@ -1273,6 +1301,7 @@
           news: false,
           tried: false,
           tried1: false,
+          tried2: false,
           sub: 1,
           secs: 720,
           method: "Cards",
@@ -1280,6 +1309,7 @@
           paymentMethods: [],
           walletPhone: "",
           paying: false,
+          promoApplying: false,
         };
 
         try {
@@ -1351,22 +1381,19 @@
           if (!b.mobile) e.mobile = "Your mobile number is required.";
           return e;
         }
-        function allErrors() {
+        function screen2Errors() {
           const b = state.buyer;
           const e = {};
-          if (!b.name) e.name = "Your full name is required.";
-          if (!b.email) e.email = "Your email is required.";
-          else if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(b.email))
-            e.email = "Enter a valid email.";
-          if (!b.mobile) e.mobile = "Your mobile number is required.";
-          if (!b.country) e.country = "Country is required.";
           if (!b.company)
             e.company = "Company name is required. Freelance? Write freelance.";
-          if (!b.title) e.title = "Pick the job title closest to your work.";
           if (!b.store)
             e.store = "Tell us which store you work on, or write none.";
           if (!b.linkedin && !b.facebook)
             e.social = "Add a LinkedIn or a Facebook profile.";
+          return e;
+        }
+        function allErrors() {
+          const e = Object.assign({}, screen1Errors(), screen2Errors());
           if (!state.consent)
             e.consent = "You must agree to the policies to pay.";
           return e;
@@ -1466,10 +1493,14 @@
         function renderErrors() {
           let errs = {};
           const e1 = screen1Errors();
+          const e2 = screen2Errors();
           const eAll = allErrors();
           if (state.tried) {
-            errs = state.sub === 1 ? e1 : eAll;
-            if (state.sub === 1 && eAll.consent) errs.consent = eAll.consent;
+            if (state.sub === 1) errs = e1;
+            else if (state.sub === 2) errs = Object.assign({}, e1, e2);
+            else errs = eAll;
+          } else if (state.tried2) {
+            errs = e2;
           } else if (state.tried1) {
             errs = e1;
           }
@@ -1550,26 +1581,91 @@
           }
         }
 
+        function setButtonLoading(btn, loading, idleHtml) {
+          if (!btn) return;
+          if (loading) {
+            if (!btn.dataset.idleHtml) {
+              btn.dataset.idleHtml = idleHtml != null ? idleHtml : btn.innerHTML;
+            }
+            btn.classList.add("is-loading");
+            btn.disabled = true;
+            btn.setAttribute("aria-busy", "true");
+            btn.innerHTML =
+              '<span class="btn-spinner" aria-hidden="true"></span><span>Processing…</span>';
+            return;
+          }
+          btn.classList.remove("is-loading");
+          btn.removeAttribute("aria-busy");
+          if (btn.dataset.idleHtml) {
+            btn.innerHTML = btn.dataset.idleHtml;
+            delete btn.dataset.idleHtml;
+          } else if (idleHtml != null) {
+            btn.innerHTML = idleHtml;
+          }
+        }
+
+        function setPromoBusy(busy) {
+          state.promoApplying = !!busy;
+          var applyBtn = document.getElementById("applyPromoBtn");
+          var promoInput = document.getElementById("promoInput");
+          var removeBtn = document.getElementById("removePromoBtn");
+          var promoCard = applyBtn && applyBtn.closest(".promo-card");
+          if (promoCard) promoCard.classList.toggle("is-busy", busy);
+          if (promoInput) promoInput.disabled = busy;
+          if (removeBtn) removeBtn.disabled = busy;
+          if (!applyBtn) return;
+          if (busy) {
+            if (!applyBtn.dataset.idleHtml) {
+              applyBtn.dataset.idleHtml = applyBtn.innerHTML;
+            }
+            applyBtn.classList.add("is-loading");
+            applyBtn.disabled = true;
+            applyBtn.setAttribute("aria-busy", "true");
+            applyBtn.innerHTML =
+              '<span class="btn-spinner" aria-hidden="true"></span><span>Applying…</span>';
+            return;
+          }
+          applyBtn.classList.remove("is-loading");
+          applyBtn.removeAttribute("aria-busy");
+          applyBtn.disabled = false;
+          if (applyBtn.dataset.idleHtml) {
+            applyBtn.innerHTML = applyBtn.dataset.idleHtml;
+            delete applyBtn.dataset.idleHtml;
+          } else {
+            applyBtn.textContent = "Apply";
+          }
+        }
+
         function renderPayButtons() {
-          const canPay = state.consent;
-          ["payBtn", "mobilePayBtn"].forEach((id) => {
-            const btn = document.getElementById(id);
-            if (btn) btn.disabled = !canPay;
-          });
+          const canPay = state.consent && state.sub === 3 && !state.paying;
+          const payIdle =
+            'Pay <span class="price-total" data-suffix=" EGP">[Total] EGP</span>';
+          const payBtn = document.getElementById("payBtn");
+          const payForm = payBtn && payBtn.closest(".form-card");
+
+          if (payForm) payForm.classList.toggle("is-busy", state.paying);
+
+          if (state.paying && state.sub === 3) {
+            setButtonLoading(payBtn, true, payIdle);
+            return;
+          }
+
+          if (payBtn) {
+            setButtonLoading(payBtn, false, payIdle);
+            payBtn.disabled = !canPay;
+          }
         }
 
         function renderSubScreens() {
-          const d1 = document.getElementById("sub1");
-          const d2 = document.getElementById("sub2");
-          if (state.sub === 1) {
-            d1.classList.remove("hidden");
-            d2.classList.add("hidden");
-          } else {
-            d1.classList.add("hidden");
-            d2.classList.remove("hidden");
-          }
-          document.getElementById("subLabel").textContent =
-            state.sub === 1 ? "Step 1 of 2" : "Step 2 of 2";
+          const s1 = document.getElementById("step1Section");
+          const s2 = document.getElementById("step2Section");
+          const s3 = document.getElementById("step3Section");
+          if (s1) s1.classList.toggle("hidden", state.sub !== 1);
+          if (s2) s2.classList.toggle("hidden", state.sub !== 2);
+          if (s3) s3.classList.toggle("hidden", state.sub !== 3);
+
+          const subLabel = document.getElementById("subLabel");
+          if (subLabel) subLabel.textContent = "Step 1 of 3";
 
           const summaryText =
             (state.buyer.name || "Your name") +
@@ -1577,7 +1673,18 @@
             (state.buyer.title || "job title") +
             " · " +
             (state.buyer.country || "country");
-          document.getElementById("subSummary").textContent = summaryText;
+          const subSummary = document.getElementById("subSummary");
+          if (subSummary) subSummary.textContent = summaryText;
+
+          const step3Summary = document.getElementById("step3Summary");
+          if (step3Summary) {
+            step3Summary.textContent =
+              (state.buyer.name || "Your name") +
+              " · " +
+              (state.buyer.company || "company") +
+              " · " +
+              (state.buyer.store || "store");
+          }
         }
 
         function updateTimerDisplay() {
@@ -1591,11 +1698,11 @@
           document.querySelectorAll(selector).forEach((el) => {
             el.addEventListener("input", (e) => {
               state.buyer[key] = e.target.value;
-              if (state.tried || state.tried1) renderErrors();
+              if (state.tried || state.tried1 || state.tried2) renderErrors();
             });
             el.addEventListener("change", (e) => {
               state.buyer[key] = e.target.value;
-              if (state.tried || state.tried1) renderErrors();
+              if (state.tried || state.tried1 || state.tried2) renderErrors();
             });
           });
         }
@@ -1633,21 +1740,51 @@
           state.news = e.target.checked;
         });
 
-        document.getElementById("goSub2").addEventListener("click", () => {
+        function goToStep2() {
           const errs = screen1Errors();
           if (Object.keys(errs).length > 0) {
             state.tried1 = true;
             renderErrors();
-          } else {
-            state.tried1 = false;
-            state.sub = 2;
-            renderAll();
+            return;
           }
-        });
-        document.getElementById("backSub1").addEventListener("click", () => {
+          state.tried1 = false;
+          state.sub = 2;
+          renderAll();
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+
+        function goToStep3() {
+          const errs = screen2Errors();
+          if (Object.keys(errs).length > 0) {
+            state.tried2 = true;
+            renderErrors();
+            return;
+          }
+          state.tried2 = false;
+          state.sub = 3;
+          renderAll();
+          if (typeof loadPaymentMethods === "function") loadPaymentMethods();
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+
+        function goToStep1() {
           state.sub = 1;
           renderAll();
-        });
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+
+        function goToStep2Back() {
+          state.sub = 2;
+          renderAll();
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+
+        document.getElementById("goSub2").addEventListener("click", goToStep2);
+        document.getElementById("goSub3").addEventListener("click", goToStep3);
+        document.getElementById("backSub1").addEventListener("click", goToStep1);
+        var backSub1Alt = document.getElementById("backSub1Alt");
+        if (backSub1Alt) backSub1Alt.addEventListener("click", goToStep1);
+        document.getElementById("backSub2").addEventListener("click", goToStep2Back);
 
         document
           .getElementById("openPromoBtn")
@@ -1658,28 +1795,66 @@
 
         document
           .getElementById("applyPromoBtn")
-          .addEventListener("click", () => {
+          .addEventListener("click", async () => {
+            if (state.promoApplying || state.paying) return;
             const code = (document.getElementById("promoInput").value || "")
               .trim()
               .toUpperCase();
-            // Server accepts LAUNCH only; other codes shown as UX states.
-            const map = {
-              LAUNCH: "valid",
-              EXPIRED: "expired",
-              LIMIT: "limit",
-              CTONLY: "na",
-            };
-            const s = code ? map[code] || "invalid" : "invalid";
-            state.promoState = s;
-            state.appliedCode = s === "valid" ? code : "";
+            const msgEl = document.getElementById("promoMsg");
+            if (!code) {
+              state.promoState = "invalid";
+              state.appliedCode = "";
+              if (window.EventPrices) EventPrices.clearActivePromo();
+              renderAll();
+              return;
+            }
+            if (!window.EcdApi || !EcdApi.validatePromo) {
+              state.promoState = "invalid";
+              state.appliedCode = "";
+              renderAll();
+              return;
+            }
+            setPromoBusy(true);
+            if (msgEl) {
+              msgEl.textContent = "Checking code…";
+              msgEl.style.color = "#6B747E";
+            }
+            try {
+              var result = await EcdApi.validatePromo({
+                code: code,
+                ticketType: state.ticket,
+                qty: 1,
+              });
+              var data = result && result.data ? result.data : result;
+              var status = (data && data.status) || "invalid";
+              state.promoState = status;
+              state.appliedCode = status === "valid" ? data.promoCode || code : "";
+              if (status === "valid" && window.EventPrices) {
+                EventPrices.setActivePromo(
+                  state.appliedCode,
+                  data.discountPercent || 0,
+                );
+              } else if (window.EventPrices) {
+                EventPrices.clearActivePromo();
+              }
+            } catch (err) {
+              console.warn("[checkout] promo validate", err);
+              state.promoState = "invalid";
+              state.appliedCode = "";
+              if (window.EventPrices) EventPrices.clearActivePromo();
+            } finally {
+              setPromoBusy(false);
+            }
             renderAll();
           });
         document
           .getElementById("removePromoBtn")
           .addEventListener("click", () => {
+            if (state.promoApplying || state.paying) return;
             state.promoState = "removed";
             state.appliedCode = "";
             document.getElementById("promoInput").value = "";
+            if (window.EventPrices) EventPrices.clearActivePromo();
             renderAll();
           });
 
@@ -1742,14 +1917,17 @@
         }
 
         async function handlePay() {
+          if (state.paying || state.promoApplying) return;
           const errs = allErrors();
           const s1Errs = screen1Errors();
+          const s2Errs = screen2Errors();
           state.tried = true;
           if (Object.keys(s1Errs).length > 0) state.sub = 1;
+          else if (Object.keys(s2Errs).length > 0) state.sub = 2;
           renderAll();
           if (Object.keys(errs).length > 0) return;
-          if (state.paying) return;
           state.paying = true;
+          renderPayButtons();
           try {
             await ensureCheckoutSession();
             await loadPaymentMethods();
@@ -1802,17 +1980,14 @@
                   await EcdContent.boot(state.ticket);
                 } catch (e) {}
               }
-              renderAll();
             }
             alert(msg);
           } finally {
             state.paying = false;
+            renderAll();
           }
         }
         document.getElementById("payBtn").addEventListener("click", handlePay);
-        document
-          .getElementById("mobilePayBtn")
-          .addEventListener("click", handlePay);
 
         setInterval(() => {
           state.secs = Math.max(0, state.secs - 1);

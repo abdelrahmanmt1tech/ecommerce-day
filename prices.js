@@ -26,8 +26,10 @@
     controlTower: null,
     fullJourney: null,
     currency: "EGP",
-    /** نسبة خصم كود LAUNCH (0.1 = 10%). اجعلها 0 لإيقاف الخصم */
+    /** Legacy LAUNCH fallback until admin creates the code in ECD Promo Codes */
     launchDiscountRate: 0.1,
+    /** Set by checkout after successful POST /promo/validate */
+    activePromo: null,
   };
 
   var TICKETS = {
@@ -81,10 +83,33 @@
 
   function calcDiscount(unit, qty, promoCode) {
     var code = (promoCode || "").toUpperCase();
-    if (code === "LAUNCH" && PRICES.launchDiscountRate > 0 && unit != null) {
-      return Math.round(unit * qty * PRICES.launchDiscountRate);
+    if (!code || unit == null) return 0;
+    var rate = null;
+    if (PRICES.activePromo && PRICES.activePromo.code === code) {
+      rate = PRICES.activePromo.rate;
+    } else if (code === "LAUNCH" && PRICES.launchDiscountRate > 0) {
+      // Legacy fallback until admin creates LAUNCH in ECD Promo Codes
+      rate = PRICES.launchDiscountRate;
     }
-    return 0;
+    if (rate == null || rate <= 0) return 0;
+    return Math.round(unit * qty * rate);
+  }
+
+  function setActivePromo(code, discountPercent) {
+    var pct = Number(discountPercent);
+    if (!code || !isFinite(pct) || pct <= 0) {
+      PRICES.activePromo = null;
+      return;
+    }
+    PRICES.activePromo = {
+      code: String(code).toUpperCase(),
+      rate: pct / 100,
+      percent: pct,
+    };
+  }
+
+  function clearActivePromo() {
+    PRICES.activePromo = null;
   }
 
   function calcTotals(ticketId, qty, promoCode) {
@@ -320,6 +345,8 @@
     formatNumber: formatNumber,
     formatMoney: formatMoney,
     calcTotals: calcTotals,
+    setActivePromo: setActivePromo,
+    clearActivePromo: clearActivePromo,
     applyStaticPrices: applyStaticPrices,
     applyTotals: applyTotals,
     applyFromPackages: applyFromPackages,
