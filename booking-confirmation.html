@@ -13,6 +13,7 @@
       rel="stylesheet"
     />
 
+    <script src="ecd-analytics.js?v=20260927c"></script>
     <!-- ✅ Reusable navbar -->
     <script src="navbar.js?v=20260925b" defer></script>
     <!-- ✅ Reusable footer -->
@@ -2660,6 +2661,7 @@
 
         var payStatus = (data.paymentStatus || "").toLowerCase();
         if (payStatus === "paid") {
+          if (window.EcdAnalytics) EcdAnalytics.purchase(data);
           if (urlStatus === "pending" || urlStatus === "failed") {
             showEdgeState("already");
           } else {
@@ -2969,6 +2971,7 @@
           (window.__ecdBooking && window.__ecdBooking.event) ||
           (window.EcdApi && EcdApi.CONFIG.EVENT);
         if (window.EcdApi) EcdApi.downloadIcs(event);
+        if (window.EcdAnalytics) EcdAnalytics.addToCalendar("ics_download");
       }
 
       function lookupBooking(orderEl, emailEl, errEl) {

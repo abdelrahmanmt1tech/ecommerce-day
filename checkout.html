@@ -10,6 +10,7 @@
       href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap"
       rel="stylesheet"
     />
+    <script src="ecd-analytics.js?v=20260927c"></script>
     <script src="prices.js?v=20260927b"></script>
     <script src="ecd-api.js?v=20260927b"></script>
     <script src="ecd-content.js?v=20260925b"></script>
@@ -2389,6 +2390,7 @@
           }
           state.tried1 = false;
           state.sub = 2;
+          if (window.EcdAnalytics) EcdAnalytics.checkoutStep(1, "your_details", state.ticket);
           persistCheckoutDraft();
           renderAll();
           window.scrollTo({ top: 0, behavior: "smooth" });
@@ -2403,6 +2405,7 @@
           }
           state.tried2 = false;
           state.sub = 3;
+          if (window.EcdAnalytics) EcdAnalytics.checkoutStep(2, "company_and_store", state.ticket);
           persistCheckoutDraft();
           renderAll();
           window.scrollTo({ top: 0, behavior: "smooth" });
@@ -2503,6 +2506,14 @@
                 );
               } else if (window.EventPrices) {
                 EventPrices.clearActivePromo();
+              }
+              if (window.EcdAnalytics) {
+                EcdAnalytics.applyPromoCode({
+                  code: code,
+                  status: status,
+                  discountPercent: data && data.discountPercent,
+                  ticketId: state.ticket,
+                });
               }
               // Promo changes totals → recreate checkout session before pay.
               state.sessionReady = false;
@@ -2936,6 +2947,20 @@
             );
             return;
           }
+          if (!forceNewCode && window.EcdAnalytics) {
+            var payPromo = state.promoState === "valid" ? state.appliedCode : "";
+            var payMethod = (state.paymentMethods || []).find(function (m) {
+              return m.paymentId === state.paymentMethodId;
+            });
+            EcdAnalytics.selectPaymentMethod({
+              ticketId: state.ticket,
+              value: window.EventPrices
+                ? EventPrices.calcTotals(state.ticket, 1, payPromo).total
+                : null,
+              paymentMethodName: payMethod ? payMethod.name_en || payMethod.name_ar : "",
+              coupon: payPromo,
+            });
+          }
           state.paying = true;
           renderPayButtons();
           try {
@@ -3073,6 +3098,11 @@
         }
 
         renderAll();
+        if (window.EcdAnalytics) {
+          EcdAnalytics.beginCheckout(function () {
+            return state.ticket;
+          });
+        }
       })();
     </script>
   </body>

@@ -14,6 +14,7 @@
     />
 
     <!-- Reusable navbar and footer (same as sponsors.html) -->
+    <script src="ecd-analytics.js?v=20260927c"></script>
     <script src="navbar.js?v=20260925b" defer></script>
     <script src="footer.js?v=20260925b" defer></script>
 
@@ -2220,6 +2221,12 @@
               state.submitted = true;
               state.reqId = (data && data.requestCode) || "";
               state.submitting = false;
+              if (window.EcdAnalytics) {
+                EcdAnalytics.generateLead({
+                  leadId: state.reqId,
+                  sponsorLevel: state.level,
+                });
+              }
               renderForm();
               scrollToForm();
             })

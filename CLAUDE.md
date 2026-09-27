@@ -55,8 +55,15 @@ Designing website UX for "ECommerce Day 2026" — one-day offline event, Cairo, 
 - Title: "Find the Pass That Fits Your Goals". Subtitle: "Access both live stages, or go further with workshops and extended content." All Access price carries the red "Limited Tickets" label (user-approved).
 - Taglines: Standard = "See the whole system." · All Access = "Learn it. Work on it. Apply it." All Access badge allowed: "Complete Access" or "Most Complete Experience" (never "Best Value").
 
+## Analytics (dataLayer)
+- `ecd-analytics.js` (first script in `<head>` on every site page) loads GTM-5DMGVFZS (same container as the TrafficMENA app) and exposes `window.EcdAnalytics`. It extends the TrafficMENA data layer (main app `docs/events-tracking-data-model.md`): reuse its event names and params, never invent new ones without the user's approval.
+- Funnel: global_variables (page view, `page_type` ecd_*) → select_item (any `[data-checkout]` button) → begin_checkout → checkout_step 1/2 → apply_promo_code → select_payment_method → purchase (booking-confirmation) → add_to_calendar. Sponsor form: generate_lead. checkout_step and generate_lead are the only ECD-only events.
+- purchase: `transaction_id` = ticket serial. Fires only for real website payments: skips admin tickets (`ADMIN_*` payment method), `ECD_SIMULATE`, 0 EGP, payments older than 24h, and repeats (localStorage). No TrafficMENA backend changes for tracking (user decision).
+- No PII in ECD events; no user-scoped fields (customer_type etc.) in global_variables.
+- The `access=` token in booking-confirmation URLs is hidden from GA4/pixels inside GTM only (Custom JS variable). Never strip or rewrite the page URL in site code (user decision, critical).
+
 ## Caching (important)
-- Shared scripts (navbar.js, footer.js, tickets-section.js, prices.js, ecd-api.js, ecd-content.js) are loaded with a version tag, e.g. `navbar.js?v=20260924a`. Whenever one of them changes, bump the tag on EVERY page, or browsers keep showing the old version.
+- Shared scripts (navbar.js, footer.js, tickets-section.js, prices.js, ecd-api.js, ecd-content.js, ecd-analytics.js) are loaded with a version tag, e.g. `navbar.js?v=20260924a`. Whenever one of them changes, bump the tag on EVERY page, or browsers keep showing the old version.
 
 ## Sitemap → project files
 - / Home → Home Page.dc.html
