@@ -38,8 +38,8 @@ Designing website UX for "ECommerce Day 2026" — one-day offline event, Cairo, 
 ## HARD RULES (never violate)
 1. Exactly two tickets: "Standard Pass" and "All Access Pass" (formerly Control Tower Pass / Conference Pass and Full Journey Pass; never use the old names). No Group/VIP/third product, no group discount.
 2. No Certificate anywhere.
-3. NO RECORDINGS: never mention recordings of any kind (Main Stage, Second Stage, workshops, "sessions are recorded") on any page. There is no Recording & Photography policy. Standard Pass: full-day Main Stage + Second Stage, no platform access. All Access Pass: both stages + up to 5 workshops + Workshop Templates & Files + complete session resources + 6 months of access to TrafficMENA's premium content library (All Access only).
-4. Platform access: "6 months of access to TrafficMENA's premium content library", All Access Pass only; the Standard Pass has none. Platform = Content Hub only: no Speaker Directory, no messaging, no networking tool.
+3. NO RECORDINGS: never mention recordings of any kind (Main Stage, Second Stage, workshops, "sessions are recorded") on any page. There is no Recording & Photography policy. Standard Pass: full-day Main Stage + Second Stage. All Access Pass: both stages + up to 5 workshops + Workshop Templates & Files + complete session resources.
+4. NO PLATFORM / CONTENT LIBRARY (removed 28 Sep 2026, the limited tickets carrying it sold out): never mention the premium content library, "6 months" access, a platform, Content Hub, account activation or login for any pass, on any page (including booking confirmation and policies). Content included with a pass (Workshop Templates & Files, summaries, Action Pack, report) is sent by email after the event.
 5. Workshops are offline-only for All Access Pass holders. Workshop booking opens 7-10 days before the event; we announce how to book (never "after payment" or "during ticket booking"). Up to 5 workshops, subject to availability; workshops at the same time cannot be selected together; selections are final once confirmed. The pass does NOT auto-reserve. The Booking Confirmation reserve step stays hidden until `WORKSHOP_BOOKING_OPEN = true` in booking-confirmation.html.
 6. Prices come ONLY from the database (admin panel); prices.js fallbacks stay null. ONE final price per ticket (EGP). No range, no strikethrough unless real dated offer. Unapproved price → token "[Final Price] EGP".
 7. Venue CONFIRMED: "Creativa Innovation Hub, Giza". Google Maps: https://maps.app.goo.gl/LxbaM9baBAA8t9Pv9 . Use this exact name everywhere; link it to the map where it is clickable.
@@ -65,6 +65,10 @@ Designing website UX for "ECommerce Day 2026" — one-day offline event, Cairo, 
 ## Caching (important)
 - Shared scripts (navbar.js, footer.js, tickets-section.js, prices.js, ecd-api.js, ecd-content.js, ecd-analytics.js) are loaded with a version tag, e.g. `navbar.js?v=20260924a`. Whenever one of them changes, bump the tag on EVERY page, or browsers keep showing the old version.
 
+## API environment (critical, broke live checkout on 28 Sep 2026)
+- `ecd-api.js` picks API_BASE from the page host (`resolveApiBase()`): www → production API, staging.trafficmena.com → staging API, localhost → localhost:8080. Never hardcode one environment or commit a "switch to staging" edit: the backend rejects other origins (ECD_ORIGIN_DENIED), prices fall back to "[Final Price] EGP" and checkout fails with "Ticket price unavailable".
+- A frontend feature that needs a new backend endpoint must not go live before that endpoint is deployed to the production backend.
+
 ## Sitemap → project files
 - / Home → Home Page.dc.html
 - /agenda/ (tracks + venue live here) → Agenda Page.dc.html
@@ -76,7 +80,7 @@ Designing website UX for "ECommerce Day 2026" — one-day offline event, Cairo, 
 - /become-a-sponsor/ (3-step form) → Become a Sponsor Page.dc.html
 - /faq/ → FAQ Page.dc.html
 - /terms/ /privacy/ /refund-policy/ /ticket-policy/ (one template) → Policy Pages.dc.html
-- Component sheet → Component Sheet.dc.html
+- Component sheet → legacy-backup/component-sheet.html (archived with the other unused legacy files; nothing on the live site links to legacy-backup/)
 
 ## Global nav & footer (identical all pages)
 - Nav: Agenda · Speakers · Tickets · Sponsors · FAQ (FAQ link currently HIDDEN in navbar.js and footer.js, commented out, until the FAQ page content is updated). Right: "Become a Sponsor" (ghost) + "Book Your Ticket" (primary).

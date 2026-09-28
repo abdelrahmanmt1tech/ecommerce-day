@@ -42,7 +42,7 @@
 
     <!-- Shared prices + ECD content (partners/speakers/packages) -->
     <script src="prices.js?v=20260924c" defer></script>
-    <script src="ecd-api.js?v=20260924c" defer></script>
+    <script src="ecd-api.js?v=20260928c" defer></script>
     <script src="ecd-content.js?v=20260925b" defer></script>
 
     <style>
@@ -886,22 +886,6 @@
           transform: none;
         }
       }
-      .review-card {
-        background: var(--white);
-        border: 1px solid var(--line);
-        border-radius: var(--radius);
-        padding: 20px;
-        font-size: 14px;
-        color: var(--ink-soft);
-        line-height: 1.6;
-        box-shadow: 0 2px 10px rgba(16, 16, 16, 0.05);
-      }
-      .review-stars {
-        color: var(--green);
-        margin-bottom: 8px;
-        font-size: 13px;
-        letter-spacing: 2px;
-      }
       .video-tile {
         border-radius: var(--radius);
         overflow: hidden;
@@ -1660,7 +1644,7 @@
           <!-- Shared tickets section (also used on agenda.html). Loaded here, not in <head>,
                so it no longer blocks the first paint; still NOT deferred on purpose: it must
                define <ecd-tickets> before the inline reveal script, prices.js and ecd-content.js run. -->
-          <script src="tickets-section.js?v=20260924c"></script>
+          <script src="tickets-section.js?v=20260928a"></script>
           <ecd-tickets></ecd-tickets>
         </div>
       </section>
@@ -2078,13 +2062,10 @@
             ],
           },
           {
-            q: "What is available on the platform?",
+            q: "How will I receive the content after the event?",
             a: [
               {
-                p: "All Access Pass holders get 6 months of access to TrafficMENA\u2019s premium content library, plus the Workshop Templates & Files.",
-              },
-              {
-                p: "Platform access is only included with the All Access Pass.",
+                p: "The content included with your pass is sent by email after the event. All Access Pass holders also receive the Workshop Templates & Files.",
               },
             ],
           },
@@ -2404,7 +2385,6 @@
           if (!tabsEl || !panel) return;
           var tabs = [
             { key: "highlights", name: "Past Reviews" },
-            { key: "reviews", name: "Community Reviews" },
             { key: "videos", name: "Video Stories" },
           ];
           var active = "highlights";
@@ -2445,14 +2425,6 @@
                 wall.appendChild(btn);
               });
               panel.appendChild(wall);
-            } else if (active === "reviews") {
-              for (var j = 0; j < 4; j++) {
-                var card = el("div", { class: "review-card" });
-                card.innerHTML =
-                  '<div class="review-stars" aria-hidden="true">★★★★★</div>' +
-                  "<p>[Placeholder review text will appear here once verified attendee feedback is available.]</p>";
-                panel.appendChild(card);
-              }
             } else {
               for (var k = 0; k < 3; k++) {
                 var v = el("div", { class: "video-tile" });

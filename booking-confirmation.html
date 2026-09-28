@@ -78,6 +78,45 @@
       .btn-primary:hover {
         background: #04d657;
       }
+      /* Hero CTA to the attending photo (brand gradient is for hero CTAs only) */
+      .hero-attending {
+        display: flex;
+        justify-content: center;
+        margin-top: 14px;
+      }
+      .btn-attending {
+        background: linear-gradient(135deg, #05ef62, #29cf9f);
+        border: none;
+        color: #101010;
+        border-radius: 10px;
+        padding: 14px 26px;
+        font-family: "Manrope", sans-serif;
+        font-weight: 600;
+        font-size: 15px;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        transition: box-shadow 0.2s;
+      }
+      .btn-attending:hover {
+        box-shadow: 0 6px 18px rgba(5, 239, 98, 0.35);
+      }
+      .btn-attending:focus-visible {
+        outline: 2px solid #006681;
+        outline-offset: 2px;
+      }
+      .btn-attending svg {
+        flex: none;
+      }
+      /* Land below the sticky nav when the CTA scrolls here */
+      #attendeeFrameSection {
+        scroll-margin-top: 72px;
+      }
+      #attendeeFrameSection:focus {
+        outline: none;
+      }
       .btn-secondary {
         background: #ffffff;
         border: 1px solid #101010;
@@ -146,10 +185,6 @@
         flex: 1 1 480px;
         min-width: 0;
         margin-bottom: 0;
-      }
-      .platform-layout > #platformActivation {
-        flex: 1 1 320px;
-        min-width: 0;
       }
       #manageBookingCard > div > div {
         gap: 12px;
@@ -364,7 +399,9 @@
         gap: 12px;
       }
       .ecd-frame-upload-btn,
-      .ecd-frame-confirm {
+      .ecd-frame-confirm,
+      .ecd-frame-download,
+      .ecd-frame-share-btn {
         display: inline-flex;
         align-items: center;
         justify-content: center;
@@ -376,10 +413,54 @@
         cursor: pointer;
         border: none;
       }
-      .ecd-frame-upload-btn {
+      .ecd-frame-upload-btn,
+      .ecd-frame-download,
+      .ecd-frame-share-btn {
         background: #fff;
         color: #101010;
         border: 1px solid #101010;
+        text-decoration: none;
+      }
+      .ecd-frame-download:hover,
+      .ecd-frame-share-btn:hover {
+        background: #f4f6f8;
+      }
+      .ecd-frame-upload-btn:focus-within,
+      .ecd-frame-confirm:focus-visible,
+      .ecd-frame-download:focus-visible,
+      .ecd-frame-share-btn:focus-visible {
+        outline: 2px solid #006681;
+        outline-offset: 2px;
+      }
+      .ecd-frame-share {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        padding-top: 4px;
+      }
+      .ecd-frame-share[hidden] {
+        display: none;
+      }
+      .ecd-frame-share-label {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 11px;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: #6b747e;
+        margin: 0;
+      }
+      .ecd-frame-share-btns {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+      .ecd-frame-share-btn {
+        gap: 8px;
+        padding: 10px 14px;
+        font-size: 13px;
+      }
+      .ecd-frame-share-btn svg {
+        flex: none;
       }
       .ecd-frame-confirm {
         background: #05ef62;
@@ -596,7 +677,8 @@
           flex-direction: column;
         }
         .hero-actions .btn-primary,
-        .hero-actions .btn-secondary {
+        .hero-actions .btn-secondary,
+        .hero-attending .btn-attending {
           width: 100%;
         }
 
@@ -826,6 +908,17 @@
             Add Event to Calendar
           </button>
         </div>
+        <div class="hero-attending">
+          <button
+            class="btn-attending"
+            id="createPhotoBtn"
+            type="button"
+            aria-controls="attendeeFrameSection"
+          >
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+            Create &amp; Share Your Photo
+          </button>
+        </div>
       </div>
 
       <!-- Next Actions -->
@@ -998,85 +1091,6 @@
                 "
               >
                 Add to Calendar
-              </button>
-            </div>
-            <div
-              class="action-card"
-              id="platformActionCard"
-              style="
-                background: #ffffff;
-                border: 1px solid #d5dae0;
-                border-radius: 14px;
-                padding: 20px 18px;
-                display: flex;
-                flex-direction: column;
-              "
-            >
-              <div
-                style="
-                  display: flex;
-                  align-items: center;
-                  gap: 8px;
-                  margin-bottom: 12px;
-                "
-              >
-                <span
-                  class="step-num"
-                  style="
-                    width: 22px;
-                    height: 22px;
-                    border-radius: 50%;
-                    background: #101010;
-                    color: #05ef62;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    font-family:
-                      JetBrains Mono,
-                      monospace;
-                    font-size: 11px;
-                    flex: none;
-                  "
-                  ></span
-                >
-              </div>
-              <div
-                style="
-                  font-weight: 700;
-                  font-size: 15px;
-                  color: #101010;
-                  margin-bottom: 8px;
-                "
-              >
-                Activate Platform
-              </div>
-              <div
-                style="
-                  font-size: 12px;
-                  line-height: 1.6;
-                  color: #4a5563;
-                  margin-bottom: 14px;
-                "
-              >
-                Premium content library after the event.
-              </div>
-              <button
-                type="button"
-                id="actionActivatePlatform"
-                style="
-                  margin-top: auto;
-                  background: #ffffff;
-                  border: 1px solid #101010;
-                  color: #101010;
-                  border-radius: 8px;
-                  padding: 9px;
-                  font-family: Manrope, sans-serif;
-                  font-weight: 600;
-                  font-size: 12px;
-                  cursor: pointer;
-                "
-              >
-                Activate
               </button>
             </div>
             <div
@@ -1935,9 +1949,8 @@
         </div>
       </div>
 
-      <!-- Platform Access -->
+      <!-- What's Included -->
       <div class="container section-padding">
-        <!-- Platform Access -->
         <div class="bc-card" id="platformAccessCard">
           <div
             class="font-mono"
@@ -1949,7 +1962,7 @@
               margin-bottom: 18px;
             "
           >
-            Platform Access
+            What's Included
           </div>
 
           <div class="platform-layout">
@@ -1962,15 +1975,9 @@
             </div>
             <div class="platform-row">
               <span style="font-weight: 500; color: #1f2630"
-                >Premium content library</span
-              ><span style="font-weight: 600; color: #6b747e">Not included</span
-              ><span style="font-weight: 600; color: #101010">6 months</span>
-            </div>
-            <div class="platform-row">
-              <span style="font-weight: 500; color: #1f2630"
                 >Templates &amp; Files</span
               ><span style="font-weight: 600; color: #6b747e">Not included</span
-              ><span style="font-weight: 600; color: #101010">Yes</span>
+              ><span style="font-weight: 600; color: #101010">Sent by email after the event</span>
             </div>
             <div class="platform-row">
               <span style="font-weight: 500; color: #1f2630"
@@ -1983,85 +1990,6 @@
             </div>
           </div>
 
-          <div id="platformActivation">
-          <div
-            class="font-mono"
-            style="
-              font-size: 10px;
-              letter-spacing: 0.1em;
-              text-transform: uppercase;
-              color: #6b747e;
-              margin-bottom: 10px;
-            "
-          >
-            Activation states
-          </div>
-          <div class="grid-2-cols" style="gap: 10px">
-            <div
-              style="
-                border: 1px solid #e6eaee;
-                border-radius: 10px;
-                padding: 12px 14px;
-              "
-            >
-              <div
-                style="
-                  font-size: 12px;
-                  font-weight: 700;
-                  margin-bottom: 6px;
-                "
-              >
-                New email
-              </div>
-              <button
-                type="button"
-                class="btn-primary"
-                id="btnActivateAccount"
-                style="padding: 8px 12px; font-size: 11px"
-              >
-                Activate My Account
-              </button>
-              <div style="font-size: 11px; color: #6b747e; margin-top: 6px">
-                Opens TrafficMENA. Use the email from your booking.
-              </div>
-            </div>
-            <div
-              style="
-                border: 1px solid #e6eaee;
-                border-radius: 10px;
-                padding: 12px 14px;
-              "
-            >
-              <div
-                style="
-                  font-size: 12px;
-                  font-weight: 700;
-                  margin-bottom: 6px;
-                "
-              >
-                Existing account
-              </div>
-              <div
-                style="
-                  font-size: 11px;
-                  color: #04c44e;
-                  font-weight: 600;
-                  margin-bottom: 6px;
-                "
-              >
-                ✓ Content access added after the event
-              </div>
-              <button
-                type="button"
-                class="btn-secondary"
-                id="btnLoginPlatform"
-                style="padding: 8px 12px; font-size: 11px"
-              >
-                Log in to Platform
-              </button>
-            </div>
-          </div>
-          </div>
           </div>
         </div>
       </div>
@@ -2544,8 +2472,8 @@
 
     <!-- Scripts -->
     <script src="prices.js?v=20260927b"></script>
-    <script src="ecd-api.js?v=20260928b"></script>
-    <script src="ecd-frame-editor.js?v=20260928b"></script>
+    <script src="ecd-api.js?v=20260928c"></script>
+    <script src="ecd-frame-editor.js?v=20260928e"></script>
     <!-- Real scannable QR (encodes ticket serial) -->
     <script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script>
     <script>
@@ -2992,11 +2920,6 @@
         }
 
         var isFj = data.ticketType === "fj";
-        // Platform access is All Access Pass only
-        var platformActionCard = document.getElementById("platformActionCard");
-        var platformActivation = document.getElementById("platformActivation");
-        if (platformActionCard) platformActionCard.style.display = isFj ? "" : "none";
-        if (platformActivation) platformActivation.style.display = isFj ? "" : "none";
         var workshopSection = document.getElementById("workshopSection");
         var workshopCard = document.getElementById("workshopActionCard");
         if (workshopSection) workshopSection.style.display = isFj ? "" : "none";
@@ -3049,8 +2972,17 @@
         __ecdFrameMounted = true;
         EcdFrameEditor.mount({
           root: root,
-          frameSrc: "assets/attendee-frame.png",
+          frameSrc: "assets/attendee-frame.png?v=20260928e",
           existingUrl: (data && data.attendeeFrameUrl) || "",
+          // One ticket per person: the attendee name, or the buyer name if empty.
+          name:
+            (data && data.tickets && data.tickets[0] && data.tickets[0].attendeeName) ||
+            (data && data.buyerName) ||
+            "",
+          share: {
+            text: "I'm going to ECommerce Day 2026. If you're coming too, let's meet and network on 5 November in Giza",
+            url: "https://www.trafficmena.com/ecommerce-day/",
+          },
           onConfirm: function (dataUrl) {
             if (!window.EcdApi || !EcdApi.uploadAttendeeFrame) {
               return Promise.reject(new Error("Upload unavailable."));
@@ -3139,20 +3071,24 @@
           if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
         });
 
+        on("createPhotoBtn", function () {
+          var el = byId("attendeeFrameSection");
+          if (!el) return;
+          var reduce =
+            window.matchMedia &&
+            window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+          el.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });
+          // Move keyboard/screen-reader focus to the section too.
+          if (!el.hasAttribute("tabindex")) el.setAttribute("tabindex", "-1");
+          try {
+            el.focus({ preventScroll: true });
+          } catch (e) {}
+        });
         on("addToCalendarBtn", downloadCalendar);
         on("actionAddCalendar", downloadCalendar);
         on("workshopAddCalendarBtn", downloadCalendar);
         on("actionDownloadPdf", function () {
           window.print();
-        });
-        on("actionActivatePlatform", function () {
-          window.open("https://www.trafficmena.com", "_blank", "noopener");
-        });
-        on("btnActivateAccount", function () {
-          window.open("https://www.trafficmena.com", "_blank", "noopener");
-        });
-        on("btnLoginPlatform", function () {
-          window.open("https://www.trafficmena.com", "_blank", "noopener");
         });
         on("actionReserveWorkshops", function () {
           var el = byId("workshopSection");

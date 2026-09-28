@@ -18,9 +18,9 @@
     <script src="footer.js?v=20260925b" defer></script>
     <!-- ✅ Shared ticket prices + live CMS packages -->
     <!-- Shared tickets section (same as index.html and agenda.html). Not deferred on purpose. -->
-    <script src="tickets-section.js?v=20260924c"></script>
+    <script src="tickets-section.js?v=20260928a"></script>
     <script src="prices.js?v=20260924c" defer></script>
-    <script src="ecd-api.js?v=20260924c" defer></script>
+    <script src="ecd-api.js?v=20260928c" defer></script>
     <script src="ecd-content.js?v=20260925b" defer></script>
 
     <style>
@@ -295,46 +295,6 @@
         color: var(--muted-light);
       }
 
-      /* Platform */
-      .platform-card {
-        background: var(--white);
-        border: 1px solid var(--green-bd);
-        border-radius: var(--radius-lg);
-        overflow: hidden;
-        max-width: 820px;
-      }
-      .platform-head {
-        display: grid;
-        grid-template-columns: 1.4fr 1fr 1fr;
-        background: var(--bg-soft);
-        border-bottom: 1px solid var(--line);
-        padding: 13px 24px;
-        font-family: "JetBrains Mono", monospace;
-        font-size: 11px;
-        letter-spacing: 0.1em;
-        text-transform: uppercase;
-        color: var(--muted-light);
-      }
-      .platform-row {
-        display: grid;
-        grid-template-columns: 1.4fr 1fr 1fr;
-        padding: 12px 24px;
-        border-bottom: 1px solid var(--line);
-        font-size: 14px;
-        align-items: center;
-      }
-      .platform-row:last-child {
-        border-bottom: none;
-      }
-      .platform-row .feature {
-        font-weight: 500;
-        color: var(--ink-soft);
-      }
-      .platform-row .val {
-        font-weight: 600;
-        color: var(--ink);
-      }
-
       /* FAQ */
       .faq-wrap {
         max-width: 860px;
@@ -509,33 +469,6 @@
         }
 
 
-        .platform-card {
-          max-width: 100%;
-        }
-        .platform-head {
-          display: none;
-        }
-        .platform-row {
-          grid-template-columns: 1fr;
-          gap: 6px;
-          padding: 12px 16px;
-        }
-        .platform-row .feature {
-          font-weight: 600;
-          font-size: 13px;
-          margin-bottom: 4px;
-        }
-        .platform-row .val {
-          display: inline;
-          font-size: 12px;
-        }
-        .platform-row .val::before {
-          content: attr(data-label) ": ";
-          color: var(--muted-light);
-          font-weight: 400;
-        }
-
-
         .faq-wrap {
           border-radius: 12px;
         }
@@ -683,10 +616,9 @@
           </div>
           <div class="why-card">
             <div class="num">04</div>
-            <div class="why-title">Report &amp; Content Library</div>
+            <div class="why-title">ECommerce Report</div>
             <div class="why-line">
-              The full ECommerce Report and 6 months of access to TrafficMENA's
-              premium content library.
+              The full ECommerce Report, sent by email after the event.
             </div>
           </div>
         </div>
@@ -733,11 +665,6 @@
               <span class="val" data-label="All Access">Yes</span>
             </div>
             <div class="cmp-row">
-              <span class="feature">Premium content library access</span>
-              <span class="val muted" data-label="Standard">No</span>
-              <span class="val" data-label="All Access">6 months</span>
-            </div>
-            <div class="cmp-row">
               <span class="feature">Session Summaries</span>
               <span class="val" data-label="Standard">Basic</span>
               <span class="val" data-label="All Access">Full</span>
@@ -748,55 +675,6 @@
               <span class="val" data-label="All Access">Full</span>
             </div>
             <div class="cmp-row">
-              <span class="feature">ECommerce Report</span>
-              <span class="val" data-label="Standard">Summary</span>
-              <span class="val" data-label="All Access">Full report</span>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- PLATFORM -->
-      <section class="bg-green">
-        <div class="container" style="padding-top: 80px; padding-bottom: 80px">
-          <div class="eyebrow">
-            <span style="color: var(--green)">All Access Only</span>
-          </div>
-          <h2 class="section-heading" style="margin-bottom: 12px">
-            Premium content library access
-          </h2>
-          <p style="font-size: 14px; color: var(--muted); margin: 0 0 36px">
-            All Access Pass holders get 6 months of access to TrafficMENA's
-            premium content library. It is a content hub, not a community or
-            networking platform.
-          </p>
-          <div class="platform-card">
-            <div class="platform-head">
-              <span></span>
-              <span>Standard Pass</span>
-              <span>All Access Pass</span>
-            </div>
-            <div class="platform-row">
-              <span class="feature">Premium content library</span>
-              <span class="val muted" data-label="Standard">No</span>
-              <span class="val" data-label="All Access">6 months</span>
-            </div>
-            <div class="platform-row">
-              <span class="feature">Workshop Templates &amp; Files</span>
-              <span class="val muted" data-label="Standard">No</span>
-              <span class="val" data-label="All Access">Yes</span>
-            </div>
-            <div class="platform-row">
-              <span class="feature">Session Summaries</span>
-              <span class="val" data-label="Standard">Basic</span>
-              <span class="val" data-label="All Access">Full</span>
-            </div>
-            <div class="platform-row">
-              <span class="feature">ECommerce Action Pack</span>
-              <span class="val" data-label="Standard">Basic</span>
-              <span class="val" data-label="All Access">Full</span>
-            </div>
-            <div class="platform-row">
               <span class="feature">ECommerce Report</span>
               <span class="val" data-label="Standard">Summary</span>
               <span class="val" data-label="All Access">Full report</span>
@@ -825,8 +703,8 @@
                 the Second Stage, with the basic Summaries, Action Pack and
                 Report. The All Access Pass adds up to 5 workshops across the
                 three workshop tracks, Exercises &amp; Live Builds, Workshop
-                Templates &amp; Files, the full Summaries, Action Pack and Report,
-                and 6 months of access to TrafficMENA's premium content library.
+                Templates &amp; Files, and the full Summaries, Action Pack and
+                Report.
               </p>
             </details>
             <details class="faq-item">
@@ -932,7 +810,7 @@
         <h2>Pick your pass. Build your ECommerce Day.</h2>
         <p>
           Start with the Main Stage, or take the full journey with workshops,
-          hands-on practice and 6 months of premium content library access.
+          hands-on practice and Workshop Templates &amp; Files.
         </p>
         <div class="cta-actions">
           <button class="btn-on-dark-outline" type="button" data-checkout="ct">

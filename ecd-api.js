@@ -8,10 +8,19 @@
 (function (global) {
   "use strict";
 
+  // API_BASE follows the host serving the page, so the same files work on
+  // www (production), staging and localhost without editing. Never hardcode
+  // one environment here: the backend rejects cross-environment origins
+  // (ECD_ORIGIN_DENIED), which leaves prices empty and blocks checkout.
+  function resolveApiBase() {
+    var host = (global.location && global.location.hostname) || "";
+    if (host === "localhost" || host === "127.0.0.1") return "http://localhost:8080/api/ecd";
+    if (host === "staging.trafficmena.com") return "https://staging.trafficmena.com/api/ecd";
+    return "https://www.trafficmena.com/api/ecd";
+  }
+
   var CONFIG = {
-    // API_BASE: "http://localhost:8080/api/ecd",
-    // API_BASE: "https://www.trafficmena.com/api/ecd",
-    API_BASE: "https://staging.trafficmena.com/api/ecd",
+    API_BASE: resolveApiBase(),
     STORAGE_TOKEN: "ecd2026_checkout_token",
     STORAGE_PUBLIC: "ecd2026_public_token",
     STORAGE_BOOKING: "ecd2026_booking",

@@ -31,11 +31,10 @@
     "Sponsor activations",
     "General networking",
   ];
-  var CT_EXCLUDED = ["Workshops", "Premium content library and workshop materials"];
+  var CT_EXCLUDED = ["Workshops", "Workshop templates and files"];
   var FJ_INCLUDED = [
     { t: "Everything in the Standard Pass", w: 700 },
     { t: "Up to five workshops", w: 400 },
-    { t: "Six months of premium content library access", w: 400 },
     { t: "Presentation slides", w: 400 },
     { t: "Workshop templates and files", w: 400 },
   ];
@@ -44,7 +43,6 @@
     { f: "Keynotes, panels, and case studies", c: "Yes" },
     { f: "Sponsor activations", c: "Yes" },
     { f: "Up to five workshops", c: "No" },
-    { f: "Six months of premium content library access", c: "No" },
     { f: "Workshop templates and files", c: "No" },
   ];
 
