@@ -224,8 +224,8 @@
     });
   }
 
-  /** Upload composited attending-frame PNG (data URL) for a paid/pending booking. */
-  function uploadAttendeeFrame(orderCode, imageBase64, accessToken) {
+  /** Upload composited attending-frame image as multipart (avoids 1MB JSON limit). */
+  function uploadAttendeeFrame(orderCode, imageDataUrl, accessToken) {
     var q = getPublicToken();
     var access =
       accessToken ||
@@ -241,10 +241,51 @@
     if (q) qs.push("publicToken=" + encodeURIComponent(q));
     if (access) qs.push("access=" + encodeURIComponent(access));
     if (qs.length) path += "?" + qs.join("&");
-    return api(path, {
+
+    var form = new FormData();
+    var blob = dataUrlToBlob(imageDataUrl);
+    var ext = (blob.type || "image/jpeg").indexOf("png") >= 0 ? "png" : "jpg";
+    form.append("file", blob, "attending." + ext);
+
+    var headers = {};
+    var token = getToken();
+    if (token) headers.Authorization = "Bearer " + token;
+
+    return fetch(CONFIG.API_BASE + path, {
       method: "POST",
-      body: { imageBase64: imageBase64 },
+      headers: headers,
+      body: form,
+      credentials: "omit",
+    }).then(async function (res) {
+      var json = null;
+      try {
+        json = await res.json();
+      } catch (e) {
+        json = null;
+      }
+      if (!res.ok) {
+        var err = new Error(
+          (json && json.error && json.error.message) ||
+            "Request failed (" + res.status + ")",
+        );
+        err.status = res.status;
+        err.code = json && json.error && json.error.code;
+        err.payload = json;
+        throw err;
+      }
+      return json && json.data !== undefined ? json.data : json;
     });
+  }
+
+  function dataUrlToBlob(dataUrl) {
+    var parts = String(dataUrl || "").split(",");
+    var mimeMatch = parts[0] && parts[0].match(/:(.*?);/);
+    var mime = (mimeMatch && mimeMatch[1]) || "image/jpeg";
+    var binary = atob(parts[1] || "");
+    var len = binary.length;
+    var bytes = new Uint8Array(len);
+    for (var i = 0; i < len; i++) bytes[i] = binary.charCodeAt(i);
+    return new Blob([bytes], { type: mime });
   }
 
   /** Partnership inquiry from become-a-sponsor.html */

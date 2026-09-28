@@ -105,7 +105,7 @@
       '<p class="ecd-frame-hint">Drag the photo to position it inside the frame.</p>' +
       '<div class="ecd-frame-actions">' +
       '<button type="button" class="ecd-frame-confirm" disabled>Confirm &amp; save</button>' +
-      '<a class="ecd-frame-download btn-link" style="display:none" download="ecommerce-day-2026-attending.png">Download</a>' +
+      '<a class="ecd-frame-download btn-link" style="display:none" download="ecommerce-day-2026-attending.jpg">Download</a>' +
       "</div>" +
       '<p class="ecd-frame-status" aria-live="polite"></p>' +
       "</div>" +
@@ -237,7 +237,7 @@
       confirmBtn.disabled = true;
       setStatus("Saving…");
       redraw();
-      var dataUrl = canvas.toDataURL("image/png");
+      var dataUrl = canvas.toDataURL("image/jpeg", 0.88);
       Promise.resolve(onConfirm(dataUrl))
         .then(function (result) {
           var url =
