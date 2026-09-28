@@ -10,8 +10,8 @@
 
   var CONFIG = {
     // API_BASE: "http://localhost:8080/api/ecd",
-    API_BASE: "https://www.trafficmena.com/api/ecd",
-    // API_BASE: "https://staging.trafficmena.com/api/ecd",
+    // API_BASE: "https://www.trafficmena.com/api/ecd",
+    API_BASE: "https://staging.trafficmena.com/api/ecd",
     STORAGE_TOKEN: "ecd2026_checkout_token",
     STORAGE_PUBLIC: "ecd2026_public_token",
     STORAGE_BOOKING: "ecd2026_booking",
@@ -224,6 +224,29 @@
     });
   }
 
+  /** Upload composited attending-frame PNG (data URL) for a paid/pending booking. */
+  function uploadAttendeeFrame(orderCode, imageBase64, accessToken) {
+    var q = getPublicToken();
+    var access =
+      accessToken ||
+      (typeof window !== "undefined"
+        ? new URLSearchParams(window.location.search).get("access")
+        : "") ||
+      "";
+    try {
+      if (!access) access = sessionStorage.getItem("ecd2026_access") || "";
+    } catch (e) {}
+    var path = "/booking/" + encodeURIComponent(orderCode) + "/attendee-frame";
+    var qs = [];
+    if (q) qs.push("publicToken=" + encodeURIComponent(q));
+    if (access) qs.push("access=" + encodeURIComponent(access));
+    if (qs.length) path += "?" + qs.join("&");
+    return api(path, {
+      method: "POST",
+      body: { imageBase64: imageBase64 },
+    });
+  }
+
   /** Partnership inquiry from become-a-sponsor.html */
   function submitSponsorInquiry(payload) {
     return api("/sponsor-inquiries", {
@@ -319,6 +342,7 @@
     centsFromPricesJs: centsFromPricesJs,
     fetchContent: fetchContent,
     reserveWorkshops: reserveWorkshops,
+    uploadAttendeeFrame: uploadAttendeeFrame,
     submitSponsorInquiry: submitSponsorInquiry,
   };
 })(window);

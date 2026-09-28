@@ -326,6 +326,90 @@
         margin-bottom: 14px;
       }
 
+      /* Attending frame editor */
+      .ecd-frame-section {
+        max-width: 720px;
+        margin: 0 auto 8px;
+      }
+      .ecd-frame-editor {
+        display: grid;
+        grid-template-columns: minmax(0, 360px) 1fr;
+        gap: 24px;
+        align-items: start;
+        border: 1px solid #d5dae0;
+        border-radius: 16px;
+        padding: 20px;
+        background: #fff;
+      }
+      @media (max-width: 720px) {
+        .ecd-frame-editor {
+          grid-template-columns: 1fr;
+        }
+      }
+      .ecd-frame-preview-wrap {
+        background: #101010;
+        border-radius: 12px;
+        padding: 12px;
+        display: flex;
+        justify-content: center;
+      }
+      .ecd-frame-canvas {
+        display: block;
+        border-radius: 8px;
+        max-width: 100%;
+      }
+      .ecd-frame-controls {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+      .ecd-frame-upload-btn,
+      .ecd-frame-confirm {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 10px;
+        padding: 12px 16px;
+        font-family: Manrope, sans-serif;
+        font-weight: 600;
+        font-size: 14px;
+        cursor: pointer;
+        border: none;
+      }
+      .ecd-frame-upload-btn {
+        background: #fff;
+        color: #101010;
+        border: 1px solid #101010;
+      }
+      .ecd-frame-confirm {
+        background: #05ef62;
+        color: #101010;
+      }
+      .ecd-frame-confirm:disabled {
+        opacity: 0.45;
+        cursor: not-allowed;
+      }
+      .ecd-frame-zoom-label {
+        font-size: 13px;
+        color: #4a5563;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+      .ecd-frame-hint,
+      .ecd-frame-status {
+        font-size: 12px;
+        color: #6b747e;
+        margin: 0;
+        line-height: 1.5;
+      }
+      .ecd-frame-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        align-items: center;
+      }
+
       /* ==========================================
          04. TICKET CARDS
          ========================================== */
@@ -1170,6 +1254,21 @@
             </div>
           </div>
         </div>
+      </div>
+
+      <!-- Attending social frame -->
+      <div class="container section-padding ecd-frame-section" id="attendeeFrameSection">
+        <div class="section-label">
+          <span class="font-mono">Share that you are attending</span>
+        </div>
+        <h2 style="font-size: 28px; margin: 0 0 8px; font-weight: 800">
+          Create your attending photo
+        </h2>
+        <p style="font-size: 15px; color: #4a5563; margin: 0 0 20px; max-width: 56ch">
+          Upload a photo, place it in the frame, then confirm. Download it for
+          LinkedIn, Instagram, or WhatsApp.
+        </p>
+        <div id="ecdFrameEditorRoot"></div>
       </div>
 
       <!-- Ticket Cards -->
@@ -2445,7 +2544,8 @@
 
     <!-- Scripts -->
     <script src="prices.js?v=20260927b"></script>
-    <script src="ecd-api.js?v=20260927b"></script>
+    <script src="ecd-api.js?v=20260928a"></script>
+    <script src="ecd-frame-editor.js?v=20260928a"></script>
     <!-- Real scannable QR (encodes ticket serial) -->
     <script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script>
     <script>
@@ -2932,10 +3032,38 @@
           discountRow.style.display = data.discountCents > 0 ? "flex" : "none";
         if (data.paymentStatus === "paid") {
           renderTicketCards(data.tickets, data.ticketName);
+          mountAttendeeFrameEditor(data);
         } else {
           var grid = document.getElementById("ecdTicketsGrid");
           if (grid) grid.innerHTML = "";
         }
+      }
+
+      var __ecdFrameMounted = false;
+      function mountAttendeeFrameEditor(data) {
+        if (__ecdFrameMounted || !window.EcdFrameEditor) return;
+        var root = document.getElementById("ecdFrameEditorRoot");
+        if (!root) return;
+        var order = (data && data.orderCode) || currentOrderCode();
+        if (!order) return;
+        __ecdFrameMounted = true;
+        EcdFrameEditor.mount({
+          root: root,
+          frameSrc: "assets/attendee-frame.png",
+          existingUrl: (data && data.attendeeFrameUrl) || "",
+          onConfirm: function (dataUrl) {
+            if (!window.EcdApi || !EcdApi.uploadAttendeeFrame) {
+              return Promise.reject(new Error("Upload unavailable."));
+            }
+            return EcdApi.uploadAttendeeFrame(order, dataUrl).then(function (res) {
+              if (window.__ecdBooking) {
+                window.__ecdBooking.attendeeFrameUrl =
+                  (res && res.attendeeFrameUrl) || dataUrl;
+              }
+              return res;
+            });
+          },
+        });
       }
 
       function supportMailto(subject, body) {
