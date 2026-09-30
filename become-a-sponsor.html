@@ -14,9 +14,36 @@
     />
 
     <!-- Reusable navbar and footer (same as sponsors.html) -->
-    <script src="ecd-analytics.js?v=20260927c"></script>
-    <script src="navbar.js?v=20260925b" defer></script>
-    <script src="footer.js?v=20260925b" defer></script>
+    <script src="ecd-analytics.js?v=20260930b"></script>
+    <script src="navbar.js?v=20260930c" defer></script>
+    <script src="breadcrumbs.js?v=20260930a" defer></script>
+    <script type="application/ld+json">
+{
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "ECommerce Day",
+          "item": "https://www.trafficmena.com/ecommerce-day/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Sponsors & Partners",
+          "item": "https://www.trafficmena.com/ecommerce-day/sponsors.html"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Become a Sponsor"
+        }
+      ]
+    }
+    </script>
+    <script src="ecd-whatsapp.js?v=20260930a" defer></script>
+    <script src="footer.js?v=20260930a" defer></script>
 
     <style>
       *,
@@ -652,6 +679,20 @@
         margin-top: 4px;
         display: block;
       }
+      /* Country code + mobile number, same as checkout */
+      .phone-group {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+      }
+      .phone-group .form-select {
+        width: 96px;
+        flex-shrink: 0;
+      }
+      .phone-group .form-input {
+        flex: 1;
+        min-width: 0;
+      }
       .form-actions {
         display: flex;
         justify-content: space-between;
@@ -1057,6 +1098,7 @@
   <body>
     <!-- Reusable Navbar (same as sponsors.html) -->
     <site-navbar current="sponsors"></site-navbar>
+    <ecd-breadcrumb id="ecdBreadcrumb" data-trail='[["ECommerce Day", "index.html"], ["Sponsors & Partners", "sponsors.html"], ["Become a Sponsor"]]' style="display:block;min-height:44px"></ecd-breadcrumb>
 
     <!-- ==================== HERO ==================== -->
     <section class="hero">
@@ -1506,7 +1548,7 @@
     <!-- Reusable Footer (same as sponsors.html) -->
     <site-footer></site-footer>
 
-    <script src="ecd-api.js?v=20260928c"></script>
+    <script src="ecd-api.js?v=20260930a"></script>
     <!-- ==================== JAVASCRIPT ==================== -->
     <script>
       (function () {
@@ -1525,6 +1567,9 @@
           level: null,
           props: [],
           contact: "Email",
+          // Mobile country code; follows the step 1 country until changed by hand.
+          cc: "+20",
+          ccSetByUser: false,
           f: {
             company: "",
             website: "",
@@ -1590,7 +1635,7 @@
           name: "Full name",
           title: "Job title",
           email: "Work email",
-          phone: "Phone",
+          phone: "Mobile number",
         };
 
         var faqData = [
@@ -1639,6 +1684,134 @@
             .replace(/"/g, "&quot;");
         }
 
+        /* ---------- Mobile number (same rules as checkout.html) ----------
+           The dropdown holds the country code, the field the national number.
+           Accepted and saved as one clean international number, e.g. +201002754217:
+             1002754217 · 01002754217 · +201002754217 · 00201002754217
+           Arabic digits (٠١٠٠...) are read as normal digits.
+           nsn = the number after the country code, without the first 0. */
+        var PHONE_RULES = {
+          "20": { name: "Egyptian", nsn: /^1[0125]\d{8}$/, digits: 10, example: "1012345678" },
+          "966": { name: "Saudi", nsn: /^5\d{8}$/, digits: 9, example: "512345678" },
+          "971": { name: "UAE", nsn: /^5\d{8}$/, digits: 9, example: "501234567" },
+          "965": { name: "Kuwaiti", nsn: /^[4569]\d{7}$/, digits: 8, example: "51234567" },
+          "974": { name: "Qatari", nsn: /^[3567]\d{7}$/, digits: 8, example: "33123456" },
+          "962": { name: "Jordanian", nsn: /^7[789]\d{7}$/, digits: 9, example: "791234567" },
+        };
+        // "other": any other country. The field then takes the full
+        // international number and must start with + or 00, so a local number
+        // is never mistaken for a country code (7911… would become Russia).
+        var OTHER_CODE = "other";
+        var PHONE_CODES = ["+20", "+966", "+971", "+965", "+974", "+962", OTHER_CODE];
+        var COUNTRY_CODE = {
+          Egypt: "+20",
+          "Saudi Arabia": "+966",
+          UAE: "+971",
+          Kuwait: "+965",
+          Qatar: "+974",
+          Jordan: "+962",
+          Other: OTHER_CODE,
+        };
+        var OTHER_EXAMPLE = "+44 7911 123456";
+
+        /* "Other" code: the international digits without + (447911123456), or
+           "" when invalid. A number of one of the six listed countries still
+           has to pass that country's rule. */
+        function otherIntlDigits(raw) {
+          var s = toAsciiDigits(raw).trim();
+          var d = s.replace(/\D/g, "");
+          if (s.charAt(0) === "+") {
+            // +… as typed
+          } else if (d.indexOf("00") === 0) {
+            d = d.slice(2);
+          } else {
+            return "";
+          }
+          var known = Object.keys(PHONE_RULES).filter(function (code) {
+            return d.indexOf(code) === 0;
+          })[0];
+          if (known) {
+            var nsn = d.slice(known.length).replace(/^0/, "");
+            return PHONE_RULES[known].nsn.test(nsn) ? known + nsn : "";
+          }
+          return /^[1-9]\d{7,14}$/.test(d) ? d : "";
+        }
+
+        function ccDigits(cc) {
+          return String(cc || "+20").replace(/\D/g, "") || "20";
+        }
+
+        function toAsciiDigits(value) {
+          return String(value || "")
+            .replace(/[٠-٩]/g, function (d) {
+              return String(d.charCodeAt(0) - 0x0660);
+            })
+            .replace(/[۰-۹]/g, function (d) {
+              return String(d.charCodeAt(0) - 0x06f0);
+            });
+        }
+
+        function normalizeLocalMobile(raw, cc) {
+          var code = ccDigits(cc);
+          var rule = PHONE_RULES[code];
+          var d = toAsciiDigits(raw).replace(/\D/g, "");
+          if (!d) return "";
+          if (d.indexOf("00" + code) === 0) {
+            d = d.slice(2 + code.length);
+          } else if (
+            rule &&
+            d.indexOf(code) === 0 &&
+            d.length >= code.length + rule.digits
+          ) {
+            // Only strip when the number is too long to be a local one, so a
+            // local number that happens to start with the same digits is kept.
+            d = d.slice(code.length);
+          }
+          if (d.charAt(0) === "0") d = d.slice(1);
+          return d;
+        }
+
+        function isValidMobile(raw, cc) {
+          if (cc === OTHER_CODE) return !!otherIntlDigits(raw);
+          var rule = PHONE_RULES[ccDigits(cc)];
+          var nsn = normalizeLocalMobile(raw, cc);
+          return rule ? rule.nsn.test(nsn) : /^\d{7,12}$/.test(nsn);
+        }
+
+        function mobileErrorText(cc) {
+          if (cc === OTHER_CODE) {
+            return (
+              "Enter the full international number, starting with + and the country code, for example " +
+              OTHER_EXAMPLE + "."
+            );
+          }
+          var code = ccDigits(cc);
+          var rule = PHONE_RULES[code];
+          if (!rule) return "Enter a complete mobile number.";
+          return (
+            "Enter a complete " + rule.name + " mobile number: " + rule.digits +
+            " digits after +" + code + ", for example " + rule.example +
+            ". Using a number from another country? Change the code first."
+          );
+        }
+
+        // The value shown in the field: the clean number once it is valid,
+        // otherwise exactly what was typed so it can be fixed.
+        function tidyMobile(raw, cc) {
+          if (!isValidMobile(raw, cc)) return String(raw || "");
+          return cc === OTHER_CODE ? "+" + otherIntlDigits(raw) : normalizeLocalMobile(raw, cc);
+        }
+
+        function assembleMobile(mobile, cc) {
+          if (cc === OTHER_CODE) return "+" + otherIntlDigits(mobile);
+          return "+" + ccDigits(cc) + normalizeLocalMobile(mobile, cc);
+        }
+
+        function mobilePlaceholder(cc) {
+          if (cc === OTHER_CODE) return OTHER_EXAMPLE;
+          return (PHONE_RULES[ccDigits(cc)] || {}).example || "";
+        }
+
         function getErrors() {
           var f = state.f;
           var e = {};
@@ -1651,6 +1824,8 @@
             ["name", "title", "phone"].forEach(function (k) {
               if (!f[k]) e[k] = reqLabels[k] + " is required.";
             });
+            if (f.phone && !isValidMobile(f.phone, state.cc))
+              e.phone = mobileErrorText(state.cc);
             if (!f.email) e.email = "Work email is required.";
             else if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(f.email))
               e.email = "Enter a valid email address.";
@@ -1864,6 +2039,10 @@
           /* ---------- STEP 2 ---------- */
           if (state.step === 2) {
             var fd2 = state.f;
+            // Start the code on the step 1 country (Egypt → +20) until changed by hand.
+            if (!state.ccSetByUser && COUNTRY_CODE[fd2.country]) {
+              state.cc = COUNTRY_CODE[fd2.country];
+            }
             stepHTML =
               '<div class="form-grid-2">' +
               /* name */
@@ -1902,14 +2081,26 @@
                 ? '<span class="field-error">' + esc(errs.email) + "</span>"
                 : "") +
               "</div>" +
-              /* phone */
+              /* phone: country code + national number, same as checkout */
               "<div>" +
-              '<label class="form-label" for="f-phone">Phone *</label>' +
+              '<label class="form-label" for="f-phone">Mobile number *</label>' +
+              '<div class="phone-group">' +
+              '<select id="f-cc" class="form-select" aria-label="Country code">' +
+              PHONE_CODES.map(function (c) {
+                return (
+                  '<option value="' + c + '"' + (state.cc === c ? " selected" : "") + ">" +
+                  (c === OTHER_CODE ? "Other" : c) + "</option>"
+                );
+              }).join("") +
+              "</select>" +
               '<input id="f-phone" class="form-input' +
               (errs.phone ? " error" : "") +
-              '" type="tel" value="' +
+              '" type="tel" autocomplete="tel-national" value="' +
               esc(fd2.phone) +
-              '" placeholder="+20" data-field="phone" />' +
+              '" placeholder="' +
+              esc(mobilePlaceholder(state.cc)) +
+              '" data-field="phone" />' +
+              "</div>" +
               (errs.phone
                 ? '<span class="field-error">' + esc(errs.phone) + "</span>"
                 : "") +
@@ -2101,6 +2292,26 @@
             });
           });
 
+          // Mobile: leaving the field shows the clean number (01002754217
+          // becomes 1002754217); changing the code re-checks it.
+          var phoneEl = qs("#f-phone", root);
+          if (phoneEl) {
+            phoneEl.addEventListener("blur", function () {
+              var tidy = tidyMobile(phoneEl.value, state.cc);
+              if (tidy !== phoneEl.value) phoneEl.value = tidy;
+              state.f.phone = tidy;
+            });
+          }
+          var ccEl = qs("#f-cc", root);
+          if (ccEl) {
+            ccEl.addEventListener("change", function (e) {
+              state.cc = e.target.value;
+              state.ccSetByUser = true;
+              state.f.phone = tidyMobile(state.f.phone, state.cc);
+              renderForm();
+            });
+          }
+
           // Chip groups
           qsa("[data-objective]", root).forEach(function (btn) {
             btn.addEventListener("click", function () {
@@ -2205,7 +2416,7 @@
             contactName: state.f.name,
             contactTitle: state.f.title,
             contactEmail: state.f.email,
-            contactPhone: state.f.phone || null,
+            contactPhone: state.f.phone ? assembleMobile(state.f.phone, state.cc) : null,
             preferredContact: state.contact || "Email",
             objectives: state.objectives.slice(),
             interestedLevel: state.level,
@@ -2225,6 +2436,10 @@
                 EcdAnalytics.generateLead({
                   leadId: state.reqId,
                   sponsorLevel: state.level,
+                });
+                EcdAnalytics.sponsorFormComplete({
+                  requestCode: state.reqId,
+                  form: payload,
                 });
               }
               renderForm();

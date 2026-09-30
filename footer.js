@@ -129,7 +129,7 @@ class SiteFooter extends HTMLElement {
               <!-- Hidden until the FAQ page content is updated: <li><a href="faq.html">FAQ</a></li> -->
               <li><a href="mailto:info@trafficmena.com">Contact</a></li>
               <li><a href="https://wa.me/201505437979?text=I%20need%20help%20for%20Ecommerce%20Day%202026" target="_blank" rel="noopener" aria-label="Chat with us on WhatsApp (opens in a new tab)">WhatsApp</a></li>
-              <li><a href="policy.html">Privacy Policy</a></li>
+              <li><a href="policy.html#privacy">Privacy Policy</a></li>
             </ul>
             <div class="footer-social" aria-label="TrafficMENA social media">
               <a href="https://x.com/trafficmena" target="_blank" rel="noopener noreferrer" aria-label="TrafficMENA on X (opens in a new tab)" title="X">

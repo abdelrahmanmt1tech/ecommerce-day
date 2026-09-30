@@ -13,11 +13,14 @@
       rel="stylesheet"
     />
 
-    <script src="ecd-analytics.js?v=20260927c"></script>
+    <script src="ecd-analytics.js?v=20260930b"></script>
     <!-- ✅ Reusable navbar -->
-    <script src="navbar.js?v=20260925b" defer></script>
+    <script src="navbar.js?v=20260930c" defer></script>
+    <script src="breadcrumbs.js?v=20260930a" defer></script>
+    <meta name="robots" content="noindex, nofollow" />
+    <script src="ecd-whatsapp.js?v=20260930a" defer></script>
     <!-- ✅ Reusable footer -->
-    <script src="footer.js?v=20260925b" defer></script>
+    <script src="footer.js?v=20260930a" defer></script>
 
     <style>
       *,
@@ -809,6 +812,7 @@
   <body>
     <!-- ✅ Reusable Navbar: one line, no duplication -->
     <site-navbar></site-navbar>
+    <ecd-breadcrumb id="ecdBreadcrumb" data-trail='[["ECommerce Day", "index.html"], ["Tickets", "tickets.html"], ["Booking confirmation"]]' style="display:block;min-height:44px"></ecd-breadcrumb>
 
     <div id="ecdSuccessFlow">
       <!-- Success Hero -->
@@ -2472,7 +2476,7 @@
 
     <!-- Scripts -->
     <script src="prices.js?v=20260927b"></script>
-    <script src="ecd-api.js?v=20260928c"></script>
+    <script src="ecd-api.js?v=20260930a"></script>
     <script src="ecd-frame-editor.js?v=20260928e"></script>
     <!-- Real scannable QR (encodes ticket serial) -->
     <script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script>

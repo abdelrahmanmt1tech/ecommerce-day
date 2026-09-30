@@ -34,14 +34,91 @@
     );
   }
 
-  function renderPartners(partners) {
-    var wrap = document.getElementById("partnersMarquee");
+  // Admin tier "community" (or no tier) = Community Partner; every other tier is a sponsor
+  function isSponsor(p) {
+    return (p.tier || "community") !== "community";
+  }
+
+  function makePartnerTile(p) {
+    var inner;
+    if (p.logoUrl) {
+      inner = el("img", {
+        src: p.logoUrl,
+        alt: p.name || "Partner",
+        class: "partner-logo",
+        loading: "lazy",
+        decoding: "async",
+      });
+    } else {
+      inner = el("span", { text: p.name || "Partner" });
+    }
+
+    if (p.websiteUrl) {
+      var a = el("a", {
+        href: p.websiteUrl,
+        target: "_blank",
+        rel: "noopener noreferrer",
+        class: "partner-tile",
+      });
+      a.style.textDecoration = "none";
+      a.style.color = "inherit";
+      a.style.display = "flex";
+      a.style.alignItems = "center";
+      a.style.justifyContent = "center";
+      a.appendChild(inner);
+      return a;
+    }
+
+    var tile = el("div", { class: "partner-tile" });
+    tile.appendChild(inner);
+    return tile;
+  }
+
+  var SPONSOR_SLOTS = 6;
+  var PLACEHOLDER_SVG =
+    '<svg viewBox="0 0 120 32" aria-hidden="true" focusable="false"><rect width="32" height="32" rx="9" fill="#DDE2E7"/><rect x="42" y="6" width="78" height="9" rx="4.5" fill="#E6EAEE"/><rect x="42" y="19" width="50" height="7" rx="3.5" fill="#E6EAEE"/></svg>';
+
+  // Home "Our Sponsors" grid: sponsor logos by tier order, gray tiles fill up to 6 slots
+  function renderSponsors(sponsors, tiers) {
+    var grid = document.getElementById("sponsorsGrid");
+    if (!grid) return;
+    var order = (tiers || []).map(function (t) {
+      return t.id;
+    });
+    function rank(p) {
+      var i = order.indexOf(p.tier);
+      return i === -1 ? order.length : i;
+    }
+    var list = sponsors.slice().sort(function (a, b) {
+      return rank(a) - rank(b);
+    });
+    var frag = document.createDocumentFragment();
+    list.forEach(function (p) {
+      frag.appendChild(makePartnerTile(p));
+    });
+    for (var i = list.length; i < SPONSOR_SLOTS; i++) {
+      frag.appendChild(
+        el("div", {
+          class: "partner-tile is-placeholder",
+          "aria-hidden": "true",
+          html: PLACEHOLDER_SVG,
+        }),
+      );
+    }
+    grid.innerHTML = "";
+    grid.appendChild(frag);
+    var status = document.getElementById("sponsorsStatus");
+    if (status) {
+      status.textContent = list.length ? "" : "Sponsors will be announced soon.";
+    }
+  }
+
+  // Home "Our Community Partners" marquee
+  function renderCommunity(partners) {
+    var wrap = document.getElementById("communityMarquee");
     if (!wrap) return;
     wrap.innerHTML = "";
-    var list = (partners || []).filter(function (p) {
-      return p.showOnHome !== false;
-    });
-    if (!list.length) {
+    if (!partners.length) {
       wrap.appendChild(
         el("div", {
           class: "partner-tile",
@@ -50,48 +127,24 @@
       );
       return;
     }
-
-    function makeTile(p) {
-      var inner;
-      if (p.logoUrl) {
-        inner = el("img", {
-          src: p.logoUrl,
-          alt: p.name || "Partner",
-          class: "partner-logo",
-          loading: "lazy",
-          decoding: "async",
-        });
-      } else {
-        inner = el("span", { text: p.name || "Partner" });
-      }
-
-      if (p.websiteUrl) {
-        var a = el("a", {
-          href: p.websiteUrl,
-          target: "_blank",
-          rel: "noopener noreferrer",
-          class: "partner-tile",
-        });
-        a.style.textDecoration = "none";
-        a.style.color = "inherit";
-        a.style.display = "flex";
-        a.style.alignItems = "center";
-        a.style.justifyContent = "center";
-        a.appendChild(inner);
-        return a;
-      }
-
-      var tile = el("div", { class: "partner-tile" });
-      tile.appendChild(inner);
-      return tile;
-    }
-
     var frag = document.createDocumentFragment();
     // Duplicate strip for CSS marquee loop
-    list.concat(list).forEach(function (p) {
-      frag.appendChild(makeTile(p));
+    partners.concat(partners).forEach(function (p) {
+      frag.appendChild(makePartnerTile(p));
     });
     wrap.appendChild(frag);
+  }
+
+  function renderPartners(partners, tiers) {
+    var list = (partners || []).filter(function (p) {
+      return p.showOnHome !== false;
+    });
+    renderSponsors(list.filter(isSponsor), tiers);
+    renderCommunity(
+      list.filter(function (p) {
+        return !isSponsor(p);
+      }),
+    );
   }
 
   function wireSpeakerCarousel(track) {
@@ -242,7 +295,7 @@
     if (global.EventPrices && global.EventPrices.applyFromPackages) {
       global.EventPrices.applyFromPackages(content.packages, activeTicketId);
     }
-    renderPartners(content.partners);
+    renderPartners(content.partners, content.partnerTiers);
     renderSpeakers(content.speakers);
     if (content.packages) {
       applyPackageCard("ct", content.packages.ct);

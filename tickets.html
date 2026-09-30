@@ -12,16 +12,37 @@
     />
 
     <!-- ✅ Reusable navbar -->
-    <script src="ecd-analytics.js?v=20260927c"></script>
-    <script src="navbar.js?v=20260925b" defer></script>
+    <script src="ecd-analytics.js?v=20260930b"></script>
+    <script src="navbar.js?v=20260930c" defer></script>
+    <script src="breadcrumbs.js?v=20260930a" defer></script>
+    <script type="application/ld+json">
+{
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "ECommerce Day",
+          "item": "https://www.trafficmena.com/ecommerce-day/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Tickets"
+        }
+      ]
+    }
+    </script>
+    <script src="ecd-whatsapp.js?v=20260930a" defer></script>
     <!-- ✅ Reusable footer -->
-    <script src="footer.js?v=20260925b" defer></script>
+    <script src="footer.js?v=20260930a" defer></script>
     <!-- ✅ Shared ticket prices + live CMS packages -->
     <!-- Shared tickets section (same as index.html and agenda.html). Not deferred on purpose. -->
     <script src="tickets-section.js?v=20260928a"></script>
     <script src="prices.js?v=20260924c" defer></script>
-    <script src="ecd-api.js?v=20260928c" defer></script>
-    <script src="ecd-content.js?v=20260925b" defer></script>
+    <script src="ecd-api.js?v=20260930a" defer></script>
+    <script src="ecd-content.js?v=20260930b" defer></script>
 
     <style>
       *,
@@ -540,6 +561,7 @@
   <body>
     <!-- ✅ Reusable Navbar: one line, no duplication -->
     <site-navbar current="tickets"></site-navbar>
+    <ecd-breadcrumb id="ecdBreadcrumb" data-trail='[["ECommerce Day", "index.html"], ["Tickets"]]' style="display:block;min-height:44px"></ecd-breadcrumb>
 
     <main>
       <!-- HERO -->

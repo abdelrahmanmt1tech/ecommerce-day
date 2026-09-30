@@ -35,15 +35,16 @@
     </noscript>
 
     <!-- ✅ Reusable navbar -->
-    <script src="ecd-analytics.js?v=20260927c"></script>
-    <script src="navbar.js?v=20260925b" defer></script>
+    <script src="ecd-analytics.js?v=20260930b"></script>
+    <script src="navbar.js?v=20260930c" defer></script>
+    <script src="ecd-whatsapp.js?v=20260930a" defer></script>
     <!-- ✅ Reusable footer -->
-    <script src="footer.js?v=20260925b" defer></script>
+    <script src="footer.js?v=20260930a" defer></script>
 
     <!-- Shared prices + ECD content (partners/speakers/packages) -->
     <script src="prices.js?v=20260924c" defer></script>
-    <script src="ecd-api.js?v=20260928c" defer></script>
-    <script src="ecd-content.js?v=20260925b" defer></script>
+    <script src="ecd-api.js?v=20260930a" defer></script>
+    <script src="ecd-content.js?v=20260930b" defer></script>
 
     <style>
       /* Reserve the navbar's height before navbar.js renders it (prevents layout shift) */
@@ -527,6 +528,62 @@
         color: var(--muted);
       }
 
+      /* ============ SPONSORS GRID ============ */
+      /* Static grid: sponsor logos first, gray tiles hold the empty slots */
+      .sponsor-grid {
+        display: grid;
+        grid-template-columns: repeat(6, minmax(0, 1fr));
+        gap: 24px;
+      }
+      .sponsor-grid .partner-tile {
+        width: auto;
+      }
+      .sponsor-grid a.partner-tile:hover {
+        box-shadow: 0 14px 40px rgba(16, 16, 16, 0.08);
+      }
+      .partner-tile.is-placeholder svg {
+        display: block;
+        width: 72%;
+        max-width: 120px;
+        height: auto;
+      }
+      .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+      }
+      .section-divided {
+        border-top: 1px solid var(--line);
+      }
+      #sponsors,
+      #community-partners {
+        scroll-margin-top: var(--ecd-nav-h, 72px);
+      }
+      @media (max-width: 900px) {
+        .sponsor-grid {
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+          gap: 16px;
+        }
+      }
+      @media (max-width: 520px) {
+        .sponsor-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          gap: 12px;
+        }
+        .sponsor-grid .partner-tile {
+          height: 80px;
+        }
+        .section-cta .btn {
+          width: 100%;
+        }
+      }
+
       /* ============ CAROUSEL ============ */
       .carousel-wrap {
         position: relative;
@@ -886,33 +943,52 @@
           transform: none;
         }
       }
+      /* Video Reviews: Bunny players, each in its own shape. Rows are justified:
+         flex-grow = aspect ratio, so every player in a row gets the same height. */
+      .video-wall {
+        grid-column: 1 / -1;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+      }
+      .video-row {
+        display: flex;
+        gap: 16px;
+      }
       .video-tile {
+        position: relative;
+        flex: var(--grow) 1 0;
+        min-width: 0;
+        aspect-ratio: var(--ratio);
         border-radius: var(--radius);
         overflow: hidden;
-        border: 1px solid var(--line);
-        background: var(--white);
-        cursor: pointer;
-        position: relative;
-        min-height: 150px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        border: 1px solid var(--line-strong);
+        background: #101010;
       }
-      .video-play {
+      .video-tile iframe {
         position: absolute;
         inset: 0;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        width: 100%;
+        height: 100%;
+        border: 0;
       }
-      .video-play span {
-        width: 46px;
-        height: 46px;
-        border-radius: 999px;
-        background: rgba(20, 24, 21, 0.65);
-        display: flex;
-        align-items: center;
-        justify-content: center;
+      @media (max-width: 900px) {
+        .video-row {
+          flex-wrap: wrap;
+        }
+        .video-tile {
+          flex: 1 1 100%;
+        }
+        .video-tile.is-portrait {
+          flex: 1 1 calc(50% - 8px);
+        }
+      }
+      @media (max-width: 600px) {
+        .video-tile.is-portrait {
+          flex: 1 1 100%;
+          max-width: 320px;
+          margin: 0 auto;
+        }
       }
 
       /* ============ STATS ============ */
@@ -1305,7 +1381,7 @@
   </head>
   <body>
     <!-- ✅ Reusable Navbar: one line, no duplication -->
-    <site-navbar></site-navbar>
+    <site-navbar current="home"></site-navbar>
 
     <main id="main">
       <!-- ============ HERO ============ -->
@@ -1446,25 +1522,45 @@
         </div>
       </section>
 
-      <!-- ============ PARTNERS ============ -->
-      <section id="partners" class="section section-soft">
+      <!-- ============ SPONSORS ============ -->
+      <!-- Filled by ecd-content.js: partners whose admin tier is not "community".
+           The gray tiles stay until real sponsor logos replace them. -->
+      <section id="sponsors" class="section section-soft">
         <div class="container">
-          <div class="eyebrow">Powering the Experience</div>
+          <div class="eyebrow">Our Sponsors</div>
           <h2 class="section-title" data-reveal>
-            The Ecosystem Behind ECommerce Day
+            The Sponsors Behind ECommerce Day
           </h2>
           <p class="section-sub" data-reveal>
             Meet the platforms, partners, and enablers supporting ecommerce
             across the region.
           </p>
 
-          <div class="marquee-wrap">
-            <div class="marquee" id="partnersMarquee"></div>
+          <p class="sr-only" id="sponsorsStatus">Sponsors will be announced soon.</p>
+          <div class="sponsor-grid" id="sponsorsGrid">
+              <div class="partner-tile is-placeholder" aria-hidden="true">
+                <svg viewBox="0 0 120 32" aria-hidden="true" focusable="false"><rect width="32" height="32" rx="9" fill="#DDE2E7"/><rect x="42" y="6" width="78" height="9" rx="4.5" fill="#E6EAEE"/><rect x="42" y="19" width="50" height="7" rx="3.5" fill="#E6EAEE"/></svg>
+              </div>
+              <div class="partner-tile is-placeholder" aria-hidden="true">
+                <svg viewBox="0 0 120 32" aria-hidden="true" focusable="false"><rect width="32" height="32" rx="9" fill="#DDE2E7"/><rect x="42" y="6" width="78" height="9" rx="4.5" fill="#E6EAEE"/><rect x="42" y="19" width="50" height="7" rx="3.5" fill="#E6EAEE"/></svg>
+              </div>
+              <div class="partner-tile is-placeholder" aria-hidden="true">
+                <svg viewBox="0 0 120 32" aria-hidden="true" focusable="false"><rect width="32" height="32" rx="9" fill="#DDE2E7"/><rect x="42" y="6" width="78" height="9" rx="4.5" fill="#E6EAEE"/><rect x="42" y="19" width="50" height="7" rx="3.5" fill="#E6EAEE"/></svg>
+              </div>
+              <div class="partner-tile is-placeholder" aria-hidden="true">
+                <svg viewBox="0 0 120 32" aria-hidden="true" focusable="false"><rect width="32" height="32" rx="9" fill="#DDE2E7"/><rect x="42" y="6" width="78" height="9" rx="4.5" fill="#E6EAEE"/><rect x="42" y="19" width="50" height="7" rx="3.5" fill="#E6EAEE"/></svg>
+              </div>
+              <div class="partner-tile is-placeholder" aria-hidden="true">
+                <svg viewBox="0 0 120 32" aria-hidden="true" focusable="false"><rect width="32" height="32" rx="9" fill="#DDE2E7"/><rect x="42" y="6" width="78" height="9" rx="4.5" fill="#E6EAEE"/><rect x="42" y="19" width="50" height="7" rx="3.5" fill="#E6EAEE"/></svg>
+              </div>
+              <div class="partner-tile is-placeholder" aria-hidden="true">
+                <svg viewBox="0 0 120 32" aria-hidden="true" focusable="false"><rect width="32" height="32" rx="9" fill="#DDE2E7"/><rect x="42" y="6" width="78" height="9" rx="4.5" fill="#E6EAEE"/><rect x="42" y="19" width="50" height="7" rx="3.5" fill="#E6EAEE"/></svg>
+              </div>
           </div>
 
-          <div class="mt-32">
+          <div class="mt-32 section-cta">
             <a href="become-a-sponsor.html" class="btn btn-primary"
-              >Become a Partner</a
+              >Become a Sponsor</a
             >
           </div>
         </div>
@@ -1533,6 +1629,25 @@
           <div class="mt-12">
             <a href="speakers.html" class="btn btn-outline-dark"
               >Meet All Speakers</a
+            >
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ COMMUNITY PARTNERS ============ -->
+      <!-- Filled by ecd-content.js: partners whose admin tier is "community" -->
+      <section id="community-partners" class="section section-divided">
+        <div class="container">
+          <div class="eyebrow">Community</div>
+          <h2 class="section-title" data-reveal>Our Community Partners</h2>
+
+          <div class="marquee-wrap mt-24">
+            <div class="marquee" id="communityMarquee"></div>
+          </div>
+
+          <div class="mt-32 section-cta">
+            <a href="become-a-sponsor.html" class="btn btn-primary"
+              >Become a Partner</a
             >
           </div>
         </div>
@@ -1823,7 +1938,7 @@
       </svg>
     </button>
 
-    <div class="mobile-cta" id="mobileCta" hidden>
+    <div class="mobile-cta" id="mobileCta" data-ecd-bottom-bar hidden>
       <div class="mobile-cta-text">
         ECommerce Day, 5 Nov 2026
         <span class="price-fj" data-suffix=" EGP">[Final Price] EGP</span>
@@ -2197,9 +2312,9 @@
        RENDER: STATIC SECTIONS
        ============================================================ */
 
-        // Partners marquee, filled by ecd-content.js from API
+        // Community partners marquee, filled by ecd-content.js from API
         (function () {
-          var wrap = document.getElementById("partnersMarquee");
+          var wrap = document.getElementById("communityMarquee");
           if (!wrap) return;
           wrap.appendChild(
             el("div", {
@@ -2385,7 +2500,24 @@
           if (!tabsEl || !panel) return;
           var tabs = [
             { key: "highlights", name: "Past Reviews" },
-            { key: "videos", name: "Video Stories" },
+            { key: "videos", name: "Video Reviews" },
+          ];
+          // Video Reviews: Bunny Stream (library 465597), montage first. Each row fills
+          // the width. autoplay=false and no "autoplay" in allow: never plays on its own;
+          // preload=false: nothing downloads until play is pressed.
+          var BUNNY_EMBED = "https://iframe.mediadelivery.net/embed/465597/";
+          var BUNNY_PARAMS =
+            "?autoplay=false&loop=false&muted=false&preload=false&responsive=true";
+          var videoRows = [
+            [
+              { id: "c9aadf62-0130-44fd-8bf6-dfa833055ca0", w: 16, h: 9 },
+              { id: "e3fcc1e6-b848-4850-b418-18a4d556ae5e", w: 16, h: 9 },
+            ],
+            [
+              { id: "c6f7a2f8-a193-4c80-93bf-adc581dc694d", w: 16, h: 9 },
+              { id: "c57caa71-4089-4689-862b-0786136c0fae", w: 9, h: 16 },
+              { id: "b9a6f7f9-3cf4-4375-80d8-189df32e857f", w: 9, h: 16 },
+            ],
           ];
           var active = "highlights";
           // Past Reviews: attendee feedback screenshots (assets/reviews)
@@ -2426,14 +2558,40 @@
               });
               panel.appendChild(wall);
             } else {
-              for (var k = 0; k < 3; k++) {
-                var v = el("div", { class: "video-tile" });
-                v.innerHTML =
-                  '<svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#D5DAE0" stroke-width="1.4"><rect x="3" y="5" width="18" height="14" rx="2"/></svg>' +
-                  '<div class="video-play"><span><svg width="16" height="16" viewBox="0 0 24 24" fill="#FFFFFF"><path d="M8 5v14l11-7Z"/></svg></span></div>';
-                v.addEventListener("click", openLightbox);
-                panel.appendChild(v);
-              }
+              var vWall = el("div", { class: "video-wall" });
+              var vTotal = 0,
+                vNum = 0;
+              videoRows.forEach(function (row) {
+                vTotal += row.length;
+              });
+              videoRows.forEach(function (row) {
+                var rowEl = el("div", { class: "video-row" });
+                row.forEach(function (v) {
+                  vNum++;
+                  var tile = el("div", {
+                    class: "video-tile" + (v.h > v.w ? " is-portrait" : ""),
+                  });
+                  tile.style.setProperty("--ratio", v.w + " / " + v.h);
+                  tile.style.setProperty("--grow", String(v.w / v.h));
+                  var frame = el("iframe", {
+                    src: BUNNY_EMBED + v.id + BUNNY_PARAMS,
+                    title:
+                      "Video review from a past TrafficMENA event (" +
+                      vNum +
+                      " of " +
+                      vTotal +
+                      ")",
+                    loading: "lazy",
+                    allow:
+                      "accelerometer; gyroscope; encrypted-media; picture-in-picture; fullscreen",
+                  });
+                  frame.setAttribute("allowfullscreen", "");
+                  tile.appendChild(frame);
+                  rowEl.appendChild(tile);
+                });
+                vWall.appendChild(rowEl);
+              });
+              panel.appendChild(vWall);
             }
           }
           function renderTabs() {
@@ -2652,6 +2810,13 @@
             if (mobileCta) {
               var mobile = window.innerWidth <= 900;
               mobileCta.hidden = !(pastHero && mobile);
+            }
+            // Keep back-to-top above the Get Ticket bar instead of behind it.
+            if (backTop) {
+              backTop.style.bottom =
+                mobileCta && !mobileCta.hidden
+                  ? mobileCta.offsetHeight + 20 + "px"
+                  : "";
             }
           }
           window.addEventListener("scroll", onScroll, { passive: true });

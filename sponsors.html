@@ -14,11 +14,32 @@
     />
 
     <!-- ✅ Reusable navbar -->
-    <script src="ecd-analytics.js?v=20260927c"></script>
-    <script src="navbar.js?v=20260925b" defer></script>
+    <script src="ecd-analytics.js?v=20260930b"></script>
+    <script src="navbar.js?v=20260930c" defer></script>
+    <script src="breadcrumbs.js?v=20260930a" defer></script>
+    <script type="application/ld+json">
+{
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "ECommerce Day",
+          "item": "https://www.trafficmena.com/ecommerce-day/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Sponsors & Partners"
+        }
+      ]
+    }
+    </script>
+    <script src="ecd-whatsapp.js?v=20260930a" defer></script>
     <!-- ✅ Reusable footer -->
-    <script src="footer.js?v=20260925b" defer></script>
-    <script src="ecd-api.js?v=20260928c" defer></script>
+    <script src="footer.js?v=20260930a" defer></script>
+    <script src="ecd-api.js?v=20260930a" defer></script>
 
     <style>
       *,
@@ -119,7 +140,8 @@
         max-width: 60ch;
         margin: 0 0 36px;
       }
-      #featured-partners {
+      #featured-partners,
+      #community-partners {
         scroll-margin-top: 72px;
       }
       .section-title {
@@ -204,6 +226,61 @@
       }
       .featured-card .level-pill {
         align-self: flex-start;
+      }
+      /* Empty sponsor slot: gray logo shape only, no text */
+      .featured-card.is-placeholder .partner-logo-slot svg {
+        display: block;
+        width: 60%;
+        max-width: 140px;
+        height: auto;
+      }
+      .band-cta {
+        margin-top: 32px;
+      }
+      /* Non-featured community partners: compact light logo tiles */
+      .partner-mini-grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 16px;
+        margin-top: 20px;
+      }
+      .partner-mini-grid[hidden] {
+        display: none;
+      }
+      .featured-grid:empty + .partner-mini-grid {
+        margin-top: 0;
+      }
+      .partner-mini {
+        width: 208px;
+        height: 104px;
+        padding: 14px 18px;
+        background: #ffffff;
+        border: 1px solid #e6eaee;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition:
+          box-shadow 0.2s,
+          border-color 0.2s;
+      }
+      a.partner-mini:hover {
+        border-color: #d5dae0;
+        box-shadow: 0 8px 24px rgba(16, 16, 16, 0.08);
+      }
+      .partner-mini img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+      }
+      .partner-mini span {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 10px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: #6b747e;
+        text-align: center;
       }
       .featured-card .featured-line,
       .featured-card .supported-asset {
@@ -477,6 +554,21 @@
           height: 88px;
           padding: 10px;
         }
+        .band-cta .btn-primary {
+          width: 100%;
+        }
+        .partner-mini-grid {
+          display: grid;
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+          gap: 10px;
+          margin-top: 12px;
+        }
+        .partner-mini {
+          width: auto;
+          height: 76px;
+          padding: 10px 12px;
+          border-radius: 10px;
+        }
         .featured-card .level-pill {
           font-size: 9px;
           letter-spacing: 0.06em;
@@ -540,6 +632,7 @@
   <body>
     <!-- ✅ Reusable Navbar -->
     <site-navbar current="sponsors"></site-navbar>
+    <ecd-breadcrumb id="ecdBreadcrumb" data-trail='[["ECommerce Day", "index.html"], ["Sponsors & Partners"]]' style="display:block;min-height:44px"></ecd-breadcrumb>
 
     <!-- ==================== HERO ==================== -->
     <div class="hero">
@@ -564,22 +657,59 @@
       </div>
     </div>
 
-    <!-- ==================== FEATURED PARTNERS ==================== -->
+    <!-- ==================== SPONSORS ==================== -->
+    <!-- Featured partners whose admin tier is not "community".
+         The gray cards stay until real sponsor logos replace them. -->
     <div class="featured-band" id="featured-partners">
       <div class="featured-inner">
         <div class="section-label section-label-strong">
-          <span>Featured Partners</span>
+          <span>Our Sponsors</span>
         </div>
         <h2 class="section-title" style="margin-bottom: 12px">
-          Meet the Leading Partners of Ecommerce Day
+          The Sponsors Behind ECommerce Day
         </h2>
         <p class="section-sub">
           Strategic brands bringing expertise, innovation, and market influence
           to the Ecommerce Day experience.
         </p>
 
-        <div class="featured-grid" id="featuredSponsors"></div>
+        <p class="visually-hidden" id="sponsorsStatus">Sponsors will be announced soon.</p>
+        <div class="featured-grid" id="featuredSponsors">
+          <div class="featured-card is-placeholder" aria-hidden="true">
+            <div class="partner-logo-slot">
+              <svg viewBox="0 0 120 32" aria-hidden="true" focusable="false"><rect width="32" height="32" rx="9" fill="#DDE2E7"/><rect x="42" y="6" width="78" height="9" rx="4.5" fill="#E6EAEE"/><rect x="42" y="19" width="50" height="7" rx="3.5" fill="#E6EAEE"/></svg>
+            </div>
+          </div>
+          <div class="featured-card is-placeholder" aria-hidden="true">
+            <div class="partner-logo-slot">
+              <svg viewBox="0 0 120 32" aria-hidden="true" focusable="false"><rect width="32" height="32" rx="9" fill="#DDE2E7"/><rect x="42" y="6" width="78" height="9" rx="4.5" fill="#E6EAEE"/><rect x="42" y="19" width="50" height="7" rx="3.5" fill="#E6EAEE"/></svg>
+            </div>
+          </div>
+          <div class="featured-card is-placeholder" aria-hidden="true">
+            <div class="partner-logo-slot">
+              <svg viewBox="0 0 120 32" aria-hidden="true" focusable="false"><rect width="32" height="32" rx="9" fill="#DDE2E7"/><rect x="42" y="6" width="78" height="9" rx="4.5" fill="#E6EAEE"/><rect x="42" y="19" width="50" height="7" rx="3.5" fill="#E6EAEE"/></svg>
+            </div>
+          </div>
+          <div class="featured-card is-placeholder" aria-hidden="true">
+            <div class="partner-logo-slot">
+              <svg viewBox="0 0 120 32" aria-hidden="true" focusable="false"><rect width="32" height="32" rx="9" fill="#DDE2E7"/><rect x="42" y="6" width="78" height="9" rx="4.5" fill="#E6EAEE"/><rect x="42" y="19" width="50" height="7" rx="3.5" fill="#E6EAEE"/></svg>
+            </div>
+          </div>
+          <div class="featured-card is-placeholder" aria-hidden="true">
+            <div class="partner-logo-slot">
+              <svg viewBox="0 0 120 32" aria-hidden="true" focusable="false"><rect width="32" height="32" rx="9" fill="#DDE2E7"/><rect x="42" y="6" width="78" height="9" rx="4.5" fill="#E6EAEE"/><rect x="42" y="19" width="50" height="7" rx="3.5" fill="#E6EAEE"/></svg>
+            </div>
+          </div>
+          <div class="featured-card is-placeholder" aria-hidden="true">
+            <div class="partner-logo-slot">
+              <svg viewBox="0 0 120 32" aria-hidden="true" focusable="false"><rect width="32" height="32" rx="9" fill="#DDE2E7"/><rect x="42" y="6" width="78" height="9" rx="4.5" fill="#E6EAEE"/><rect x="42" y="19" width="50" height="7" rx="3.5" fill="#E6EAEE"/></svg>
+            </div>
+          </div>
+        </div>
 
+        <div class="band-cta">
+          <a href="become-a-sponsor.html" class="btn-primary">Become a Sponsor</a>
+        </div>
       </div>
     </div>
 
@@ -676,6 +806,25 @@
           </div>
           <div class="experience-name">ECommerce Research</div>
           <div class="experience-formula">Presented by [Partner]</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== COMMUNITY PARTNERS ==================== -->
+    <!-- Featured partners whose admin tier is "community" -->
+    <div class="featured-band" id="community-partners">
+      <div class="featured-inner">
+        <div class="section-label section-label-strong">
+          <span>Community</span>
+        </div>
+        <h2 class="section-title">Our Community Partners</h2>
+
+        <div class="featured-grid" id="communityPartners"></div>
+        <!-- Community partners with the admin "Featured" switch off: small logo tiles -->
+        <div class="partner-mini-grid" id="communityMini" hidden></div>
+
+        <div class="band-cta">
+          <a href="become-a-sponsor.html" class="btn-primary">Become a Partner</a>
         </div>
       </div>
     </div>
@@ -825,9 +974,90 @@
           return { id: id, name: id, color: "#4a5563", focus: "" };
         }
 
+        function partnerCard(p, tiers) {
+          var t = tierMeta(tiers, p.tier || "community");
+          var pillStyle = PILL[p.tier] || PILL.community;
+          var logo = p.logoUrl
+            ? '<img src="' +
+              esc(p.logoUrl) +
+              '" alt="' +
+              esc(p.name) +
+              '" loading="lazy" decoding="async" />'
+            : "<span>Partner logo</span>";
+          var website = p.websiteUrl
+            ? '<a class="btn-secondary" href="' +
+              esc(p.websiteUrl) +
+              '" target="_blank" rel="noopener noreferrer" style="padding:11px 18px;font-size:13px;text-decoration:none">Visit Partner Website</a>'
+            : "";
+          var experience = p.experienceUrl
+            ? '<a href="' +
+              esc(p.experienceUrl) +
+              '" style="background:none;border:none;color:#04c44e;font-weight:600;font-size:13px;cursor:pointer;padding:11px 0;text-decoration:none">Explore the Supported Experience →</a>'
+            : "";
+          // The logo already carries the name; keep it for screen readers only
+          return (
+            '<div class="featured-card">' +
+            '<div class="partner-logo-slot">' +
+            logo +
+            "</div>" +
+            '<h3 class="visually-hidden">' +
+            esc(p.name) +
+            "</h3>" +
+            '<span class="level-pill" style="' +
+            pillStyle +
+            '">' +
+            esc(t.name) +
+            "</span>" +
+            (p.blurb
+              ? '<div class="featured-line">' + esc(p.blurb) + "</div>"
+              : "") +
+            (p.supportedAsset
+              ? '<div class="supported-asset"><div class="supported-asset-label">Supported asset</div><div class="supported-asset-value">' +
+                esc(p.supportedAsset) +
+                "</div></div>"
+              : "") +
+            (website || experience
+              ? '<div class="featured-card-actions">' +
+                website +
+                experience +
+                "</div>"
+              : "") +
+            "</div>"
+          );
+        }
+
+        // Admin tier "community" (or no tier) = Community Partner; every other tier is a sponsor
+        function isSponsor(p) {
+          return (p.tier || "community") !== "community";
+        }
+
+        var SPONSOR_SLOTS = 6;
+        var PLACEHOLDER_CARD =
+          '<div class="featured-card is-placeholder" aria-hidden="true"><div class="partner-logo-slot"><svg viewBox="0 0 120 32" aria-hidden="true" focusable="false"><rect width="32" height="32" rx="9" fill="#DDE2E7"/><rect x="42" y="6" width="78" height="9" rx="4.5" fill="#E6EAEE"/><rect x="42" y="19" width="50" height="7" rx="3.5" fill="#E6EAEE"/></svg></div></div>';
+
+        function miniTile(p) {
+          var inner = p.logoUrl
+            ? '<img src="' +
+              esc(p.logoUrl) +
+              '" alt="' +
+              esc(p.name) +
+              '" loading="lazy" decoding="async" />'
+            : "<span>" + esc(p.name) + "</span>";
+          return p.websiteUrl
+            ? '<a class="partner-mini" href="' +
+                esc(p.websiteUrl) +
+                '" target="_blank" rel="noopener noreferrer" title="' +
+                esc(p.name) +
+                '">' +
+                inner +
+                "</a>"
+            : '<div class="partner-mini" title="' + esc(p.name) + '">' + inner + "</div>";
+        }
+
         function renderFeatured(partners, tiers) {
-          var host = document.getElementById("featuredSponsors");
-          if (!host) return;
+          var communityMini = (partners || []).filter(function (p) {
+            return !p.featured && !isSponsor(p);
+          });
           var featured = (partners || [])
             .filter(function (p) {
               return p.featured;
@@ -836,65 +1066,57 @@
               return (a.featuredSortOrder || 0) - (b.featuredSortOrder || 0);
             });
 
-          if (!featured.length) {
-            host.innerHTML =
-              '<p style="color:#6b747e;font-size:14px;grid-column:1/-1">Featured partners will be announced soon.</p>';
-            return;
+          // Sponsors: tier order first (Top Player → Empowerment), then Featured sort
+          var order = tiers.map(function (t) {
+            return t.id;
+          });
+          function rank(p) {
+            var i = order.indexOf(p.tier);
+            return i === -1 ? order.length : i;
+          }
+          var sponsors = featured.filter(isSponsor).sort(function (a, b) {
+            return rank(a) - rank(b);
+          });
+          var community = featured.filter(function (p) {
+            return !isSponsor(p);
+          });
+
+          var sponsorHost = document.getElementById("featuredSponsors");
+          if (sponsorHost) {
+            var html = sponsors
+              .map(function (p) {
+                return partnerCard(p, tiers);
+              })
+              .join("");
+            for (var i = sponsors.length; i < SPONSOR_SLOTS; i++) {
+              html += PLACEHOLDER_CARD;
+            }
+            sponsorHost.innerHTML = html;
+            var status = document.getElementById("sponsorsStatus");
+            if (status) {
+              status.textContent = sponsors.length
+                ? ""
+                : "Sponsors will be announced soon.";
+            }
           }
 
-          host.innerHTML = featured
-            .map(function (p) {
-              var t = tierMeta(tiers, p.tier || "community");
-              var pillStyle = PILL[p.tier] || PILL.community;
-              var logo = p.logoUrl
-                ? '<img src="' +
-                  esc(p.logoUrl) +
-                  '" alt="' +
-                  esc(p.name) +
-                  '" loading="lazy" decoding="async" />'
-                : "<span>Partner logo</span>";
-              var website = p.websiteUrl
-                ? '<a class="btn-secondary" href="' +
-                  esc(p.websiteUrl) +
-                  '" target="_blank" rel="noopener noreferrer" style="padding:11px 18px;font-size:13px;text-decoration:none">Visit Partner Website</a>'
-                : "";
-              var experience = p.experienceUrl
-                ? '<a href="' +
-                  esc(p.experienceUrl) +
-                  '" style="background:none;border:none;color:#04c44e;font-weight:600;font-size:13px;cursor:pointer;padding:11px 0;text-decoration:none">Explore the Supported Experience →</a>'
-                : "";
-              // The logo already carries the name; keep it for screen readers only
-              return (
-                '<div class="featured-card">' +
-                '<div class="partner-logo-slot">' +
-                logo +
-                "</div>" +
-                '<h3 class="visually-hidden">' +
-                esc(p.name) +
-                "</h3>" +
-                '<span class="level-pill" style="' +
-                pillStyle +
-                '">' +
-                esc(t.name) +
-                "</span>" +
-                (p.blurb
-                  ? '<div class="featured-line">' + esc(p.blurb) + "</div>"
-                  : "") +
-                (p.supportedAsset
-                  ? '<div class="supported-asset"><div class="supported-asset-label">Supported asset</div><div class="supported-asset-value">' +
-                    esc(p.supportedAsset) +
-                    "</div></div>"
-                  : "") +
-                (website || experience
-                  ? '<div class="featured-card-actions">' +
-                    website +
-                    experience +
-                    "</div>"
-                  : "") +
-                "</div>"
-              );
-            })
-            .join("");
+          var communityHost = document.getElementById("communityPartners");
+          if (communityHost) {
+            communityHost.innerHTML = community.length
+              ? community
+                  .map(function (p) {
+                    return partnerCard(p, tiers);
+                  })
+                  .join("")
+              : communityMini.length
+                ? ""
+                : '<p style="color:#6b747e;font-size:14px;grid-column:1/-1">Community partners will be announced soon.</p>';
+          }
+          var miniHost = document.getElementById("communityMini");
+          if (miniHost) {
+            miniHost.innerHTML = communityMini.map(miniTile).join("");
+            miniHost.hidden = !communityMini.length;
+          }
         }
 
         function boot() {

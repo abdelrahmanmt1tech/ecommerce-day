@@ -5,7 +5,14 @@
  * src/lib/analytics). Same GTM container, same event names and parameter shapes.
  * Reused events: global_variables, select_item, begin_checkout, apply_promo_code,
  * select_payment_method, purchase, add_to_calendar.
- * ECD-only events: checkout_step (checkout steps 1-2), generate_lead (sponsor form).
+ * ECD-only events: checkout_step (1 your_details, 2 payment), booking_complete
+ * (registration saved, not paid yet), generate_lead (sponsor form).
+ *
+ * booking_complete and purchase carry user_data: the buyer's booking form in
+ * plain text (for the CRM) plus SHA-256 hashes of first name, last name, email
+ * and phone (for Meta, Google Ads, Snapchat and TikTok). In GTM the plain
+ * values must only feed CRM tags, never GA4 or ad pixels. If the browser
+ * cannot hash, the hashed fields are empty and the event still fires.
  *
  * Load first in <head> on every page (not deferred):
  *   <script src="ecd-analytics.js?v=..."></script>
@@ -25,6 +32,7 @@
   };
   var PURCHASE_WINDOW_MS = 24 * 60 * 60 * 1000;
   var PURCHASE_STORAGE_PREFIX = "ecd_tracked_purchase_";
+  var BOOKING_STORAGE_PREFIX = "ecd_tracked_booking_";
 
   var PAGE_TYPES = {
     "": "ecd_home",
@@ -98,6 +106,175 @@
     };
     if (typeof price === "number") item.price = price;
     return item;
+  }
+
+  /* ---------- user_data (booking_complete + purchase) ---------- */
+
+  function text(value) {
+    return value == null ? "" : String(value).trim();
+  }
+
+  /** Hex SHA-256 of value; "" for an empty value, null when the browser cannot hash. */
+  function sha256(value) {
+    if (!value) return Promise.resolve("");
+    var subtle = global.crypto && global.crypto.subtle;
+    if (!subtle || typeof global.TextEncoder !== "function") return Promise.resolve(null);
+    return subtle.digest("SHA-256", new global.TextEncoder().encode(value)).then(
+      function (buf) {
+        return Array.prototype.map
+          .call(new Uint8Array(buf), function (b) {
+            return ("0" + b.toString(16)).slice(-2);
+          })
+          .join("");
+      },
+      function () {
+        return null;
+      },
+    );
+  }
+
+  /**
+   * Plain + hashed buyer details. Every key is always present ("" when empty)
+   * so GTM never keeps a previous buyer's value in its data model.
+   * Hash inputs follow the ad platforms' rules: trimmed and lowercased; phone
+   * as +201002754217 (Google, TikTok) and 201002754217 (Meta).
+   * Name split: first word is the first name, the rest the last name.
+   */
+  function buildUserData(b) {
+    var fullName = text(b.name).replace(/\s+/g, " ");
+    var firstName = fullName.split(" ")[0] || "";
+    var lastName = fullName.split(" ").slice(1).join(" ");
+    var email = text(b.email).toLowerCase();
+    // b.mobile: a full international number, or "" when it could not be
+    // recognised; then the plain fields keep b.mobileAsTyped and no phone is hashed.
+    var phoneDigits = text(b.mobile).replace(/\D/g, "");
+    var phoneWithPlus = phoneDigits ? "+" + phoneDigits : "";
+    return Promise.all([
+      sha256(firstName.toLowerCase()),
+      sha256(lastName.toLowerCase()),
+      sha256(email),
+      sha256(phoneWithPlus),
+      sha256(phoneDigits),
+    ]).then(function (h) {
+      return {
+        user_id: h[2] || email,
+        full_name: fullName,
+        first_name: firstName,
+        last_name: lastName,
+        email: email,
+        phone_with_plus: phoneWithPlus || text(b.mobileAsTyped),
+        phone_without_plus: phoneDigits || text(b.mobileAsTyped).replace(/\D/g, ""),
+        country: text(b.country),
+        job_title: text(b.jobTitle),
+        company: text(b.company),
+        store: text(b.store),
+        linkedin: text(b.linkedin),
+        facebook: text(b.facebook),
+        newsletter_opt_in: !!b.newsOptIn,
+        sha256_first_name: h[0] || "",
+        sha256_last_name: h[1] || "",
+        sha256_email: h[2] || "",
+        sha256_phone_with_plus: h[3] || "",
+        sha256_phone_without_plus: h[4] || "",
+      };
+    });
+  }
+
+  // National number rules per country, same as checkout.html.
+  var COUNTRY_PHONE = {
+    Egypt: { cc: "20", national: /^1[0125]\d{8}$/ },
+    "Saudi Arabia": { cc: "966", national: /^5\d{8}$/ },
+    UAE: { cc: "971", national: /^5\d{8}$/ },
+    Kuwait: { cc: "965", national: /^[4569]\d{7}$/ },
+    Qatar: { cc: "974", national: /^[3567]\d{7}$/ },
+    Jordan: { cc: "962", national: /^7[789]\d{7}$/ },
+  };
+
+  /**
+   * Free-text phone → international digits (201002754217), or "" when it
+   * cannot be recognised. +… and 00… are international; a local number is
+   * completed with the selected country's code.
+   */
+  function internationalPhone(raw, country) {
+    var s = text(raw)
+      .replace(/[٠-٩]/g, function (d) {
+        return String(d.charCodeAt(0) - 0x0660);
+      })
+      .replace(/[۰-۹]/g, function (d) {
+        return String(d.charCodeAt(0) - 0x06f0);
+      });
+    var digits = s.replace(/\D/g, "");
+    var intl = "";
+    if (s.charAt(0) === "+") intl = digits;
+    else if (digits.indexOf("00") === 0) intl = digits.slice(2);
+    if (intl) {
+      // +20 0100… style: drop the trunk 0 after a known country code.
+      Object.keys(COUNTRY_PHONE).forEach(function (k) {
+        var r = COUNTRY_PHONE[k];
+        if (intl.indexOf(r.cc + "0") === 0 && r.national.test(intl.slice(r.cc.length + 1))) {
+          intl = r.cc + intl.slice(r.cc.length + 1);
+        }
+      });
+      return intl.length >= 8 && intl.length <= 15 ? intl : "";
+    }
+    var rule = COUNTRY_PHONE[text(country)];
+    if (!rule) return "";
+    var national = digits.replace(/^0/, "");
+    if (rule.national.test(national)) return rule.cc + national;
+    // Country code typed without + or 00 (201002754217).
+    if (digits.indexOf(rule.cc) === 0) {
+      national = digits.slice(rule.cc.length).replace(/^0/, "");
+      if (rule.national.test(national)) return rule.cc + national;
+    }
+    return "";
+  }
+
+  // Hashing is async; events with user_data are pushed in the order they were
+  // called, so the first registration is the one that counts.
+  var userDataQueue = Promise.resolve();
+
+  /** Adds user_data to data and pushes it, unless shouldPush(userData) is false. */
+  function pushWithUserData(data, buyer, shouldPush) {
+    var ready = buildUserData(buyer);
+    userDataQueue = userDataQueue
+      .then(function () {
+        return ready;
+      })
+      .then(
+        safe(function (userData) {
+          if (shouldPush && !shouldPush(userData)) return;
+          data.user_data = userData;
+          push(data);
+        }),
+      );
+  }
+
+  /** Order fields shared by booking_complete and purchase (amounts in EGP). */
+  function bookingOrderData(booking) {
+    var id = passId(booking.ticketType);
+    var qty = Math.max(1, parseInt(booking.qty, 10) || 1);
+    var value = (Number(booking.totalCents) || 0) / 100;
+    var item = buildItem(id, value / qty);
+    item.quantity = qty;
+    return {
+      booking_id: text(booking.bookingId),
+      order_code: text(booking.orderCode),
+      currency: CURRENCY,
+      value: value,
+      item_type: "event_ticket",
+      ticket_type: PASSES[id].ticket_type,
+      coupon: booking.promoCode || "",
+      discount: (Number(booking.discountCents) || 0) / 100,
+      original_value: ((Number(booking.unitPriceCents) || 0) * qty) / 100,
+      items: [item],
+    };
+  }
+
+  function assign(target, source) {
+    Object.keys(source).forEach(function (k) {
+      target[k] = source[k];
+    });
+    return target;
   }
 
   /* ---------- global_variables + GTM bootstrap ---------- */
@@ -261,29 +438,78 @@
     }
     if (reason) return reason;
 
-    var id = passId(booking.ticketType);
-    var qty = Math.max(1, parseInt(booking.qty, 10) || 1);
-    var value = booking.totalCents / 100;
     var method = String(booking.paymentMethodName || "");
     if (method.indexOf(":") > -1) method = method.split(":").pop();
-    var item = buildItem(id, value / qty);
-    item.quantity = qty;
+    var form = booking.form || {};
+    var data = assign(
+      { event: "purchase", transaction_id: transactionId, event_id: transactionId },
+      bookingOrderData(booking),
+    );
+    data.payment_type = normalizePaymentMethod(method);
+    data.payment_status = "paid";
 
-    push({
-      event: "purchase",
-      transaction_id: transactionId,
-      event_id: transactionId,
-      currency: CURRENCY,
-      value: value,
-      item_type: "event_ticket",
-      payment_type: normalizePaymentMethod(method),
-      ticket_type: PASSES[id].ticket_type,
-      coupon: booking.promoCode || "",
-      discount: (Number(booking.discountCents) || 0) / 100,
-      original_value: ((Number(booking.unitPriceCents) || 0) * qty) / 100,
-      items: [item],
+    pushWithUserData(data, {
+      name: booking.buyerName,
+      email: booking.buyerEmail,
+      mobile: booking.buyerMobile,
+      country: form.country,
+      jobTitle: form.jobTitle,
+      company: form.company,
+      store: form.store,
+      linkedin: form.linkedinUrl,
+      facebook: form.facebookUrl,
+      newsOptIn: form.newsOptIn,
     });
     return "";
+  }
+
+  /* ---------- booking_complete (checkout.html) ---------- */
+
+  var trackedBookings = {};
+
+  /**
+   * Registration saved (POST /session succeeded), payment not done yet.
+   * booking: the /session response; request: the payload sent to it
+   * (promoCode + buyer). Fires once per buyer (user_id) and pass: a new
+   * registration after editing details or retrying Pay does not fire again.
+   */
+  function bookingComplete(booking, request) {
+    if (!booking || !booking.bookingId) return;
+    var buyer = (request && request.buyer) || {};
+    var data = assign(
+      { event: "booking_complete", event_id: String(booking.bookingId) },
+      bookingOrderData(assign({ promoCode: request && request.promoCode }, booking)),
+    );
+    data.payment_status = "pending";
+    data.event_source = "Web";
+
+    pushWithUserData(
+      data,
+      {
+        name: buyer.name,
+        email: buyer.email,
+        mobile: buyer.mobile,
+        country: buyer.country,
+        jobTitle: buyer.title,
+        company: buyer.company,
+        store: buyer.store,
+        linkedin: buyer.linkedin,
+        facebook: buyer.facebook,
+        newsOptIn: buyer.newsOptIn,
+      },
+      function (userData) {
+        var key = BOOKING_STORAGE_PREFIX + userData.user_id + "_" + data.ticket_type;
+        if (trackedBookings[key]) return false;
+        trackedBookings[key] = true;
+        try {
+          if (global.localStorage.getItem(key)) return false;
+          global.localStorage.setItem(key, String(Date.now()));
+        } catch (e) {
+          // Storage blocked: the in-memory check still limits it to once per page.
+        }
+        return true;
+      },
+    );
   }
 
   /* ---------- Engagement ---------- */
@@ -309,13 +535,67 @@
     });
   }
 
+  var trackedSponsorForms = {};
+
+  /**
+   * Become a Sponsor form saved (same moment as generate_lead), with the whole
+   * form: contact in user_data (plain + hashed), the rest in sponsor_data.
+   * p.requestCode: the server's request code; p.form: the payload sent to it.
+   */
+  function sponsorFormComplete(p) {
+    var f = (p && p.form) || {};
+    var requestCode = text(p && p.requestCode);
+    if (!requestCode || trackedSponsorForms[requestCode]) return;
+    trackedSponsorForms[requestCode] = true;
+    var list = function (v) {
+      return Array.isArray(v) ? v.slice() : [];
+    };
+    pushWithUserData(
+      {
+        event: "sponsor_form_complete",
+        event_id: requestCode,
+        lead_id: requestCode,
+        lead_type: "sponsorship",
+        form_name: "become_a_sponsor",
+        event_source: "Web",
+        sponsor_data: {
+          company: text(f.company),
+          website: text(f.website),
+          sector: text(f.sector),
+          country: text(f.country),
+          company_size: text(f.companySize),
+          job_title: text(f.contactTitle),
+          preferred_contact: text(f.preferredContact),
+          objectives: list(f.objectives),
+          sponsorship_level: text(f.interestedLevel),
+          interested_properties: list(f.interestedProperties),
+          target_audience: text(f.targetAudience),
+          timing: text(f.timing),
+          notes: text(f.notes),
+          budget_band: text(f.budgetBand),
+        },
+      },
+      {
+        name: f.contactName,
+        email: f.contactEmail,
+        mobile: internationalPhone(f.contactPhone, f.country),
+        mobileAsTyped: f.contactPhone,
+        country: f.country,
+        jobTitle: f.contactTitle,
+        company: f.company,
+      },
+    );
+  }
+
   global.EcdAnalytics = {
     beginCheckout: safe(beginCheckout),
     checkoutStep: safe(checkoutStep),
     applyPromoCode: safe(applyPromoCode),
     selectPaymentMethod: safe(selectPaymentMethod),
+    bookingComplete: safe(bookingComplete),
     purchase: safe(purchase),
     addToCalendar: safe(addToCalendar),
     generateLead: safe(generateLead),
+    sponsorFormComplete: safe(sponsorFormComplete),
   };
 })(window);

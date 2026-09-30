@@ -14,10 +14,31 @@
     />
 
     <!-- ✅ Reusable navbar -->
-    <script src="ecd-analytics.js?v=20260927c"></script>
-    <script src="navbar.js?v=20260925b" defer></script>
+    <script src="ecd-analytics.js?v=20260930b"></script>
+    <script src="navbar.js?v=20260930c" defer></script>
+    <script src="breadcrumbs.js?v=20260930a" defer></script>
+    <script type="application/ld+json">
+{
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "ECommerce Day",
+          "item": "https://www.trafficmena.com/ecommerce-day/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Agenda"
+        }
+      ]
+    }
+    </script>
+    <script src="ecd-whatsapp.js?v=20260930a" defer></script>
     <!-- ✅ Reusable footer -->
-    <script src="footer.js?v=20260925b" defer></script>
+    <script src="footer.js?v=20260930a" defer></script>
     <!-- Shared tickets section (same as index.html). Not deferred on purpose. -->
     <script src="tickets-section.js?v=20260928a"></script>
 
@@ -317,6 +338,7 @@
   <body>
     <!-- ✅ Reusable Navbar -->
     <site-navbar current="agenda"></site-navbar>
+    <ecd-breadcrumb id="ecdBreadcrumb" data-trail='[["ECommerce Day", "index.html"], ["Agenda"]]' style="display:block;min-height:44px"></ecd-breadcrumb>
 
     <!-- Hero -->
     <div class="container" style="padding: 72px 24px 48px">
@@ -1972,8 +1994,8 @@
 
     <!-- Scripts -->
     <script src="prices.js?v=20260924c"></script>
-    <script src="ecd-api.js?v=20260928c"></script>
-    <script src="ecd-content.js?v=20260925b"></script>
+    <script src="ecd-api.js?v=20260930a"></script>
+    <script src="ecd-content.js?v=20260930b"></script>
     <script>
       // ==========================================
       // 00. DATA

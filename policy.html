@@ -14,10 +14,31 @@
     />
 
     <!-- ✅ Reusable navbar -->
-    <script src="ecd-analytics.js?v=20260927c"></script>
-    <script src="navbar.js?v=20260925b" defer></script>
+    <script src="ecd-analytics.js?v=20260930b"></script>
+    <script src="navbar.js?v=20260930c" defer></script>
+    <script src="breadcrumbs.js?v=20260930a" defer></script>
+    <script type="application/ld+json">
+{
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "ECommerce Day",
+          "item": "https://www.trafficmena.com/ecommerce-day/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Policies"
+        }
+      ]
+    }
+    </script>
+    <script src="ecd-whatsapp.js?v=20260930a" defer></script>
     <!-- ✅ Reusable footer -->
-    <script src="footer.js?v=20260925b" defer></script>
+    <script src="footer.js?v=20260930a" defer></script>
 
     <style>
       *,
@@ -620,6 +641,7 @@
   <body>
     <!-- ✅ Reusable Navbar: one line, no duplication -->
     <site-navbar></site-navbar>
+    <ecd-breadcrumb id="ecdBreadcrumb" data-trail='[["ECommerce Day", "index.html"], ["Terms & Conditions"]]' style="display:block;min-height:44px"></ecd-breadcrumb>
 
     <!-- ==================== POLICY SWITCHER ==================== -->
     <div class="container" style="padding-top: 24px">
@@ -935,6 +957,21 @@
         historyOpen: false,
       };
 
+      // Links open a specific policy: policy.html#terms, #privacy, #refund, #ticket
+      var POLICY_HASHES = ["terms", "privacy", "refund", "ticket"];
+      var HASH_ALIASES = { "refund-policy": 2, "ticket-policy": 3 };
+      function policyFromHash() {
+        var h = decodeURIComponent(location.hash.slice(1)).toLowerCase();
+        if (HASH_ALIASES[h] != null) return HASH_ALIASES[h];
+        var i = POLICY_HASHES.indexOf(h);
+        return i >= 0 ? i : null;
+      }
+      function showPolicy(i) {
+        state.pol = i;
+        state.historyOpen = false;
+        renderAll();
+      }
+
       // ==========================================
       // 02. ESCAPE
       // ==========================================
@@ -973,9 +1010,9 @@
           .join("");
         wrap.querySelectorAll(".policy-chip").forEach(function (btn) {
           btn.addEventListener("click", function () {
-            state.pol = parseInt(this.getAttribute("data-pol"));
-            state.historyOpen = false;
-            renderAll();
+            var i = parseInt(this.getAttribute("data-pol"));
+            history.replaceState(null, "", "#" + POLICY_HASHES[i]);
+            showPolicy(i);
             window.scrollTo({ top: 0, behavior: "smooth" });
           });
         });
@@ -984,10 +1021,27 @@
       // ==========================================
       // 04. RENDER HEADER + SUMMARY
       // ==========================================
+      // Visible trail follows the selected policy (ECommerce Day › Privacy Policy).
+      function syncBreadcrumb(title) {
+        var el = document.getElementById("ecdBreadcrumb");
+        if (!el) return;
+        var trail = [["ECommerce Day", "index.html"], [title]];
+        el.setAttribute("data-trail", JSON.stringify(trail));
+        if (window.EcdBreadcrumb && el.firstChild) {
+          EcdBreadcrumb.render(
+            el,
+            trail.map(function (t) {
+              return { label: t[0], href: t[1] };
+            }),
+          );
+        }
+      }
+
       function renderHeader() {
         var p = policies[state.pol];
         document.getElementById("polSlug").textContent = p.slug;
         document.getElementById("polTitle").textContent = p.title;
+        syncBreadcrumb(p.title);
         document.getElementById("polPlain").textContent = p.plain;
         document.getElementById("polSummary").textContent = p.summary;
       }
@@ -1096,14 +1150,18 @@
       function renderRelated() {
         var wrap = document.getElementById("relatedGrid");
         var list = relatedAll
-          .filter(function (r, i) {
-            return i !== state.pol;
+          .map(function (r, i) {
+            return { r: r, i: i };
+          })
+          .filter(function (x) {
+            return x.i !== state.pol;
           })
           .slice(0, 4);
         wrap.innerHTML = list
-          .map(function (r) {
+          .map(function (x) {
+            var r = x.r;
             return (
-              '<a href="#" class="related-card">' +
+              '<a href="#' + POLICY_HASHES[x.i] + '" class="related-card">' +
               '<div class="bar"></div>' +
               '<div class="related-card-title">' +
               esc(r.en) +
@@ -1152,7 +1210,15 @@
       // ==========================================
       // 10. INIT
       // ==========================================
+      var initialPol = policyFromHash();
+      if (initialPol != null) state.pol = initialPol;
       renderAll();
+      window.addEventListener("hashchange", function () {
+        var i = policyFromHash();
+        if (i == null || i === state.pol) return;
+        showPolicy(i);
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      });
     </script>
   </body>
 </html>

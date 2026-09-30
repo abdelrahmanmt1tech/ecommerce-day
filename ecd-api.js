@@ -26,8 +26,9 @@
     STORAGE_BOOKING: "ecd2026_booking",
     EVENT: {
       title: "ECommerce Day 2026",
-      startIso: "2026-11-05T10:00:00+02:00",
-      endIso: "2026-11-05T18:00:00+02:00",
+      // Program 10:30 AM to 7:00 PM Cairo (UTC+2 in November). Registration opens 10:00.
+      startIso: "2026-11-05T10:30:00+02:00",
+      endIso: "2026-11-05T19:00:00+02:00",
       location: "Creativa Innovation Hub, Giza",
     },
   };

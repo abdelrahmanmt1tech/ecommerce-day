@@ -10,10 +10,13 @@
       href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap"
       rel="stylesheet"
     />
-    <script src="ecd-analytics.js?v=20260927c"></script>
+    <script src="ecd-analytics.js?v=20260930b"></script>
+    <meta name="robots" content="noindex, nofollow" />
+    <script src="ecd-whatsapp.js?v=20260930a" defer></script>
+    <script src="breadcrumbs.js?v=20260930a"></script>
     <script src="prices.js?v=20260927b"></script>
-    <script src="ecd-api.js?v=20260928c"></script>
-    <script src="ecd-content.js?v=20260925b"></script>
+    <script src="ecd-api.js?v=20260930a"></script>
+    <script src="ecd-content.js?v=20260930b"></script>
     <script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script>
     <style>
       * {
@@ -150,9 +153,6 @@
         font-size: 13px;
         font-weight: 600;
         flex-wrap: wrap;
-      }
-      .header-right a:first-child {
-        color: var(--gray-700);
       }
 
       @media (max-width: 900px) {
@@ -913,7 +913,6 @@
       body.ecd-pending-active #promoClosed,
       body.ecd-pending-active #promoOpen,
       body.ecd-pending-active #summaryPromo,
-      body.ecd-pending-active #backSub2,
       body.ecd-pending-active .checkbox-label {
         display: none !important;
       }
@@ -1158,7 +1157,7 @@
       .summary-change {
         font-size: 13px;
         font-weight: 600;
-        color: var(--green-dark);
+        color: var(--gray-700);
       }
       .chip-row {
         display: flex;
@@ -1192,6 +1191,138 @@
         padding-top: 8px;
       }
 
+      /* ============ STEP 1 SUB-HEADING ============ */
+      .form-subhead {
+        font-size: 15px;
+        font-weight: 700;
+        color: var(--black);
+      }
+
+      /* Fields scroll into view clear of the sticky header and bottom bar */
+      .field,
+      .checkbox-label,
+      .wallet-field-wrap {
+        scroll-margin-top: 140px;
+        scroll-margin-bottom: 110px;
+      }
+
+      /* ============ MOBILE STICKY BAR ============ */
+      .mobile-pay-bar {
+        display: none;
+      }
+      @media (max-width: 1024px) {
+        .mobile-pay-bar {
+          position: fixed;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          z-index: 180;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 12px;
+          padding: 12px 16px calc(12px + env(safe-area-inset-bottom, 0px));
+          background: #ffffff;
+          border-top: 1px solid var(--gray-200);
+          box-shadow: 0 -10px 24px rgba(16, 16, 16, 0.08);
+        }
+        .mobile-pay-bar[hidden],
+        body.ecd-pending-active .mobile-pay-bar {
+          display: none;
+        }
+        /* Room for the bar so it never hides the last field or the Pay button */
+        .checkout-main {
+          padding-bottom: 120px;
+        }
+      }
+      .mpb-info {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+        min-width: 0;
+      }
+      .mpb-ticket {
+        font-size: 12px;
+        font-weight: 600;
+        color: var(--gray-600);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .mpb-total {
+        font-size: 16px;
+        font-weight: 800;
+        color: var(--black);
+        white-space: nowrap;
+      }
+      .mpb-btn {
+        flex-shrink: 0;
+        min-height: 48px;
+        padding: 0 20px;
+        border: none;
+        border-radius: 10px;
+        background: var(--green);
+        color: var(--black);
+        font-size: 15px;
+        font-weight: 600;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        white-space: nowrap;
+      }
+      .mpb-back {
+        flex-shrink: 0;
+        min-height: 48px;
+        padding: 0 16px;
+        border: 1px solid var(--black);
+        border-radius: 10px;
+        background: #ffffff;
+        color: var(--black);
+        font-size: 15px;
+        font-weight: 600;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        white-space: nowrap;
+      }
+      .mpb-back[hidden] {
+        display: none;
+      }
+      .mpb-back:focus-visible {
+        outline: 2px solid var(--black);
+        outline-offset: 2px;
+      }
+      .mpb-info[hidden] {
+        display: none;
+      }
+      /* Payment step: Back on the left, Pay fills the rest */
+      .mobile-pay-bar.is-pay .mpb-btn {
+        flex: 1;
+      }
+      .mpb-back:hover {
+        background: var(--gray-100);
+      }
+      .mpb-btn:hover {
+        background: #04d456;
+      }
+      .mpb-btn:focus-visible {
+        outline: 2px solid var(--black);
+        outline-offset: 2px;
+      }
+      .mpb-btn:disabled {
+        opacity: 0.85;
+        cursor: progress;
+      }
+      @media (max-width: 360px) {
+        .mpb-btn {
+          padding: 0 14px;
+          font-size: 14px;
+        }
+      }
+
       /* ============ UTILS ============ */
       .hidden {
         display: none !important;
@@ -1222,29 +1353,37 @@
           Secure Checkout
         </div>
         <div class="header-right">
-          <a href="tickets.html">← Back to Tickets</a>
-          <a href="#">Need help?</a>
+          <a
+            href="https://wa.me/201505437979?text=I%20need%20help%20for%20Ecommerce%20Day%202026"
+            target="_blank"
+            rel="noopener"
+            aria-label="Need help? Chat with us on WhatsApp (opens in a new tab)"
+            >Need help?</a
+          >
         </div>
       </div>
     </header>
+
+    <!-- Breadcrumb: follows the step (rendered by renderBreadcrumb) -->
+    <div class="ecd-bc-host" id="checkoutBreadcrumb" style="width: 100%"></div>
 
     <!-- ============ MAIN ============ -->
     <main class="checkout-main">
       <!-- LEFT COLUMN -->
       <div class="left-col">
         <!-- Error summary -->
-        <div id="errorSummary" class="error-summary hidden">
-          <div class="error-title">Please fix the following before paying:</div>
+        <div id="errorSummary" class="error-summary hidden" role="alert">
+          <div class="error-title">A few details need your attention:</div>
           <div class="error-list" id="errorList"></div>
         </div>
 
-        <!-- Step 1: Your details -->
+        <!-- Step 1: Your details (personal + company & store) -->
         <section id="step1Section">
           <div class="step-header-row" style="margin-bottom: 22px">
             <div class="section-header" style="margin-bottom: 0">
               <span class="step-circle">1</span>
               <h2>Your details</h2>
-              <span class="step-label" id="subLabel">Step 1 of 3</span>
+              <span class="step-label" id="subLabel">Step 1 of 2</span>
             </div>
             <button type="button" class="btn-clear-draft" id="clearDraftBtn1">
               Clear saved details
@@ -1301,7 +1440,7 @@
                 <div class="form-card" style="border: none; padding: 0">
                   <div class="field">
                     <label for="name">Full name *</label>
-                    <input id="name" type="text" data-field="name" />
+                    <input id="name" type="text" data-field="name" autocomplete="name" />
                     <span class="error-msg" data-error="name"></span>
                   </div>
                   <div class="field">
@@ -1310,6 +1449,7 @@
                       id="email"
                       type="email"
                       data-field="email"
+                      autocomplete="email"
                       placeholder="name@company.com"
                     />
                     <span class="error-msg" data-error="email"></span>
@@ -1325,9 +1465,82 @@
                         <option>+974</option>
                         <option>+962</option>
                       </select>
-                      <input id="mobile" type="tel" data-field="mobile" />
+                      <input
+                        id="mobile"
+                        type="tel"
+                        data-field="mobile"
+                        autocomplete="tel-national"
+                        placeholder="1012345678"
+                        aria-describedby="mobileError"
+                      />
                     </div>
-                    <span class="error-msg" data-error="mobile"></span>
+                    <span class="error-msg" id="mobileError" data-error="mobile"></span>
+                  </div>
+                </div>
+              </div>
+              <div class="divider">
+                <div class="form-card" style="border: none; padding: 0">
+                  <div class="full-width form-subhead">Company &amp; store</div>
+                  <div class="field">
+                    <label for="company">Company *</label>
+                    <input id="company" type="text" data-field="company" autocomplete="organization" />
+                    <span class="error-msg" data-error="company"></span>
+                  </div>
+                  <div class="field">
+                    <label for="store"
+                      >Which e-commerce store do you work on? *</label
+                    >
+                    <input
+                      id="store"
+                      type="text"
+                      inputmode="url"
+                      autocapitalize="off"
+                      spellcheck="false"
+                      data-field="store"
+                      placeholder="yourstore.com"
+                    />
+                    <span class="error-msg" data-error="store"></span>
+                  </div>
+                  <div class="field">
+                    <label for="linkedin">LinkedIn profile</label>
+                    <input
+                      id="linkedin"
+                      type="text"
+                      inputmode="url"
+                      autocapitalize="off"
+                      spellcheck="false"
+                      data-field="linkedin"
+                      placeholder="linkedin.com/in/your-name"
+                    />
+                    <span class="error-msg" data-error="linkedin"></span>
+                  </div>
+                  <div class="field">
+                    <label for="facebook">Facebook profile</label>
+                    <input
+                      id="facebook"
+                      type="text"
+                      inputmode="url"
+                      autocapitalize="off"
+                      spellcheck="false"
+                      data-field="facebook"
+                      placeholder="facebook.com/your.name"
+                    />
+                    <span class="error-msg" data-error="facebook"></span>
+                  </div>
+                  <div class="full-width" style="margin-top: -6px">
+                    <span
+                      style="
+                        font-size: 11px;
+                        line-height: 1.6;
+                        color: var(--gray-500);
+                      "
+                      >One of the two is enough, whichever you actually use.</span
+                    >
+                    <span
+                      class="error-msg"
+                      data-error="social"
+                      style="display: block"
+                    ></span>
                   </div>
                 </div>
               </div>
@@ -1341,141 +1554,23 @@
                   margin-top: 8px;
                 "
               >
-                <button type="button" class="btn-primary" id="goSub2">
-                  Next: Company &amp; store →
+                <button type="button" class="btn-primary" id="goPayment">
+                  Continue to payment <span aria-hidden="true">→</span>
                 </button>
                 <span class="text-muted" style="font-size: 12px"
-                  >Step 1 of 3</span
+                  >Step 1 of 2</span
                 >
               </div>
             </div>
           </div>
         </section>
 
-        <!-- Step 2: Company & store -->
+        <!-- Step 2: Payment -->
         <section id="step2Section" class="hidden">
-          <div class="step-header-row" style="margin-bottom: 22px">
-            <div class="section-header" style="margin-bottom: 0">
-              <span class="step-circle">2</span>
-              <h2>Company &amp; store</h2>
-              <span class="step-label">Step 2 of 3</span>
-            </div>
-            <button type="button" class="btn-clear-draft" id="clearDraftBtn2">
-              Clear saved details
-            </button>
-          </div>
-
-          <div id="sub2">
-            <div class="form-card">
-              <div
-                class="full-width"
-                style="
-                  display: flex;
-                  align-items: center;
-                  justify-content: space-between;
-                  gap: 16px;
-                  border-bottom: 1px solid var(--gray-200);
-                  padding-bottom: 16px;
-                "
-              >
-                <div class="text-muted" style="font-size: 14px" id="subSummary">
-                  Your name · job title · country
-                </div>
-                <button type="button" class="btn-link" id="backSub1">
-                  ← Back to details
-                </button>
-              </div>
-              <div class="field">
-                <label for="company">Company *</label>
-                <input id="company" type="text" data-field="company" />
-                <span class="error-msg" data-error="company"></span>
-              </div>
-              <div class="field">
-                <label for="access">Accessibility needs</label>
-                <input
-                  id="access"
-                  type="text"
-                  data-field="access"
-                  placeholder="Optional"
-                />
-              </div>
-              <div class="field full-width">
-                <label for="store"
-                  >Which e-commerce store do you work on? *</label
-                >
-                <input
-                  id="store"
-                  type="text"
-                  data-field="store"
-                  placeholder="yourstore.com"
-                />
-                <span class="error-msg" data-error="store"></span>
-              </div>
-              <div class="field">
-                <label for="linkedin">LinkedIn profile</label>
-                <input
-                  id="linkedin"
-                  type="url"
-                  data-field="linkedin"
-                  placeholder="linkedin.com/in/you"
-                />
-              </div>
-              <div class="field">
-                <label for="facebook">Facebook profile</label>
-                <input
-                  id="facebook"
-                  type="url"
-                  data-field="facebook"
-                  placeholder="facebook.com/you"
-                />
-              </div>
-              <div class="full-width" style="margin-top: -6px">
-                <span
-                  style="
-                    font-size: 11px;
-                    line-height: 1.6;
-                    color: var(--gray-500);
-                  "
-                  >One of the two is enough, whichever you actually use.</span
-                >
-                <span
-                  class="error-msg"
-                  data-error="social"
-                  style="display: block"
-                ></span>
-              </div>
-              <div
-                class="full-width"
-                style="
-                  display: flex;
-                  align-items: center;
-                  gap: 16px;
-                  flex-wrap: wrap;
-                  margin-top: 20px;
-                  padding-top: 16px;
-                  border-top: 1px solid var(--gray-200);
-                "
-              >
-                <button type="button" class="btn-primary" id="goSub3">
-                  Next: Payment →
-                </button>
-                <button type="button" class="btn-link" id="backSub1Alt">
-                  ← Back
-                </button>
-                <span class="text-muted" style="font-size: 12px"
-                  >Step 2 of 3</span
-                >
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <!-- Step 3: Promo + Payment -->
-        <section id="step3Section" class="hidden">
           <div class="section-header">
-            <span class="step-circle">3</span>
+            <span class="step-circle">2</span>
             <h2>Payment</h2>
-            <span class="step-label" id="step3Label">Step 3 of 3</span>
+            <span class="step-label" id="step2Label">Step 2 of 2</span>
           </div>
 
           <div
@@ -1488,12 +1583,9 @@
               flex-wrap: wrap;
             "
           >
-            <div class="text-muted" style="font-size: 14px" id="step3Summary">
+            <div class="text-muted" style="font-size: 14px" id="step2Summary">
               Your name · company · store
             </div>
-            <button type="button" class="btn-link" id="backSub2">
-              ← Back to company
-            </button>
           </div>
 
           <div class="form-card" style="display: block; margin-top: 16px">
@@ -1553,12 +1645,15 @@
               </div>
             </div>
 
-            <label class="checkbox-label">
-              <input type="checkbox" id="consentCheck" />
+            <label class="checkbox-label" id="consentLabel">
+              <input type="checkbox" id="consentCheck" checked />
               <span
-                >I agree to the <a href="#">Terms</a>,
-                <a href="#">Ticket Policy</a>, <a href="#">Refund Policy</a>,
-                and <a href="#">Privacy Policy</a>. *</span
+                >I agree to the
+                <a href="policy.html#terms" target="_blank" rel="noopener">Terms</a>,
+                <a href="policy.html#ticket" target="_blank" rel="noopener">Ticket Policy</a>,
+                <a href="policy.html#refund" target="_blank" rel="noopener">Refund Policy</a>,
+                and
+                <a href="policy.html#privacy" target="_blank" rel="noopener">Privacy Policy</a>. *</span
               >
             </label>
             <span
@@ -1567,7 +1662,7 @@
               style="display: block; margin-bottom: 8px"
             ></span>
             <label class="checkbox-label optional">
-              <input type="checkbox" id="newsCheck" />
+              <input type="checkbox" id="newsCheck" checked />
               <span>Send me TrafficMENA news &amp; events (optional).</span>
             </label>
             <div class="legal-note">
@@ -1669,8 +1764,13 @@
                 </div>
               </div>
             </div>
-            <a href="#" class="summary-change">Change ticket</a>
-            <div class="chip-row" id="ticketChips"></div>
+            <div class="summary-change" id="changeTicketLabel">Change ticket</div>
+            <div
+              class="chip-row"
+              id="ticketChips"
+              role="group"
+              aria-labelledby="changeTicketLabel"
+            ></div>
           </div>
         </div>
         <div class="value-reminder">
@@ -1683,6 +1783,20 @@
         </div>
       </aside>
     </main>
+
+    <!-- Mobile sticky bar: follows the step (Continue to payment / Pay) -->
+    <div class="mobile-pay-bar" id="mobilePayBar" data-ecd-bottom-bar>
+      <button type="button" class="mpb-back" id="mpbBack" hidden>
+        <span aria-hidden="true">←</span> Back
+      </button>
+      <div class="mpb-info" id="mpbInfo">
+        <span class="mpb-ticket" id="mpbTicket">All Access Pass</span>
+        <span class="mpb-total price-total" data-suffix=" EGP">[Total] EGP</span>
+      </div>
+      <button type="button" class="mpb-btn" id="mpbBtn">
+        Continue to payment <span aria-hidden="true">→</span>
+      </button>
+    </div>
 
     <div class="ecd-modal-backdrop hidden" id="ecdModal" role="dialog" aria-modal="true" aria-labelledby="ecdModalTitle">
       <div class="ecd-modal">
@@ -1711,17 +1825,19 @@
             store: "",
             linkedin: "",
             facebook: "",
-            access: "",
           },
           promoOpen: false,
           promoCode: "",
           promoState: null,
           appliedCode: "",
-          consent: false,
-          news: false,
+          // Both boxes start ticked (user decision, 30 Sep 2026).
+          consent: true,
+          news: true,
+          // true once the buyer changes the newsletter box themselves
+          newsSetByUser: false,
           tried: false,
           tried1: false,
-          tried2: false,
+          mobileTouched: false,
           sub: 1,
           secs: 720,
           method: "Cards",
@@ -1734,6 +1850,10 @@
           promoApplying: false,
           sessionReady: false,
           sessionFingerprint: "",
+          // A booking session is good for ONE payment attempt. After Pay has
+          // been sent, the server has already tied that booking to a payment,
+          // so the next Pay must start a fresh session.
+          sessionUsed: false,
           pendingOrderCode: "",
           pendingBookingId: "",
           verifyTimer: null,
@@ -1749,6 +1869,7 @@
                 cc: state.cc,
                 buyer: state.buyer,
                 news: !!state.news,
+                newsSetByUser: !!state.newsSetByUser,
                 walletLocal: state.walletLocal || "",
                 savedAt: Date.now(),
               }),
@@ -1773,7 +1894,12 @@
                 }
               });
             }
-            state.news = !!draft.news;
+            // Older drafts saved news:false only because that used to be the
+            // default. Respect the saved value only if the buyer chose it.
+            if (draft.newsSetByUser) {
+              state.news = !!draft.news;
+              state.newsSetByUser = true;
+            }
             if (draft.walletLocal) {
               state.walletLocal = String(draft.walletLocal);
             }
@@ -1792,6 +1918,16 @@
           if (ccEl) ccEl.value = state.cc || "+20";
           var newsEl = document.getElementById("newsCheck");
           if (newsEl) newsEl.checked = !!state.news;
+          var consentEl = document.getElementById("consentCheck");
+          if (consentEl) consentEl.checked = !!state.consent;
+          // Saved numbers like 01002754217 are shown in the clean form.
+          var tidy = tidyMobile(state.buyer.mobile, state.cc);
+          if (tidy !== state.buyer.mobile) {
+            state.buyer.mobile = tidy;
+            var mobileEl = document.getElementById("mobile");
+            if (mobileEl) mobileEl.value = tidy;
+          }
+          updateMobilePlaceholder();
           var walletEl = document.getElementById("ecd-wallet-phone");
           if (walletEl && state.walletLocal) {
             walletEl.value = state.walletLocal;
@@ -1812,21 +1948,19 @@
             store: "",
             linkedin: "",
             facebook: "",
-            access: "",
           };
           state.cc = "+20";
-          state.news = false;
+          state.news = true;
+          state.newsSetByUser = false;
           state.walletLocal = "";
           state.walletPhone = "";
           state.walletTouched = false;
-          state.consent = false;
+          state.consent = true;
           state.sessionReady = false;
           state.sessionFingerprint = "";
           state.tried = false;
           state.tried1 = false;
-          state.tried2 = false;
-          var consentEl = document.getElementById("consentCheck");
-          if (consentEl) consentEl.checked = false;
+          state.mobileTouched = false;
           hydrateFormFromState();
           syncWalletUi();
           renderAll();
@@ -1890,11 +2024,188 @@
             : "Full-day access to the Main Stage and the Second Stage.";
         }
 
+        /* ---------- Mobile number rules ----------
+           The country code is picked in the dropdown, so the field holds the
+           national number only. We accept what people naturally type and
+           save one clean international number, e.g. +201002754217:
+             1002754217       as is
+             01002754217      first 0 dropped (the code already covers it)
+             +201002754217    pasted with the code: code dropped
+             00201002754217   same, with 00 instead of +
+           Arabic digits (٠١٠٠...) are read as normal digits.
+           nsn = the number after the country code, without the first 0. */
+        var PHONE_RULES = {
+          "20": { name: "Egyptian", nsn: /^1[0125]\d{8}$/, digits: 10, example: "1012345678" },
+          "966": { name: "Saudi", nsn: /^5\d{8}$/, digits: 9, example: "512345678" },
+          "971": { name: "UAE", nsn: /^5\d{8}$/, digits: 9, example: "501234567" },
+          "965": { name: "Kuwaiti", nsn: /^[4569]\d{7}$/, digits: 8, example: "51234567" },
+          "974": { name: "Qatari", nsn: /^[3567]\d{7}$/, digits: 8, example: "33123456" },
+          "962": { name: "Jordanian", nsn: /^7[789]\d{7}$/, digits: 9, example: "791234567" },
+        };
+
+        function ccDigits(cc) {
+          return String(cc || "+20").replace(/\D/g, "") || "20";
+        }
+
+        function toAsciiDigits(value) {
+          return String(value || "")
+            .replace(/[\u0660-\u0669]/g, function (d) {
+              return String(d.charCodeAt(0) - 0x0660);
+            })
+            .replace(/[\u06F0-\u06F9]/g, function (d) {
+              return String(d.charCodeAt(0) - 0x06f0);
+            });
+        }
+
+        function normalizeLocalMobile(raw, cc) {
+          var code = ccDigits(cc);
+          var rule = PHONE_RULES[code];
+          var d = toAsciiDigits(raw).replace(/\D/g, "");
+          if (!d) return "";
+          if (d.indexOf("00" + code) === 0) {
+            d = d.slice(2 + code.length);
+          } else if (
+            rule &&
+            d.indexOf(code) === 0 &&
+            d.length >= code.length + rule.digits
+          ) {
+            // Only strip when the number is too long to be a local one, so a
+            // local number that happens to start with the same digits is kept.
+            d = d.slice(code.length);
+          }
+          if (d.charAt(0) === "0") d = d.slice(1);
+          return d;
+        }
+
+        function isValidMobile(raw, cc) {
+          var rule = PHONE_RULES[ccDigits(cc)];
+          var nsn = normalizeLocalMobile(raw, cc);
+          return rule ? rule.nsn.test(nsn) : /^\d{7,12}$/.test(nsn);
+        }
+
+        function mobileErrorText(cc) {
+          var code = ccDigits(cc);
+          var rule = PHONE_RULES[code];
+          if (!rule) return "Enter a complete mobile number.";
+          return (
+            "Enter a complete " + rule.name + " mobile number: " + rule.digits +
+            " digits after +" + code + ", for example " + rule.example +
+            ". Using a number from another country? Change the code first."
+          );
+        }
+
+        // The value shown in the field: the clean number once it is valid,
+        // otherwise exactly what the buyer typed so they can fix it.
+        function tidyMobile(raw, cc) {
+          return isValidMobile(raw, cc) ? normalizeLocalMobile(raw, cc) : String(raw || "");
+        }
+
+        function updateMobilePlaceholder() {
+          var input = document.getElementById("mobile");
+          var rule = PHONE_RULES[ccDigits(state.cc)];
+          if (input) input.placeholder = rule ? rule.example : "";
+        }
+
+        /* ---------- Link rules (store, LinkedIn, Facebook) ----------
+           People may type links with or without https:// and www; we save
+           the full https:// link. Each returns the clean link, or "" when
+           the text is not a valid link of that kind. */
+        function parseLink(raw) {
+          var text = String(raw || "").trim();
+          if (!text || /\s/.test(text)) return null;
+          if (!/^[a-z][a-z0-9+.-]*:\/\//i.test(text)) text = "https://" + text;
+          try {
+            var u = new URL(text);
+            if (u.protocol !== "https:" && u.protocol !== "http:") return null;
+            if (u.username || u.password) return null;
+            return u;
+          } catch (e) {
+            return null;
+          }
+        }
+
+        function isRealHostname(host) {
+          if (!host || host.length > 253) return false;
+          var labels = host.split(".");
+          if (labels.length < 2) return false;
+          var tld = labels[labels.length - 1];
+          if (!/^([a-z]{2,24}|xn--[a-z0-9-]{1,59})$/.test(tld)) return false;
+          return labels.every(function (l) {
+            return /^[a-z0-9]([a-z0-9-]{0,61}[a-z0-9])?$/.test(l);
+          });
+        }
+
+        // Social and link-in-bio sites are not a store's own website.
+        var NOT_A_STORE =
+          /(^|\.)(instagram\.com|facebook\.com|fb\.com|fb\.me|tiktok\.com|linkedin\.com|x\.com|twitter\.com|threads\.net|snapchat\.com|youtube\.com|youtu\.be|wa\.me|whatsapp\.com|t\.me|telegram\.me|linktr\.ee|beacons\.ai)$/;
+
+        function cleanStoreLink(raw) {
+          var u = parseLink(raw);
+          if (!u) return "";
+          var host = u.hostname.toLowerCase();
+          if (!isRealHostname(host) || NOT_A_STORE.test(host)) return "";
+          var path = u.pathname === "/" ? "" : u.pathname.replace(/\/+$/, "");
+          return "https://" + host + path + u.search;
+        }
+
+        function isSocialPage(raw) {
+          var u = parseLink(raw);
+          return !!u && NOT_A_STORE.test(u.hostname.toLowerCase());
+        }
+
+        // Personal profile: linkedin.com/in/your-name (any country subdomain).
+        function cleanLinkedIn(raw) {
+          var u = parseLink(raw);
+          if (!u) return "";
+          if (!/^([a-z]{2,3}\.)?linkedin\.com$/.test(u.hostname.toLowerCase())) return "";
+          var m = /^\/in\/([^/?#]{3,100})\/?$/.exec(u.pathname);
+          if (!m) return "";
+          return "https://www.linkedin.com/in/" + m[1];
+        }
+
+        // Personal profile: facebook.com/your.name, profile.php?id=123,
+        // /people/Name/123, or the app's "copy profile link" (/share/abc).
+        var FB_NOT_PROFILE =
+          /^(groups|pages|events|watch|marketplace|gaming|reel|reels|videos|photo|photos|photo\.php|permalink\.php|story\.php|posts|hashtag|search|login|login\.php|home\.php|help|policies|privacy|settings|notifications|messages|friends|bookmarks|ads|business|l\.php|sharer|sharer\.php|dialog|plugins|stories)$/i;
+
+        function cleanFacebook(raw) {
+          var u = parseLink(raw);
+          if (!u) return "";
+          var host = u.hostname.toLowerCase();
+          if (!/^((www|m|web|mbasic)\.)?(facebook|fb)\.com$/.test(host)) return "";
+          var parts = u.pathname.replace(/\/+$/, "").split("/").filter(Boolean);
+          var base = "https://www.facebook.com/";
+          if (parts.length === 1 && parts[0].toLowerCase() === "profile.php") {
+            var id = u.searchParams.get("id") || "";
+            return /^\d{5,20}$/.test(id) ? base + "profile.php?id=" + id : "";
+          }
+          if (parts.length === 1 && /^[a-z0-9.]{5,50}$/i.test(parts[0]) && !FB_NOT_PROFILE.test(parts[0])) {
+            return base + parts[0];
+          }
+          if (parts.length === 3 && parts[0] === "people" && /^\d{5,20}$/.test(parts[2])) {
+            return base + parts.join("/");
+          }
+          // share/p, share/r, share/v are posts, reels and videos, not profiles.
+          if (parts.length === 2 && parts[0] === "share" && /^[a-z0-9]{6,30}$/i.test(parts[1])) {
+            return base + "share/" + parts[1];
+          }
+          return "";
+        }
+
+        var LINK_CLEANERS = {
+          store: cleanStoreLink,
+          linkedin: cleanLinkedIn,
+          facebook: cleanFacebook,
+        };
+
+        // What the field shows: the clean link once valid, otherwise exactly
+        // what the buyer typed so they can fix it.
+        function tidyLink(key, raw) {
+          return LINK_CLEANERS[key](raw) || String(raw || "");
+        }
+
         function assembleMobile(mobile, cc) {
-          var m = String(mobile || "").replace(/\D/g, "");
-          var code = String(cc || "+20").replace(/\D/g, "");
-          if (m.indexOf("0") === 0) m = m.slice(1);
-          return "+" + code + m;
+          return "+" + ccDigits(cc) + normalizeLocalMobile(mobile, cc);
         }
 
         function isWalletMethodName(nameEn) {
@@ -2010,21 +2321,27 @@
           else if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(b.email))
             e.email = "Enter a valid email.";
           if (!b.mobile) e.mobile = "Your mobile number is required.";
-          return e;
-        }
-        function screen2Errors() {
-          const b = state.buyer;
-          const e = {};
+          else if (!isValidMobile(b.mobile, state.cc))
+            e.mobile = mobileErrorText(state.cc);
           if (!b.company)
             e.company = "Company name is required. Freelance? Write freelance.";
-          if (!b.store)
-            e.store = "Tell us which store you work on, or write none.";
+          if (!b.store) e.store = "Add the link to your store's website.";
+          else if (!cleanStoreLink(b.store))
+            e.store = isSocialPage(b.store)
+              ? "Enter your store's own website, not a social media page. For example: yourstore.com"
+              : "Enter a real website link. For example: yourstore.com";
           if (!b.linkedin && !b.facebook)
             e.social = "Add a LinkedIn or a Facebook profile.";
+          if (b.linkedin && !cleanLinkedIn(b.linkedin))
+            e.linkedin =
+              "Enter your LinkedIn profile link. For example: linkedin.com/in/your-name";
+          if (b.facebook && !cleanFacebook(b.facebook))
+            e.facebook =
+              "Enter your Facebook profile link. For example: facebook.com/your.name";
           return e;
         }
         function allErrors() {
-          const e = Object.assign({}, screen1Errors(), screen2Errors());
+          const e = Object.assign({}, screen1Errors());
           if (!state.consent)
             e.consent = "You must agree to the policies to pay.";
           return e;
@@ -2038,6 +2355,7 @@
           renderPromo();
           renderPayButtons();
           renderSubScreens();
+          renderMobileBar();
           updateTimerDisplay();
         }
 
@@ -2055,6 +2373,7 @@
             const btn = document.createElement("button");
             btn.type = "button";
             btn.className = "btn-chip" + (isActive ? " active" : "");
+            btn.setAttribute("aria-pressed", isActive ? "true" : "false");
             btn.textContent = name;
             btn.setAttribute("data-ticket", id);
             btn.onclick = function () {
@@ -2062,7 +2381,7 @@
               state.sessionReady = false;
               persistCheckoutDraft();
               renderAll();
-              if (state.sub === 3) preparePaymentStep();
+              if (state.sub === 2) preparePaymentStep();
             };
             chips.appendChild(btn);
           });
@@ -2137,16 +2456,13 @@
         function renderErrors() {
           let errs = {};
           const e1 = screen1Errors();
-          const e2 = screen2Errors();
-          const eAll = allErrors();
           if (state.tried) {
-            if (state.sub === 1) errs = e1;
-            else if (state.sub === 2) errs = Object.assign({}, e1, e2);
-            else errs = eAll;
-          } else if (state.tried2) {
-            errs = e2;
+            errs = state.sub === 1 ? e1 : allErrors();
           } else if (state.tried1) {
             errs = e1;
+          } else if (state.mobileTouched && state.buyer.mobile && e1.mobile) {
+            // Flag an incomplete number as soon as the buyer leaves the field.
+            errs = { mobile: e1.mobile };
           }
           const errList = Object.values(errs).filter(Boolean);
 
@@ -2166,18 +2482,13 @@
           document.querySelectorAll("[data-error]").forEach((el) => {
             el.textContent = errs[el.dataset.error] || "";
           });
+          // "Add one of the two" marks both; each field's own error was set above.
           if (errs.social) {
             document
               .querySelectorAll(
                 '[data-field="linkedin"], [data-field="facebook"]',
               )
               .forEach((el) => el.classList.add("error"));
-          } else {
-            document
-              .querySelectorAll(
-                '[data-field="linkedin"], [data-field="facebook"]',
-              )
-              .forEach((el) => el.classList.remove("error"));
           }
           const consentErrEl = document.querySelector('[data-error="consent"]');
           if (consentErrEl) consentErrEl.textContent = errs.consent || "";
@@ -2284,15 +2595,16 @@
           const walletOk =
             !selectedMethodIsWallet() || Boolean(assembleWalletE164(state.walletLocal));
           const canPay =
-            state.consent && state.sub === 3 && !state.paying && walletOk;
+            state.consent && state.sub === 2 && !state.paying && walletOk;
           const payIdle = payButtonIdleHtml();
           const payBtn = document.getElementById("payBtn");
           const payForm = payBtn && payBtn.closest(".form-card");
 
           if (payForm) payForm.classList.toggle("is-busy", state.paying);
 
-          if (state.paying && state.sub === 3) {
+          if (state.paying && state.sub === 2) {
             setButtonLoading(payBtn, true, payIdle);
+            renderMobileBar();
             return;
           }
 
@@ -2300,38 +2612,75 @@
             setButtonLoading(payBtn, false, payIdle);
             payBtn.disabled = !canPay;
           }
+          renderMobileBar();
+        }
+
+        // Breadcrumb replaces the old back links. On Payment, "Your details"
+        // takes the buyer back (same as the phone's Back button).
+        function renderBreadcrumb() {
+          if (!window.EcdBreadcrumb) return;
+          var items = [
+            { label: "ECommerce Day", href: "index.html" },
+            { label: "Tickets", href: "tickets.html" },
+          ];
+          if (state.sub === 2) {
+            items.push({ label: "Your details", onClick: goToDetails });
+            items.push({ label: "Payment" });
+          } else {
+            items.push({ label: "Your details" });
+          }
+          EcdBreadcrumb.render(document.getElementById("checkoutBreadcrumb"), items);
+        }
+
+        // Mobile sticky bar mirrors the step: Continue to payment, then Pay.
+        function renderMobileBar() {
+          var bar = document.getElementById("mobilePayBar");
+          var btn = document.getElementById("mpbBtn");
+          if (!bar || !btn) return;
+          var ticketEl = document.getElementById("mpbTicket");
+          if (ticketEl) ticketEl.textContent = getTicketName();
+          // Payment step: "← Back" replaces the pass/total (Pay shows the total).
+          var onPay = state.sub === 2;
+          bar.classList.toggle("is-pay", onPay);
+          var backEl = document.getElementById("mpbBack");
+          var infoEl = document.getElementById("mpbInfo");
+          if (backEl) {
+            backEl.hidden = !onPay;
+            backEl.disabled = state.paying;
+          }
+          if (infoEl) infoEl.hidden = onPay;
+          var html;
+          if (state.sub === 1) {
+            html = 'Continue to payment <span aria-hidden="true">→</span>';
+          } else if (state.paying) {
+            html =
+              '<span class="btn-spinner" aria-hidden="true"></span><span>Processing…</span>';
+          } else {
+            html = payButtonIdleHtml();
+          }
+          if (btn.innerHTML !== html) btn.innerHTML = html;
+          btn.disabled = state.sub === 2 && state.paying;
+          btn.setAttribute("aria-busy", btn.disabled ? "true" : "false");
         }
 
         function renderSubScreens() {
           const s1 = document.getElementById("step1Section");
           const s2 = document.getElementById("step2Section");
-          const s3 = document.getElementById("step3Section");
           if (s1) s1.classList.toggle("hidden", state.sub !== 1);
           if (s2) s2.classList.toggle("hidden", state.sub !== 2);
-          if (s3) s3.classList.toggle("hidden", state.sub !== 3);
           const summaryPromo = document.getElementById("summaryPromo");
-          if (summaryPromo) summaryPromo.classList.toggle("hidden", state.sub !== 3);
+          if (summaryPromo) summaryPromo.classList.toggle("hidden", state.sub !== 2);
 
-          const subLabel = document.getElementById("subLabel");
-          if (subLabel) subLabel.textContent = "Step 1 of 3";
+          renderBreadcrumb();
 
-          const summaryText =
-            (state.buyer.name || "Your name") +
-            " · " +
-            (state.buyer.title || "job title") +
-            " · " +
-            (state.buyer.country || "country");
-          const subSummary = document.getElementById("subSummary");
-          if (subSummary) subSummary.textContent = summaryText;
-
-          const step3Summary = document.getElementById("step3Summary");
-          if (step3Summary) {
-            step3Summary.textContent =
+          const step2Summary = document.getElementById("step2Summary");
+          if (step2Summary) {
+            step2Summary.textContent =
               (state.buyer.name || "Your name") +
               " · " +
               (state.buyer.company || "company") +
               " · " +
-              (state.buyer.store || "store");
+              (String(state.buyer.store || "").replace(/^https?:\/\/(www\.)?/i, "") || "store");
           }
         }
 
@@ -2347,12 +2696,12 @@
             el.addEventListener("input", (e) => {
               state.buyer[key] = e.target.value;
               persistCheckoutDraft();
-              if (state.tried || state.tried1 || state.tried2) renderErrors();
+              if (state.tried || state.tried1) renderErrors();
             });
             el.addEventListener("change", (e) => {
               state.buyer[key] = e.target.value;
               persistCheckoutDraft();
-              if (state.tried || state.tried1 || state.tried2) renderErrors();
+              if (state.tried || state.tried1) renderErrors();
             });
           });
         }
@@ -2363,21 +2712,50 @@
         bindField("#email", "email");
         bindField("#mobile", "mobile");
         bindField("#company", "company");
-        bindField("#access", "access");
         bindField("#store", "store");
         bindField("#linkedin", "linkedin");
         bindField("#facebook", "facebook");
 
+        // Leaving the mobile field: show the clean number (01002754217
+        // becomes 1002754217) or flag it right away if it is incomplete.
+        function onMobileSettled() {
+          var el = document.getElementById("mobile");
+          if (!el) return;
+          var tidy = tidyMobile(el.value, state.cc);
+          if (tidy !== el.value) el.value = tidy;
+          state.buyer.mobile = tidy;
+          state.mobileTouched = true;
+          persistCheckoutDraft();
+          renderErrors();
+        }
+        var mobileInput = document.getElementById("mobile");
+        if (mobileInput) mobileInput.addEventListener("blur", onMobileSettled);
+
+        // Leaving a link field: show the full link (linkedin.com/in/x becomes
+        // https://www.linkedin.com/in/x) so the buyer sees what we save.
+        Object.keys(LINK_CLEANERS).forEach(function (key) {
+          var el = document.getElementById(key);
+          if (!el) return;
+          el.addEventListener("blur", function () {
+            var tidy = tidyLink(key, el.value);
+            if (tidy !== el.value) el.value = tidy;
+            state.buyer[key] = tidy;
+            persistCheckoutDraft();
+            if (state.tried || state.tried1) renderErrors();
+          });
+        });
+
         var ccEl = document.getElementById("cc");
         if (ccEl) {
-          ccEl.addEventListener("change", function (e) {
+          var onCcChange = function (e) {
+            if (state.cc === e.target.value) return;
             state.cc = e.target.value;
-            persistCheckoutDraft();
-          });
-          ccEl.addEventListener("input", function (e) {
-            state.cc = e.target.value;
-            persistCheckoutDraft();
-          });
+            updateMobilePlaceholder();
+            if (state.buyer.mobile) onMobileSettled();
+            else persistCheckoutDraft();
+          };
+          ccEl.addEventListener("change", onCcChange);
+          ccEl.addEventListener("input", onCcChange);
         }
 
         hydrateFormFromState();
@@ -2391,6 +2769,7 @@
           });
         document.getElementById("newsCheck").addEventListener("change", (e) => {
           state.news = e.target.checked;
+          state.newsSetByUser = true;
           persistCheckoutDraft();
         });
 
@@ -2405,35 +2784,76 @@
           clearCheckoutDraft();
         }
         var clear1 = document.getElementById("clearDraftBtn1");
-        var clear2 = document.getElementById("clearDraftBtn2");
         if (clear1) clear1.addEventListener("click", onClearDraftClick);
-        if (clear2) clear2.addEventListener("click", onClearDraftClick);
 
-        function goToStep2() {
+        // Field order on screen, used to take the buyer to the first problem.
+        var FIELD_ORDER = [
+          "country",
+          "title",
+          "name",
+          "email",
+          "mobile",
+          "company",
+          "store",
+          "linkedin",
+          "facebook",
+          "social",
+          "consent",
+        ];
+        var FIELD_TARGET = { social: "linkedin", consent: "consentCheck" };
+
+        function focusFirstError(errs) {
+          var key = FIELD_ORDER.find(function (k) {
+            return errs[k];
+          });
+          if (!key) return;
+          var el = document.getElementById(FIELD_TARGET[key] || key);
+          if (!el) return;
+          var box = el.closest(".field, .checkbox-label") || el;
+          box.scrollIntoView({ behavior: "smooth", block: "center" });
+          try {
+            el.focus({ preventScroll: true });
+          } catch (e) {
+            el.focus();
+          }
+        }
+
+        function goToPayment() {
+          // Pick up anything typed but not yet blurred (e.g. tapping the bar).
+          var mobileEl = document.getElementById("mobile");
+          if (mobileEl && mobileEl.value) {
+            var tidy = tidyMobile(mobileEl.value, state.cc);
+            if (tidy !== mobileEl.value) mobileEl.value = tidy;
+            state.buyer.mobile = tidy;
+          }
+          Object.keys(LINK_CLEANERS).forEach(function (key) {
+            var el = document.getElementById(key);
+            if (!el || !el.value) return;
+            var tidy = tidyLink(key, el.value);
+            if (tidy !== el.value) el.value = tidy;
+            state.buyer[key] = tidy;
+          });
           const errs = screen1Errors();
           if (Object.keys(errs).length > 0) {
             state.tried1 = true;
             renderErrors();
+            focusFirstError(errs);
             return;
           }
           state.tried1 = false;
           state.sub = 2;
-          if (window.EcdAnalytics) EcdAnalytics.checkoutStep(1, "your_details", state.ticket);
-          persistCheckoutDraft();
-          renderAll();
-          window.scrollTo({ top: 0, behavior: "smooth" });
-        }
-
-        function goToStep3() {
-          const errs = screen2Errors();
-          if (Object.keys(errs).length > 0) {
-            state.tried2 = true;
-            renderErrors();
-            return;
+          // Phone/browser Back on the payment step returns to the details
+          // step instead of leaving checkout. Same URL, only a history entry.
+          try {
+            if (!history.state || history.state.ecdStep !== 2) {
+              history.pushState({ ecdStep: 2 }, "");
+            }
+          } catch (e) {}
+          // Funnel: step 1 "your_details" completes here, step 2 "payment"
+          // on Pay (handlePay).
+          if (window.EcdAnalytics) {
+            EcdAnalytics.checkoutStep(1, "your_details", state.ticket);
           }
-          state.tried2 = false;
-          state.sub = 3;
-          if (window.EcdAnalytics) EcdAnalytics.checkoutStep(2, "company_and_store", state.ticket);
           persistCheckoutDraft();
           renderAll();
           window.scrollTo({ top: 0, behavior: "smooth" });
@@ -2465,24 +2885,74 @@
           }
         }
 
-        function goToStep1() {
+        function showDetailsStep() {
           state.sub = 1;
           renderAll();
           window.scrollTo({ top: 0, behavior: "smooth" });
         }
 
-        function goToStep2Back() {
-          state.sub = 2;
-          renderAll();
-          window.scrollTo({ top: 0, behavior: "smooth" });
+        // Back buttons: undo the history entry added for the payment step, so
+        // the browser's Back and ours always agree.
+        function goToDetails() {
+          if (state.paying) return;
+          if (history.state && history.state.ecdStep === 2) {
+            history.back();
+          } else {
+            showDetailsStep();
+          }
         }
 
-        document.getElementById("goSub2").addEventListener("click", goToStep2);
-        document.getElementById("goSub3").addEventListener("click", goToStep3);
-        document.getElementById("backSub1").addEventListener("click", goToStep1);
-        var backSub1Alt = document.getElementById("backSub1Alt");
-        if (backSub1Alt) backSub1Alt.addEventListener("click", goToStep1);
-        document.getElementById("backSub2").addEventListener("click", goToStep2Back);
+        window.addEventListener("popstate", function (e) {
+          var wantsPayment = !!(e.state && e.state.ecdStep === 2);
+          if (!wantsPayment && state.sub === 2) {
+            showDetailsStep();
+          } else if (wantsPayment && state.sub === 1) {
+            // Forward button: only if the details are still complete.
+            if (Object.keys(screen1Errors()).length === 0) {
+              state.sub = 2;
+              renderAll();
+              preparePaymentStep();
+            } else {
+              history.back();
+            }
+          }
+        });
+
+        // A reload always starts on the details step; drop a stale entry.
+        try {
+          if (history.state && history.state.ecdStep === 2) {
+            history.replaceState(null, "");
+          }
+        } catch (e) {}
+
+        // On the payment step the bar explains what is missing instead of
+        // sitting there disabled.
+        function onMobileBarPay() {
+          if (state.paying || state.promoApplying) return;
+          if (!state.consent) {
+            state.tried = true;
+            renderErrors();
+            focusFirstError({ consent: true });
+            return;
+          }
+          if (selectedMethodIsWallet() && !assembleWalletE164(state.walletLocal)) {
+            state.walletTouched = true;
+            syncWalletUi();
+            var wallet = document.getElementById("ecd-wallet-phone");
+            var wrap = document.getElementById("ecdWalletField");
+            if (wrap) wrap.scrollIntoView({ behavior: "smooth", block: "center" });
+            if (wallet) wallet.focus({ preventScroll: true });
+            return;
+          }
+          handlePay(false);
+        }
+
+        document.getElementById("goPayment").addEventListener("click", goToPayment);
+        document.getElementById("mpbBack").addEventListener("click", goToDetails);
+        document.getElementById("mpbBtn").addEventListener("click", function () {
+          if (state.sub === 1) goToPayment();
+          else onMobileBarPay();
+        });
 
         document
           .getElementById("openPromoBtn")
@@ -2555,7 +3025,7 @@
               setPromoBusy(false);
             }
             renderAll();
-            if (state.sub === 3) preparePaymentStep();
+            if (state.sub === 2) preparePaymentStep();
           });
         document
           .getElementById("removePromoBtn")
@@ -2567,7 +3037,7 @@
             if (window.EventPrices) EventPrices.clearActivePromo();
             state.sessionReady = false;
             renderAll();
-            if (state.sub === 3) preparePaymentStep();
+            if (state.sub === 2) preparePaymentStep();
           });
 
         var walletInput = document.getElementById("ecd-wallet-phone");
@@ -2670,13 +3140,15 @@
               store: state.buyer.store,
               linkedin: state.buyer.linkedin || null,
               facebook: state.buyer.facebook || null,
-              access: state.buyer.access || null,
               newsOptIn: !!state.news,
             },
           };
           var created = await EcdApi.createSession(payload);
           state.sessionReady = true;
           state.sessionFingerprint = fp;
+          state.sessionUsed = false;
+          // Registration saved in the database, payment not done yet.
+          if (window.EcdAnalytics) EcdAnalytics.bookingComplete(created, payload);
           return created;
         }
 
@@ -2824,6 +3296,7 @@
           if (hosted) hosted.style.display = "none";
           var payBtn = document.getElementById("payBtn");
           if (payBtn) payBtn.style.display = "none";
+          renderMobileBar();
           return built.hasCodes;
         }
 
@@ -2837,6 +3310,7 @@
           if (hosted) hosted.style.display = "";
           var payBtn = document.getElementById("payBtn");
           if (payBtn) payBtn.style.display = "";
+          renderMobileBar();
         }
 
         function goToConfirmation(orderCode, access) {
@@ -2948,12 +3422,13 @@
           if (state.paying || state.promoApplying) return;
           const errs = allErrors();
           const s1Errs = screen1Errors();
-          const s2Errs = screen2Errors();
           state.tried = true;
           if (Object.keys(s1Errs).length > 0) state.sub = 1;
-          else if (Object.keys(s2Errs).length > 0) state.sub = 2;
           renderAll();
-          if (Object.keys(errs).length > 0) return;
+          if (Object.keys(errs).length > 0) {
+            focusFirstError(errs);
+            return;
+          }
           if (selectedMethodIsWallet()) {
             state.walletTouched = true;
             syncWalletUi();
@@ -2980,6 +3455,7 @@
             var payMethod = (state.paymentMethods || []).find(function (m) {
               return m.paymentId === state.paymentMethodId;
             });
+            EcdAnalytics.checkoutStep(2, "payment", state.ticket);
             EcdAnalytics.selectPaymentMethod({
               ticketId: state.ticket,
               value: window.EventPrices
@@ -2992,7 +3468,10 @@
           state.paying = true;
           renderPayButtons();
           try {
-            await ensureCheckoutSession();
+            // A new Pay after an earlier attempt (buyer came back from the card
+            // page, or the attempt failed) gets a fresh booking. "Request new
+            // code" keeps the same booking on purpose (forceNewCode).
+            await ensureCheckoutSession(!forceNewCode && state.sessionUsed);
             if (!state.paymentMethods.length) {
               await loadPaymentMethods();
             }
@@ -3003,6 +3482,7 @@
               );
               return;
             }
+            state.sessionUsed = true;
             var result = await EcdApi.pay({
               paymentMethodId: state.paymentMethodId,
               walletPhone: selectedMethodIsWallet()
@@ -3065,6 +3545,16 @@
           } catch (err) {
             var msg =
               (err && err.message) || "Checkout failed. Please try again.";
+            if (
+              err &&
+              (err.code === "hold_expired" ||
+                err.code === "BOOKING_NOT_FOUND" ||
+                err.status === 401)
+            ) {
+              msg =
+                "Your checkout session timed out. Your details are saved, so just tap Pay again.";
+              state.sessionReady = false;
+            }
             if (err && err.code === "price_changed") {
               msg = "Price changed. Totals refreshed. Try Pay again.";
               state.sessionReady = false;
@@ -3106,6 +3596,30 @@
             }
           });
         }
+
+        // Back button from the payment provider can restore this page from
+        // the browser's memory with its old state. Make sure nothing is stuck
+        // in "Processing…"; the next Pay starts a fresh booking (sessionUsed).
+        window.addEventListener("pageshow", function (e) {
+          if (!e.persisted) return;
+          state.paying = false;
+          renderPayButtons();
+        });
+
+        // Returning from a failed card payment (failUrl adds status=failed).
+        (function noticeFailedPayment() {
+          try {
+            var q = new URLSearchParams(window.location.search);
+            if (q.get("status") !== "failed") return;
+            var key = "ecd2026_failed_notice_" + (q.get("order") || "");
+            if (sessionStorage.getItem(key)) return;
+            sessionStorage.setItem(key, "1");
+            showEcdModal(
+              "Your payment didn't go through. Your details are saved, so you can continue to payment and try again.",
+              "Payment not completed",
+            );
+          } catch (e) {}
+        })();
 
         setInterval(() => {
           state.secs = Math.max(0, state.secs - 1);
